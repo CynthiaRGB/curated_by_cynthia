@@ -33,7 +33,7 @@ export class RestaurantService {
         case "Paris":
           return address.includes('paris') || address.includes('france');
         default:
-          return false;
+          return address.includes(cityName);
       }
     });
   }

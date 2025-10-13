@@ -1,1 +1,588 @@
-/* App-specific styles */
+/* App-specific styles based on Figma design */
+
+/* Main container with exact background color */
+.app-container {
+  background-color: #F7EFE0;
+  min-height: 100vh;
+  position: relative;
+  width: 100%;
+}
+
+/* Centered content container */
+.content-container {
+  position: absolute;
+  left: 50%;
+  top: 36%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  width: 800px;
+}
+
+/* Main title styling */
+.main-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: normal;
+  color: #B64809;
+  text-align: center;
+  width: min-content;
+  min-width: 100%;
+}
+
+/* Chatbox container */
+.chatbox-container {
+  background-color: #FCF6E8;
+  border: 1px solid #B64809;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.08);
+  width: 800px;
+  max-height: 500px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* Chatbox content wrapper */
+.chatbox-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px;
+}
+
+/* Text input area */
+.text-input-area {
+  width: 100%;
+}
+
+/* Text input styling - integrated into chatbox */
+.text-input {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  color: #1A1818;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  width: 100%;
+  min-height: 24px;
+  max-height: 200px;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.text-input::placeholder {
+  color: #7F7F7F;
+}
+
+.text-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* Bottom row with pills and submit button */
+.bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Pills container */
+.pills-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Individual pill styling */
+.pill {
+  background-color: #FCF6E8;
+  border: 1px solid #B8A57F;
+  border-radius: 100px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pill:hover {
+  background-color: #EADBBE;
+}
+
+.pill.selected {
+  background-color: #EADBBE;
+  border-color: #B8A57F;
+}
+
+.pill-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  color: #1A1818;
+  white-space: nowrap;
+}
+
+/* Submit button */
+.submit-button {
+  background-color: #B64809;
+  border-radius: 100px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+.submit-button:hover:not(.disabled) {
+  opacity: 0.9;
+}
+
+.submit-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Arrow icon container */
+.arrow-container {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Response Screen Styles */
+.response-screen {
+  background-color: #F7EFE0;
+  min-height: 100vh;
+  padding: 32px 24px 0 24px; /* No bottom padding - using spacer instead */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto; /* Enable scrolling */
+}
+
+.conversation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: stretch; /* Allow individual items to control their alignment */
+  width: 740px;
+  max-width: 100%;
+}
+
+/* User prompt pill */
+.prompt-pill {
+  background-color: #EADBBE;
+  border-radius: 100px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end; /* Align to the right */
+  margin-left: auto; /* Ensure it stays right-aligned */
+  width: fit-content; /* Hug content, don't fill container */
+  max-width: 100%; /* Prevent overflow */
+}
+
+.prompt-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  color: #1A1818;
+  white-space: nowrap;
+}
+
+/* Response content */
+.response-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.response-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  color: #1A1818;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+/* Typewriter cursor */
+.typewriter-cursor {
+  animation: blink 1s infinite;
+  color: #1A1818;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Restaurant cards container */
+.restaurant-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 740px; /* Match conversation-container width */
+}
+
+/* Bottom spacer to prevent content from being blocked by fixed chatbox */
+.bottom-spacer {
+  height: 220px; /* Approximate height of bottom chatbox + padding + extra 100px */
+  width: 100%;
+}
+
+/* Individual restaurant card */
+.restaurant-card {
+  background-color: #F7EFE0;
+  border: 1px solid #B8A57F;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.restaurant-card:hover {
+  background-color: #EADBBE;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Restaurant card animation states */
+.restaurant-card-hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease-out;
+}
+
+.restaurant-card-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.4s ease-out;
+}
+
+.restaurant-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: normal;
+  color: #1A1818;
+  width: 100%;
+  margin: 0;
+}
+
+.restaurant-details {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.cuisine, .neighborhood, .price, .rating {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  color: #1A1818;
+  white-space: nowrap;
+}
+
+.separator {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  color: #1A1818;
+  white-space: nowrap;
+}
+
+.rating-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.stars {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.star {
+  font-size: 14px;
+  line-height: normal;
+}
+
+.star.filled {
+  color: #FFD700; /* Gold color for filled stars */
+}
+
+.star.empty {
+  color: #D3D3D3; /* Light gray for empty stars */
+}
+
+.restaurant-address {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  color: #1A1818;
+  width: 100%;
+  margin: 0;
+}
+
+.restaurant-summary {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #7F7F7F;
+  width: 100%;
+  margin: 0;
+}
+
+.maps-link-indicator {
+  margin-top: 0;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.restaurant-card:hover .maps-link-indicator {
+  opacity: 1;
+}
+
+.maps-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: normal;
+  color: #B64809;
+}
+
+/* Bottom chatbox */
+.bottom-chatbox {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #F7EFE0;
+  padding: 16px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* Align to bottom for upward growth */
+  z-index: 10; /* Ensure it stays on top */
+}
+
+.bottom-chatbox .chatbox-container {
+  width: 768px;
+  max-width: calc(100% - 48px);
+  max-height: 500px; /* Max height for upward growth */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Content grows upward from bottom */
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .content-container {
+    width: 90%;
+    max-width: 800px;
+  }
+  
+  .chatbox-container {
+    width: 100%;
+  }
+  
+  .main-title {
+    font-size: 24px;
+  }
+
+  .conversation-container {
+    width: 90%;
+  }
+
+  .bottom-chatbox .chatbox-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 600px) {
+  .pills-container {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .pill {
+    padding: 6px 10px;
+  }
+  
+  .pill-text {
+    font-size: 12px;
+  }
+
+  .response-screen {
+    padding: 24px 16px 0 16px;
+  }
+
+  .bottom-chatbox {
+    padding: 24px 0;
+  }
+
+}
+
+/* City prompts styles - positioned below chatbox */
+.city-prompts-container {
+  margin-top: 16px;
+  width: 800px;
+  max-width: 100%;
+}
+
+.city-prompts-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.city-prompt-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 400;
+  color: #333333; /* Primary text color */
+  text-align: left;
+  padding: 12px 0 12px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Animation states for staggered reveal */
+.prompt-hidden {
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.prompt-visible {
+  opacity: 1;
+  pointer-events: auto;
+  height: auto;
+  padding: 12px 0 12px 20px;
+  margin: 0;
+  animation: promptFadeIn 0.4s ease-out;
+}
+
+@keyframes promptFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.prompt-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prompt-arrow {
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.2s ease;
+  color: #333333; /* Primary text color */
+}
+
+.city-prompt-item:hover .prompt-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.city-prompt-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #D4C4A8; /* Tertiary color */
+}
+
+/* Responsive adjustments for city prompts */
+@media (max-width: 900px) {
+  .city-prompts-container {
+    width: 90%;
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 600px) {
+  .city-prompts-container {
+    width: 90%;
+    margin-top: 16px;
+  }
+  
+  .city-prompt-item {
+    font-size: 13px;
+    padding: 10px 0 10px 16px;
+  }
+  
+  .prompt-arrow {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* No results message styling */
+.no-results-message {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 400;
+  color: #7F7F7F; /* Text/secondary color */
+  line-height: normal;
+}

@@ -1,151 +1,176 @@
-// Restaurant data types based on Google Places API enriched data
+// Restaurant type definitions for Curated by Cynthia
 
 export interface AddressComponent {
   longText: string;
   shortText: string;
   types: string[];
-  languageCode: string;
 }
 
 export interface Location {
   address: string;
   country_code: string;
-  name: string;
+}
+
+export interface Properties {
+  location: Location;
+  google_maps_url?: string;
 }
 
 export interface Geometry {
   coordinates: [number, number]; // [longitude, latitude]
-  type: "Point";
 }
 
 export interface OriginalPlace {
   geometry: Geometry;
-  properties: {
-    date: string;
-    google_maps_url: string;
-    location: Location;
-  };
-  type: "Feature";
+  properties: Properties;
 }
 
 export interface DisplayName {
   text: string;
-  languageCode: string;
+}
+
+export interface PriceRange {
+  startPrice: { units: string };
+  endPrice: { units: string };
+}
+
+export interface OpeningPeriod {
+  open: { day: number; hour: number; minute: number };
+  close: { day: number; hour: number; minute: number };
+}
+
+export interface RegularOpeningHours {
+  periods: OpeningPeriod[];
+  weekdayDescriptions: string[];
+}
+
+export interface GenerativeSummary {
+  overview: { text: string };
 }
 
 export interface ReviewSummary {
-  reviewCount: number;
-  averageRating: number;
-  firstReview?: {
-    author: string;
-    text: string;
-    rating: number;
-    publishTime: string;
-  };
+  text: { text: string };
 }
 
-export interface Photo {
-  name: string;
-  widthPx: number;
-  heightPx: number;
-  authorAttributions: Array<{
-    displayName: string;
-    uri: string;
-    photoUri: string;
-  }>;
-}
-
-export interface GooglePlaceData {
-  name: string;
-  id: string;
-  types: string[];
-  nationalPhoneNumber?: string;
-  internationalPhoneNumber?: string;
-  formattedAddress: string;
-  addressComponents: AddressComponent[];
+export interface GoogleData {
   displayName: DisplayName;
+  name?: string;
+  id?: string;
+  primaryType?: string;
+  types: string[];
   rating?: number;
   userRatingCount?: number;
-  priceLevel?: "PRICE_LEVEL_FREE" | "PRICE_LEVEL_INEXPENSIVE" | "PRICE_LEVEL_MODERATE" | "PRICE_LEVEL_EXPENSIVE" | "PRICE_LEVEL_VERY_EXPENSIVE";
-  websiteUri?: string;
-  businessStatus?: "OPERATIONAL" | "CLOSED_TEMPORARILY" | "CLOSED_PERMANENTLY";
+  priceRange?: PriceRange;
+  regularOpeningHours?: RegularOpeningHours;
+  takeout?: boolean;
+  servesCoffee?: boolean;
+  generativeSummary?: GenerativeSummary;
   reviewSummary?: ReviewSummary;
-  photos?: Photo[];
-  regularOpeningHours?: {
-    openNow: boolean;
-    periods: Array<{
-      open: {
-        day: number;
-        hour: number;
-        minute: number;
-      };
-      close?: {
-        day: number;
-        hour: number;
-        minute: number;
-      };
-    }>;
-    weekdayDescriptions: string[];
-  };
+  addressComponents: AddressComponent[];
+  nationalPhoneNumber?: string;
+  internationalPhoneNumber?: string;
+  formattedAddress?: string;
+  
+  // Meal service flags
+  servesBreakfast?: boolean;
+  servesBrunch?: boolean;
+  servesLunch?: boolean;
+  servesDinner?: boolean;
+  
+  // Food service flags
+  servesVegetarianFood?: boolean;
+  servesDessert?: boolean;
+  
+  // Beverage service flags
+  servesBeer?: boolean;
+  servesWine?: boolean;
+  servesCocktails?: boolean;
+  
+  // Additional metadata
+  editorialSummary?: { text: string };
+  reviews?: Array<{ text: { text: string } }>;
+  weekdayDescriptions?: string[];
 }
 
 export interface Restaurant {
-  original_place: OriginalPlace;
+  // Core identification
   google_place_id: string;
-  google_data: GooglePlaceData;
+  
+  // Location data
+  city: string;
+  neighborhood_extracted: string;
+  specific_type: string;
+  place_classification: string;
+  
+  // Google Places data
+  google_data: GoogleData;
+  original_place: OriginalPlace;
+  
+  // Enrichment metadata
+  enrichment_status?: string;
+  enrichment_date?: string;
+  
+  // Cynthia's curation
+  cynthias_pick?: boolean;
+  
+  // Price display
+  price_display?: string;
 }
 
-export interface RestaurantData {
-  metadata: {
-    processing_date: string;
-    source: string;
-    original_file: string;
-    test_mode: boolean;
-    filtering_mode: string;
-    places_processed: number;
-    places_enriched: number;
-    errors: number;
-    api_calls_made: number;
-    expected_api_calls: number;
-    estimated_cost_usd: number;
-    field_mask_used: string;
-    classification_stats: {
-      restaurant: number;
-      non_restaurant: number;
-      other: number;
-    };
-    places_filtered_out: number;
-    restaurant_breakdown: {
-      restaurants: number;
-      bars: number;
-      cafes: number;
-      other_food: number;
-    };
-    cleaning_mode: string;
-    cleaning_date: string;
-    size_reduction: {
-      removed_fields: string[];
-      kept_fields: string[];
-      reduction_date: string;
-    };
-  };
-  places: Restaurant[];
+// Filter service types
+export interface ExtractedKeywords {
+  // Original query
+  originalQuery?: string;
+  
+  // Location
+  neighborhood?: string;
+  borough?: string;
+  city?: string;
+  
+  // Cuisine/Type
+  cuisineType?: string;
+  cuisineTypeInfo?: { primary: string[], secondary: string[] };
+  
+  // Meal time
+  mealType?: 'breakfast' | 'brunch' | 'lunch' | 'dinner' | 'late-night' | null;
+  
+  // Price preference
+  priceLevel?: 'budget' | 'moderate' | 'upscale' | 'any';
+  
+  // Amenities
+  needsTakeout?: boolean;
+  needsCoffee?: boolean;
+  
+  // Vibes (save for Claude, don't filter on these)
+  vibeKeywords: string[];
 }
 
-// Helper types for filtering and searching
-export type City = "New York City" | "Tokyo" | "Seoul" | "Paris";
+// Legacy types for backward compatibility
+export interface RestaurantStatistics {
+  totalRestaurants: number;
+  averageRating: string;
+  cuisineTypes: number;
+  cities: number;
+}
 
-export interface RestaurantFilter {
-  city?: City;
+export interface FilterOptions {
+  city?: string;
   cuisine?: string;
-  priceLevel?: string;
+  priceLevel?: number;
   minRating?: number;
-  maxRating?: number;
-  isOpenNow?: boolean;
 }
 
 export interface SearchQuery {
   text: string;
-  city?: City;
-  filters?: RestaurantFilter;
+  city?: string;
+  filters?: FilterOptions;
 }
+
+export interface RestaurantFilter {
+  city?: string;
+  cuisine?: string;
+  priceLevel?: number;
+  minRating?: number;
+}
+
+export type City = 'New York City' | 'Tokyo' | 'Seoul' | 'Paris';
