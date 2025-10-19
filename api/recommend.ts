@@ -1,208 +1,42 @@
-// api/recommend.ts - Vercel serverless function with filtering service
-
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import Statsig from "statsig-node";
 
-// We'll load the data dynamically to avoid bundling issues
+// Initialize Statsig server-side client
+let statsigInitialized = false;
 
-// Simple filtering functions (copied from filterService.ts)
-function extractKeywords(query: string) {
+const initializeStatsig = async () => {
+  if (!statsigInitialized) {
+    await Statsig.initialize(
+      "secret-DbvINwRbZkGrethf1bSYq5ZZ12htEQFj5hBiKyT71QY",
+      { environment: { tier: "production" } }
+    );
+    statsigInitialized = true;
+  }
+};
+
+// Helper function to extract cuisine type from search query
+const getCuisineTypeFromQuery = (query: string): string => {
   const lowerQuery = query.toLowerCase();
   
-  // Extract city
-  let city = null;
-  if (lowerQuery.includes('paris')) city = 'paris';
-  else if (lowerQuery.includes('new york') || lowerQuery.includes('nyc')) city = 'nyc';
-  else if (lowerQuery.includes('seoul')) city = 'seoul';
-  else if (lowerQuery.includes('tokyo')) city = 'tokyo';
-  else if (lowerQuery.includes('brooklyn')) city = 'nyc';
+  if (lowerQuery.includes('sushi') || lowerQuery.includes('japanese')) return 'japanese';
+  if (lowerQuery.includes('italian')) return 'italian';
+  if (lowerQuery.includes('chinese')) return 'chinese';
+  if (lowerQuery.includes('korean')) return 'korean';
+  if (lowerQuery.includes('french')) return 'french';
+  if (lowerQuery.includes('mexican')) return 'mexican';
+  if (lowerQuery.includes('thai')) return 'thai';
+  if (lowerQuery.includes('indian')) return 'indian';
+  if (lowerQuery.includes('pizza')) return 'pizza';
+  if (lowerQuery.includes('burger')) return 'burger';
+  if (lowerQuery.includes('steak')) return 'steak';
+  if (lowerQuery.includes('seafood')) return 'seafood';
+  if (lowerQuery.includes('coffee') || lowerQuery.includes('cafe')) return 'cafe';
+  if (lowerQuery.includes('brunch')) return 'brunch';
+  if (lowerQuery.includes('romantic')) return 'romantic';
+  if (lowerQuery.includes("cynthia's favorites")) return 'cynthias_picks';
   
-  // Extract neighborhood
-  let neighborhood = null;
-  const neighborhoodMatch = lowerQuery.match(/(?:in|at|near)\s+([^,\s]+)/);
-  if (neighborhoodMatch) {
-    neighborhood = neighborhoodMatch[1];
-  }
-  
-  // Extract cuisine type
-  let cuisineType = null;
-  const cuisineKeywords = ['coffee', 'pizza', 'sushi', 'italian', 'french', 'korean', 'japanese', 'mexican', 'thai', 'chinese', 'indian', 'brunch', 'breakfast', 'lunch', 'dinner', 'dessert', 'bakery', 'cafe', 'bar', 'wine', 'cocktail', 'seafood', 'steak', 'vegetarian', 'vegan', 'fast food', 'fine dining', 'casual', 'romantic', 'family', 'outdoor', 'rooftop', 'galettes', 'crepes'];
-  
-  for (const keyword of cuisineKeywords) {
-    if (lowerQuery.includes(keyword)) {
-      cuisineType = keyword;
-      break;
-    }
-  }
-  
-  return { city, neighborhood, cuisineType };
-}
-
-function matchesLocation(restaurant: any, keywords: any): boolean {
-  if (!keywords.neighborhood && !keywords.borough && !keywords.city) {
-    return true; // No location filter
-  }
-
-  // Check city match
-  if (keywords.city) {
-    const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
-    
-    switch (keywords.city) {
-      case 'nyc':
-        return address.includes('new york') || address.includes('nyc');
-      case 'tokyo':
-        return address.includes('tokyo') || address.includes('japan');
-      case 'seoul':
-        return address.includes('seoul') || address.includes('korea');
-      case 'paris':
-        return address.includes('paris') || address.includes('france');
-      default:
-        return true;
-    }
-  }
-
-  return false;
-}
-
-function matchesCuisineType(restaurant: any, keywords: any): boolean {
-  if (!keywords.cuisineType) {
-    return true; // No cuisine filter
-  }
-
-  const cuisineType = keywords.cuisineType.toLowerCase();
-  const restaurantTypes = [
-    restaurant.google_data?.primaryType?.toLowerCase(),
-    restaurant.specific_type?.toLowerCase(),
-    ...(restaurant.google_data?.types || []).map((t: string) => t.toLowerCase())
-  ].filter(Boolean);
-
-  // Special handling for specific cuisine types
-  if (cuisineType === 'coffee') {
-    return restaurantTypes.some((type: string) => 
-      type.includes('coffee') || type.includes('cafe')
-    ) || restaurant.google_data?.servesCoffee;
-  }
-
-  if (cuisineType === 'romantic') {
-    const romanticKeywords = ['romantic', 'intimate', 'cozy', 'fine dining', 'upscale'];
-    return romanticKeywords.some(keyword => 
-      restaurantTypes.some((type: string) => type.includes(keyword))
-    );
-  }
-
-  return restaurantTypes.some((type: string) => type.includes(cuisineType));
-}
-
-function calculateQualityScore(restaurant: any): number {
-  const rating = restaurant.google_data?.rating || 0;
-  const reviewCount = restaurant.google_data?.userRatingCount || 0;
-  const baseScore = rating * Math.log10(reviewCount + 1);
-  const cynthiaMultiplier = restaurant.cynthias_pick ? 1.5 : 1.0;
-  return baseScore * cynthiaMultiplier;
-}
-
-async function preFilterRestaurants(query: string) {
-  // For now, use a simple hardcoded dataset to test the functionality
-  // TODO: Load full dataset from file system
-  const restaurants = [
-    {
-      google_data: {
-        displayName: { text: "Don Angie" },
-        rating: 4.5,
-        userRatingCount: 1200,
-        primaryType: "restaurant",
-        types: ["restaurant", "italian"],
-      },
-      original_place: {
-        properties: {
-          location: {
-            address: "103 Greenwich Ave, New York, NY 10014, USA",
-          },
-        },
-      },
-      neighborhood_extracted: "West Village",
-      specific_type: "italian",
-      cynthias_pick: true,
-      price_display: "$$$",
-    },
-    {
-      google_data: {
-        displayName: { text: "L'Artusi" },
-        rating: 4.4,
-        userRatingCount: 800,
-        primaryType: "restaurant",
-        types: ["restaurant", "italian"],
-      },
-      original_place: {
-        properties: {
-          location: {
-            address: "228 W 10th St, New York, NY 10014, USA",
-          },
-        },
-      },
-      neighborhood_extracted: "West Village",
-      specific_type: "italian",
-      cynthias_pick: true,
-      price_display: "$$$",
-    },
-    {
-      google_data: {
-        displayName: { text: "Via Carota" },
-        rating: 4.3,
-        userRatingCount: 600,
-        primaryType: "restaurant",
-        types: ["restaurant", "italian"],
-      },
-      original_place: {
-        properties: {
-          location: {
-            address: "51 Grove St, New York, NY 10014, USA",
-          },
-        },
-      },
-      neighborhood_extracted: "West Village",
-      specific_type: "italian",
-      cynthias_pick: false,
-      price_display: "$$",
-    }
-  ];
-  const keywords = extractKeywords(query);
-  
-  // Special case: "Cynthia's favorites"
-  if (query.toLowerCase().includes("cynthia's favorites") || query.toLowerCase().includes("cynthias favorites")) {
-    let cynthiasPicks = restaurants.filter(restaurant => restaurant.cynthias_pick === true);
-    
-    // Filter by city if specified
-    if (keywords.city) {
-      cynthiasPicks = cynthiasPicks.filter(restaurant => {
-        const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
-        
-        switch (keywords.city) {
-          case 'nyc':
-          case 'new york city':
-            return address.includes('new york') || address.includes('nyc');
-          case 'tokyo':
-            return address.includes('tokyo') || address.includes('japan');
-          case 'seoul':
-            return address.includes('seoul') || address.includes('korea');
-          case 'paris':
-            return address.includes('paris') || address.includes('france');
-          default:
-            return true;
-        }
-      });
-    }
-    
-    return cynthiasPicks.sort((a, b) => calculateQualityScore(b) - calculateQualityScore(a));
-  }
-  
-  // Regular filtering
-  const filteredRestaurants = restaurants.filter(restaurant => {
-    return matchesLocation(restaurant, keywords) && matchesCuisineType(restaurant, keywords);
-  });
-
-  // Sort by quality score
-  return filteredRestaurants.sort((a, b) => calculateQualityScore(b) - calculateQualityScore(a));
-}
+  return 'general';
+};
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Enable CORS
@@ -219,54 +53,409 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { query } = req.body;
+        // Initialize Statsig server-side client
+        await initializeStatsig();
+        
+        const { query, userId = 'api-user' } = req.body;
 
-    if (!query) {
-      return res.status(400).json({ error: 'Query is required' });
+        if (!query || typeof query !== 'string') {
+          return res.status(400).json({ error: 'Query is required' });
+        }
+
+        console.log('[API] Query received:', query);
+
+        // Create Statsig user object
+        const statsigUser = {
+          userID: userId
+        };
+
+        // Try to fetch Dynamic Config from Statsig
+        let cynthiaBoost = 1.5; // Default fallback
+        let maxResults = 10; // Default fallback
+        let statsigConfigFetched = false;
+        let statsigError = 'No error';
+        
+        try {
+          console.log('[Statsig Config] Attempting to fetch Dynamic Config...');
+          const rankingConfig = Statsig.getConfig(statsigUser, 'results_ranking');
+          
+          console.log('[Statsig Config] Config object:', rankingConfig);
+          console.log('[Statsig Config] Config type:', typeof rankingConfig);
+          
+          if (rankingConfig) {
+            cynthiaBoost = rankingConfig.get('cynthias_pick_multiplier', 1.5);
+            maxResults = rankingConfig.get('max_results', 10);
+            statsigConfigFetched = true;
+            console.log('[Statsig Config] Successfully fetched config values');
+          } else {
+            statsigError = 'Config object is null or undefined';
+            console.log('[Statsig Config] Config object is null/undefined');
+          }
+        } catch (error) {
+          statsigError = error instanceof Error ? error.message : 'Unknown error';
+          console.error('[Statsig Config] Error fetching config:', error);
+        }
+        
+        console.log('[Statsig Config] Final values - Cynthia boost:', cynthiaBoost);
+        console.log('[Statsig Config] Final values - Max results:', maxResults);
+        console.log('[Statsig Config] Config fetched:', statsigConfigFetched);
+        console.log('[Statsig Config] Error:', statsigError);
+
+    const apiStartTime = Date.now();
+
+    // Load restaurant data from local enriched file
+    const fs = require('fs');
+    const path = require('path');
+    
+    console.log(`[API] Loading enriched restaurant data from local file`);
+    
+    let restaurants;
+    try {
+      const filePath = path.join(process.cwd(), 'api', 'data', '285_restaurants_enriched.json');
+      const fileContent = fs.readFileSync(filePath, 'utf8');
+      const restaurantData = JSON.parse(fileContent);
+      restaurants = restaurantData.places || restaurantData; // Handle both array and object formats
+      console.log(`[API] Loaded ${restaurants.length} restaurants from blob storage`);
+    } catch (error) {
+      console.error('[API] Failed to load from blob, using fallback data:', error);
+      
+      // Fallback to embedded data if blob fails
+      restaurants = [
+        {
+          google_data: {
+            displayName: { text: "Don Angie" },
+            rating: 4.5,
+            userRatingCount: 1200,
+            primaryType: "restaurant",
+            types: ["restaurant", "italian"]
+          },
+          original_place: {
+            properties: {
+              location: {
+                address: "103 Greenwich Ave, New York, NY 10014, USA",
+                country_code: "US"
+              }
+            },
+            geometry: {
+              coordinates: [-74.0014, 40.7379] as [number, number],
+              type: "Point" as const
+            },
+            type: "Feature" as const
+          },
+          neighborhood_extracted: "West Village",
+          specific_type: "italian",
+          place_classification: "restaurant",
+          enrichment_status: "success",
+          enrichment_date: "2024-01-01T00:00:00Z",
+          cynthias_pick: true,
+          price_display: "$$$",
+          city: "New York City"
+        },
+        {
+          google_data: {
+            displayName: { text: "L'Artusi" },
+            rating: 4.4,
+            userRatingCount: 800,
+            primaryType: "restaurant",
+            types: ["restaurant", "italian"]
+          },
+          original_place: {
+            properties: {
+              location: {
+                address: "228 W 10th St, New York, NY 10014, USA",
+                country_code: "US"
+              }
+            },
+            geometry: {
+              coordinates: [-74.0014, 40.7379] as [number, number],
+              type: "Point" as const
+            },
+            type: "Feature" as const
+          },
+          neighborhood_extracted: "West Village",
+          specific_type: "italian",
+          place_classification: "restaurant",
+          enrichment_status: "success",
+          enrichment_date: "2024-01-01T00:00:00Z",
+          cynthias_pick: true,
+          price_display: "$$$",
+          city: "New York City"
+        },
+        {
+          google_data: {
+            displayName: { text: "Blue Bottle Coffee" },
+            rating: 4.2,
+            userRatingCount: 400,
+            primaryType: "cafe",
+            types: ["cafe", "coffee_shop"],
+            servesCoffee: true
+          },
+          original_place: {
+            properties: {
+              location: {
+                address: "54 Mint St, New York, NY 10013, USA",
+                country_code: "US"
+              }
+            },
+            geometry: {
+              coordinates: [-74.0014, 40.7379] as [number, number],
+              type: "Point" as const
+            },
+            type: "Feature" as const
+          },
+          neighborhood_extracted: "SoHo",
+          specific_type: "cafe",
+          place_classification: "restaurant",
+          enrichment_status: "success",
+          enrichment_date: "2024-01-01T00:00:00Z",
+          cynthias_pick: true,
+          price_display: "$$",
+          city: "New York City"
+        }
+      ];
+      console.log(`[API] Using fallback data with ${restaurants.length} restaurants`);
     }
 
-    console.log('Filtering restaurants for query:', query);
+    // Enhanced filtering logic with tiered ranking
+    const lowerQuery = query.toLowerCase();
     
-    // Use the filtering service
-    const filteredRestaurants = await preFilterRestaurants(query);
+    // Extract city from query
+    let targetCity = null;
+    if (lowerQuery.includes('new york') || lowerQuery.includes('nyc') || lowerQuery.includes('manhattan') || lowerQuery.includes('brooklyn')) {
+      targetCity = 'New York City';
+    } else if (lowerQuery.includes('paris')) {
+      targetCity = 'Paris';
+    } else if (lowerQuery.includes('seoul')) {
+      targetCity = 'Seoul';
+    } else if (lowerQuery.includes('tokyo') || lowerQuery.includes('shibuya')) {
+      targetCity = 'Tokyo';
+    }
     
-    console.log(`Found ${filteredRestaurants.length} restaurants`);
+    console.log(`[API] Detected target city: ${targetCity}`);
+    
+    // Helper function to check if restaurant matches city
+    const matchesCity = (restaurant) => {
+      if (!targetCity) return true;
+      if (targetCity === 'Tokyo') {
+        // Include all Tokyo districts and Shibuya
+        return restaurant.google_data?.postalAddress?.administrativeArea === 'Tokyo' || 
+               restaurant.city === 'Shibuya' ||
+               (restaurant.city && restaurant.city.includes('City') && restaurant.city !== 'New York City');
+      } else {
+        return restaurant.city === targetCity;
+      }
+    };
+    
+    // Helper function to calculate quality score
+    const calculateQualityScore = (restaurant) => {
+      const rating = restaurant.google_data?.rating || 0;
+      const reviewCount = restaurant.google_data?.userRatingCount || 0;
+      const baseScore = rating * Math.log(Math.max(reviewCount, 1));
+      
+      // Apply Cynthia's boost from Statsig config
+      if (restaurant.cynthias_pick) {
+        return baseScore * cynthiaBoost;  // Use variable instead of hardcoded 1.5
+      }
+      return baseScore;
+    };
+    
+    // Helper function to check if restaurant matches cuisine type
+    const matchesCuisineType = (restaurant, cuisineType) => {
+      const primaryType = restaurant.google_data?.primaryType?.toLowerCase();
+      const specificType = restaurant.specific_type?.toLowerCase();
+      const types = restaurant.google_data?.types || [];
+      
+      // Tier 1: Primary type match (highest priority)
+      if (primaryType === cuisineType || specificType === cuisineType) {
+        return { tier: 1, matches: true };
+      }
+      
+      // Tier 2: Types array match (medium priority)
+      const filteredTypes = types.filter(type => 
+        !['establishment', 'point_of_interest', 'store', 'food'].includes(type.toLowerCase())
+      );
+      if (filteredTypes.some(type => type.toLowerCase().includes(cuisineType))) {
+        return { tier: 2, matches: true };
+      }
+      
+      return { tier: 0, matches: false };
+    };
+    
+    // Determine cuisine type from query
+    let cuisineType = null;
+    if (lowerQuery.includes('coffee') || lowerQuery.includes('cafe')) {
+      cuisineType = 'cafe';
+    } else if (lowerQuery.includes('italian')) {
+      cuisineType = 'italian';
+    } else if (lowerQuery.includes('sushi') || lowerQuery.includes('japanese')) {
+      cuisineType = 'japanese';
+    } else if (lowerQuery.includes('chinese')) {
+      cuisineType = 'chinese';
+    } else if (lowerQuery.includes('korean')) {
+      cuisineType = 'korean';
+    } else if (lowerQuery.includes('french')) {
+      cuisineType = 'french';
+    } else if (lowerQuery.includes('mexican')) {
+      cuisineType = 'mexican';
+    } else if (lowerQuery.includes('thai')) {
+      cuisineType = 'thai';
+    } else if (lowerQuery.includes('indian')) {
+      cuisineType = 'indian';
+    } else if (lowerQuery.includes('pizza')) {
+      cuisineType = 'pizza';
+    } else if (lowerQuery.includes('burger')) {
+      cuisineType = 'burger';
+    } else if (lowerQuery.includes('steak')) {
+      cuisineType = 'steak';
+    } else if (lowerQuery.includes('seafood')) {
+      cuisineType = 'seafood';
+    }
+    
+    console.log(`[API] Detected cuisine type: ${cuisineType}`);
+    
+    let filteredRestaurants = [];
+    
+    // Check for "Cynthia's favorites" - special case
+    if (lowerQuery.includes("cynthia's favorites") || lowerQuery.includes("cynthias favorites")) {
+      filteredRestaurants = restaurants.filter(r => {
+        const isCynthiasPick = r.cynthias_pick === true;
+        return isCynthiasPick && matchesCity(r);
+      });
+      console.log(`[API] Filtered to ${filteredRestaurants.length} Cynthia's picks in ${targetCity || 'all cities'}`);
+    }
+    // Apply tiered ranking for cuisine-based queries
+    else if (cuisineType) {
+      const tier1Matches = [];
+      const tier2Matches = [];
+      
+      restaurants.forEach(restaurant => {
+        if (!matchesCity(restaurant)) return;
+        
+        const matchResult = matchesCuisineType(restaurant, cuisineType);
+        if (matchResult.matches) {
+          const qualityScore = calculateQualityScore(restaurant);
+          const restaurantWithScore = { ...restaurant, qualityScore };
+          
+          if (matchResult.tier === 1) {
+            tier1Matches.push(restaurantWithScore);
+          } else if (matchResult.tier === 2) {
+            tier2Matches.push(restaurantWithScore);
+          }
+        }
+      });
+      
+      // Sort each tier by quality score (descending)
+      tier1Matches.sort((a, b) => b.qualityScore - a.qualityScore);
+      tier2Matches.sort((a, b) => b.qualityScore - a.qualityScore);
+      
+      // Combine tiers: Tier 1 first, then Tier 2
+      filteredRestaurants = [...tier1Matches, ...tier2Matches];
+      
+      console.log(`[API] Tier 1 matches: ${tier1Matches.length}, Tier 2 matches: ${tier2Matches.length}`);
+      console.log(`[API] Total filtered to ${filteredRestaurants.length} ${cuisineType} restaurants in ${targetCity || 'all cities'}`);
+    }
+    // If no specific cuisine filter, just filter by city if specified
+    else if (targetCity) {
+      filteredRestaurants = restaurants.filter(matchesCity);
+      console.log(`[API] Filtered to ${filteredRestaurants.length} restaurants in ${targetCity}`);
+    }
+    // If no filters at all, return all restaurants
+    else {
+      filteredRestaurants = restaurants;
+      console.log(`[API] No filters applied, returning all ${filteredRestaurants.length} restaurants`);
+    }
+
+    console.log(`[API] Final filtered to ${filteredRestaurants.length} matches`);
+
+    // Log server-side API performance event
+    const apiProcessingTime = Date.now() - apiStartTime;
+    // Temporarily disabled Statsig logging
+    // statsigClient.logEvent('api_request_completed', statsigUser, {
+    //   query: query,
+    //   results_count: filteredRestaurants.length.toString(),
+    //   processing_time_ms: apiProcessingTime.toString(),
+    //   has_results: (filteredRestaurants.length > 0).toString(),
+    //   timestamp: new Date().toISOString()
+    // });
 
     if (filteredRestaurants.length === 0) {
+      // Log no results event
+      // Temporarily disabled Statsig logging
+      // statsigClient.logEvent('api_no_results', statsigUser, {
+      //   query: query,
+      //   processing_time_ms: apiProcessingTime.toString(),
+      //   timestamp: new Date().toISOString()
+      // });
+
       return res.status(200).json({
         recommendations: [],
-        summary: "I couldn't find any restaurants matching your criteria. Try broadening your search!",
+        summary: "No spots found matching your criteria. Try a different search!",
         usedClaude: false,
       });
     }
 
-    // Return top 10 results with simple formatting
-    const topResults = filteredRestaurants.slice(0, 10).map(restaurant => ({
-      restaurantName: restaurant.google_data?.displayName?.text || 'Unknown Restaurant',
-      address: restaurant.original_place?.properties?.location?.address || 'Address not available',
-      neighborhood: restaurant.neighborhood_extracted || '',
-      rating: restaurant.google_data?.rating || 0,
-      reviewCount: restaurant.google_data?.userRatingCount || 0,
-      priceRange: restaurant.price_display || 'N/A',
-      cuisineType: restaurant.specific_type || '',
-      cynthiasPick: restaurant.cynthias_pick || false,
-      reason: `Highly rated ${restaurant.specific_type || 'restaurant'} in ${restaurant.neighborhood_extracted || 'this area'}`,
-      highlights: [
-        `${restaurant.google_data?.rating || 0}⭐ (${restaurant.google_data?.userRatingCount || 0} reviews)`,
-        restaurant.specific_type || 'Restaurant',
-        restaurant.price_display || 'Price varies'
-      ],
-      matchScore: Math.round(calculateQualityScore(restaurant)),
-    }));
+    // Return top results based on Statsig config
+    const topResults = filteredRestaurants.slice(0, maxResults);  // Use variable instead of hardcoded 10
 
-    return res.status(200).json({
-      recommendations: topResults,
-      summary: `Found ${topResults.length} great restaurants for you!`,
-      usedClaude: false,
-    });
+    // Log successful API response
+    // Temporarily disabled Statsig logging
+    // statsigClient.logEvent('api_success', statsigUser, {
+    //   query: query,
+    //   results_returned: topResults.length.toString(),
+    //   total_matches: filteredRestaurants.length.toString(),
+    //   processing_time_ms: apiProcessingTime.toString(),
+    //   timestamp: new Date().toISOString()
+    // });
+
+    // Log restaurant search event using the correct Statsig format
+    // Temporarily disabled Statsig logging
+    // statsigClient.logEvent(
+    //   statsigUser,
+    //   "restaurant_search_completed",
+    //   topResults.length,
+    //   {
+    //     search_query: query,
+    //     city: query.toLowerCase().includes(' in ') ? query.split(' in ')[1] : 'unknown',
+    //     cuisine_type: getCuisineTypeFromQuery(query),
+    //     results_found: topResults.length.toString(),
+    //     cynthias_picks_count: topResults.filter(r => r.cynthias_pick).length.toString(),
+    //     processing_time_ms: apiProcessingTime.toString()
+    //   }
+    // );
+
+        return res.status(200).json({
+          recommendations: topResults,
+          summary: `Curated ${topResults.length} spots just for you`,
+          usedClaude: false,
+          debug: {
+            cynthiaBoost,
+            maxResults,
+            statsigConfigFetched,
+            statsigClientInitialized: statsigInitialized,
+            errorMessage: statsigError
+          }
+        });
 
   } catch (error: any) {
-    console.error('Error:', error);
-    return res.status(500).json({ error: error.message });
+    console.error('[API] Error:', error);
+    
+    // Log server-side error event
+    // Temporarily disabled Statsig logging
+    // try {
+    //   const statsigClient = await initializeStatsig();
+    //   const errorUser = { userID: 'api-user', customIDs: {}, custom: {}, privateAttributes: {}, email: undefined, ip: undefined, userAgent: undefined, country: undefined, locale: undefined, appVersion: undefined };
+    //   statsigClient.logEvent('api_error', errorUser, {
+    //     error_message: error.message || 'Unknown error',
+    //     error_type: error.name || 'Error',
+    //     timestamp: new Date().toISOString()
+    //   });
+    // } catch (statsigError) {
+    //   console.error('[API] Failed to log error to Statsig:', statsigError);
+    // }
+    
+    return res.status(500).json({ 
+      error: 'Internal server error',
+      details: error.message 
+    });
   }
 }
