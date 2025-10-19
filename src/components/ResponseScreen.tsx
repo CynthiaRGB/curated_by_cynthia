@@ -1,12 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useStatsigClient } from '@statsig/react-bindings';
 import { Restaurant, City } from '../types/restaurant';
 import { TypewriterText } from './TypewriterText';
 import { AnimatedRestaurantCards } from './AnimatedRestaurantCards';
 
 // BotResponse component to coordinate typewriter and restaurant card timing
-const BotResponse: React.FC<{ text: string; restaurants?: Restaurant[] }> = ({ 
+const BotResponse: React.FC<{ 
+  text: string; 
+  restaurants?: Restaurant[];
+  searchQuery?: string;
+  searchResultsTimestamp?: number;
+  originalPromptText?: string | null;
+  promptClickTimestamp?: number | null;
+  isLoading?: boolean;
+}> = ({ 
   text, 
-  restaurants 
+  restaurants,
+  searchQuery,
+  searchResultsTimestamp,
+  originalPromptText,
+  promptClickTimestamp,
+  isLoading = false
 }) => {
   const [showRestaurantCards, setShowRestaurantCards] = useState(false);
 
@@ -16,18 +30,30 @@ const BotResponse: React.FC<{ text: string; restaurants?: Restaurant[] }> = ({
 
   return (
     <div className="response-content">
-      <p className="response-text">
-        <TypewriterText 
-          text={text} 
-          onComplete={handleTypewriterComplete}
-        />
-      </p>
+      <div className="response-text">
+        {isLoading ? (
+          // Show loading state like Google Gemini with AI icon
+          <div className="flex items-center gap-2">
+            <div className="ai-icon">✨</div>
+            <span className="loading-text">{text}</span>
+          </div>
+        ) : (
+          <TypewriterText 
+            text={text} 
+            onComplete={handleTypewriterComplete}
+          />
+        )}
+      </div>
       
       {/* Show animated restaurant cards only after typewriter completes */}
-      {restaurants && restaurants.length > 0 && showRestaurantCards && (
+      {restaurants && restaurants.length > 0 && showRestaurantCards && !isLoading && (
         <AnimatedRestaurantCards 
           restaurants={restaurants} 
-          delay={200} 
+          delay={200}
+          searchQuery={searchQuery}
+          searchResultsTimestamp={searchResultsTimestamp}
+          originalPromptText={originalPromptText || undefined}
+          promptClickTimestamp={promptClickTimestamp || undefined}
         />
       )}
     </div>
@@ -40,6 +66,7 @@ interface Message {
   isUser: boolean;
   timestamp: number;
   restaurants?: Restaurant[]; // Add restaurants to bot messages
+  isLoading?: boolean; // Loading state for bot messages
 }
 
 interface ResponseScreenProps {
@@ -49,6 +76,10 @@ interface ResponseScreenProps {
   onBackToSearch: () => void;
   onSendMessage?: (message: string, city?: City) => void;
   onNewResults?: (restaurants: Restaurant[], query: string) => void;
+  searchQuery?: string; // Add search query for event logging
+  originalPromptText?: string | null; // Original prompt text if search came from prompt
+  promptClickTimestamp?: number | null; // When the prompt was clicked
+  isLoading?: boolean; // Loading state for new searches
 }
 
 const CITIES: City[] = ['Tokyo', 'New York City', 'Paris', 'Seoul'];
@@ -60,18 +91,46 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   onBackToSearch,
   onSendMessage,
   onNewResults,
+  searchQuery = userPrompt, // Default to userPrompt if searchQuery not provided
+  originalPromptText = null,
+  promptClickTimestamp = null,
+  isLoading: isExternalLoading = false,
 }) => {
+  const { client } = useStatsigClient();
   const [message, setMessage] = useState('');
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [conversation, setConversation] = useState<Message[]>([
-    { id: 'user-1', text: userPrompt, isUser: true, timestamp: Date.now() },
-    { id: 'bot-1', text: botResponse, isUser: false, timestamp: Date.now() + 1, restaurants: restaurants }
-  ]);
+  const [isLocalLoading, setIsLocalLoading] = useState(false);
+  const [hasSelectedCityInSession, setHasSelectedCityInSession] = useState(false);
+  const [conversation, setConversation] = useState<Message[]>(() => {
+    const messages: Message[] = [
+      { id: 'user-1', text: userPrompt, isUser: true, timestamp: Date.now() }
+    ];
+    
+    if (isExternalLoading) {
+      // Show loading state like Google Gemini
+      messages.push({
+        id: 'bot-loading',
+        text: 'Curating the best spots for you...',
+        isUser: false,
+        timestamp: Date.now() + 1,
+        isLoading: true
+      });
+    } else {
+      messages.push({
+        id: 'bot-1',
+        text: botResponse,
+        isUser: false,
+        timestamp: Date.now() + 1,
+        restaurants: restaurants
+      });
+    }
+    
+    return messages;
+  });
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = () => {
-    if ((message.trim() || selectedCity) && !isLoading) {
+    if ((message.trim() || selectedCity) && !isLocalLoading) {
       const newMessage = message.trim() || `Recommend me restaurants in ${selectedCity}`;
       
       // Add user message to conversation
@@ -104,7 +163,17 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
 
   const handlePillClick = (city: City) => {
     console.log('ResponseScreen - Pill clicked:', city);
+    
+    // Log city_selected event with comprehensive data
+    client.logEvent("city_selected", city, {
+      city: city,
+      selection_method: "button",
+      is_first_selection: (!hasSelectedCityInSession).toString(),
+      timestamp: new Date().toISOString()
+    });
+    
     setSelectedCity(city);
+    setHasSelectedCityInSession(true); // Mark that user has selected a city in this session
     
     // Add user message to conversation
     const userMessage: Message = {
@@ -131,7 +200,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
     }
   };
 
-  const isReadyToSubmit = (message.trim().length > 0 || selectedCity) && !isLoading;
+  const isReadyToSubmit = (message.trim().length > 0 || selectedCity) && !isLocalLoading;
 
   // Auto-resize textarea based on content
   useEffect(() => {
@@ -156,7 +225,12 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
               /* Bot response */
               <BotResponse 
                 text={msg.text} 
-                restaurants={msg.restaurants} 
+                restaurants={msg.restaurants}
+                searchQuery={searchQuery}
+                searchResultsTimestamp={msg.timestamp}
+                originalPromptText={originalPromptText}
+                promptClickTimestamp={promptClickTimestamp}
+                isLoading={msg.isLoading}
               />
             )}
           </div>
@@ -183,7 +257,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
                 }}
                 placeholder="Ask for more recommendations..."
                 className="text-input"
-                disabled={isLoading}
+                disabled={isLocalLoading}
                 rows={1}
               />
             </div>

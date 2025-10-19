@@ -84,6 +84,31 @@
   color: #7F7F7F;
 }
 
+.text-input.dynamic-placeholder::placeholder {
+  color: #6B7280; /* Secondary color for dynamic placeholder */
+  font-weight: 500;
+}
+
+/* Loading state styles like Google Gemini */
+.ai-icon {
+  font-size: 16px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.loading-text {
+  color: #374151;
+  font-weight: 400;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 .text-input:disabled {
   opacity: 0.5;
   cursor: not-allowed;

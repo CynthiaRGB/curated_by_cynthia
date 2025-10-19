@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useStatsigClient } from '@statsig/react-bindings';
 import { City } from '../types/restaurant';
 
 interface ChatboxProps {
@@ -39,9 +40,13 @@ export const Chatbox: React.FC<ChatboxProps> = ({
   onSendMessage,
   isLoading = false,
 }) => {
+  const { client } = useStatsigClient();
   const [message, setMessage] = useState('');
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [visiblePrompts, setVisiblePrompts] = useState<number[]>([]);
+  const [hasSelectedCityInSession, setHasSelectedCityInSession] = useState(false);
+  const [hasClickedPromptInSession, setHasClickedPromptInSession] = useState(false);
+  const [hoveredPrompt, setHoveredPrompt] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = () => {
@@ -53,20 +58,57 @@ export const Chatbox: React.FC<ChatboxProps> = ({
   };
 
   const handlePillClick = (city: City) => {
+    // Log city_selected event with comprehensive data
+    client.logEvent("city_selected", city, {
+      city: city,
+      selection_method: "button",
+      is_first_selection: (!hasSelectedCityInSession).toString(),
+      timestamp: new Date().toISOString()
+    });
+    
     setSelectedCity(city);
     setVisiblePrompts([]); // Reset visible prompts
+    setHasSelectedCityInSession(true); // Mark that user has selected a city in this session
     // Don't automatically navigate - show prompts instead
   };
 
   const handlePromptClick = (prompt: string) => {
+    // Find the position of the prompt in the current city's prompts
+    const currentCityPrompts = selectedCity ? CITY_PROMPTS[selectedCity] : [];
+    const promptPosition = currentCityPrompts.findIndex(p => p === prompt) + 1; // 1-indexed
+    
+    // Log suggested_prompt_clicked event with comprehensive data
+    client.logEvent("suggested_prompt_clicked", prompt, {
+      prompt_text: prompt,
+      city: selectedCity || 'Unknown',
+      prompt_position: promptPosition.toString(),
+      is_first_prompt_click: (!hasClickedPromptInSession).toString(),
+      timestamp: new Date().toISOString()
+    });
+    
+    // Mark that user has clicked a prompt in this session
+    setHasClickedPromptInSession(true);
+    
+    // Store the original prompt text for tracking purposes
+    // We'll pass this through the search flow to track if it leads to restaurant clicks
+    const fullPromptText = selectedCity ? `${prompt} in ${selectedCity}` : prompt;
+    
     // Send the prompt as the message
-    onSendMessage(prompt, selectedCity || undefined);
+    onSendMessage(fullPromptText, selectedCity || undefined);
     setMessage('');
     setSelectedCity(null);
   };
 
 
   const isReadyToSubmit = message.trim().length > 0 && !isLoading;
+
+  // Generate dynamic placeholder text
+  const getPlaceholderText = () => {
+    if (selectedCity && hoveredPrompt) {
+      return `${hoveredPrompt} in ${selectedCity}`;
+    }
+    return "Recommend me restaurants in ...";
+  };
 
   // Auto-resize textarea based on content
   useEffect(() => {
@@ -114,8 +156,8 @@ export const Chatbox: React.FC<ChatboxProps> = ({
                   handleSubmit();
                 }
               }}
-              placeholder="Recommend me restaurants in ..."
-              className="text-input"
+              placeholder={getPlaceholderText()}
+              className={`text-input ${selectedCity && hoveredPrompt ? 'dynamic-placeholder' : ''}`}
               disabled={isLoading}
               autoFocus
               rows={1}
@@ -158,6 +200,8 @@ export const Chatbox: React.FC<ChatboxProps> = ({
                 key={index}
                 className={`city-prompt-item ${visiblePrompts.includes(index) ? 'prompt-visible' : 'prompt-hidden'}`}
                 onClick={() => handlePromptClick(prompt)}
+                onMouseEnter={() => setHoveredPrompt(prompt)}
+                onMouseLeave={() => setHoveredPrompt(null)}
               >
                 <div className="prompt-text">
                   <span>{prompt}</span>
