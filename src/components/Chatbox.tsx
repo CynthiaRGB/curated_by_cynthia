@@ -51,11 +51,17 @@ export const Chatbox: React.FC<ChatboxProps> = ({
 
   const handleSubmit = () => {
     if ((message.trim() || selectedCity) && !isLoading) {
-      // If there's a message and a selected city, append the city to the message
       let fullMessage = message.trim();
-      if (fullMessage && selectedCity) {
+      
+      // If no message but city is selected, use the placeholder text
+      if (!fullMessage && selectedCity) {
+        fullMessage = `Recommend me restaurants in ${selectedCity}`;
+      }
+      // If there's a message and a selected city, append the city to the message
+      else if (fullMessage && selectedCity) {
         fullMessage = `${fullMessage} in ${selectedCity}`;
       }
+      
       onSendMessage(fullMessage, selectedCity || undefined);
       setMessage('');
       setSelectedCity(null);
