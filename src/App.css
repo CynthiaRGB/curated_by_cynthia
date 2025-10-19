@@ -496,11 +496,8 @@
 
 /* City prompts styles - positioned below chatbox */
 .city-prompts-container {
-  margin-top: 16px;
   width: 100%;
   max-width: 798px;
-  padding: 0 24px;
-  box-sizing: border-box;
 }
 
 .city-prompts-list {
@@ -581,9 +578,6 @@
 
 /* Responsive adjustments for city prompts */
 @media (max-width: 600px) {
-  .city-prompts-container {
-    padding: 0 16px;
-  }
   
   .city-prompt-item {
     font-size: 13px;
