@@ -113,25 +113,24 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
             {restaurant.google_data.displayName.text}
           </h3>
           <div className="restaurant-details">
-            <div className="restaurant-details-row">
-              <span className="cuisine">
-                {restaurant.google_data.types[0] 
-                  ? restaurant.google_data.types[0]
-                      .split('_')
-                      .map(word => word === 'restaurant' ? 'restaurant' : word.charAt(0).toUpperCase() + word.slice(1))
-                      .join(' ')
-                  : 'N/A'
-                }
-              </span>
-              <span className="separator">·</span>
-              <span className="neighborhood">
-                {restaurant.neighborhood_extracted || 'N/A'}
-              </span>
-              <span className="separator">·</span>
-              <span className="price">
-                {restaurant.price_display || 'N/A'}
-              </span>
-            </div>
+            <span className="cuisine">
+              {restaurant.google_data.types[0] 
+                ? restaurant.google_data.types[0]
+                    .split('_')
+                    .map(word => word === 'restaurant' ? 'restaurant' : word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ')
+                : 'N/A'
+              }
+            </span>
+            <span className="separator">·</span>
+            <span className="neighborhood">
+              {restaurant.neighborhood_extracted || 'N/A'}
+            </span>
+            <span className="separator">·</span>
+            <span className="price">
+              {restaurant.price_display || 'N/A'}
+            </span>
+            <span className="separator">·</span>
             <div className="rating-container">
               <span className="rating">{restaurant.google_data.rating || 0}</span>
               <div className="stars">

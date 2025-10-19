@@ -341,6 +341,7 @@
   gap: 8px;
   align-items: center;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .cuisine, .neighborhood, .price, .rating {
@@ -350,6 +351,7 @@
   line-height: normal;
   color: #1A1818;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .separator {
@@ -359,12 +361,15 @@
   line-height: normal;
   color: #1A1818;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .rating-container {
   display: flex;
   gap: 8px;
   align-items: center;
+  flex-shrink: 0;
+  min-width: fit-content;
 }
 
 .stars {
