@@ -131,3 +131,4 @@ export interface ExtractedKeywords {
   requiresInstagrammable?: boolean;
   requiresMichelin?: boolean;
 }
+export type City = 'New York City' | 'Tokyo' | 'Paris' | 'Seoul';
