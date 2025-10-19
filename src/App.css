@@ -47,7 +47,6 @@
   max-height: 500px;
   box-sizing: border-box;
   overflow-y: auto;
-  margin: 0 24px;
 }
 
 /* Chatbox content wrapper */
