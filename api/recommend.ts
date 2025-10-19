@@ -1,6 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Statsig from "statsig-node";
-// ✨ NEW: Import the filter service
 import { preFilterRestaurants } from './services/filterService';
 
 // Initialize Statsig server-side client
@@ -105,35 +104,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const apiStartTime = Date.now();
 
-    // ✨ CHANGED: Use the filter service instead of inline filtering
+    // Use the filter service to process query
     console.log('[API] Using filter service to process query');
     const filteredRestaurants = preFilterRestaurants(query);
     console.log(`[API] Filter service returned ${filteredRestaurants.length} restaurants`);
-
-    // ❌ REMOVED: All the manual filtering logic (lines 99-270 in your original)
-    // The filterService.ts now handles:
-    // - Loading restaurant data
-    // - City detection and filtering
-    // - Cuisine type matching with tiered ranking
-    // - Cynthia's picks filtering
-    // - Quality score calculation
-    // - Sorting by tier and quality
 
     // Log server-side API performance event
     const apiProcessingTime = Date.now() - apiStartTime;
 
     if (filteredRestaurants.length === 0) {
-      // Log no results event
-      // Temporarily disabled Statsig logging
-      // statsigClient.logEvent('api_no_results', statsigUser, {
-      //   query: query,
-      //   processing_time_ms: apiProcessingTime.toString(),
-      //   timestamp: new Date().toISOString()
-      // });
-
       return res.status(200).json({
         recommendations: [],
-        summary: "No spots found matching your criteria. Try a different search!",
         summary: "No spots found matching your criteria. Try a different search!",
         usedClaude: false,
       });
@@ -144,11 +125,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Log restaurant search event using the correct Statsig format
     try {
-      await Statsig.logEvent({
-        eventName: 'restaurant_search_completed',
-        value: topResults.length,
-        user: statsigUser,
-        metadata: {
+      Statsig.logEvent(
+        statsigUser,
+        'restaurant_search_completed',
+        topResults.length,
+        {
           search_query: query,
           city: query.toLowerCase().includes(' in ') ? query.split(' in ')[1] : 'unknown',
           cuisine_type: getCuisineTypeFromQuery(query),
@@ -156,7 +137,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           cynthias_picks_count: topResults.filter(r => r.cynthias_pick).length.toString(),
           processing_time_ms: apiProcessingTime.toString()
         }
-      });
+      );
     } catch (statsigLogError) {
       console.error('[Statsig] Error logging event:', statsigLogError);
     }
@@ -179,15 +160,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     
     // Log server-side error event
     try {
-      await Statsig.logEvent({
-        eventName: 'api_error',
-        user: { userID: 'api-user' },
-        metadata: {
+      Statsig.logEvent(
+        { userID: 'api-user' },
+        'api_error',
+        null,
+        {
           error_message: error.message || 'Unknown error',
           error_type: error.name || 'Error',
           timestamp: new Date().toISOString()
         }
-      });
+      );
     } catch (statsigError) {
       console.error('[API] Failed to log error to Statsig:', statsigError);
     }
