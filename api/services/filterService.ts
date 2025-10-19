@@ -2,18 +2,10 @@
 // Pre-filters restaurants before sending to Claude API for smart ranking
 
 import { Restaurant, ExtractedKeywords } from '../../src/types/restaurant';
-import { readFileSync } from 'fs';
-import { join } from 'path';
-
-// Load restaurant data using fs (works in all Node versions)
-const restaurantDataRaw = readFileSync(
-  join(process.cwd(), 'api', 'data', '285_restaurants_enriched.json'),
-  'utf-8'
-);
-const restaurantData = JSON.parse(restaurantDataRaw);
+import { restaurantData } from '../data/restaurantData';
 
 // Get restaurants from the data
-const restaurants: Restaurant[] = (restaurantData as any).places || restaurantData || [];
+const restaurants: Restaurant[] = (restaurantData as any).places || (restaurantData as any) || [];
 
 // Cuisine types to match against
 const CUISINE_TYPES = [
