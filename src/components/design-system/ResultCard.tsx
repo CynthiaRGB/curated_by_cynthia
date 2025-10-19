@@ -56,6 +56,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
     <div
       className={`${baseClasses} ${stateClasses} p-4 flex flex-col gap-2 ${className}`}
       onClick={onClick}
+      style={{ overflow: 'hidden' }}
     >
       {isSpecial && (
         <div className="flex items-center gap-2 font-bold text-xl">
@@ -70,13 +71,13 @@ export const ResultCard: React.FC<ResultCardProps> = ({
         </h3>
       )}
       
-      <div className="flex items-center gap-2 text-base text-[#1A1818]">
-        <span>{restaurant.google_data.types[0] || 'Restaurant'}</span>
+      <div className="flex items-center gap-2 text-base text-[#1A1818] flex-wrap">
+        <span className="whitespace-nowrap">{restaurant.google_data.types[0] || 'Restaurant'}</span>
         <span>·</span>
-        <span>{formatPriceLevel(restaurant.google_data.priceLevel)}</span>
+        <span className="whitespace-nowrap">{formatPriceLevel(restaurant.google_data.priceLevel)}</span>
         <span>·</span>
         <div className="flex items-center gap-1">
-          <span>{restaurant.google_data.rating?.toFixed(1) || 'N/A'}</span>
+          <span className="whitespace-nowrap">{restaurant.google_data.rating?.toFixed(1) || 'N/A'}</span>
           <div className="flex">
             {renderStars(restaurant.google_data.rating || 0).map((star, index) => (
               <span key={index} className="text-sm">{star}</span>
@@ -85,7 +86,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
         </div>
       </div>
       
-      <div className="text-base text-[#1A1818]">
+      <div className="text-base text-[#1A1818] break-words">
         {restaurant.google_data.formattedAddress}
       </div>
     </div>
