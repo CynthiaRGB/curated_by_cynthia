@@ -91,7 +91,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     try {
       // All filtering now happens on the backend
       console.log('Calling backend for restaurant filtering...');
-      
+      console.log('🔥 ABOUT TO FETCH - CHECK NETWORK TAB NOW!'); 
+
       const response = await fetch('/api/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
