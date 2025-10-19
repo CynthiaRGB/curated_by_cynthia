@@ -35,6 +35,14 @@
   min-width: 100%;
 }
 
+/* Chatbox wrapper - parent container for chatbox and city prompts */
+.chatbox-wrapper {
+  width: 100%;
+  max-width: 798px;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Chatbox container */
 .chatbox-container {
   background-color: #FCF6E8;
@@ -42,7 +50,6 @@
   border-radius: 12px;
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.08);
   width: 100%;
-  max-width: 798px;
   max-height: 500px;
   box-sizing: border-box;
   overflow-y: auto;
@@ -496,8 +503,8 @@
 
 /* City prompts styles - positioned below chatbox */
 .city-prompts-container {
+  margin-top: 16px;
   width: 100%;
-  max-width: 798px;
 }
 
 .city-prompts-list {

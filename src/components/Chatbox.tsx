@@ -142,7 +142,7 @@ export const Chatbox: React.FC<ChatboxProps> = ({
   }, [selectedCity]);
 
   return (
-    <>
+    <div className="chatbox-wrapper">
       <div className="chatbox-container">
         <div className="chatbox-content">
           <div className="text-input-area">
@@ -225,6 +225,6 @@ export const Chatbox: React.FC<ChatboxProps> = ({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
