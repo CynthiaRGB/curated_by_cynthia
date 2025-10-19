@@ -130,5 +130,6 @@ export interface ExtractedKeywords {
   // NEW: Special requirements
   requiresInstagrammable?: boolean;
   requiresMichelin?: boolean;
+  requiresCynthiasPick?: boolean;
 }
 export type City = 'New York City' | 'Tokyo' | 'Paris' | 'Seoul';

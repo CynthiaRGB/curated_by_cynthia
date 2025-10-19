@@ -2,7 +2,7 @@
 // Pre-filters restaurants before sending to Claude API for smart ranking
 
 import { Restaurant, ExtractedKeywords } from '../../src/types/restaurant';
-import { restaurantData } from '../data/285_review_subtracted.js';
+import { restaurantData } from '../data/285_with_photo.js';
 
 // Get restaurants from the data
 const restaurants: Restaurant[] = (restaurantData as any).places || (restaurantData as any) || [];
@@ -72,7 +72,8 @@ export function extractKeywords(query: string): ExtractedKeywords {
     occasionType: null,
     noisePreference: null,
     requiresInstagrammable: false,
-    requiresMichelin: false
+    requiresMichelin: false,
+    requiresCynthiasPick: false
   };
 
   // Extract location using regex - only match known locations
@@ -186,6 +187,11 @@ export function extractKeywords(query: string): ExtractedKeywords {
     keywords.requiresMichelin = true;
   }
 
+  // Check for Cynthia's favorites
+  if (lowerQuery.includes("cynthia's favorites") || lowerQuery.includes("cynthias favorites")) {
+    keywords.requiresCynthiasPick = true;
+  }
+
   console.log('Extracted keywords:', keywords);
   return keywords;
 }
@@ -266,6 +272,8 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
     return true; // No location filter
   }
 
+  let matches = false;
+
   // Check neighborhood match
   if (keywords.neighborhood) {
     const neighborhood = restaurant.neighborhood_extracted?.toLowerCase() || '';
@@ -276,7 +284,7 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
     if (neighborhood.includes(neighborhoodKeyword) ||
         address.includes(neighborhoodKeyword) ||
         name.includes(neighborhoodKeyword)) {
-      return true;
+      matches = true;
     }
   }
 
@@ -289,7 +297,7 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
     if (boroughComponent) {
       const borough = boroughComponent.longText.toLowerCase();
       if (borough.includes(keywords.borough.toLowerCase())) {
-        return true;
+        matches = true;
       }
     }
   }
@@ -300,29 +308,33 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
     
     switch (keywords.city) {
       case 'nyc':
-        if (address.includes('new york') || address.includes('nyc')) {
-          return true;
+        // For NYC, check if it's in any NYC borough (Manhattan, Brooklyn, Queens, Bronx, Staten Island)
+        if (address.includes('new york') || address.includes('nyc') || 
+            address.includes('manhattan') || address.includes('brooklyn') || 
+            address.includes('queens') || address.includes('bronx') || 
+            address.includes('staten island')) {
+          matches = true;
         }
         break;
       case 'tokyo':
         if (address.includes('tokyo') || address.includes('japan')) {
-          return true;
+          matches = true;
         }
         break;
       case 'seoul':
         if (address.includes('seoul') || address.includes('korea')) {
-          return true;
+          matches = true;
         }
         break;
       case 'paris':
         if (address.includes('paris') || address.includes('france')) {
-          return true;
+          matches = true;
         }
         break;
     }
   }
 
-  return false;
+  return matches;
 }
 
 /**
@@ -508,6 +520,17 @@ function matchesMichelin(restaurant: Restaurant, keywords: ExtractedKeywords): b
 }
 
 /**
+ * NEW: Check if restaurant is one of Cynthia's picks
+ */
+function matchesCynthiasPick(restaurant: Restaurant, keywords: ExtractedKeywords): boolean {
+  if (!keywords.requiresCynthiasPick) {
+    return true;
+  }
+
+  return restaurant.cynthias_pick === true;
+}
+
+/**
  * Pre-filter restaurants based on natural language query
  * Returns filtered and sorted restaurants using enriched tags
  */
@@ -535,7 +558,8 @@ export function preFilterRestaurants(query: string): Restaurant[] {
                matchesOccasion(restaurant, keywords) &&       // NEW: Occasion filtering
                matchesNoiseLevel(restaurant, keywords) &&     // NEW: Noise filtering
                matchesInstagrammable(restaurant, keywords) && // NEW: Instagrammable filtering
-               matchesMichelin(restaurant, keywords);         // NEW: Michelin filtering
+               matchesMichelin(restaurant, keywords) &&       // NEW: Michelin filtering
+               matchesCynthiasPick(restaurant, keywords);     // NEW: Cynthia's pick filtering
       } catch (error) {
         console.warn('Error filtering restaurant:', error);
         return false;
