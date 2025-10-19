@@ -1,11 +1,11 @@
 // Client-side filter service for Curated by Cynthia
-// Pre-filters restaurants using enriched tags before sending to Claude API for smart ranking
+// Pre-filters restaurants before sending to Claude API for smart ranking
 
 import { Restaurant, ExtractedKeywords } from '../../src/types/restaurant';
-import restaurantData from '../data/285_restaurants_enriched.json';
+import restaurantData from '../data/285_restaurants_enriched.json' assert { type: 'json' };
 
 // Get restaurants from the data
-const restaurants: Restaurant[] = (restaurantData as any);
+const restaurants: Restaurant[] = (restaurantData as any).places || restaurantData || [];
 
 // Cuisine types to match against
 const CUISINE_TYPES = [
