@@ -51,7 +51,12 @@ export const Chatbox: React.FC<ChatboxProps> = ({
 
   const handleSubmit = () => {
     if ((message.trim() || selectedCity) && !isLoading) {
-      onSendMessage(message.trim(), selectedCity || undefined);
+      // If there's a message and a selected city, append the city to the message
+      let fullMessage = message.trim();
+      if (fullMessage && selectedCity) {
+        fullMessage = `${fullMessage} in ${selectedCity}`;
+      }
+      onSendMessage(fullMessage, selectedCity || undefined);
       setMessage('');
       setSelectedCity(null);
     }
@@ -100,12 +105,15 @@ export const Chatbox: React.FC<ChatboxProps> = ({
   };
 
 
-  const isReadyToSubmit = message.trim().length > 0 && !isLoading;
+  const isReadyToSubmit = (message.trim().length > 0 || selectedCity) && !isLoading;
 
   // Generate dynamic placeholder text
   const getPlaceholderText = () => {
     if (selectedCity && hoveredPrompt) {
       return `${hoveredPrompt} in ${selectedCity}`;
+    }
+    if (selectedCity) {
+      return `Recommend me restaurants in ${selectedCity}`;
     }
     return "Recommend me restaurants in ...";
   };
