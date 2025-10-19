@@ -205,20 +205,16 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   return (
     <div className="content-container">
       <h1 className="main-title">Dining spots, curated by Cynthia</h1>
-      <div className={`${className}`}>
-        <Chatbox 
-          onSendMessage={handleSendMessage}
-          isLoading={isLoading}
-        />
+      <Chatbox 
+        onSendMessage={handleSendMessage}
+        isLoading={isLoading}
+      />
 
-        {restaurants.length === 0 && !isLoading && lastQuery && (
-          <div className="text-center py-8">
-            <div className="no-results-message">
-              No spots found for "{lastQuery}". Try a different search!
-            </div>
-          </div>
-        )}
-      </div>
+      {restaurants.length === 0 && !isLoading && lastQuery && (
+        <div className="no-results-message">
+          No spots found for "{lastQuery}". Try a different search!
+        </div>
+      )}
     </div>
   );
 };
