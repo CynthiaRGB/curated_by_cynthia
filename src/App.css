@@ -497,8 +497,10 @@
 /* City prompts styles - positioned below chatbox */
 .city-prompts-container {
   margin-top: 16px;
-  width: 800px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 798px;
+  padding: 0 24px;
+  box-sizing: border-box;
 }
 
 .city-prompts-list {
@@ -578,17 +580,9 @@
 }
 
 /* Responsive adjustments for city prompts */
-@media (max-width: 900px) {
-  .city-prompts-container {
-    width: 90%;
-    max-width: 800px;
-  }
-}
-
 @media (max-width: 600px) {
   .city-prompts-container {
-    width: 90%;
-    margin-top: 16px;
+    padding: 0 16px;
   }
   
   .city-prompt-item {

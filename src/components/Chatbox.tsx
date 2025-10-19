@@ -142,50 +142,52 @@ export const Chatbox: React.FC<ChatboxProps> = ({
   }, [selectedCity]);
 
   return (
-    <div className="chatbox-container">
-      <div className="chatbox-content">
-        <div className="text-input-area">
-          <textarea
-            ref={textareaRef}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSubmit();
-              }
-            }}
-            placeholder={getPlaceholderText()}
-            className={`text-input ${selectedCity && hoveredPrompt ? 'dynamic-placeholder' : ''}`}
-            disabled={isLoading}
-            autoFocus
-            rows={1}
-          />
-        </div>
-        <div className="bottom-row">
-          <div className="pills-container">
-            {CITIES.map((city) => (
-              <button
-                key={city}
-                className={`pill ${selectedCity === city ? 'selected' : ''}`}
-                onClick={() => handlePillClick(city)}
-              >
-                <span className="pill-text">{city}</span>
-              </button>
-            ))}
+    <>
+      <div className="chatbox-container">
+        <div className="chatbox-content">
+          <div className="text-input-area">
+            <textarea
+              ref={textareaRef}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSubmit();
+                }
+              }}
+              placeholder={getPlaceholderText()}
+              className={`text-input ${selectedCity && hoveredPrompt ? 'dynamic-placeholder' : ''}`}
+              disabled={isLoading}
+              autoFocus
+              rows={1}
+            />
           </div>
-          <button
-            className={`submit-button ${!isReadyToSubmit ? 'disabled' : ''}`}
-            onClick={handleSubmit}
-            disabled={!isReadyToSubmit}
-          >
-            <div className="arrow-container">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="12" y1="19" x2="12" y2="5"></line>
-                <polyline points="5,12 12,5 19,12"></polyline>
-              </svg>
+          <div className="bottom-row">
+            <div className="pills-container">
+              {CITIES.map((city) => (
+                <button
+                  key={city}
+                  className={`pill ${selectedCity === city ? 'selected' : ''}`}
+                  onClick={() => handlePillClick(city)}
+                >
+                  <span className="pill-text">{city}</span>
+                </button>
+              ))}
             </div>
-          </button>
+            <button
+              className={`submit-button ${!isReadyToSubmit ? 'disabled' : ''}`}
+              onClick={handleSubmit}
+              disabled={!isReadyToSubmit}
+            >
+              <div className="arrow-container">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="12" y1="19" x2="12" y2="5"></line>
+                  <polyline points="5,12 12,5 19,12"></polyline>
+                </svg>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
       
@@ -223,6 +225,6 @@ export const Chatbox: React.FC<ChatboxProps> = ({
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
