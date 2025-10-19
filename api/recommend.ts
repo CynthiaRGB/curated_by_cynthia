@@ -123,8 +123,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const apiProcessingTime = Date.now() - apiStartTime;
 
     if (filteredRestaurants.length === 0) {
+      // Log no results event
+      // Temporarily disabled Statsig logging
+      // statsigClient.logEvent('api_no_results', statsigUser, {
+      //   query: query,
+      //   processing_time_ms: apiProcessingTime.toString(),
+      //   timestamp: new Date().toISOString()
+      // });
+
       return res.status(200).json({
         recommendations: [],
+        summary: "No spots found matching your criteria. Try a different search!",
         summary: "No spots found matching your criteria. Try a different search!",
         usedClaude: false,
       });
