@@ -2,7 +2,7 @@
 // Pre-filters restaurants before sending to Claude API for smart ranking
 
 import { Restaurant, ExtractedKeywords } from '../../src/types/restaurant';
-import { restaurantData } from '../data/285_review_subtracted';
+import { restaurantData } from '../data/285_review_subtracted.js';
 
 // Get restaurants from the data
 const restaurants: Restaurant[] = (restaurantData as any).places || (restaurantData as any) || [];
