@@ -7,8 +7,14 @@ let statsigInitialized = false;
 
 const initializeStatsig = async () => {
   if (!statsigInitialized) {
+    const statsigSecret = process.env.STATSIG_SERVER_SECRET_KEY;
+    
+    if (!statsigSecret) {
+      throw new Error('STATSIG_SERVER_SECRET_KEY environment variable is not set');
+    }
+    
     await Statsig.initialize(
-      "secret-DbvINwRbZkGrethf1bSYq5ZZ12htEQFj5hBiKyT71QY",
+      statsigSecret,  // ✅ Use environment variable
       { environment: { tier: "production" } }
     );
     statsigInitialized = true;
