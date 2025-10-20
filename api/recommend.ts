@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Statsig from "statsig-node";
-import { preFilterRestaurants } from './services/filterService.js';
+import { preFilterRestaurants } from './services/filterService';
 
 // Initialize Statsig server-side client
 let statsigInitialized = false;
