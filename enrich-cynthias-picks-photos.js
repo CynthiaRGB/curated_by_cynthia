@@ -1,35 +1,51 @@
 // enrich-cynthias-picks-photos.js
-// Add photos to Cynthia's 35 favorite restaurants
+// Add photos to Cynthia's 32 favorite restaurants
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Your Google Places API Key
 const GOOGLE_API_KEY = 'AIzaSyAdkZl43KGOOCodXfDyqehjNtxcQRyxwdw'; // Replace with your actual key
 
-// Read your restaurants data
-const restaurantsPath = path.join(__dirname, 'src', 'data', 'google_enriched_restaurants_311_clean.json');
-console.log('Reading restaurants data from:', restaurantsPath);
+// Read Cynthia's restaurants from TypeScript file
+const restaurantsPath = path.join(__dirname, 'api', 'data', '32_cynthia_restaurants.ts');
+console.log('Reading Cynthia\'s restaurants from:', restaurantsPath);
 
-let data;
+let cynthiasPicks;
 try {
   const fileContent = fs.readFileSync(restaurantsPath, 'utf8');
-  data = JSON.parse(fileContent);
+  
+  // Extract the JSON data from the TypeScript file
+  // Handle: export const cynthiasPicksData = { "places": [...] }
+  let jsonContent = fileContent;
+  
+  // Remove TypeScript export syntax
+  jsonContent = jsonContent.replace(/export\s+const\s+\w+\s*=\s*/g, '');
+  jsonContent = jsonContent.replace(/export\s+default\s+/g, '');
+  
+  // Remove type annotations and trailing semicolons
+  jsonContent = jsonContent.replace(/:\s*Restaurant\[\]/g, '');
+  jsonContent = jsonContent.replace(/;\s*$/g, '');
+  
+  // Parse the JSON
+  const parsedData = eval('(' + jsonContent + ')');
+  
+  // Extract the places array from the data structure
+  cynthiasPicks = parsedData.places || parsedData;
+  
+  console.log(`✓ Loaded ${cynthiasPicks.length} of Cynthia's picks\n`);
 } catch (error) {
   console.error('Error reading restaurants file:', error.message);
+  console.log('\nTip: Make sure 32_cynthia_restaurants.ts contains a JSON array');
   process.exit(1);
 }
 
-const restaurants = data.places || data;
-console.log(`✓ Loaded ${restaurants.length} restaurants\n`);
-
-// Filter for Cynthia's picks only
-const cynthiasPicks = restaurants.filter(r => r.cynthias_pick === true);
-console.log(`Found ${cynthiasPicks.length} of Cynthia's picks to enrich with photos\n`);
-
-if (cynthiasPicks.length === 0) {
-  console.error('❌ No restaurants with cynthias_pick: true found!');
-  console.log('Make sure you ran add-cynthias-picks.js first');
+if (!cynthiasPicks || cynthiasPicks.length === 0) {
+  console.error('❌ No restaurants found in the file!');
   process.exit(1);
 }
 
@@ -115,13 +131,14 @@ async function enrichCynthiasPicksWithPhotos() {
   console.log(`Total processed: ${cynthiasPicks.length}`);
   
   // Create backup before saving
-  const backupPath = restaurantsPath.replace('.json', '.backup-before-photos.json');
-  fs.writeFileSync(backupPath, JSON.stringify(data, null, 2));
+  const backupPath = restaurantsPath.replace('.ts', '.backup.ts');
+  fs.writeFileSync(backupPath, fs.readFileSync(restaurantsPath, 'utf8'));
   console.log(`\n✓ Backup created: ${backupPath}`);
   
-  // Save the enriched data
-  fs.writeFileSync(restaurantsPath, JSON.stringify(data, null, 2));
-  console.log(`✓ Updated data saved to: ${restaurantsPath}`);
+  // Save as JSON (easier to work with for now)
+  const jsonOutputPath = path.join(__dirname, 'api', 'data', '32_cynthia_restaurants_with_photos.json');
+  fs.writeFileSync(jsonOutputPath, JSON.stringify(cynthiasPicks, null, 2));
+  console.log(`✓ Updated data saved to: ${jsonOutputPath}`);
   
   // Generate a summary report
   const report = {
@@ -155,8 +172,10 @@ async function enrichCynthiasPicksWithPhotos() {
   console.log('='.repeat(60));
   console.log('1. Check cynthias-picks-photo-report.json for photo URLs');
   console.log('2. Test a few photo URLs in your browser');
-  console.log('3. Update your photo utility (photoUtils.ts) to use these photos');
-  console.log('4. Deploy and enjoy beautiful photos for Cynthia\'s picks!');
+  console.log('3. The enriched data is saved as JSON in:');
+  console.log('   src/data/32_cynthia_restaurants_with_photos.json');
+  console.log('4. Update your photo utility (photoUtils.ts) to use these photos');
+  console.log('5. Deploy and enjoy beautiful photos for Cynthia\'s picks!');
   console.log('='.repeat(60));
 }
 

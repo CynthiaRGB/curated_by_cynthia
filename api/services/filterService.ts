@@ -431,7 +431,18 @@ function matchesMealType(restaurant: Restaurant, keywords: ExtractedKeywords): b
   const mealType = keywords.mealType.toLowerCase();
   
   if (mealType === 'brunch') {
-    return restaurant.google_data.servesBrunch === true;
+    // Must serve brunch AND not be primarily a bar/drinking establishment
+    const servesBrunch = restaurant.google_data.servesBrunch === true;
+    const primaryType = restaurant.google_data.primaryType?.toLowerCase() || '';
+    const specificType = restaurant.specific_type?.toLowerCase() || '';
+    
+    // Exclude bars, pubs, and night clubs as primary types
+    const isBarEstablishment = primaryType === 'bar' || 
+                              primaryType === 'pub' || 
+                              primaryType === 'night_club' ||
+                              specificType === 'bar';
+    
+    return servesBrunch && !isBarEstablishment;
   }
   
   if (mealType === 'breakfast') {
