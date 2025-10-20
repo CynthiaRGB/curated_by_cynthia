@@ -591,3 +591,5 @@ export function preFilterRestaurants(query: string): Restaurant[] {
 }
 
 // Filter service ready for use
+
+export { preFilterRestaurants, extractKeywords };
