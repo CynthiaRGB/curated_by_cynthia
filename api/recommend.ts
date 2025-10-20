@@ -9,6 +9,11 @@ const initializeStatsig = async () => {
   if (!statsigInitialized) {
     const statsigSecret = process.env.STATSIG_SERVER_SECRET_KEY;
     
+    console.log('[Statsig Debug] Environment check:');
+    console.log('[Statsig Debug] - STATSIG_SERVER_SECRET_KEY exists:', !!statsigSecret);
+    console.log('[Statsig Debug] - Value length:', statsigSecret ? statsigSecret.length : 0);
+    console.log('[Statsig Debug] - All env vars with STATSIG:', Object.keys(process.env).filter(key => key.includes('STATSIG')));
+    
     if (!statsigSecret) {
       throw new Error('STATSIG_SERVER_SECRET_KEY environment variable is not set');
     }
@@ -18,6 +23,7 @@ const initializeStatsig = async () => {
       { environment: { tier: "production" } }
     );
     statsigInitialized = true;
+    console.log('[Statsig Debug] Successfully initialized');
   }
 };
 
