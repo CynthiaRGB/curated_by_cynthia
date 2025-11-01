@@ -1,6 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Statsig from "statsig-node";
 import { preFilterRestaurants } from './services/filterService.js';
+import { decideRoute, getMoreRestaurants, isShowMeMoreQuery, type RoutingContext } from './services/routingService.js';
+import { rankRestaurantsWithClaude, enrichRecommendations } from '../src/claudeService.js';
+import { getCachedResponse, setCachedResponse, generateCacheKey } from './services/claudeCache.js';
+import { Restaurant } from '../src/types/restaurant.js';
 
 // Initialize Statsig server-side client
 let statsigInitialized = false;
@@ -69,13 +73,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Initialize Statsig server-side client
     await initializeStatsig();
     
-    const { query, userId = 'api-user' } = req.body;
+    const { 
+      query, 
+      userId = 'api-user',
+      context // Optional: { previousQuery, previousResults, previousRoute }
+    } = req.body;
 
     if (!query || typeof query !== 'string') {
       return res.status(400).json({ error: 'Query is required' });
     }
 
     console.log('[API] Query received:', query);
+    if (context) {
+      console.log('[API] Context provided:', {
+        hasPreviousQuery: !!context.previousQuery,
+        previousResultsCount: context.previousResults?.length || 0,
+        previousRoute: context.previousRoute
+      });
+    }
 
     // Create Statsig user object
     const statsigUser = {
@@ -116,38 +131,133 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const apiStartTime = Date.now();
 
-    // Use the filter service to process query
-    console.log('[API] Using filter service to process query');
-    const filteredRestaurants = preFilterRestaurants(query);
+    // Step 1: Decide routing strategy
+    const routingContext: RoutingContext | undefined = context ? {
+      previousQuery: context.previousQuery,
+      previousResults: context.previousResults?.map((r: any) => r as Restaurant),
+      previousRoute: context.previousRoute,
+    } : undefined;
+    
+    const routeDecision = decideRoute(query, routingContext);
+    console.log('[Routing] Decision:', routeDecision.route, '-', routeDecision.reason);
+
+    // Step 2: Handle irrelevant queries
+    if (routeDecision.route === 'default') {
+      return res.status(200).json({
+        recommendations: [],
+        summary: "Sorry, I'm designed to only answer questions related to restaurants. Try another question.",
+        usedClaude: false,
+        route: 'default',
+      });
+    }
+
+    // Step 3: Always pre-filter with filterService first (by city and other criteria)
+    console.log('[API] Pre-filtering restaurants with filterService');
+    let filteredRestaurants = preFilterRestaurants(query);
     console.log(`[API] Filter service returned ${filteredRestaurants.length} restaurants`);
 
-    // Log server-side API performance event
-    const apiProcessingTime = Date.now() - apiStartTime;
+    // Step 4: Handle "show me more" follow-ups
+    if (isShowMeMoreQuery(query) && context?.previousResults) {
+      const previousRestaurants = (context.previousResults as Restaurant[]) || [];
+      filteredRestaurants = getMoreRestaurants(filteredRestaurants, previousRestaurants);
+      console.log(`[API] After excluding previous results: ${filteredRestaurants.length} restaurants`);
+    }
 
     if (filteredRestaurants.length === 0) {
       return res.status(200).json({
         recommendations: [],
-        summary: "No spots found matching your criteria. Try a different search!",
+        summary: "No more spots found matching your criteria. Try a different search!",
         usedClaude: false,
+        route: routeDecision.route,
       });
     }
 
-    // Return top results based on Statsig config
-    const topResults = filteredRestaurants.slice(0, maxResults);
+    // Step 5: Execute routing decision
+    let finalRestaurants: Restaurant[] = [];
+    let summary = '';
+    let usedClaude = false;
+
+    if (routeDecision.route === 'claude' && routeDecision.needsClaude) {
+      // Use Claude API for nuanced queries
+      console.log('[API] Using Claude API for nuanced query');
+      usedClaude = true;
+
+      // Check cache first
+      const restaurantIds = filteredRestaurants.map(r => r.google_place_id);
+      const cacheKey = generateCacheKey(query, restaurantIds);
+      let claudeResponse = getCachedResponse(query, restaurantIds);
+
+      if (!claudeResponse) {
+        // Cache miss - call Claude API
+        const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
+        
+        if (!anthropicApiKey) {
+          console.warn('[API] ANTHROPIC_API_KEY not set, falling back to filterService');
+          // Fallback to filterService
+          finalRestaurants = filteredRestaurants.slice(0, maxResults);
+          summary = `Curated ${finalRestaurants.length} spots just for you`;
+          usedClaude = false;
+        } else {
+          try {
+            claudeResponse = await rankRestaurantsWithClaude(
+              query,
+              filteredRestaurants,
+              anthropicApiKey
+            );
+            
+            // Cache the response
+            setCachedResponse(query, claudeResponse, restaurantIds);
+            
+            // Map Claude recommendations back to full Restaurant objects
+            finalRestaurants = enrichRecommendations(
+              claudeResponse.recommendations,
+              filteredRestaurants
+            );
+            
+            summary = claudeResponse.summary || `Curated ${finalRestaurants.length} spots just for you`;
+          } catch (claudeError: any) {
+            console.error('[API] Claude API error, falling back to filterService:', claudeError);
+            // Fallback to filterService on error
+            finalRestaurants = filteredRestaurants.slice(0, maxResults);
+            summary = `Curated ${finalRestaurants.length} spots just for you`;
+            usedClaude = false;
+          }
+        }
+      } else {
+        // Cache hit - use cached response
+        console.log('[API] Using cached Claude response');
+        finalRestaurants = enrichRecommendations(
+          claudeResponse.recommendations,
+          filteredRestaurants
+        );
+        summary = claudeResponse.summary || `Curated ${finalRestaurants.length} spots just for you`;
+      }
+    } else {
+      // Use filterService only
+      console.log('[API] Using filterService only');
+      finalRestaurants = filteredRestaurants.slice(0, maxResults);
+      summary = `Curated ${finalRestaurants.length} spots just for you`;
+      usedClaude = false;
+    }
+
+    // Log server-side API performance event
+    const apiProcessingTime = Date.now() - apiStartTime;
 
     // Log restaurant search event using the correct Statsig format
     try {
       Statsig.logEvent(
         statsigUser,
         'restaurant_search_completed',
-        topResults.length,
+        finalRestaurants.length,
         {
           search_query: query,
           city: query.toLowerCase().includes(' in ') ? query.split(' in ')[1] : 'unknown',
           cuisine_type: getCuisineTypeFromQuery(query),
-          results_found: topResults.length.toString(),
-          cynthias_picks_count: topResults.filter(r => r.cynthias_pick).length.toString(),
-          processing_time_ms: apiProcessingTime.toString()
+          results_found: finalRestaurants.length.toString(),
+          cynthias_picks_count: finalRestaurants.filter(r => r.cynthias_pick).length.toString(),
+          processing_time_ms: apiProcessingTime.toString(),
+          used_claude: usedClaude.toString(),
+          route: routeDecision.route
         }
       );
     } catch (statsigLogError) {
@@ -155,15 +265,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     return res.status(200).json({
-      recommendations: topResults,
-      summary: `Curated ${topResults.length} spots just for you`,
-      usedClaude: false,
+      recommendations: finalRestaurants,
+      summary,
+      usedClaude,
+      route: routeDecision.route,
       debug: {
         cynthiaBoost,
         maxResults,
         statsigConfigFetched,
         statsigClientInitialized: statsigInitialized,
-        errorMessage: statsigError
+        errorMessage: statsigError,
+        routingReason: routeDecision.reason
       }
     });
 

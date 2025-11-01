@@ -22,6 +22,12 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const [originalPromptText, setOriginalPromptText] = useState<string | null>(null);
   const [promptClickTimestamp, setPromptClickTimestamp] = useState<number | null>(null);
   const [isInConversation, setIsInConversation] = useState(false); // Track if we're in a conversation
+  // Track conversation context for follow-up queries
+  const [conversationContext, setConversationContext] = useState<{
+    previousQuery?: string;
+    previousResults?: Restaurant[];
+    previousRoute?: 'filterService' | 'claude' | 'default';
+  } | null>(null);
 
   // Helper function to detect if a query came from a prompt
   const checkIfPromptQuery = (query: string): boolean => {
@@ -94,12 +100,20 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       console.log('Calling backend for restaurant filtering...');
       console.log('🔥 ABOUT TO FETCH - CHECK NETWORK TAB NOW!'); 
 
+      // Prepare context for follow-up queries
+      const context = isInConversation && conversationContext ? {
+        previousQuery: conversationContext.previousQuery,
+        previousResults: conversationContext.previousResults,
+        previousRoute: conversationContext.previousRoute,
+      } : undefined;
+
       const response = await fetch('/api/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           query: fullQuery,
           userId: 'web-user', // Add userId for Statsig Dynamic Config
+          context, // Pass conversation context for routing decisions
         }),
       });
 
@@ -141,8 +155,14 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
              setRestaurants(restaurants);
              setBotResponse(data.summary + ' ⚡');
-             setUsedClaude(false);
+             setUsedClaude(data.usedClaude || false);
              setIsInConversation(true); // Mark that we're in a conversation
+             // Update conversation context for follow-up queries
+             setConversationContext({
+               previousQuery: fullQuery,
+               previousResults: restaurants,
+               previousRoute: data.route || 'filterService',
+             });
            } else {
              // Log search_no_results event when no results
              client.logEvent('search_no_results', fullQuery, {
@@ -152,8 +172,14 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
              setRestaurants([]);
              setBotResponse(data.summary || `No spots found for "${fullQuery}". Try a different search!`);
-             setUsedClaude(false);
+             setUsedClaude(data.usedClaude || false);
              setIsInConversation(true); // Mark that we're in a conversation even with no results
+             // Update conversation context even with no results (for follow-ups)
+             setConversationContext({
+               previousQuery: fullQuery,
+               previousResults: [],
+               previousRoute: data.route || 'filterService',
+             });
            }
 
            // Only increment key for first query, not for follow-ups
@@ -204,6 +230,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           setOriginalPromptText(null);
           setPromptClickTimestamp(null);
           setIsInConversation(false); // Reset conversation state
+          setConversationContext(null); // Clear conversation context
           setResponseScreenKey(prev => prev + 1); // Increment key to reset ResponseScreen
         }}
         onSendMessage={handleSendMessage}
