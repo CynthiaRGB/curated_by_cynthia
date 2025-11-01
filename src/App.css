@@ -337,8 +337,8 @@
 /* Restaurant photo container for Cynthia's picks - positioned on the right */
 .restaurant-photo-container {
   flex-shrink: 0;
-  width: 200px;
-  height: 200px;
+  width: 160px;
+  height: 160px;
   position: relative;
   border-radius: 8px;
   overflow: hidden;
