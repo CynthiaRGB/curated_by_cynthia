@@ -11,11 +11,16 @@ const restaurants: Restaurant[] = (restaurantData as any).places || (restaurantD
 const CUISINE_TYPES = [
   'italian', 'japanese', 'french', 'korean', 'chinese', 'mexican', 'thai', 
   'vietnamese', 'indian', 'american', 'ramen', 'sushi', 'pizza', 'burger', 
-  'bakery', 'cafe', 'dessert', 'seafood', 'steak', 'bbq', 'mediterranean',
+  'bakery', 'cafe', 'dessert', 'seafood', 'steak', 'bbq', 'barbeque', 'barbecue', 'mediterranean',
   'middle eastern', 'latin', 'spanish', 'greek', 'turkish', 'ethiopian',
   'caribbean', 'soul food', 'southern', 'tex-mex', 'fusion', 'vegetarian',
   'vegan', 'healthy', 'fast food', 'fine dining', 'bar', 'drink', 'drinks', 
-  'cake', 'bakeries', 'sweets', 'galettes', 'crepes', 'coffee shop'
+  'cake', 'bakeries', 'sweets', 'galettes', 'crepes', 'coffee shop',
+  // Japanese specific dishes
+  'yakitori', 'katsu', 'tonkatsu', 'tempura', 'udon', 'soba', 'okonomiyaki',
+  'takoyaki', 'sashimi', 'teriyaki', 'sukiyaki', 'shabu shabu', 'kaiseki',
+  // Other specific dishes
+  'dim sum', 'pho', 'pad thai', 'tacos', 'burritos', 'pasta', 'risotto'
 ];
 
 // Borough names to match
@@ -123,13 +128,26 @@ export function extractKeywords(query: string): ExtractedKeywords {
     keywords.mealType = mealMatch as any;
   }
 
-  // Extract cuisine type
+  // Extract cuisine type - check for multi-word phrases first, then single words
   const sortedCuisineTypes = [...CUISINE_TYPES].sort((a, b) => b.length - a.length);
-  const cuisineMatch = sortedCuisineTypes.find(cuisine => 
-    lowerQuery.includes(cuisine)
-  );
-  if (cuisineMatch) {
-    keywords.cuisineType = cuisineMatch;
+  
+  // First, try to match multi-word cuisine types (e.g., "dim sum", "coffee shop")
+  const multiWordMatch = sortedCuisineTypes
+    .filter(c => c.includes(' '))
+    .find(cuisine => lowerQuery.includes(cuisine));
+  
+  if (multiWordMatch) {
+    keywords.cuisineType = multiWordMatch;
+  } else {
+    // Then try single-word matches
+    const cuisineMatch = sortedCuisineTypes.find(cuisine => {
+      // Match whole words to avoid false positives (e.g., "sushi" shouldn't match "sushiya")
+      const words = lowerQuery.split(/\s+/);
+      return words.some(word => word === cuisine || word.startsWith(cuisine + '-'));
+    });
+    if (cuisineMatch) {
+      keywords.cuisineType = cuisineMatch;
+    }
   }
 
   // Extract price preference
@@ -225,13 +243,21 @@ function calculateTier(restaurant: Restaurant, keywords: ExtractedKeywords): num
   const specificType = restaurant.specific_type?.toLowerCase() || '';
   const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
 
-  // Tier 1: Matches primaryType or specificType
-  if (primaryType.includes(cuisineKeyword) || specificType.includes(cuisineKeyword)) {
+  const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
+  const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
+  const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
+  
+  // Tier 1: Matches primaryType, specificType, or restaurant name
+  if (primaryType.includes(cuisineKeyword) || 
+      specificType.includes(cuisineKeyword) ||
+      restaurantName.includes(cuisineKeyword)) {
     return 1;
   }
 
-  // Tier 2: Matches types array
-  if (types.some(t => t.includes(cuisineKeyword))) {
+  // Tier 2: Matches types array or appears in summaries
+  if (types.some(t => t.includes(cuisineKeyword)) ||
+      summary.includes(cuisineKeyword) ||
+      reviewSummary.includes(cuisineKeyword)) {
     return 2;
   }
 
@@ -373,6 +399,14 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
   const primaryType = restaurant.google_data.primaryType?.toLowerCase() || '';
   const specificType = restaurant.specific_type?.toLowerCase() || '';
   const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
+  const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
+  
+  // Check restaurant name for dish-specific keywords (e.g., "yakitori", "katsu")
+  // This is important because dish-specific restaurants often have the dish in their name
+  // but their type might just be "japanese_restaurant"
+  if (restaurantName.includes(cuisineKeyword)) {
+    return true;
+  }
   
   // For "bar" queries, be strict
   if (cuisineKeyword === 'bar') {
@@ -391,6 +425,18 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
            restaurant.google_data.servesCoffee === true;
   }
   
+  // Check restaurant summary/description for mentions (helps with dish-specific searches)
+  const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
+  const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
+  const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
+  
+  if (summary.includes(cuisineKeyword) || 
+      reviewSummary.includes(cuisineKeyword) || 
+      editorialSummary.includes(cuisineKeyword)) {
+    return true;
+  }
+  
+  // Standard type matching
   return specificType.includes(cuisineKeyword) ||
          primaryType.includes(cuisineKeyword) ||
          types.some(t => t.includes(cuisineKeyword));

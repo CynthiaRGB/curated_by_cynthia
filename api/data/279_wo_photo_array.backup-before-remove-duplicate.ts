@@ -95783,5 +95783,294 @@ export const restaurantData = [
     ],
     "negative_tags": [],
     "accolades_tags": []
+  },
+  {
+    "original_place": {
+      "geometry": {
+        "coordinates": [
+          139.7469855,
+          35.6674824
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "date": "2025-11-01T04:59:13.756Z",
+        "google_maps_url": "https://maps.google.com/?cid=11680264112446360524&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+        "location": {
+          "address": "Japan, 〒105-0001 Tokyo, Minato City, Toranomon, 2-chōme−6−３ 虎ノ門ヒルズステーションタワー 4F",
+          "country_code": "JP",
+          "name": "Yakitori Nonotori Gencho Toranomon Hills Station Tower"
+        }
+      },
+      "type": "Feature"
+    },
+    "google_place_id": "ChIJjRtEAgCLGGARzMsbWVOiGKI",
+    "google_data": {
+      "name": "places/ChIJjRtEAgCLGGARzMsbWVOiGKI",
+      "id": "ChIJjRtEAgCLGGARzMsbWVOiGKI",
+      "types": [
+        "japanese_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "formattedAddress": "Japan, 〒105-0001 Tokyo, Minato City, Toranomon, 2-chōme−6−３ 虎ノ門ヒルズステーションタワー 4F",
+      "location": {
+        "latitude": 35.6674824,
+        "longitude": 139.7469855
+      },
+      "rating": 4.6,
+      "googleMapsUri": "https://maps.google.com/?cid=11680264112446360524&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "businessStatus": "OPERATIONAL",
+      "priceLevel": "PRICE_LEVEL_MODERATE",
+      "userRatingCount": 253,
+      "displayName": {
+        "text": "Yakitori Nonotori Gencho Toranomon Hills Station Tower",
+        "languageCode": "en"
+      },
+      "primaryTypeDisplayName": {
+        "text": "Japanese Restaurant",
+        "languageCode": "en-US"
+      },
+      "takeout": true,
+      "delivery": false,
+      "dineIn": true,
+      "curbsidePickup": true,
+      "reservable": true,
+      "servesBreakfast": false,
+      "servesLunch": true,
+      "servesDinner": true,
+      "servesBeer": true,
+      "servesWine": true,
+      "servesBrunch": false,
+      "servesVegetarianFood": false,
+      "primaryType": "japanese_restaurant",
+      "shortFormattedAddress": "Minato City, Toranomon, 2-chōme−6−3 虎ノ門ヒルズステーションタワー 4F",
+      "outdoorSeating": false,
+      "liveMusic": false,
+      "menuForChildren": false,
+      "servesCocktails": true,
+      "servesDessert": true,
+      "servesCoffee": false,
+      "allowsDogs": false,
+      "restroom": true,
+      "goodForGroups": true,
+      "goodForWatchingSports": false,
+      "paymentOptions": {
+        "acceptsCreditCards": true,
+        "acceptsDebitCards": true,
+        "acceptsCashOnly": false,
+        "acceptsNfc": true
+      },
+      "parkingOptions": {
+        "freeParkingLot": false,
+        "paidParkingLot": true,
+        "freeStreetParking": false,
+        "paidStreetParking": false,
+        "valetParking": true,
+        "freeGarageParking": false,
+        "paidGarageParking": true
+      },
+      "accessibilityOptions": {
+        "wheelchairAccessibleParking": true,
+        "wheelchairAccessibleEntrance": false,
+        "wheelchairAccessibleRestroom": true,
+        "wheelchairAccessibleSeating": false
+      },
+      "addressDescriptor": {
+        "landmarks": [
+          {
+            "name": "places/ChIJVVXZGpeLGGARLb8UtLKboQY",
+            "placeId": "ChIJVVXZGpeLGGARLb8UtLKboQY",
+            "displayName": {
+              "text": "Toranomon Hospital",
+              "languageCode": "en"
+            },
+            "types": [
+              "establishment",
+              "health",
+              "hospital",
+              "point_of_interest"
+            ],
+            "straightLineDistanceMeters": 216.82893,
+            "travelDistanceMeters": 198.73825
+          },
+          {
+            "name": "places/ChIJmXC-m5GLGGAR7X1D5Kft2MU",
+            "placeId": "ChIJmXC-m5GLGGAR7X1D5Kft2MU",
+            "displayName": {
+              "text": "Sunwood",
+              "languageCode": "en"
+            },
+            "types": [
+              "establishment",
+              "general_contractor",
+              "point_of_interest",
+              "real_estate_agency"
+            ],
+            "spatialRelationship": "ACROSS_THE_ROAD",
+            "straightLineDistanceMeters": 38.9577,
+            "travelDistanceMeters": 25.219055
+          },
+          {
+            "name": "places/ChIJRQpFJ7qLGGARTiZCGM0RpDs",
+            "placeId": "ChIJRQpFJ7qLGGARTiZCGM0RpDs",
+            "displayName": {
+              "text": "Japan Business Systems Inc.",
+              "languageCode": "en"
+            },
+            "types": [
+              "establishment",
+              "point_of_interest"
+            ],
+            "spatialRelationship": "BESIDE",
+            "straightLineDistanceMeters": 42.675163,
+            "travelDistanceMeters": 23.104668
+          },
+          {
+            "name": "places/ChIJM5YrnvuLGGARl6WHdtuXAUE",
+            "placeId": "ChIJM5YrnvuLGGARl6WHdtuXAUE",
+            "displayName": {
+              "text": "Toranomon Hills Residential Tower",
+              "languageCode": "en"
+            },
+            "types": [
+              "establishment",
+              "point_of_interest"
+            ],
+            "spatialRelationship": "AROUND_THE_CORNER",
+            "straightLineDistanceMeters": 205.50212,
+            "travelDistanceMeters": 173.09026
+          },
+          {
+            "name": "places/ChIJAzqKoZOLGGARm8GYfYwJvlM",
+            "placeId": "ChIJAzqKoZOLGGARm8GYfYwJvlM",
+            "displayName": {
+              "text": "Toranomon Hills Mori Tower",
+              "languageCode": "en"
+            },
+            "types": [
+              "establishment",
+              "point_of_interest",
+              "shopping_mall"
+            ],
+            "spatialRelationship": "AROUND_THE_CORNER",
+            "straightLineDistanceMeters": 214.58047,
+            "travelDistanceMeters": 141.76419
+          }
+        ],
+        "areas": [
+          {
+            "name": "places/ChIJkeONKZKLGGARnc_5FwHM50g",
+            "placeId": "ChIJkeONKZKLGGARnc_5FwHM50g",
+            "displayName": {
+              "text": "6",
+              "languageCode": "en"
+            },
+            "containment": "OUTSKIRTS"
+          },
+          {
+            "name": "places/ChIJUR5g2ZGLGGARRUEt4cxXFo8",
+            "placeId": "ChIJUR5g2ZGLGGARRUEt4cxXFo8",
+            "displayName": {
+              "text": "2 Chome",
+              "languageCode": "en"
+            },
+            "containment": "OUTSKIRTS"
+          },
+          {
+            "name": "places/ChIJjxmFbZGLGGARFmdnFZzSchU",
+            "placeId": "ChIJjxmFbZGLGGARFmdnFZzSchU",
+            "displayName": {
+              "text": "Toranomon",
+              "languageCode": "en"
+            },
+            "containment": "WITHIN"
+          }
+        ]
+      },
+      "googleMapsLinks": {
+        "directionsUri": "https://www.google.com/maps/dir//''/data=!4m7!4m6!1m1!4e2!1m2!1m1!1s0x60188b0002441b8d:0xa218a253591bcbcc!3e0?g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+        "placeUri": "https://maps.google.com/?cid=11680264112446360524&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+        "writeAReviewUri": "https://www.google.com/maps/place//data=!4m3!3m2!1s0x60188b0002441b8d:0xa218a253591bcbcc!12e1?g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+        "reviewsUri": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x60188b0002441b8d:0xa218a253591bcbcc!9m1!1b1?g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+        "photosUri": "https://www.google.com/maps/place//data=!4m3!3m2!1s0x60188b0002441b8d:0xa218a253591bcbcc!10e5?g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA"
+      },
+      "priceRange": {
+        "startPrice": {
+          "currencyCode": "JPY",
+          "units": "10000"
+        }
+      },
+      "reviewSummary": {
+        "text": {
+          "text": "People say this yakitori restaurant offers a premium omakase course with a variety of rare parts, including Kyoto duck and green onion, and a delicious egg over rice. They highlight the generous portions, the excellent wine and sake pairings, and the attentive service. They also like the chic and sophisticated atmosphere, perfect for a date or special occasion.",
+          "languageCode": "en-US"
+        },
+        "flagContentUri": "https://www.google.com/local/review/rap/report?postId=5%401:CAIQACodChtyc19oOmlJbGZ6WmUzV1hnbkg4ZGwtRmR4Y2c%7CCAIQACorChtyc19oOmlJbGZ6WmUzV1hnbkg4ZGwtRmR4Y2cSDAi28IjIBhCI_ryJAQ&d=17924085&t=8",
+        "disclosureText": {
+          "text": "Summarized with Gemini",
+          "languageCode": "en-US"
+        },
+        "reviewsUri": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x60188b0002441b8d:0xa218a253591bcbcc!9m1!1b1"
+      },
+      "timeZone": {
+        "id": "Asia/Tokyo"
+      },
+      "postalAddress": {
+        "regionCode": "JP",
+        "languageCode": "en-US",
+        "postalCode": "105-0001",
+        "administrativeArea": "Tokyo",
+        "addressLines": [
+          "Minato City, Toranomon, 2 Chome−6−3 虎ノ門ヒルズステーションタワー 4F"
+        ]
+      }
+    },
+    "place_classification": "restaurant",
+    "specific_type": "japanese_restaurant",
+    "neighborhood_extracted": "Toranomon",
+    "enrichment_status": "success",
+    "enrichment_date": "2025-11-01T04:59:13.756Z",
+    "cynthias_pick": true,
+    "price_display": "$$",
+    "city": "Tokyo",
+    "vibe_tags": [
+      "upscale",
+      "sophisticated",
+      "intimate",
+      "modern",
+      "chic"
+    ],
+    "occasion_tags": [
+      "date_night",
+      "anniversary",
+      "celebration",
+      "business_dinner"
+    ],
+    "crowd_tags": [
+      "mature_crowd",
+      "locals_spot"
+    ],
+    "service_tags": [
+      "attentive_service",
+      "knowledgeable_staff"
+    ],
+    "noise_level": "quiet_ambiance",
+    "food_quality_tags": [
+      "exceptional_food",
+      "wine_focused"
+    ],
+    "value_tag": "splurge_worthy",
+    "special_features": [
+      "chef_driven",
+      "unique_concept"
+    ],
+    "booking_tags": [
+      "reservations_required"
+    ],
+    "negative_tags": [],
+    "accolades_tags": []
   }
 ];
