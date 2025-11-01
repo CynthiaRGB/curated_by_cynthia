@@ -10,17 +10,23 @@ const restaurants: Restaurant[] = (restaurantData as any).places || (restaurantD
 // Cuisine types to match against
 const CUISINE_TYPES = [
   'italian', 'japanese', 'french', 'korean', 'chinese', 'mexican', 'thai', 
-  'vietnamese', 'indian', 'american', 'ramen', 'sushi', 'pizza', 'burger', 
+  'vietnamese', 'indian', 'american', 'ramen', 'sushi', 'sashimi', 'nigiri', 'sushi roll', 'pizza', 'burger', 
   'bakery', 'cafe', 'dessert', 'seafood', 'steak', 'bbq', 'barbeque', 'barbecue', 'mediterranean',
   'middle eastern', 'latin', 'spanish', 'greek', 'turkish', 'ethiopian',
   'caribbean', 'soul food', 'southern', 'tex-mex', 'fusion', 'vegetarian',
   'vegan', 'healthy', 'fast food', 'fine dining', 'bar', 'drink', 'drinks', 
-  'cake', 'bakeries', 'sweets', 'galettes', 'crepes', 'coffee shop',
+  'cake', 'pastries', 'pastry','bakeries', 'sweets', 'coffee shop', 'bagel', 'bagels', 'sandwich', 'sandwiches',
   // Japanese specific dishes
-  'yakitori', 'katsu', 'tonkatsu', 'tempura', 'udon', 'soba', 'okonomiyaki',
-  'takoyaki', 'sashimi', 'teriyaki', 'sukiyaki', 'shabu shabu', 'kaiseki',
+  'yakitori', 'katsu', 'tonkatsu', 'tempura', 'udon', 'soba', 'okonomiyaki', 'curry', 'onigiri'
+  'takoyaki', 'sashimi', 'teriyaki', 'sukiyaki', 'shabu shabu', 'shabushabu', 'kaiseki', 'omurice',
+  // French specific dishes
+  'galettes', 'crepes', 'crepe', 'galette', 'crossiant', 'duck confit'
+  // Italian specific dishes
+  'pasta', 'risotto', 'pizza'
+  //Chinese specific dishes
+  'dim sum', 'dimsum', 'hot pot', 'szechuan', 'peking duck'
   // Other specific dishes
-  'dim sum', 'pho', 'pad thai', 'tacos', 'burritos', 'pasta', 'risotto'
+  'pho', 'vermicelli', 'pad thai', 'tacos', 'burritos'
 ];
 
 // Borough names to match

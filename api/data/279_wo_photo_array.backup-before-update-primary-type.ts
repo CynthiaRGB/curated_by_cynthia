@@ -54606,7 +54606,7 @@ export const restaurantData = [
       "name": "places/ChIJ-c9WERGMGGARhYoB-iRgKGQ",
       "id": "ChIJ-c9WERGMGGARhYoB-iRgKGQ",
       "types": [
-        "japanese_restaurant",
+        "restaurant",
         "food",
         "point_of_interest",
         "establishment"
@@ -54787,7 +54787,7 @@ export const restaurantData = [
           "nextCloseTime": "2025-09-29T10:00:00Z"
         }
       ],
-      "primaryType": "japanese_restaurant",
+      "primaryType": "restaurant",
       "shortFormattedAddress": "Chiyoda City, Kanda Jinbōchō, 1-chōme−１１",
       "editorialSummary": {
         "text": "Long-established, intimate, tiki-style cafe for coffee, drinks & Japanese takes on Western dishes.",
