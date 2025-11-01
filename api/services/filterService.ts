@@ -10,7 +10,8 @@ const restaurants: Restaurant[] = (restaurantData as any).places || (restaurantD
 // Cuisine types to match against
 const CUISINE_TYPES = [
   'italian', 'japanese', 'french', 'korean', 'chinese', 'mexican', 'thai', 
-  'vietnamese', 'indian', 'american', 'ramen', 'sushi', 'sashimi', 'nigiri', 'sushi roll', 'pizza', 'burger', 
+  'vietnamese', 'indian', 'american', 'asian', // Added 'asian' as a generic category
+  'ramen', 'sushi', 'sashimi', 'nigiri', 'sushi roll', 'pizza', 'burger', 
   'bakery', 'cafe', 'dessert', 'seafood', 'steak', 'bbq', 'barbeque', 'barbecue', 'mediterranean',
   'middle eastern', 'latin', 'spanish', 'greek', 'turkish', 'ethiopian',
   'caribbean', 'soul food', 'southern', 'tex-mex', 'fusion', 'vegetarian',
@@ -20,13 +21,23 @@ const CUISINE_TYPES = [
   'yakitori', 'katsu', 'tonkatsu', 'tempura', 'udon', 'soba', 'okonomiyaki', 'curry', 'onigiri',
   'takoyaki', 'sashimi', 'teriyaki', 'sukiyaki', 'shabu shabu', 'shabushabu', 'kaiseki', 'omurice',
   // French specific dishes
-  'galettes', 'crepes', 'crepe', 'galette', 'crossiant', 'duck confit',
+  'galettes', 'crepes', 'crepe', 'Crêperie', 'galette', 'crossiant', 'duck confit',
   // Italian specific dishes
   'pasta', 'risotto', 'pizza',
   //Chinese specific dishes
   'dim sum', 'dimsum', 'hot pot', 'szechuan', 'peking duck',
   // Other specific dishes
   'pho', 'vermicelli', 'pad thai', 'tacos', 'burritos'
+];
+
+// Asian cuisines that should match when user searches for "asian"
+const ASIAN_CUISINES = [
+  'japanese', 'chinese', 'korean', 'thai', 'vietnamese', 'indian',
+  'ramen', 'sushi', 'sashimi', 'dim sum', 'dimsum', 'hot pot', 
+  'szechuan', 'peking duck', 'pho', 'vermicelli', 'pad thai',
+  'yakitori', 'katsu', 'tonkatsu', 'tempura', 'udon', 'soba',
+  'okonomiyaki', 'curry', 'onigiri', 'takoyaki', 'teriyaki',
+  'sukiyaki', 'shabu shabu', 'shabushabu', 'kaiseki', 'omurice'
 ];
 
 // Borough names to match
@@ -442,6 +453,27 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
            specificType.includes('coffee') ||
            types.some(t => t.includes('cafe') || t.includes('coffee')) ||
            restaurant.google_data.servesCoffee === true;
+  }
+  
+  // For "asian" queries, match any Asian cuisine type
+  if (cuisineKeyword === 'asian') {
+    return ASIAN_CUISINES.some(asianCuisine => {
+      const normalizedAsianCuisine = normalizeForMatching(asianCuisine);
+      return primaryType.includes(asianCuisine) ||
+             specificType.includes(asianCuisine) ||
+             types.some(t => t.includes(asianCuisine)) ||
+             normalizeForMatching(primaryType).includes(normalizedAsianCuisine) ||
+             normalizeForMatching(specificType).includes(normalizedAsianCuisine) ||
+             types.some(t => normalizeForMatching(t).includes(normalizedAsianCuisine)) ||
+             restaurantName.includes(asianCuisine) ||
+             normalizeForMatching(restaurantName).includes(normalizedAsianCuisine) ||
+             summary.includes(asianCuisine) ||
+             reviewSummary.includes(asianCuisine) ||
+             editorialSummary.includes(asianCuisine) ||
+             normalizeForMatching(summary).includes(normalizedAsianCuisine) ||
+             normalizeForMatching(reviewSummary).includes(normalizedAsianCuisine) ||
+             normalizeForMatching(editorialSummary).includes(normalizedAsianCuisine);
+    });
   }
   
   // Check restaurant summary/description for mentions (helps with dish-specific searches)

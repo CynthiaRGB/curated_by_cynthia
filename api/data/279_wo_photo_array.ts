@@ -54606,7 +54606,7 @@ export const restaurantData = [
       "name": "places/ChIJ-c9WERGMGGARhYoB-iRgKGQ",
       "id": "ChIJ-c9WERGMGGARhYoB-iRgKGQ",
       "types": [
-        "japanese_restaurant",
+        "restaurant",
         "food",
         "point_of_interest",
         "establishment"
@@ -54625,7 +54625,7 @@ export const restaurantData = [
         "languageCode": "en"
       },
       "primaryTypeDisplayName": {
-        "text": "Japanese Restaurant",
+        "text": "Restaurant",
         "languageCode": "en-US"
       },
       "delivery": false,
@@ -54787,7 +54787,7 @@ export const restaurantData = [
           "nextCloseTime": "2025-09-29T10:00:00Z"
         }
       ],
-      "primaryType": "japanese_restaurant",
+      "primaryType": "restaurant",
       "shortFormattedAddress": "Chiyoda City, Kanda Jinbōchō, 1-chōme−１１",
       "editorialSummary": {
         "text": "Long-established, intimate, tiki-style cafe for coffee, drinks & Japanese takes on Western dishes.",
@@ -69351,7 +69351,7 @@ export const restaurantData = [
     "neighborhood_extracted": "1st arrondissement",
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:16:00.943357",
-    "cynthias_pick": true,
+    "cynthias_pick": false,
     "price_display": "$$$$",
     "city": "Paris",
     "vibe_tags": [
@@ -71187,7 +71187,7 @@ export const restaurantData = [
     "neighborhood_extracted": "3rd arrondissement",
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:16:18.316638",
-    "cynthias_pick": true,
+    "cynthias_pick": false,
     "price_display": "$$$",
     "city": "Paris",
     "vibe_tags": [
