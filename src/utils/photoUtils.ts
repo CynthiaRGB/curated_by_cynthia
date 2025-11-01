@@ -4,34 +4,79 @@
 
 import { Restaurant } from '../types/restaurant';
 
+// Load photo mapping (lazy-loaded to avoid blocking initial render)
+let photoMapping: Record<string, string[]> | null = null;
+let mappingLoadPromise: Promise<Record<string, string[]>> | null = null;
+
+async function loadPhotoMapping(): Promise<Record<string, string[]>> {
+  if (photoMapping !== null) {
+    return photoMapping;
+  }
+  
+  if (mappingLoadPromise) {
+    return mappingLoadPromise;
+  }
+  
+  mappingLoadPromise = fetch('/restaurant-photos/photo-mapping.json')
+    .then(res => res.ok ? res.json() : {})
+    .catch(() => ({}))
+    .then(mapping => {
+      photoMapping = mapping;
+      return mapping;
+    });
+  
+  return mappingLoadPromise;
+}
+
 /**
  * Get photo URL for a restaurant
  * Returns null if no photos available
+ * Only uses local photos from Vercel CDN - no Google API fallback
  */
-export function getRestaurantPhotoUrl(restaurant: Restaurant): string | null {
-  // Check if this restaurant has photos from enrichment
-  const firstPhoto = restaurant.google_data?.photos?.[0];
+export async function getRestaurantPhotoUrl(restaurant: Restaurant): Promise<string | null> {
+  const placeId = restaurant.google_place_id;
   
-  if (firstPhoto?.name) {
-    // Use the Google Places Photo API URL - higher resolution for better quality
-    const apiKey = import.meta.env.VITE_GOOGLE_PLACES_API_KEY || '';
-    return `https://places.googleapis.com/v1/${firstPhoto.name}/media?maxHeightPx=1200&maxWidthPx=1200&key=${apiKey}`;
+  // Try to load local photo mapping
+  const mapping = await loadPhotoMapping();
+  
+  // Check if we have local photos for this restaurant
+  if (mapping[placeId] && mapping[placeId].length > 0) {
+    return mapping[placeId][0]; // Return first local photo
   }
   
-  // No photos available
+  // No local photos available - return null (no Google API fallback)
   return null;
 }
 
 /**
- * Get photo attribution text (required by Google)
+ * Get photo URLs for a restaurant (up to 3 photos)
+ * Returns array of photo URLs from local Vercel CDN only - no Google API fallback
  */
-export function getPhotoAttribution(restaurant: Restaurant): string | null {
-  const firstPhoto = restaurant.google_data?.photos?.[0];
+export async function getRestaurantPhotoUrls(restaurant: Restaurant): Promise<string[]> {
+  const placeId = restaurant.google_place_id;
   
-  if (firstPhoto?.authorAttributions?.[0]) {
-    const author = firstPhoto.authorAttributions[0];
-    return author.displayName || 'Google User';
+  // Try to load local photo mapping
+  const mapping = await loadPhotoMapping();
+  
+  // Check if we have local photos for this restaurant
+  if (mapping[placeId] && mapping[placeId].length > 0) {
+    return mapping[placeId]; // Return all local photos (up to 3)
   }
   
-  return null;
+  // No local photos available - return empty array (no Google API fallback)
+  return [];
+}
+
+/**
+ * Check if a restaurant has photos available in the local mapping
+ * Uses the photo mapping file instead of the photos array
+ */
+export async function hasRestaurantPhoto(restaurant: Restaurant): Promise<boolean> {
+  const placeId = restaurant.google_place_id;
+  
+  // Try to load local photo mapping
+  const mapping = await loadPhotoMapping();
+  
+  // Check if we have local photos for this restaurant
+  return !!(mapping[placeId] && mapping[placeId].length > 0);
 }

@@ -13,6 +13,7 @@ export interface Restaurant {
         address: string;
         country_code: string;
       };
+      google_maps_url?: string;
     };
   };
 

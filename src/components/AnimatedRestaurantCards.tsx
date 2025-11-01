@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useStatsigClient } from '@statsig/react-bindings';
 import { Restaurant } from '../types/restaurant';
-import { getRestaurantPhotoUrl, getPhotoAttribution } from '../utils/photoUtils';
+// Photo utilities are loaded via photo mapping in the component
+
+// Component to handle photo display
+const RestaurantPhoto: React.FC<{ photoUrl: string; restaurantName: string }> = ({ photoUrl, restaurantName }) => {
+  return (
+    <div className="restaurant-photo-container">
+      <img 
+        src={photoUrl} 
+        alt={restaurantName}
+        className="restaurant-photo"
+      />
+    </div>
+  );
+};
 
 interface AnimatedRestaurantCardsProps {
   restaurants: Restaurant[];
@@ -26,6 +39,24 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
 }) => {
   const { client } = useStatsigClient();
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
+  const [photoMapping, setPhotoMapping] = useState<Record<string, string[]>>({});
+
+  // Load photo mapping once to determine which restaurants have photos
+  useEffect(() => {
+    const loadPhotoMapping = async () => {
+      try {
+        const response = await fetch('/restaurant-photos/photo-mapping.json');
+        if (response.ok) {
+          const mapping = await response.json();
+          setPhotoMapping(mapping);
+        }
+      } catch (error) {
+        console.error('Error loading photo mapping:', error);
+      }
+    };
+    
+    loadPhotoMapping();
+  }, []);
 
   // Helper function to calculate scroll depth percentage
   const calculateScrollDepth = () => {
@@ -100,83 +131,82 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
 
   return (
     <div className={`restaurant-cards ${className}`}>
-      {restaurants.map((restaurant, index) => (
-        <div
-          key={`${restaurant.google_place_id}-${index}`}
-          className={`restaurant-card ${
-            visibleCards.includes(index) ? 'restaurant-card-visible' : 'restaurant-card-hidden'
-          } ${getRestaurantPhotoUrl(restaurant) ? 'restaurant-card-with-photo' : ''}`}
-          onClick={() => handleCardClick(restaurant, index)}
-          title="Click to view on Google Maps"
-        >
-          <div className="restaurant-card-content">
-            <div className="restaurant-text-content">
-              <h3 className="restaurant-name">
-                {restaurant.cynthias_pick && '👑 '}
-                {restaurant.google_data.displayName.text}
-              </h3>
-              <div className="restaurant-details">
-                <span className="cuisine">
-                  {restaurant.google_data.types[0] 
-                    ? restaurant.google_data.types[0]
-                        .split('_')
-                        .filter(word => word !== 'restaurant')
-                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                        .join(' ')
-                    : 'N/A'
-                  }
-                </span>
-                <span className="separator">·</span>
-                <span className="neighborhood">
-                  {restaurant.neighborhood_extracted || 'N/A'}
-                </span>
-                <span className="separator">·</span>
-                <span className="price">
-                  {restaurant.price_display || 'N/A'}
-                </span>
-                <span className="separator">·</span>
-                <div className="rating-container">
-                  <span className="rating">{restaurant.google_data.rating || 0}</span>
-                  <div className="stars">
-                    {Array.from({ length: 5 }, (_, i) => {
-                      const rating = restaurant.google_data.rating || 0;
-                      const filledStars = Math.round(rating);
-                      const isFilled = i < filledStars;
-                      return (
-                        <span key={i} className={`star ${isFilled ? 'filled' : 'empty'}`}>
-                          {isFilled ? '⭐' : '☆'}
-                        </span>
-                      );
-                    })}
+      {restaurants.map((restaurant, index) => {
+        // Get first photo URL from mapping (if available)
+        const photoUrls = photoMapping[restaurant.google_place_id];
+        const firstPhotoUrl = photoUrls && photoUrls.length > 0 ? photoUrls[0] : null;
+        const hasPhoto = !!firstPhotoUrl;
+        
+        return (
+          <div
+            key={`${restaurant.google_place_id}-${index}`}
+            className={`restaurant-card ${
+              visibleCards.includes(index) ? 'restaurant-card-visible' : 'restaurant-card-hidden'
+            } ${hasPhoto ? 'restaurant-card-with-photo' : ''}`}
+            onClick={() => handleCardClick(restaurant, index)}
+            title="Click to view on Google Maps"
+          >
+            <div className="restaurant-card-content">
+              <div className="restaurant-text-content">
+                <h3 className="restaurant-name">
+                  {restaurant.cynthias_pick && '👑 '}
+                  {restaurant.google_data.displayName.text}
+                </h3>
+                <div className="restaurant-details">
+                  <span className="cuisine">
+                    {restaurant.google_data.types[0] 
+                      ? restaurant.google_data.types[0]
+                          .split('_')
+                          .filter(word => word !== 'restaurant')
+                          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                          .join(' ')
+                      : 'N/A'
+                    }
+                  </span>
+                  <span className="separator">·</span>
+                  <span className="neighborhood">
+                    {restaurant.neighborhood_extracted || 'N/A'}
+                  </span>
+                  <span className="separator">·</span>
+                  <span className="price">
+                    {restaurant.price_display || 'N/A'}
+                  </span>
+                  <span className="separator">·</span>
+                  <div className="rating-container">
+                    <span className="rating">{restaurant.google_data.rating || 0}</span>
+                    <div className="stars">
+                      {Array.from({ length: 5 }, (_, i) => {
+                        const rating = restaurant.google_data.rating || 0;
+                        const filledStars = Math.round(rating);
+                        const isFilled = i < filledStars;
+                        return (
+                          <span key={i} className={`star ${isFilled ? 'filled' : 'empty'}`}>
+                            {isFilled ? '⭐' : '☆'}
+                          </span>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
-              </div>
-              {(restaurant.google_data.editorialSummary?.text || restaurant.google_data.generativeSummary?.overview?.text) && (
-                <p className="restaurant-summary">
-                  {restaurant.google_data.editorialSummary?.text || restaurant.google_data.generativeSummary?.overview?.text}
-                </p>
-              )}
-              <div className="maps-link-indicator">
-                <span className="maps-text">📍 View on Google Maps</span>
-              </div>
-            </div>
-            {getRestaurantPhotoUrl(restaurant) && (
-              <div className="restaurant-photo-container">
-                <img 
-                  src={getRestaurantPhotoUrl(restaurant) || ''} 
-                  alt={restaurant.google_data.displayName.text}
-                  className="restaurant-photo"
-                />
-                {getPhotoAttribution(restaurant) && (
-                  <div className="photo-attribution">
-                    Photo by {getPhotoAttribution(restaurant)}
-                  </div>
+                {(restaurant.google_data.editorialSummary?.text || restaurant.google_data.generativeSummary?.overview?.text) && (
+                  <p className="restaurant-summary">
+                    {restaurant.google_data.editorialSummary?.text || restaurant.google_data.generativeSummary?.overview?.text}
+                  </p>
                 )}
+                <div className="maps-link-indicator">
+                  <span className="maps-text">📍 View on Google Maps</span>
+                </div>
               </div>
-            )}
+              {hasPhoto && firstPhotoUrl && (
+                <RestaurantPhoto 
+                  photoUrl={firstPhotoUrl} 
+                  restaurantName={restaurant.google_data.displayName.text}
+                />
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

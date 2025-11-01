@@ -371,8 +371,10 @@
   padding: 4px 8px;
   border-radius: 4px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 400;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .restaurant-card:hover {
