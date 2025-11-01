@@ -41,6 +41,73 @@ const FOLLOW_UP_PATTERNS = [
   /show.*better.*rating/i,
 ];
 
+// Patterns that indicate user wants to start a NEW search (not a follow-up)
+// These override the context check
+const NEW_QUERY_PATTERNS = [
+  // Change of mind / correction
+  /^actually/i,
+  /^instead/i,
+  /^never mind/i,
+  /^forget that/i,
+  /^forget about/i,
+  /^change my mind/i,
+  /^changed my mind/i,
+  /^on second thought/i,
+  /^scratch that/i,
+  /^cancel that/i,
+  
+  // Direct requests (starting fresh)
+  /^i want/i,
+  /^i'd like/i,
+  /^i would like/i,
+  /^i need/i,
+  /^i'm looking for/i,
+  /^i'm craving/i,
+  /^looking for/i,
+  /^search for/i,
+  /^find me/i,
+  /^show me(?!\s+more)/i, // "show me" but NOT "show me more" (follow-up pattern checked first)
+  /^can you find/i,
+  /^can i get/i,
+  /^do you have/i,
+  /^want to try/i,
+  /^let's try/i,
+  /^let's/i,
+  /^give me/i,
+  /^recommend/i,
+  /^suggest/i,
+  /^surprise me/i,
+  
+  // New/different intent
+  /^now i want/i,
+  /^now i'd like/i,
+  /^now i'm looking/i,
+  /^new search/i,
+  /^start over/i,
+  /^restart/i,
+  /^something different/i,
+  /^something new/i,
+  
+  // Suggestion/question patterns (new search)
+  /^how about/i,
+  /^what about/i,
+  /^do you know/i,
+  /^are there/i,
+  /^where can i/i,
+  /^what if/i,
+  /^what if i/i,
+  /^maybe/i,
+  /^maybe i want/i,
+  /^maybe we/i,
+  
+  // Wait/hesitation (often precedes new query)
+  /^wait/i,
+  /^wait,? i/i,
+  /^hold on/i,
+  /^um,? i/i,
+  /^hmm,? i/i,
+];
+
 // Patterns that indicate irrelevant queries (non-restaurant related)
 const IRRELEVANT_PATTERNS = [
   /^(hi|hello|hey)$/i,
@@ -85,11 +152,23 @@ const RESTAURANT_KEYWORDS = [
  * Check if query is a follow-up question
  */
 function isFollowUpQuery(query: string, context?: RoutingContext): boolean {
+  // IMPORTANT: Check follow-up patterns FIRST (more specific)
+  // e.g., "show me more" should be follow-up, not caught by "show me" new query pattern
+  if (FOLLOW_UP_PATTERNS.some(pattern => pattern.test(query))) {
+    return true;
+  }
+  
+  // If query starts with patterns that indicate a new search, treat as new query
+  if (NEW_QUERY_PATTERNS.some(pattern => pattern.test(query))) {
+    return false;
+  }
+  
+  // If there's context AND query doesn't indicate a new search, treat as follow-up
   if (context?.previousQuery) {
     return true; // Has previous context
   }
   
-  return FOLLOW_UP_PATTERNS.some(pattern => pattern.test(query));
+  return false;
 }
 
 /**

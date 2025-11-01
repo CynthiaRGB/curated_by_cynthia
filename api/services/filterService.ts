@@ -407,10 +407,23 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
   const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
   const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
   
+  // Normalize accents and handle plural/singular variations for matching
+  // e.g., "crepes" should match "crepe", "crêpe", "crêperie"
+  const normalizeForMatching = (text: string): string => {
+    return text
+      .normalize('NFD') // Decompose characters with diacritics
+      .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+      .replace(/s$/, ''); // Remove trailing 's' for plural handling
+  };
+  
+  const normalizedCuisineKeyword = normalizeForMatching(cuisineKeyword);
+  
   // Check restaurant name for dish-specific keywords (e.g., "yakitori", "katsu")
   // This is important because dish-specific restaurants often have the dish in their name
   // but their type might just be "japanese_restaurant"
-  if (restaurantName.includes(cuisineKeyword)) {
+  // Also check normalized version to handle accents and plurals
+  if (restaurantName.includes(cuisineKeyword) || 
+      normalizeForMatching(restaurantName).includes(normalizedCuisineKeyword)) {
     return true;
   }
   
@@ -436,16 +449,24 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
   const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
   const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
   
+  // normalizedCuisineKeyword already defined above - reuse it
+  
   if (summary.includes(cuisineKeyword) || 
       reviewSummary.includes(cuisineKeyword) || 
-      editorialSummary.includes(cuisineKeyword)) {
+      editorialSummary.includes(cuisineKeyword) ||
+      normalizeForMatching(summary).includes(normalizedCuisineKeyword) ||
+      normalizeForMatching(reviewSummary).includes(normalizedCuisineKeyword) ||
+      normalizeForMatching(editorialSummary).includes(normalizedCuisineKeyword)) {
     return true;
   }
   
-  // Standard type matching
+  // Standard type matching (also check normalized versions)
   return specificType.includes(cuisineKeyword) ||
          primaryType.includes(cuisineKeyword) ||
-         types.some(t => t.includes(cuisineKeyword));
+         types.some(t => t.includes(cuisineKeyword)) ||
+         normalizeForMatching(specificType).includes(normalizedCuisineKeyword) ||
+         normalizeForMatching(primaryType).includes(normalizedCuisineKeyword) ||
+         types.some(t => normalizeForMatching(t).includes(normalizedCuisineKeyword));
 }
 
 /**
