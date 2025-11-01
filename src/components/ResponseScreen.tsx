@@ -168,24 +168,28 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
 
   const handleSubmit = () => {
     if (message.trim() && !isLocalLoading) {
-      let followUpMessage = message.trim();
+      const originalMessage = message.trim();
       
-      // If we have an original city and the follow-up doesn't mention a city, append it
+      // For display in prompt-pill: use the original message without appending city
+      // For backend: pass message and city separately so ChatInterface can construct the full query
+      let queryForBackend = originalMessage;
+      
+      // If we have an original city and the follow-up doesn't mention a city, append it for backend query
       if (originalCity) {
-        const messageLower = followUpMessage.toLowerCase();
+        const messageLower = originalMessage.toLowerCase();
         const cityLower = originalCity.toLowerCase();
         
         // Check if message already contains the city name
         if (!messageLower.includes(cityLower) && !messageLower.includes('nyc') && 
             !(cityLower === 'new york city' && messageLower.includes('new york'))) {
-          followUpMessage = `${followUpMessage} in ${originalCity}`;
+          queryForBackend = `${originalMessage} in ${originalCity}`;
         }
       }
       
-      // Add user message to conversation
+      // Add user message to conversation - display original message without "in [city]"
       const userMessage: Message = {
         id: `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-        text: followUpMessage,
+        text: originalMessage, // Display original message in prompt-pill
         isUser: true,
         timestamp: Date.now()
       };
@@ -200,7 +204,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
         isUser: false,
         timestamp: Date.now() + 1,
         isLoading: true,
-        searchQuery: followUpMessage
+        searchQuery: queryForBackend // Use full query with city for search query tracking
       };
       
       setConversation(prev => [...prev, loadingMessage]);
@@ -208,7 +212,8 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
       lastBotMessageIdRef.current = loadingMessageId;
       
       if (onSendMessage) {
-        onSendMessage(followUpMessage, originalCity || undefined);
+        // Pass original message and city separately - ChatInterface will handle constructing the full query
+        onSendMessage(originalMessage, originalCity || undefined);
       }
       setMessage('');
     }

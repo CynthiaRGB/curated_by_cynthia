@@ -17,14 +17,14 @@ const CUISINE_TYPES = [
   'vegan', 'healthy', 'fast food', 'fine dining', 'bar', 'drink', 'drinks', 
   'cake', 'pastries', 'pastry','bakeries', 'sweets', 'coffee shop', 'bagel', 'bagels', 'sandwich', 'sandwiches',
   // Japanese specific dishes
-  'yakitori', 'katsu', 'tonkatsu', 'tempura', 'udon', 'soba', 'okonomiyaki', 'curry', 'onigiri'
+  'yakitori', 'katsu', 'tonkatsu', 'tempura', 'udon', 'soba', 'okonomiyaki', 'curry', 'onigiri',
   'takoyaki', 'sashimi', 'teriyaki', 'sukiyaki', 'shabu shabu', 'shabushabu', 'kaiseki', 'omurice',
   // French specific dishes
-  'galettes', 'crepes', 'crepe', 'galette', 'crossiant', 'duck confit'
+  'galettes', 'crepes', 'crepe', 'galette', 'crossiant', 'duck confit',
   // Italian specific dishes
-  'pasta', 'risotto', 'pizza'
+  'pasta', 'risotto', 'pizza',
   //Chinese specific dishes
-  'dim sum', 'dimsum', 'hot pot', 'szechuan', 'peking duck'
+  'dim sum', 'dimsum', 'hot pot', 'szechuan', 'peking duck',
   // Other specific dishes
   'pho', 'vermicelli', 'pad thai', 'tacos', 'burritos'
 ];
