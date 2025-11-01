@@ -143,6 +143,12 @@ export function extractKeywords(query: string): ExtractedKeywords {
   );
   if (mealMatch) {
     keywords.mealType = mealMatch as any;
+    
+    // Special handling: If query says "brunch restaurants" (plural), require stricter matching
+    // This indicates user wants brunch-focused restaurants, not just any that serve brunch
+    if (mealMatch === 'brunch' && lowerQuery.includes('brunch restaurant')) {
+      keywords.requiresBrunchFocus = true;
+    }
   }
 
   // Extract cuisine type - check for multi-word phrases first, then single words
@@ -155,6 +161,11 @@ export function extractKeywords(query: string): ExtractedKeywords {
   
   if (multiWordMatch) {
     keywords.cuisineType = multiWordMatch;
+    
+    // Special handling: If query says "coffee shop", require stricter matching
+    if (multiWordMatch === 'coffee shop') {
+      keywords.requiresCoffeeFocus = true;
+    }
   } else {
     // Then try single-word matches
     const cuisineMatch = sortedCuisineTypes.find(cuisine => {
@@ -164,6 +175,53 @@ export function extractKeywords(query: string): ExtractedKeywords {
     });
     if (cuisineMatch) {
       keywords.cuisineType = cuisineMatch;
+      
+      // Special handling: If query says "coffee" or "cafe", require stricter matching
+      if (cuisineMatch === 'coffee' || cuisineMatch === 'cafe') {
+        keywords.requiresCoffeeFocus = true;
+      }
+      
+      // Special handling: If query says "dessert", "pastry", "cake", "pastries", require stricter matching
+      if (['dessert', 'pastry', 'cake', 'pastries', 'bakery', 'bakeries', 'sweets'].includes(cuisineMatch)) {
+        keywords.requiresDessertFocus = true;
+      }
+    }
+  }
+  
+  // Also check for coffee/dessert queries that might not match cuisine types exactly
+  // e.g., "coffee place", "dessert spot", etc.
+  if (!keywords.requiresCoffeeFocus && (lowerQuery.includes('coffee') || lowerQuery.includes('cafe'))) {
+    // Only trigger if it's clearly about coffee/cafe, not just mentioning it in passing
+    if (/coffee\s+(shop|place|spot|cafe|bar)/i.test(lowerQuery) || 
+        /(coffee|cafe)\s+(in|near|around)/i.test(lowerQuery) ||
+        lowerQuery.trim().match(/^(coffee|cafe)/i)) {
+      keywords.requiresCoffeeFocus = true;
+      if (!keywords.cuisineType) {
+        keywords.cuisineType = lowerQuery.includes('coffee shop') ? 'coffee shop' : 'coffee';
+      }
+    }
+  }
+  
+  if (!keywords.requiresDessertFocus && 
+      (lowerQuery.includes('dessert') || lowerQuery.includes('pastry') || 
+       lowerQuery.includes('pastries') || lowerQuery.includes('cake'))) {
+    // Only trigger if it's clearly about dessert, not just mentioning it in passing
+    if (/dessert\s+(place|spot|shop|restaurant)/i.test(lowerQuery) ||
+        /(dessert|pastry|pastries|cake|bakery)\s+(in|near|around)/i.test(lowerQuery) ||
+        lowerQuery.trim().match(/^(dessert|pastry|pastries|cake|bakery)/i)) {
+      keywords.requiresDessertFocus = true;
+      if (!keywords.cuisineType) {
+        // Set cuisine type to the first matching dessert-related term
+        if (lowerQuery.includes('pastry') || lowerQuery.includes('pastries')) {
+          keywords.cuisineType = 'pastry';
+        } else if (lowerQuery.includes('cake')) {
+          keywords.cuisineType = 'cake';
+        } else if (lowerQuery.includes('bakery')) {
+          keywords.cuisineType = 'bakery';
+        } else {
+          keywords.cuisineType = 'dessert';
+        }
+      }
     }
   }
 
@@ -418,6 +476,11 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
   const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
   const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
   
+  // Get summaries early (needed for special cuisine matching)
+  const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
+  const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
+  const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
+  
   // Normalize accents and handle plural/singular variations for matching
   // e.g., "crepes" should match "crepe", "crêpe", "crêperie"
   const normalizeForMatching = (text: string): string => {
@@ -445,14 +508,120 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
            specificType === 'bar';
   }
   
-  // For "coffee shop" queries, be very specific
-  if (cuisineKeyword === 'coffee shop') {
-    return primaryType.includes('cafe') || 
-           primaryType.includes('coffee') ||
-           specificType.includes('cafe') ||
-           specificType.includes('coffee') ||
-           types.some(t => t.includes('cafe') || t.includes('coffee')) ||
-           restaurant.google_data.servesCoffee === true;
+  // For "coffee shop"/"coffee"/"cafe" queries, apply strict matching if required
+  if (cuisineKeyword === 'coffee shop' || cuisineKeyword === 'coffee' || cuisineKeyword === 'cafe') {
+    // Basic check: restaurant must serve coffee or be a cafe
+    const servesCoffee = restaurant.google_data.servesCoffee;
+    const isCafe = types.some(t => t.includes('cafe') || t.includes('coffee'));
+    
+    if (!servesCoffee && !isCafe) {
+      return false;
+    }
+    
+    // If query requires coffee focus (e.g., "coffee shop", "coffee place"), apply stricter criteria
+    if (keywords.requiresCoffeeFocus) {
+      // Check metadata indicators (most reliable)
+      const hasCoffeeType = types.some(t => 
+        t.includes('cafe') || 
+        t.includes('coffee') || 
+        t === 'cafe' || 
+        t === 'coffee_shop'
+      );
+      
+      // Check if coffee/cafe is mentioned prominently (name or summaries)
+      const mentionsCoffee = restaurantName.includes('coffee') ||
+                           restaurantName.includes('cafe') ||
+                           restaurantName.includes('café') ||
+                           summary.includes('coffee') ||
+                           summary.includes('cafe') ||
+                           summary.includes('café') ||
+                           reviewSummary.includes('coffee') ||
+                           reviewSummary.includes('cafe') ||
+                           reviewSummary.includes('café') ||
+                           editorialSummary.includes('coffee') ||
+                           editorialSummary.includes('cafe') ||
+                           editorialSummary.includes('café');
+      
+      // Restaurant must meet at least one of these criteria to be coffee-focused
+      const isCoffeeFocused = hasCoffeeType || mentionsCoffee;
+      
+      // If none of these indicators are present, exclude it (not a coffee-focused restaurant)
+      if (!isCoffeeFocused) {
+        return false;
+      }
+    }
+    
+    return true;
+  }
+  
+  // For dessert-related queries (dessert, pastry, cake, pastries, bakery, sweets), apply strict matching if required
+  if (['dessert', 'pastry', 'cake', 'pastries', 'bakery', 'bakeries', 'sweets'].includes(cuisineKeyword)) {
+    // Basic check: restaurant must serve dessert or be a bakery/dessert shop
+    const servesDessert = restaurant.google_data.servesDessert;
+    const isBakery = types.some(t => 
+      t.includes('bakery') || 
+      t.includes('dessert') || 
+      t.includes('ice_cream') ||
+      t === 'bakery' ||
+      t === 'dessert_shop' ||
+      t === 'ice_cream_shop'
+    );
+    
+    if (!servesDessert && !isBakery) {
+      return false;
+    }
+    
+    // If query requires dessert focus (e.g., "dessert place", "pastry shop"), apply stricter criteria
+    if (keywords.requiresDessertFocus) {
+      // Check metadata indicators (most reliable)
+      const hasDessertType = types.some(t => 
+        t.includes('bakery') || 
+        t.includes('dessert') || 
+        t.includes('ice_cream') ||
+        t.includes('pastry') ||
+        t === 'bakery' ||
+        t === 'dessert_shop' ||
+        t === 'ice_cream_shop' ||
+        t === 'pastry_shop'
+      );
+      
+      // Check if dessert-related terms are mentioned prominently (name or summaries)
+      const mentionsDessert = restaurantName.includes('dessert') ||
+                             restaurantName.includes('pastry') ||
+                             restaurantName.includes('pastries') ||
+                             restaurantName.includes('cake') ||
+                             restaurantName.includes('bakery') ||
+                             restaurantName.includes('sweet') ||
+                             restaurantName.includes('cream') ||
+                             summary.includes('dessert') ||
+                             summary.includes('pastry') ||
+                             summary.includes('pastries') ||
+                             summary.includes('cake') ||
+                             summary.includes('bakery') ||
+                             summary.includes('sweet') ||
+                             reviewSummary.includes('dessert') ||
+                             reviewSummary.includes('pastry') ||
+                             reviewSummary.includes('pastries') ||
+                             reviewSummary.includes('cake') ||
+                             reviewSummary.includes('bakery') ||
+                             reviewSummary.includes('sweet') ||
+                             editorialSummary.includes('dessert') ||
+                             editorialSummary.includes('pastry') ||
+                             editorialSummary.includes('pastries') ||
+                             editorialSummary.includes('cake') ||
+                             editorialSummary.includes('bakery') ||
+                             editorialSummary.includes('sweet');
+      
+      // Restaurant must meet at least one of these criteria to be dessert-focused
+      const isDessertFocused = hasDessertType || mentionsDessert;
+      
+      // If none of these indicators are present, exclude it (not a dessert-focused restaurant)
+      if (!isDessertFocused) {
+        return false;
+      }
+    }
+    
+    return true;
   }
   
   // For "asian" queries, match any Asian cuisine type
@@ -477,11 +646,7 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
   }
   
   // Check restaurant summary/description for mentions (helps with dish-specific searches)
-  const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
-  const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
-  const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
-  
-  // normalizedCuisineKeyword already defined above - reuse it
+  // Summaries already defined at top of function - reuse them
   
   if (summary.includes(cuisineKeyword) || 
       reviewSummary.includes(cuisineKeyword) || 
@@ -546,6 +711,13 @@ function matchesAmenities(restaurant: Restaurant, keywords: ExtractedKeywords): 
     }
   }
 
+  // Check dessert focus requirements (separate from cuisine matching)
+  if (keywords.requiresDessertFocus && keywords.cuisineType && 
+      ['dessert', 'pastry', 'cake', 'pastries', 'bakery', 'bakeries', 'sweets'].includes(keywords.cuisineType.toLowerCase())) {
+    // This will be handled in matchesCuisine, but we can add additional checks here if needed
+    // For now, let matchesCuisine handle it
+  }
+
   return true;
 }
 
@@ -560,7 +732,52 @@ function matchesMealType(restaurant: Restaurant, keywords: ExtractedKeywords): b
   const mealType = keywords.mealType.toLowerCase();
   
   if (mealType === 'brunch') {
-    return restaurant.google_data.servesBrunch === true;
+    // Basic check: restaurant must serve brunch
+    if (!restaurant.google_data.servesBrunch) {
+      return false;
+    }
+    
+    // If query requires brunch focus (e.g., "brunch restaurants"), apply stricter criteria
+    if (keywords.requiresBrunchFocus) {
+      const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
+      const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
+      const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
+      const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
+      
+      // Check metadata indicators first (most reliable)
+      const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
+      const hasBrunchRestaurantType = types.includes('brunch_restaurant');
+      
+      // Check for dedicated brunch hours
+      const googleData = restaurant.google_data as any; // Type assertion needed for secondary hours
+      const hasBrunchHours = googleData.currentSecondaryOpeningHours?.some(
+        (hours: any) => hours.secondaryHoursType === 'BRUNCH'
+      ) || googleData.secondaryOpeningHours?.some(
+        (hours: any) => hours.secondaryHoursType === 'BRUNCH'
+      );
+      
+      // Check for weekend_brunch occasion tag
+      const hasWeekendBrunchTag = restaurant.occasion_tags?.includes('weekend_brunch');
+      
+      // Check if brunch is mentioned prominently (name or summaries)
+      const mentionsBrunch = restaurantName.includes('brunch') ||
+                            summary.includes('brunch') ||
+                            reviewSummary.includes('brunch') ||
+                            editorialSummary.includes('brunch');
+      
+      // Restaurant must meet at least one of these criteria to be brunch-focused
+      const isBrunchFocused = hasBrunchRestaurantType || 
+                             hasBrunchHours || 
+                             hasWeekendBrunchTag || 
+                             mentionsBrunch;
+      
+      // If none of these indicators are present, exclude it (not a brunch-focused restaurant)
+      if (!isBrunchFocused) {
+        return false;
+      }
+    }
+    
+    return true;
   }
   
   if (mealType === 'breakfast') {

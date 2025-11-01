@@ -142,5 +142,8 @@ export interface ExtractedKeywords {
   requiresInstagrammable?: boolean;
   requiresMichelin?: boolean;
   requiresCynthiasPick?: boolean;
+  requiresBrunchFocus?: boolean; // For "brunch restaurants" queries - stricter matching
+  requiresCoffeeFocus?: boolean; // For "coffee shop"/"coffee"/"cafe" queries - stricter matching
+  requiresDessertFocus?: boolean; // For "dessert"/"pastry"/"cake" queries - stricter matching
 }
 export type City = 'New York City' | 'Tokyo' | 'Paris' | 'Seoul';
