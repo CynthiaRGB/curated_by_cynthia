@@ -132,12 +132,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const apiStartTime = Date.now();
 
     // Step 1: Decide routing strategy
+    // Pass the CURRENT query to detect "show me more" pattern, but we'll use previous query for filtering
     const routingContext: RoutingContext | undefined = context ? {
       previousQuery: context.previousQuery,
       previousResults: context.previousResults?.map((r: any) => r as Restaurant),
       previousRoute: context.previousRoute,
     } : undefined;
     
+    // Use current query for routing decision (to detect "show me more" pattern)
+    // But for "show me more", we'll force filterService route and use previous query for filtering
     const routeDecision = decideRoute(query, routingContext);
     console.log('[Routing] Decision:', routeDecision.route, '-', routeDecision.reason);
 
@@ -152,13 +155,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Step 3: Always pre-filter with filterService first (by city and other criteria)
+    // For "show me more" queries, use the previous query to preserve filters (cuisine, location, etc.)
+    const queryToFilter = isShowMeMoreQuery(query) && context?.previousQuery 
+      ? context.previousQuery 
+      : query;
+    
     console.log('[API] Pre-filtering restaurants with filterService');
-    let filteredRestaurants = preFilterRestaurants(query);
+    console.log(`[API] Using query for filtering: "${queryToFilter}" (original query: "${query}")`);
+    let filteredRestaurants = preFilterRestaurants(queryToFilter);
     console.log(`[API] Filter service returned ${filteredRestaurants.length} restaurants`);
 
-    // Step 4: Handle "show me more" follow-ups
+    // Step 4: Handle "show me more" follow-ups - exclude previously shown results
     if (isShowMeMoreQuery(query) && context?.previousResults) {
       const previousRestaurants = (context.previousResults as Restaurant[]) || [];
+      console.log(`[API] Excluding ${previousRestaurants.length} previously shown restaurants`);
       filteredRestaurants = getMoreRestaurants(filteredRestaurants, previousRestaurants);
       console.log(`[API] After excluding previous results: ${filteredRestaurants.length} restaurants`);
     }
@@ -173,11 +183,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Step 5: Execute routing decision
+    // FORCE filterService route for "show me more" queries - never call Claude
+    const shouldUseFilterServiceOnly = isShowMeMoreQuery(query);
+    
     let finalRestaurants: Restaurant[] = [];
     let summary = '';
     let usedClaude = false;
 
-    if (routeDecision.route === 'claude' && routeDecision.needsClaude) {
+    if (!shouldUseFilterServiceOnly && routeDecision.route === 'claude' && routeDecision.needsClaude) {
       // Use Claude API for nuanced queries
       console.log('[API] Using Claude API for nuanced query');
       usedClaude = true;
