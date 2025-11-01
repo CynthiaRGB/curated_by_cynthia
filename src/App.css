@@ -129,8 +129,9 @@
 .bottom-row {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
+  gap: 8px;
 }
 
 /* Pills container */
