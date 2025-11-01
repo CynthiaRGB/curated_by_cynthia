@@ -1,8 +1,39 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useStatsigClient } from '@statsig/react-bindings';
 import { Restaurant, City } from '../types/restaurant';
 import { TypewriterText } from './TypewriterText';
 import { AnimatedRestaurantCards } from './AnimatedRestaurantCards';
+
+// Helper function to extract city from a query string
+const extractCityFromQuery = (query: string): City | null => {
+  const lowerQuery = query.toLowerCase();
+  
+  if (lowerQuery.includes('new york city') || lowerQuery.includes('nyc') || lowerQuery.includes('new york')) {
+    return 'New York City';
+  } else if (lowerQuery.includes('tokyo')) {
+    return 'Tokyo';
+  } else if (lowerQuery.includes('paris')) {
+    return 'Paris';
+  } else if (lowerQuery.includes('seoul')) {
+    return 'Seoul';
+  }
+  
+  // Try to extract from "in [city]" pattern
+  const match = query.match(/in\s+([^,\s]+(?:\s+[^,\s]+)*)/i);
+  if (match) {
+    const location = match[1].trim();
+    if (location.toLowerCase().includes('new york') || location.toLowerCase().includes('nyc')) {
+      return 'New York City';
+    } else if (location.toLowerCase().includes('tokyo')) {
+      return 'Tokyo';
+    } else if (location.toLowerCase().includes('paris')) {
+      return 'Paris';
+    } else if (location.toLowerCase().includes('seoul')) {
+      return 'Seoul';
+    }
+  }
+  
+  return null;
+};
 
 // BotResponse component to coordinate typewriter and restaurant card timing
 const BotResponse: React.FC<{ 
@@ -67,6 +98,7 @@ interface Message {
   timestamp: number;
   restaurants?: Restaurant[]; // Add restaurants to bot messages
   isLoading?: boolean; // Loading state for bot messages
+  searchQuery?: string; // Store the query for this specific message
 }
 
 interface ResponseScreenProps {
@@ -82,8 +114,6 @@ interface ResponseScreenProps {
   isLoading?: boolean; // Loading state for new searches
 }
 
-const CITIES: City[] = ['Tokyo', 'New York City', 'Paris', 'Seoul'];
-
 export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   userPrompt,
   botResponse,
@@ -96,11 +126,13 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   promptClickTimestamp = null,
   isLoading: isExternalLoading = false,
 }) => {
-  const { client } = useStatsigClient();
   const [message, setMessage] = useState('');
-  const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [isLocalLoading, setIsLocalLoading] = useState(false);
-  const [hasSelectedCityInSession, setHasSelectedCityInSession] = useState(false);
+  // Track the original city from the first query
+  const [originalCity, setOriginalCity] = useState<City | null>(() => {
+    const city = extractCityFromQuery(searchQuery || userPrompt);
+    return city;
+  });
   const [conversation, setConversation] = useState<Message[]>(() => {
     const messages: Message[] = [
       { id: 'user-1', text: userPrompt, isUser: true, timestamp: Date.now() }
@@ -113,7 +145,8 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
         text: 'Curating the best spots for you...',
         isUser: false,
         timestamp: Date.now() + 1,
-        isLoading: true
+        isLoading: true,
+        searchQuery: searchQuery || userPrompt
       });
     } else {
       messages.push({
@@ -121,22 +154,38 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
         text: botResponse,
         isUser: false,
         timestamp: Date.now() + 1,
-        restaurants: restaurants
+        restaurants: restaurants,
+        searchQuery: searchQuery || userPrompt
       });
     }
     
     return messages;
   });
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  
+  // Track the last bot response ID to detect new results
+  const lastBotMessageIdRef = useRef<string>('bot-1');
 
   const handleSubmit = () => {
-    if ((message.trim() || selectedCity) && !isLocalLoading) {
-      const newMessage = message.trim() || `Recommend me restaurants in ${selectedCity}`;
+    if (message.trim() && !isLocalLoading) {
+      let followUpMessage = message.trim();
+      
+      // If we have an original city and the follow-up doesn't mention a city, append it
+      if (originalCity) {
+        const messageLower = followUpMessage.toLowerCase();
+        const cityLower = originalCity.toLowerCase();
+        
+        // Check if message already contains the city name
+        if (!messageLower.includes(cityLower) && !messageLower.includes('nyc') && 
+            !(cityLower === 'new york city' && messageLower.includes('new york'))) {
+          followUpMessage = `${followUpMessage} in ${originalCity}`;
+        }
+      }
       
       // Add user message to conversation
       const userMessage: Message = {
         id: `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-        text: newMessage,
+        text: followUpMessage,
         isUser: true,
         timestamp: Date.now()
       };
@@ -144,63 +193,82 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
       setConversation(prev => [...prev, userMessage]);
       
       // Add loading bot message
+      const loadingMessageId = `bot-loading-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       const loadingMessage: Message = {
-        id: `bot-loading-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        id: loadingMessageId,
         text: 'Finding the perfect restaurants for you...',
         isUser: false,
-        timestamp: Date.now() + 1
+        timestamp: Date.now() + 1,
+        isLoading: true,
+        searchQuery: followUpMessage
       };
       
       setConversation(prev => [...prev, loadingMessage]);
+      setIsLocalLoading(true);
+      lastBotMessageIdRef.current = loadingMessageId;
       
       if (onSendMessage) {
-        onSendMessage(message.trim(), selectedCity || undefined);
+        onSendMessage(followUpMessage, originalCity || undefined);
       }
       setMessage('');
-      setSelectedCity(null);
     }
   };
 
-  const handlePillClick = (city: City) => {
-    console.log('ResponseScreen - Pill clicked:', city);
-    
-    // Log city_selected event with comprehensive data
-    client.logEvent("city_selected", city, {
-      city: city,
-      selection_method: "button",
-      is_first_selection: (!hasSelectedCityInSession).toString(),
-      timestamp: new Date().toISOString()
-    });
-    
-    setSelectedCity(city);
-    setHasSelectedCityInSession(true); // Mark that user has selected a city in this session
-    
-    // Add user message to conversation
-    const userMessage: Message = {
-      id: `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      text: `Recommend me restaurants in ${city}`,
-      isUser: true,
-      timestamp: Date.now()
-    };
-    
-    setConversation(prev => [...prev, userMessage]);
-    
-    // Add loading bot message
-    const loadingMessage: Message = {
-      id: `bot-loading-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      text: 'Finding the perfect restaurants for you...',
-      isUser: false,
-      timestamp: Date.now() + 1
-    };
-    
-    setConversation(prev => [...prev, loadingMessage]);
-    
-    if (onSendMessage) {
-      onSendMessage('', city);
-    }
-  };
+  const isReadyToSubmit = message.trim().length > 0 && !isLocalLoading;
 
-  const isReadyToSubmit = (message.trim().length > 0 || selectedCity) && !isLocalLoading;
+  // Update conversation when new results arrive (for follow-up queries or initial load)
+  useEffect(() => {
+    // Handle follow-up queries: update loading message with results
+    if (isLocalLoading && !isExternalLoading && botResponse) {
+      setConversation(prev => {
+        // Find and replace the loading message
+        const updated = prev.map(msg => {
+          if (msg.isLoading && msg.id === lastBotMessageIdRef.current) {
+            const newId = msg.id.replace('loading', 'response');
+            lastBotMessageIdRef.current = newId;
+            return {
+              id: newId,
+              text: botResponse,
+              isUser: false,
+              timestamp: Date.now(),
+              restaurants: restaurants,
+              isLoading: false,
+              searchQuery: msg.searchQuery || searchQuery // Preserve the query from loading message
+            };
+          }
+          return msg;
+        });
+        return updated;
+      });
+      setIsLocalLoading(false);
+    }
+    
+    // Handle initial load: replace initial loading message when results arrive
+    if (isExternalLoading === false && botResponse && restaurants.length > 0) {
+      setConversation(prev => {
+        // Find the initial loading message (if it exists) and replace it
+        const hasInitialLoading = prev.some(msg => msg.id === 'bot-loading' && msg.isLoading);
+        if (hasInitialLoading) {
+          return prev.map(msg => {
+            if (msg.id === 'bot-loading' && msg.isLoading) {
+              lastBotMessageIdRef.current = 'bot-1';
+              return {
+                id: 'bot-1',
+                text: botResponse,
+                isUser: false,
+                timestamp: Date.now(),
+                restaurants: restaurants,
+                isLoading: false,
+                searchQuery: msg.searchQuery || searchQuery
+              };
+            }
+            return msg;
+          });
+        }
+        return prev;
+      });
+    }
+  }, [botResponse, restaurants, isExternalLoading, isLocalLoading, searchQuery]);
 
   // Auto-resize textarea based on content
   useEffect(() => {
@@ -226,7 +294,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
               <BotResponse 
                 text={msg.text} 
                 restaurants={msg.restaurants}
-                searchQuery={searchQuery}
+                searchQuery={msg.searchQuery || searchQuery}
                 searchResultsTimestamp={msg.timestamp}
                 originalPromptText={originalPromptText}
                 promptClickTimestamp={promptClickTimestamp}
@@ -262,17 +330,6 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
               />
             </div>
             <div className="bottom-row">
-              <div className="pills-container">
-                {CITIES.map((city) => (
-                  <button
-                    key={city}
-                    className={`pill ${selectedCity === city ? 'selected' : ''}`}
-                    onClick={() => handlePillClick(city)}
-                  >
-                    <span className="pill-text">{city}</span>
-                  </button>
-                ))}
-              </div>
               <button
                 className={`submit-button ${!isReadyToSubmit ? 'disabled' : ''}`}
                 onClick={handleSubmit}

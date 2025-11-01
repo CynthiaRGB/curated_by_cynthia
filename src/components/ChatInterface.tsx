@@ -21,6 +21,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const [, setUsedClaude] = useState(false);
   const [originalPromptText, setOriginalPromptText] = useState<string | null>(null);
   const [promptClickTimestamp, setPromptClickTimestamp] = useState<number | null>(null);
+  const [isInConversation, setIsInConversation] = useState(false); // Track if we're in a conversation
 
   // Helper function to detect if a query came from a prompt
   const checkIfPromptQuery = (query: string): boolean => {
@@ -138,22 +139,28 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           response_time_ms: responseTime.toString()
         });
 
-        setRestaurants(restaurants);
-        setBotResponse(data.summary + ' ⚡');
-        setUsedClaude(false);
-      } else {
-        // Log search_no_results event when no results
-        client.logEvent('search_no_results', fullQuery, {
-          query: fullQuery,
-          timestamp: new Date().toISOString()
-        });
+             setRestaurants(restaurants);
+             setBotResponse(data.summary + ' ⚡');
+             setUsedClaude(false);
+             setIsInConversation(true); // Mark that we're in a conversation
+           } else {
+             // Log search_no_results event when no results
+             client.logEvent('search_no_results', fullQuery, {
+               query: fullQuery,
+               timestamp: new Date().toISOString()
+             });
 
-        setRestaurants([]);
-        setBotResponse(data.summary || `No spots found for "${fullQuery}". Try a different search!`);
-        setUsedClaude(false);
-      }
+             setRestaurants([]);
+             setBotResponse(data.summary || `No spots found for "${fullQuery}". Try a different search!`);
+             setUsedClaude(false);
+             setIsInConversation(true); // Mark that we're in a conversation even with no results
+           }
 
-      setResponseScreenKey(prev => prev + 1);
+           // Only increment key for first query, not for follow-ups
+           // This preserves the ResponseScreen instance and conversation state
+           if (!isInConversation) {
+             setResponseScreenKey(prev => prev + 1);
+           }
       
     } catch (error) {
       console.error('Error getting recommendations:', error);
@@ -196,6 +203,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           setBotResponse('');
           setOriginalPromptText(null);
           setPromptClickTimestamp(null);
+          setIsInConversation(false); // Reset conversation state
+          setResponseScreenKey(prev => prev + 1); // Increment key to reset ResponseScreen
         }}
         onSendMessage={handleSendMessage}
       />
