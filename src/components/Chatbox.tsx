@@ -7,7 +7,7 @@ interface ChatboxProps {
   isLoading?: boolean;
 }
 
-const CITIES: City[] = ['Tokyo', 'New York City', 'Paris', 'Seoul'];
+const CITIES: City[] = ['New York City', 'Tokyo', 'Paris', 'Seoul'];
 
 // City-specific search prompts
 const CITY_PROMPTS: Record<City, string[]> = {
@@ -42,7 +42,7 @@ export const Chatbox: React.FC<ChatboxProps> = ({
 }) => {
   const { client } = useStatsigClient();
   const [message, setMessage] = useState('');
-  const [selectedCity, setSelectedCity] = useState<City | null>(null);
+  const [selectedCity, setSelectedCity] = useState<City>('New York City');
   const [visiblePrompts, setVisiblePrompts] = useState<number[]>([]);
   const [hasSelectedCityInSession, setHasSelectedCityInSession] = useState(false);
   const [hasClickedPromptInSession, setHasClickedPromptInSession] = useState(false);
@@ -50,48 +50,41 @@ export const Chatbox: React.FC<ChatboxProps> = ({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = () => {
-    if ((message.trim() || selectedCity) && !isLoading) {
-      let fullMessage = message.trim();
-      
-      // If no message but city is selected, use the placeholder text
-      if (!fullMessage && selectedCity) {
-        fullMessage = `Recommend me restaurants in ${selectedCity}`;
-      }
-      // If there's a message and a selected city, append the city to the message
-      else if (fullMessage && selectedCity) {
-        fullMessage = `${fullMessage} in ${selectedCity}`;
-      }
-      
-      onSendMessage(fullMessage, selectedCity || undefined);
+    if (message.trim() && !isLoading) {
+      const fullMessage = `${message.trim()} in ${selectedCity}`;
+      onSendMessage(fullMessage, selectedCity);
       setMessage('');
-      setSelectedCity(null);
+      // Keep the city selected - don't clear it
     }
   };
 
   const handlePillClick = (city: City) => {
-    // Log city_selected event with comprehensive data
-    client.logEvent("city_selected", city, {
-      city: city,
-      selection_method: "button",
-      is_first_selection: (!hasSelectedCityInSession).toString(),
-      timestamp: new Date().toISOString()
-    });
-    
-    setSelectedCity(city);
-    setVisiblePrompts([]); // Reset visible prompts
-    setHasSelectedCityInSession(true); // Mark that user has selected a city in this session
-    // Don't automatically navigate - show prompts instead
+    // Only change if clicking a different city (prevent unselecting)
+    if (city !== selectedCity) {
+      // Log city_selected event with comprehensive data
+      client.logEvent("city_selected", city, {
+        city: city,
+        selection_method: "button",
+        is_first_selection: (!hasSelectedCityInSession).toString(),
+        timestamp: new Date().toISOString()
+      });
+      
+      setSelectedCity(city);
+      setVisiblePrompts([]); // Reset visible prompts
+      setHasSelectedCityInSession(true); // Mark that user has selected a city in this session
+    }
+    // Don't allow unselecting - always keep a city selected
   };
 
   const handlePromptClick = (prompt: string) => {
     // Find the position of the prompt in the current city's prompts
-    const currentCityPrompts = selectedCity ? CITY_PROMPTS[selectedCity] : [];
+    const currentCityPrompts = CITY_PROMPTS[selectedCity];
     const promptPosition = currentCityPrompts.findIndex(p => p === prompt) + 1; // 1-indexed
     
     // Log suggested_prompt_clicked event with comprehensive data
     client.logEvent("suggested_prompt_clicked", prompt, {
       prompt_text: prompt,
-      city: selectedCity || 'Unknown',
+      city: selectedCity,
       prompt_position: promptPosition.toString(),
       is_first_prompt_click: (!hasClickedPromptInSession).toString(),
       timestamp: new Date().toISOString()
@@ -102,26 +95,23 @@ export const Chatbox: React.FC<ChatboxProps> = ({
     
     // Store the original prompt text for tracking purposes
     // We'll pass this through the search flow to track if it leads to restaurant clicks
-    const fullPromptText = selectedCity ? `${prompt} in ${selectedCity}` : prompt;
+    const fullPromptText = `${prompt} in ${selectedCity}`;
     
     // Send the prompt as the message
-    onSendMessage(fullPromptText, selectedCity || undefined);
+    onSendMessage(fullPromptText, selectedCity);
     setMessage('');
-    setSelectedCity(null);
+    // Keep the city selected - don't clear it
   };
 
 
-  const isReadyToSubmit = (message.trim().length > 0 || selectedCity) && !isLoading;
+  const isReadyToSubmit = message.trim().length > 0 && !isLoading;
 
   // Generate dynamic placeholder text
   const getPlaceholderText = () => {
-    if (selectedCity && hoveredPrompt) {
+    if (hoveredPrompt) {
       return `${hoveredPrompt} in ${selectedCity}`;
     }
-    if (selectedCity) {
-      return `Recommend me restaurants in ${selectedCity}`;
-    }
-    return "Recommend me restaurants in ...";
+    return `Recommend me restaurants in ${selectedCity}`;
   };
 
   // Auto-resize textarea based on content
@@ -132,27 +122,24 @@ export const Chatbox: React.FC<ChatboxProps> = ({
     }
   }, [message]);
 
-  // Staggered animation for prompts
+  // Staggered animation for prompts - always show prompts since city is always selected
   useEffect(() => {
-    if (selectedCity) {
-      const prompts = CITY_PROMPTS[selectedCity];
-      
-      const revealNext = (index: number) => {
-        if (index < prompts.length) {
-          setVisiblePrompts(prev => [...prev, index]);
-          setTimeout(() => revealNext(index + 1), 50); // 50ms delay between each prompt
-        }
-      };
-      
-      // Start revealing prompts immediately
-      revealNext(0);
-      
-      return () => {
-        // Cleanup function
-      };
-    } else {
-      setVisiblePrompts([]);
-    }
+    const prompts = CITY_PROMPTS[selectedCity];
+    
+    const revealNext = (index: number) => {
+      if (index < prompts.length) {
+        setVisiblePrompts(prev => [...prev, index]);
+        setTimeout(() => revealNext(index + 1), 50); // 50ms delay between each prompt
+      }
+    };
+    
+    // Reset and start revealing prompts immediately
+    setVisiblePrompts([]);
+    revealNext(0);
+    
+    return () => {
+      // Cleanup function
+    };
   }, [selectedCity]);
 
   return (
@@ -171,7 +158,7 @@ export const Chatbox: React.FC<ChatboxProps> = ({
                 }
               }}
               placeholder={getPlaceholderText()}
-              className={`text-input ${selectedCity && hoveredPrompt ? 'dynamic-placeholder' : ''}`}
+              className={`text-input ${hoveredPrompt ? 'dynamic-placeholder' : ''}`}
               disabled={isLoading}
               autoFocus
               rows={1}
@@ -205,40 +192,38 @@ export const Chatbox: React.FC<ChatboxProps> = ({
         </div>
       </div>
       
-      {/* City-specific prompts - positioned below chatbox */}
-      {selectedCity && (
-        <div className="city-prompts-container">
-          <div className="city-prompts-list">
-            {CITY_PROMPTS[selectedCity].map((prompt, index) => (
-              <div
-                key={index}
-                className={`city-prompt-item ${visiblePrompts.includes(index) ? 'prompt-visible' : 'prompt-hidden'}`}
-                onClick={() => handlePromptClick(prompt)}
-                onMouseEnter={() => setHoveredPrompt(prompt)}
-                onMouseLeave={() => setHoveredPrompt(null)}
-              >
-                <div className="prompt-text">
-                  <span>{prompt}</span>
-                  <svg 
-                    className="prompt-arrow" 
-                    width="16" 
-                    height="16" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round"
-                  >
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12,5 19,12 12,19"></polyline>
-                  </svg>
-                </div>
+      {/* City-specific prompts - positioned below chatbox, always shown */}
+      <div className="city-prompts-container">
+        <div className="city-prompts-list">
+          {CITY_PROMPTS[selectedCity].map((prompt, index) => (
+            <div
+              key={index}
+              className={`city-prompt-item ${visiblePrompts.includes(index) ? 'prompt-visible' : 'prompt-hidden'}`}
+              onClick={() => handlePromptClick(prompt)}
+              onMouseEnter={() => setHoveredPrompt(prompt)}
+              onMouseLeave={() => setHoveredPrompt(null)}
+            >
+              <div className="prompt-text">
+                <span>{prompt}</span>
+                <svg 
+                  className="prompt-arrow" 
+                  width="16" 
+                  height="16" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12,5 19,12 12,19"></polyline>
+                </svg>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };
