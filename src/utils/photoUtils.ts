@@ -13,9 +13,9 @@ export function getRestaurantPhotoUrl(restaurant: Restaurant): string | null {
   const firstPhoto = restaurant.google_data?.photos?.[0];
   
   if (firstPhoto?.name) {
-    // Use the Google Places Photo API URL
+    // Use the Google Places Photo API URL - higher resolution for better quality
     const apiKey = import.meta.env.VITE_GOOGLE_PLACES_API_KEY || '';
-    return `https://places.googleapis.com/v1/${firstPhoto.name}/media?maxHeightPx=400&maxWidthPx=400&key=${apiKey}`;
+    return `https://places.googleapis.com/v1/${firstPhoto.name}/media?maxHeightPx=1200&maxWidthPx=1200&key=${apiKey}`;
   }
   
   // No photos available

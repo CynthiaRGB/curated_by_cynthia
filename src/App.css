@@ -318,18 +318,35 @@
   cursor: pointer;
 }
 
-/* Restaurant photo container for Cynthia's picks */
+/* Restaurant card with photo - side-by-side layout */
+.restaurant-card-with-photo .restaurant-card-content {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.restaurant-text-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0; /* Allows text to shrink */
+}
+
+/* Restaurant photo container for Cynthia's picks - positioned on the right */
 .restaurant-photo-container {
-  width: 100%;
-  margin: -16px -20px 12px -20px; /* Negative margins to extend to card edges */
+  flex-shrink: 0;
+  width: 200px;
+  height: 200px;
   position: relative;
-  border-radius: 12px 12px 0 0;
+  border-radius: 8px;
   overflow: hidden;
 }
 
 .restaurant-photo {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
@@ -374,6 +391,7 @@
   color: #1A1818;
   width: 100%;
   margin: 0;
+  word-wrap: break-word;
 }
 
 .restaurant-details {
