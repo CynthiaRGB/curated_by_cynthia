@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useStatsigClient } from '@statsig/react-bindings';
 import { Restaurant } from '../types/restaurant';
+import { getRestaurantPhotoUrl, getPhotoAttribution } from '../utils/photoUtils';
 
 interface AnimatedRestaurantCardsProps {
   restaurants: Restaurant[];
@@ -108,6 +109,20 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
           onClick={() => handleCardClick(restaurant, index)}
           title="Click to view on Google Maps"
         >
+          {restaurant.cynthias_pick && getRestaurantPhotoUrl(restaurant) && (
+            <div className="restaurant-photo-container">
+              <img 
+                src={getRestaurantPhotoUrl(restaurant) || ''} 
+                alt={restaurant.google_data.displayName.text}
+                className="restaurant-photo"
+              />
+              {getPhotoAttribution(restaurant) && (
+                <div className="photo-attribution">
+                  Photo by {getPhotoAttribution(restaurant)}
+                </div>
+              )}
+            </div>
+          )}
           <h3 className="restaurant-name">
             {restaurant.cynthias_pick && '👑 '}
             {restaurant.google_data.displayName.text}

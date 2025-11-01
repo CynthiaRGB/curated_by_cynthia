@@ -75,6 +75,16 @@ export interface Restaurant {
         text: string;
       };
     }>;
+    photos?: Array<{
+      name: string;
+      widthPx?: number;
+      heightPx?: number;
+      authorAttributions?: Array<{
+        displayName?: string;
+        uri?: string;
+        photoUri?: string;
+      }>;
+    }>;
   };
 
   // Extracted metadata

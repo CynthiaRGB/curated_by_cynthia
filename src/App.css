@@ -317,6 +317,35 @@
   cursor: pointer;
 }
 
+/* Restaurant photo container for Cynthia's picks */
+.restaurant-photo-container {
+  width: 100%;
+  margin: -16px -20px 12px -20px; /* Negative margins to extend to card edges */
+  position: relative;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+}
+
+.restaurant-photo {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-attribution {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #FFFFFF;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+}
+
 .restaurant-card:hover {
   background-color: #EADBBE;
   transform: translateY(-2px);
