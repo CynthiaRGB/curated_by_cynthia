@@ -63,6 +63,12 @@
   padding: 20px;
 }
 
+/* Response screen chatbox - no padding, different gap */
+.bottom-chatbox .chatbox-content {
+  padding: 0;
+  gap: 8px;
+}
+
 /* Text input area */
 .text-input-area {
   width: 100%;
@@ -132,6 +138,11 @@
   justify-content: space-between;
   width: 100%;
   gap: 8px;
+}
+
+/* Bottom row in response screen - only submit button, align right */
+.bottom-chatbox .bottom-row {
+  justify-content: flex-end;
 }
 
 /* Pills container */
@@ -396,10 +407,16 @@
 
 .restaurant-details {
   display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.restaurant-details-row {
+  display: flex;
   gap: 8px;
   align-items: center;
   width: 100%;
-  flex-wrap: wrap;
 }
 
 .cuisine, .neighborhood, .price, .rating {
@@ -410,6 +427,14 @@
   color: #1A1818;
   white-space: nowrap;
   flex-shrink: 0;
+}
+
+.restaurant-location {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  color: #1A1818;
 }
 
 .separator {
@@ -508,6 +533,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end; /* Content grows upward from bottom */
+  padding: 20px; /* Padding for the container itself */
 }
 
 /* Responsive adjustments */
