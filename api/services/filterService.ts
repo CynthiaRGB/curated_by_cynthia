@@ -302,35 +302,59 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
     }
   }
 
-  // Check city match
+  // Check city match - use restaurant.city property if available, otherwise fall back to address parsing
   if (keywords.city) {
+    const restaurantCity = restaurant.city?.toLowerCase();
     const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
     
-    switch (keywords.city) {
-      case 'nyc':
-        // For NYC, check if it's in any NYC borough (Manhattan, Brooklyn, Queens, Bronx, Staten Island)
-        if (address.includes('new york') || address.includes('nyc') || 
-            address.includes('manhattan') || address.includes('brooklyn') || 
-            address.includes('queens') || address.includes('bronx') || 
-            address.includes('staten island')) {
+    // Map keywords.city to expected city names
+    const cityMap: { [key: string]: string[] } = {
+      'nyc': ['new york city', 'new york', 'nyc'],
+      'tokyo': ['tokyo'],
+      'seoul': ['seoul'],
+      'paris': ['paris']
+    };
+    
+    const expectedCities = cityMap[keywords.city] || [];
+    
+    // First check restaurant.city property (more reliable)
+    if (restaurantCity) {
+      for (const expectedCity of expectedCities) {
+        if (restaurantCity.includes(expectedCity) || expectedCity.includes(restaurantCity)) {
           matches = true;
+          break;
         }
-        break;
-      case 'tokyo':
-        if (address.includes('tokyo') || address.includes('japan')) {
-          matches = true;
-        }
-        break;
-      case 'seoul':
-        if (address.includes('seoul') || address.includes('korea')) {
-          matches = true;
-        }
-        break;
-      case 'paris':
-        if (address.includes('paris') || address.includes('france')) {
-          matches = true;
-        }
-        break;
+      }
+    }
+    
+    // Fall back to address parsing if restaurant.city didn't match
+    if (!matches) {
+      switch (keywords.city) {
+        case 'nyc':
+          // For NYC, check if it's in any NYC borough (Manhattan, Brooklyn, Queens, Bronx, Staten Island)
+          if (address.includes('new york') || address.includes('nyc') || 
+              address.includes('manhattan') || address.includes('brooklyn') || 
+              address.includes('queens') || address.includes('bronx') || 
+              address.includes('staten island')) {
+            matches = true;
+          }
+          break;
+        case 'tokyo':
+          if (address.includes('tokyo') || address.includes('japan')) {
+            matches = true;
+          }
+          break;
+        case 'seoul':
+          if (address.includes('seoul') || address.includes('korea')) {
+            matches = true;
+          }
+          break;
+        case 'paris':
+          if (address.includes('paris') || address.includes('france')) {
+            matches = true;
+          }
+          break;
+      }
     }
   }
 
@@ -580,5 +604,3 @@ export function preFilterRestaurants(query: string): Restaurant[] {
 }
 
 // Filter service ready for use
-
-export { preFilterRestaurants, extractKeywords };
