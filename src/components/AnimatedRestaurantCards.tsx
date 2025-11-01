@@ -105,7 +105,7 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
           key={`${restaurant.google_place_id}-${index}`}
           className={`restaurant-card ${
             visibleCards.includes(index) ? 'restaurant-card-visible' : 'restaurant-card-hidden'
-          } ${restaurant.cynthias_pick && getRestaurantPhotoUrl(restaurant) ? 'restaurant-card-with-photo' : ''}`}
+          } ${getRestaurantPhotoUrl(restaurant) ? 'restaurant-card-with-photo' : ''}`}
           onClick={() => handleCardClick(restaurant, index)}
           title="Click to view on Google Maps"
         >
@@ -116,45 +116,40 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
                 {restaurant.google_data.displayName.text}
               </h3>
               <div className="restaurant-details">
-                <div className="restaurant-details-row">
-                  <span className="cuisine">
-                    {restaurant.google_data.types[0] 
-                      ? restaurant.google_data.types[0]
-                          .split('_')
-                          .map(word => word === 'restaurant' ? 'restaurant' : word.charAt(0).toUpperCase() + word.slice(1))
-                          .join(' ')
-                      : 'N/A'
-                    }
-                  </span>
-                  <span className="separator">·</span>
-                  <span className="price">
-                    {restaurant.price_display || 'N/A'}
-                  </span>
-                  <span className="separator">·</span>
-                  <div className="rating-container">
-                    <span className="rating">{restaurant.google_data.rating || 0}</span>
-                    <div className="stars">
-                      {Array.from({ length: 5 }, (_, i) => {
-                        const rating = restaurant.google_data.rating || 0;
-                        const filledStars = Math.round(rating);
-                        const isFilled = i < filledStars;
-                        return (
-                          <span key={i} className={`star ${isFilled ? 'filled' : 'empty'}`}>
-                            {isFilled ? '⭐' : '☆'}
-                          </span>
-                        );
-                      })}
-                    </div>
+                <span className="cuisine">
+                  {restaurant.google_data.types[0] 
+                    ? restaurant.google_data.types[0]
+                        .split('_')
+                        .filter(word => word !== 'restaurant')
+                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                        .join(' ')
+                    : 'N/A'
+                  }
+                </span>
+                <span className="separator">·</span>
+                <span className="neighborhood">
+                  {restaurant.neighborhood_extracted || 'N/A'}
+                </span>
+                <span className="separator">·</span>
+                <span className="price">
+                  {restaurant.price_display || 'N/A'}
+                </span>
+                <span className="separator">·</span>
+                <div className="rating-container">
+                  <span className="rating">{restaurant.google_data.rating || 0}</span>
+                  <div className="stars">
+                    {Array.from({ length: 5 }, (_, i) => {
+                      const rating = restaurant.google_data.rating || 0;
+                      const filledStars = Math.round(rating);
+                      const isFilled = i < filledStars;
+                      return (
+                        <span key={i} className={`star ${isFilled ? 'filled' : 'empty'}`}>
+                          {isFilled ? '⭐' : '☆'}
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
-                {(restaurant.neighborhood_extracted || restaurant.city) && (
-                  <div className="restaurant-location">
-                    {restaurant.neighborhood_extracted && restaurant.city
-                      ? `${restaurant.neighborhood_extracted}, ${restaurant.city}`
-                      : restaurant.neighborhood_extracted || restaurant.city || 'N/A'
-                    }
-                  </div>
-                )}
               </div>
               {(restaurant.google_data.editorialSummary?.text || restaurant.google_data.generativeSummary?.overview?.text) && (
                 <p className="restaurant-summary">
@@ -165,7 +160,7 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
                 <span className="maps-text">📍 View on Google Maps</span>
               </div>
             </div>
-            {restaurant.cynthias_pick && getRestaurantPhotoUrl(restaurant) && (
+            {getRestaurantPhotoUrl(restaurant) && (
               <div className="restaurant-photo-container">
                 <img 
                   src={getRestaurantPhotoUrl(restaurant) || ''} 

@@ -345,11 +345,11 @@
   min-width: 0; /* Allows text to shrink */
 }
 
-/* Restaurant photo container for Cynthia's picks - positioned on the right */
+/* Restaurant photo container - positioned on the right */
 .restaurant-photo-container {
   flex-shrink: 0;
-  width: 160px;
-  height: 160px;
+  width: 140px;
+  height: 140px;
   position: relative;
   border-radius: 8px;
   overflow: hidden;
@@ -407,16 +407,10 @@
 
 .restaurant-details {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 100%;
-}
-
-.restaurant-details-row {
-  display: flex;
   gap: 8px;
   align-items: center;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .cuisine, .neighborhood, .price, .rating {
@@ -427,14 +421,6 @@
   color: #1A1818;
   white-space: nowrap;
   flex-shrink: 0;
-}
-
-.restaurant-location {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: normal;
-  color: #1A1818;
 }
 
 .separator {
