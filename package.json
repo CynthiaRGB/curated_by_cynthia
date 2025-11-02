@@ -24,6 +24,7 @@
     "@vercel/blob": "^2.0.0",
     "@vitejs/plugin-react": "^5.0.4",
     "autoprefixer": "^10.4.21",
+    "braintrust": "^0.4.8",
     "dotenv": "^17.2.3",
     "lucide-react": "^0.544.0",
     "postcss": "^8.5.6",
