@@ -391,13 +391,47 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
 
   // Check borough match
   if (keywords.borough) {
+    const boroughKeyword = keywords.borough.toLowerCase();
+    
+    // First try addressComponents (more structured)
     const addressComponents = restaurant.google_data.addressComponents || [];
     const boroughComponent = addressComponents.find(comp => 
       comp.types && comp.types.includes('sublocality_level_1')
     );
     if (boroughComponent) {
       const borough = boroughComponent.longText.toLowerCase();
-      if (borough.includes(keywords.borough.toLowerCase())) {
+      if (borough.includes(boroughKeyword) || boroughKeyword.includes(borough)) {
+        matches = true;
+      }
+    }
+    
+    // Fallback: check address string directly (most restaurants don't have addressComponents)
+    if (!matches) {
+      const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || 
+                      restaurant.google_data.formattedAddress?.toLowerCase() || '';
+      
+      // Check if borough is in the address
+      // Handle variations: "Brooklyn, NY", "Brooklyn", "BK", etc.
+      if (address.includes(boroughKeyword)) {
+        matches = true;
+      }
+      
+      // Handle special cases
+      if (boroughKeyword === 'bk' && address.includes('brooklyn')) {
+        matches = true;
+      }
+      if (boroughKeyword === 'brooklyn' && address.includes('bk')) {
+        matches = true;
+      }
+      
+      // Special handling for Manhattan: addresses say "New York, NY" not "Manhattan, NY"
+      // So if query is Manhattan, check for "new york, ny" but exclude other boroughs
+      if (boroughKeyword === 'manhattan' && 
+          address.includes('new york') && 
+          !address.includes('brooklyn') && 
+          !address.includes('queens') && 
+          !address.includes('bronx') && 
+          !address.includes('staten island')) {
         matches = true;
       }
     }
