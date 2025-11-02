@@ -16,7 +16,7 @@ const CUISINE_TYPES = [
   'middle eastern', 'latin', 'spanish', 'greek', 'turkish', 'ethiopian',
   'caribbean', 'soul food', 'southern', 'tex-mex', 'fusion', 'vegetarian',
   'vegan', 'healthy', 'fast food', 'fine dining', 'bar', 'drink', 'drinks', 
-  'cake', 'pastries', 'pastry','bakeries', 'sweets', 'coffee shop', 'bagel', 'bagels', 'sandwich', 'sandwiches',
+  'cake', 'pastries', 'pastry','bakeries', 'sweets', 'coffee shop','coffee', 'bagel', 'bagels', 'sandwich', 'sandwiches',
   // Japanese specific dishes
   'yakitori', 'katsu', 'tonkatsu', 'tempura', 'udon', 'soba', 'okonomiyaki', 'curry', 'onigiri',
   'takoyaki', 'sashimi', 'teriyaki', 'sukiyaki', 'shabu shabu', 'shabushabu', 'kaiseki', 'omurice',
@@ -492,65 +492,37 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
   
   const normalizedCuisineKeyword = normalizeForMatching(cuisineKeyword);
   
-  // Check restaurant name for dish-specific keywords (e.g., "yakitori", "katsu")
-  // This is important because dish-specific restaurants often have the dish in their name
-  // but their type might just be "japanese_restaurant"
-  // Also check normalized version to handle accents and plurals
-  if (restaurantName.includes(cuisineKeyword) || 
-      normalizeForMatching(restaurantName).includes(normalizedCuisineKeyword)) {
-    return true;
-  }
-  
-  // For "bar" queries, be strict
+  // For "bar" queries, be strict (check before name matching)
   if (cuisineKeyword === 'bar') {
     return primaryType === 'bar' || 
            primaryType === 'night_club' || 
            specificType === 'bar';
   }
   
-  // For "coffee shop"/"coffee"/"cafe" queries, apply strict matching if required
+  // For "coffee shop"/"coffee"/"cafe" queries, only check metadata fields
+  // MUST check this BEFORE restaurant name matching to avoid false positives
+  // (e.g., "Café Fleur" has "cafe" in name but isn't actually a cafe)
   if (cuisineKeyword === 'coffee shop' || cuisineKeyword === 'coffee' || cuisineKeyword === 'cafe') {
-    // Basic check: restaurant must serve coffee or be a cafe
-    const servesCoffee = restaurant.google_data.servesCoffee;
-    const isCafe = types.some(t => t.includes('cafe') || t.includes('coffee'));
+    // Simplified: Check both primaryType and types array equally (no prioritization)
+    // Must have 'coffee_shop' or 'cafe' in either primaryType OR types array
+    const hasCoffeePrimaryType = primaryType === 'coffee_shop' || primaryType === 'cafe';
+    const hasCoffeeInTypes = types.some(t => 
+      t === 'coffee_shop' || 
+      t === 'cafe' || 
+      t.toLowerCase() === 'coffee_shop' || 
+      t.toLowerCase() === 'cafe'
+    );
     
-    if (!servesCoffee && !isCafe) {
-      return false;
-    }
-    
-    // If query requires coffee focus (e.g., "coffee shop", "coffee place"), apply stricter criteria
-    if (keywords.requiresCoffeeFocus) {
-      // Check metadata indicators (most reliable)
-      const hasCoffeeType = types.some(t => 
-        t.includes('cafe') || 
-        t.includes('coffee') || 
-        t === 'cafe' || 
-        t === 'coffee_shop'
-      );
-      
-      // Check if coffee/cafe is mentioned prominently (name or summaries)
-      const mentionsCoffee = restaurantName.includes('coffee') ||
-                           restaurantName.includes('cafe') ||
-                           restaurantName.includes('café') ||
-                           summary.includes('coffee') ||
-                           summary.includes('cafe') ||
-                           summary.includes('café') ||
-                           reviewSummary.includes('coffee') ||
-                           reviewSummary.includes('cafe') ||
-                           reviewSummary.includes('café') ||
-                           editorialSummary.includes('coffee') ||
-                           editorialSummary.includes('cafe') ||
-                           editorialSummary.includes('café');
-      
-      // Restaurant must meet at least one of these criteria to be coffee-focused
-      const isCoffeeFocused = hasCoffeeType || mentionsCoffee;
-      
-      // If none of these indicators are present, exclude it (not a coffee-focused restaurant)
-      if (!isCoffeeFocused) {
-        return false;
-      }
-    }
-    
+    return hasCoffeePrimaryType || hasCoffeeInTypes;
+  }
+  
+  // Check restaurant name for dish-specific keywords (e.g., "yakitori", "katsu")
+  // This is important because dish-specific restaurants often have the dish in their name
+  // but their type might just be "japanese_restaurant"
+  // Also check normalized version to handle accents and plurals
+  // NOTE: This check happens AFTER coffee/cafe/bar checks to ensure those use strict metadata-only matching
+  if (restaurantName.includes(cuisineKeyword) || 
+      normalizeForMatching(restaurantName).includes(normalizedCuisineKeyword)) {
     return true;
   }
   
