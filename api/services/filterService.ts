@@ -516,83 +516,43 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
     return hasCoffeePrimaryType || hasCoffeeInTypes;
   }
   
+  // For dessert-related queries (dessert, pastry, cake, pastries, bakery, sweets), only check metadata fields
+  // MUST check this BEFORE restaurant name matching to avoid false positives
+  // (consistent with coffee/cafe logic)
+  if (['dessert', 'pastry', 'cake', 'pastries', 'bakery', 'bakeries', 'sweets'].includes(cuisineKeyword)) {
+    // Simplified: Check both primaryType and types array equally (no prioritization)
+    // Must have dessert-related type in either primaryType OR types array
+    const hasDessertPrimaryType = primaryType === 'bakery' || 
+                                   primaryType === 'dessert_shop' || 
+                                   primaryType === 'ice_cream_shop' ||
+                                   primaryType === 'pastry_shop' ||
+                                   primaryType === 'confectionery' ||
+                                   primaryType === 'dessert_restaurant';
+    const hasDessertInTypes = types.some(t => 
+      t === 'bakery' || 
+      t === 'dessert_shop' || 
+      t === 'ice_cream_shop' ||
+      t === 'pastry_shop' ||
+      t === 'confectionery' ||
+      t === 'dessert_restaurant' ||
+      t.toLowerCase() === 'bakery' ||
+      t.toLowerCase() === 'dessert_shop' ||
+      t.toLowerCase() === 'ice_cream_shop' ||
+      t.toLowerCase() === 'pastry_shop' ||
+      t.toLowerCase() === 'confectionery' ||
+      t.toLowerCase() === 'dessert_restaurant'
+    );
+    
+    return hasDessertPrimaryType || hasDessertInTypes;
+  }
+  
   // Check restaurant name for dish-specific keywords (e.g., "yakitori", "katsu")
   // This is important because dish-specific restaurants often have the dish in their name
   // but their type might just be "japanese_restaurant"
   // Also check normalized version to handle accents and plurals
-  // NOTE: This check happens AFTER coffee/cafe/bar checks to ensure those use strict metadata-only matching
+  // NOTE: This check happens AFTER coffee/cafe/dessert/bar checks to ensure those use strict metadata-only matching
   if (restaurantName.includes(cuisineKeyword) || 
       normalizeForMatching(restaurantName).includes(normalizedCuisineKeyword)) {
-    return true;
-  }
-  
-  // For dessert-related queries (dessert, pastry, cake, pastries, bakery, sweets), apply strict matching if required
-  if (['dessert', 'pastry', 'cake', 'pastries', 'bakery', 'bakeries', 'sweets'].includes(cuisineKeyword)) {
-    // Basic check: restaurant must serve dessert or be a bakery/dessert shop
-    const servesDessert = restaurant.google_data.servesDessert;
-    const isBakery = types.some(t => 
-      t.includes('bakery') || 
-      t.includes('dessert') || 
-      t.includes('ice_cream') ||
-      t === 'bakery' ||
-      t === 'dessert_shop' ||
-      t === 'ice_cream_shop'
-    );
-    
-    if (!servesDessert && !isBakery) {
-      return false;
-    }
-    
-    // If query requires dessert focus (e.g., "dessert place", "pastry shop"), apply stricter criteria
-    if (keywords.requiresDessertFocus) {
-      // Check metadata indicators (most reliable)
-      const hasDessertType = types.some(t => 
-        t.includes('bakery') || 
-        t.includes('dessert') || 
-        t.includes('ice_cream') ||
-        t.includes('pastry') ||
-        t === 'bakery' ||
-        t === 'dessert_shop' ||
-        t === 'ice_cream_shop' ||
-        t === 'pastry_shop'
-      );
-      
-      // Check if dessert-related terms are mentioned prominently (name or summaries)
-      const mentionsDessert = restaurantName.includes('dessert') ||
-                             restaurantName.includes('pastry') ||
-                             restaurantName.includes('pastries') ||
-                             restaurantName.includes('cake') ||
-                             restaurantName.includes('bakery') ||
-                             restaurantName.includes('sweet') ||
-                             restaurantName.includes('cream') ||
-                             summary.includes('dessert') ||
-                             summary.includes('pastry') ||
-                             summary.includes('pastries') ||
-                             summary.includes('cake') ||
-                             summary.includes('bakery') ||
-                             summary.includes('sweet') ||
-                             reviewSummary.includes('dessert') ||
-                             reviewSummary.includes('pastry') ||
-                             reviewSummary.includes('pastries') ||
-                             reviewSummary.includes('cake') ||
-                             reviewSummary.includes('bakery') ||
-                             reviewSummary.includes('sweet') ||
-                             editorialSummary.includes('dessert') ||
-                             editorialSummary.includes('pastry') ||
-                             editorialSummary.includes('pastries') ||
-                             editorialSummary.includes('cake') ||
-                             editorialSummary.includes('bakery') ||
-                             editorialSummary.includes('sweet');
-      
-      // Restaurant must meet at least one of these criteria to be dessert-focused
-      const isDessertFocused = hasDessertType || mentionsDessert;
-      
-      // If none of these indicators are present, exclude it (not a dessert-focused restaurant)
-      if (!isDessertFocused) {
-        return false;
-      }
-    }
-    
     return true;
   }
   
@@ -683,12 +643,8 @@ function matchesAmenities(restaurant: Restaurant, keywords: ExtractedKeywords): 
     }
   }
 
-  // Check dessert focus requirements (separate from cuisine matching)
-  if (keywords.requiresDessertFocus && keywords.cuisineType && 
-      ['dessert', 'pastry', 'cake', 'pastries', 'bakery', 'bakeries', 'sweets'].includes(keywords.cuisineType.toLowerCase())) {
-    // This will be handled in matchesCuisine, but we can add additional checks here if needed
-    // For now, let matchesCuisine handle it
-  }
+  // Dessert/sweets filtering is now handled in matchesCuisine with strict metadata-only matching
+  // (consistent with coffee/cafe logic)
 
   return true;
 }
