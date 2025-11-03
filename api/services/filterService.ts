@@ -110,6 +110,7 @@ export function extractKeywords(query: string): ExtractedKeywords {
   }
   
   // Extract neighborhoods - look anywhere in query, but only create array for explicit "and"/"or"
+  // Works for all cities: NYC (e.g., "West Village"), Tokyo (e.g., "Shibuya"), Seoul (e.g., "Gangnam"), Paris (e.g., "7th arrondissement")
   const neighborhoods: string[] = [];
   
   // Words to exclude (cuisine types, meal types, common words)
@@ -184,7 +185,7 @@ export function extractKeywords(query: string): ExtractedKeywords {
         
         // Extract words from query
         const tokens = lowerQuery.match(/\S+/g) || [];
-        const words = tokens.filter(w => {
+        const words = tokens.filter((w: string) => {
           const wLower = w.toLowerCase();
           return /^\d/.test(w) || !excludeWords.has(wLower);
         });
@@ -468,7 +469,7 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
   let hasBoroughMatch = false;
   let hasCityMatch = false;
 
-  // Check neighborhood match - only check neighborhood_extracted field
+  // Check neighborhood match - only check neighborhood_extracted field (works for all cities: NYC, Tokyo, Seoul, Paris)
   // Neighborhood takes precedence over borough and city
   if (keywords.neighborhood) {
     const restaurantNeighborhood = restaurant.neighborhood_extracted?.toLowerCase() || '';
@@ -476,18 +477,20 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
     // Handle both single neighborhood and array of neighborhoods (union for explicit "and"/"or")
     if (Array.isArray(keywords.neighborhood)) {
       // Multiple neighborhoods: match if restaurant is in ANY of them (union)
+      // Works for all cities: e.g., "Shibuya or Ginza" (Tokyo), "Gangnam or Jongno" (Seoul), "1st arrondissement or 7th arrondissement" (Paris)
       hasNeighborhoodMatch = keywords.neighborhood.some(neighborhoodKeyword => {
         const keyword = neighborhoodKeyword.toLowerCase();
         return restaurantNeighborhood.includes(keyword) || keyword.includes(restaurantNeighborhood);
       });
     } else {
-      // Single neighborhood
+      // Single neighborhood - works for all cities
+      // Examples: "Shibuya" (Tokyo), "Gangnam District" (Seoul), "7th arrondissement" (Paris)
       const neighborhoodKeyword = keywords.neighborhood.toLowerCase();
       hasNeighborhoodMatch = restaurantNeighborhood.includes(neighborhoodKeyword) || 
                              neighborhoodKeyword.includes(restaurantNeighborhood);
     }
     
-    // If neighborhood is specified, return immediately (neighborhood takes precedence over borough and city)
+    // If neighborhood is specified, return immediately (neighborhood takes precedence over borough and city for ALL cities)
     return hasNeighborhoodMatch;
   } else {
     // If no neighborhood specified, consider it as matching (no neighborhood filter)
@@ -518,11 +521,12 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
   }
 
   // Check city match - only if neighborhood and borough are not specified (they take precedence)
+  // Works consistently for all cities: NYC, Tokyo, Seoul, Paris
   if (keywords.city) {
     const restaurantCity = restaurant.city?.toLowerCase();
     const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
     
-    // Map keywords.city to expected city names
+    // Map keywords.city to expected city names (all supported cities)
     const cityMap: { [key: string]: string[] } = {
       'nyc': ['new york city', 'new york', 'nyc'],
       'tokyo': ['tokyo'],
@@ -532,7 +536,7 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
     
     const expectedCities = cityMap[keywords.city] || [];
     
-    // First check restaurant.city property (more reliable)
+    // First check restaurant.city property (more reliable for all cities)
     if (restaurantCity) {
       for (const expectedCity of expectedCities) {
         if (restaurantCity.includes(expectedCity) || expectedCity.includes(restaurantCity)) {
@@ -542,7 +546,7 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
       }
     }
     
-    // Fall back to address parsing if restaurant.city didn't match
+    // Fall back to address parsing if restaurant.city didn't match (same pattern for all cities)
     if (!hasCityMatch) {
       switch (keywords.city) {
         case 'nyc':
@@ -553,16 +557,19 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
           }
           break;
         case 'tokyo':
+          // For Tokyo: match addresses containing "tokyo" or "japan"
           if (address.includes('tokyo') || address.includes('japan')) {
             hasCityMatch = true;
           }
           break;
         case 'seoul':
+          // For Seoul: match addresses containing "seoul" or "korea"
           if (address.includes('seoul') || address.includes('korea')) {
             hasCityMatch = true;
           }
           break;
         case 'paris':
+          // For Paris: match addresses containing "paris" or "france"
           if (address.includes('paris') || address.includes('france')) {
             hasCityMatch = true;
           }

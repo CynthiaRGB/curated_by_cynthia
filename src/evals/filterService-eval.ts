@@ -283,11 +283,12 @@ function scoreLocationMatch({ input, output, expected }) {
   const allMatch = output.every(restaurant => {
     let matches = false;
     
-    // Check neighborhood match - only check neighborhood_extracted field
+    // Check neighborhood match - only check neighborhood_extracted field (works for all cities: NYC, Tokyo, Seoul, Paris)
     if (neighborhood) {
       const restaurantNeighborhood = restaurant.neighborhood_extracted?.toLowerCase() || '';
       
       // Handle both single neighborhood and array (for union logic)
+      // Works for all cities: e.g., "Shibuya or Ginza" (Tokyo), "Gangnam or Jongno" (Seoul), "1st arrondissement or 7th arrondissement" (Paris)
       const neighborhoods = Array.isArray(neighborhood) ? neighborhood : [neighborhood];
       
       // Match if restaurant is in ANY of the neighborhoods (union)
@@ -316,11 +317,12 @@ function scoreLocationMatch({ input, output, expected }) {
     }
     
     // Check city match - use restaurant.city property if available, otherwise fall back to address parsing
+    // Works consistently for all cities: NYC, Tokyo, Seoul, Paris
     if (city) {
       const restaurantCity = restaurant.city?.toLowerCase();
       const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
       
-      // Map keywords.city to expected city names
+      // Map keywords.city to expected city names (all supported cities)
       const cityMap: { [key: string]: string[] } = {
         'nyc': ['new york city', 'new york', 'nyc'],
         'tokyo': ['tokyo'],
@@ -331,7 +333,7 @@ function scoreLocationMatch({ input, output, expected }) {
       const cityKeyword = city.toLowerCase();
       const expectedCities = cityMap[cityKeyword] || [cityKeyword];
       
-      // First check restaurant.city property (more reliable)
+      // First check restaurant.city property (more reliable for all cities)
       if (restaurantCity) {
         for (const expectedCity of expectedCities) {
           if (restaurantCity.includes(expectedCity) || expectedCity.includes(restaurantCity)) {
@@ -341,27 +343,29 @@ function scoreLocationMatch({ input, output, expected }) {
         }
       }
       
-      // Fall back to address parsing if restaurant.city didn't match
+      // Fall back to address parsing if restaurant.city didn't match (same pattern for all cities)
       if (!matches) {
         switch (cityKeyword) {
           case 'nyc':
             // For NYC queries, show all restaurants (both Manhattan and Brooklyn)
-            // Since we only have Manhattan and Brooklyn data, any NYC address matches
             if (address.includes('new york') || address.includes('nyc') || address.includes('brooklyn')) {
               matches = true;
             }
             break;
           case 'tokyo':
+            // For Tokyo: match addresses containing "tokyo" or "japan"
             if (address.includes('tokyo') || address.includes('japan')) {
               matches = true;
             }
             break;
           case 'seoul':
+            // For Seoul: match addresses containing "seoul" or "korea"
             if (address.includes('seoul') || address.includes('korea')) {
               matches = true;
             }
             break;
           case 'paris':
+            // For Paris: match addresses containing "paris" or "france"
             if (address.includes('paris') || address.includes('france')) {
               matches = true;
             }

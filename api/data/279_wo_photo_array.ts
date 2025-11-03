@@ -54400,7 +54400,7 @@ export const restaurantData = [
     },
     "place_classification": "restaurant",
     "specific_type": "restaurant",
-    "neighborhood_extracted": "千代田区",
+    "neighborhood_extracted": "Chiyoda City",
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:14:37.930098",
     "cynthias_pick": true,
