@@ -150,6 +150,16 @@ export function extractKeywords(query: string): ExtractedKeywords {
     const inCityPattern = /\s+in\s+(tokyo|seoul|paris|new\s+york|new\s+york\s+city|nyc)/i;
     const hasInCityPattern = inCityPattern.test(lowerQuery);
     
+    // Extract all words that appear before "in [city]" to exclude them from neighborhood extraction
+    let wordsBeforeIn: string[] = [];
+    if (hasInCityPattern) {
+      const match = lowerQuery.match(/^(.+?)\s+in\s+(tokyo|seoul|paris|new\s+york|new\s+york\s+city|nyc)/i);
+      if (match && match[1]) {
+        const beforeIn = match[1].trim();
+        wordsBeforeIn = beforeIn.split(/\s+/).map(w => w.toLowerCase());
+      }
+    }
+    
     const parts = lowerQuery.split(/\s+(and|or)\s+/i).map(p => p.trim()).filter(p => p.length > 0);
     
     // Extract neighborhood from each part (neighborhood takes precedence over borough and city)
@@ -167,7 +177,9 @@ export function extractKeywords(query: string): ExtractedKeywords {
         // Exclude city names and boroughs from being extracted as neighborhoods
         const isCity = ['nyc', 'new', 'york', 'city', 'tokyo', 'seoul', 'paris'].includes(wLower);
         const isBorough = BOROUGHS.map(b => b.toLowerCase()).includes(wLower);
-        return !isCity && !isBorough && (/^\d/.test(w) || !excludeWords.has(wLower));
+        // Exclude words that appear before "in [city]" pattern (these are cuisine/food descriptors, not neighborhoods)
+        const isBeforeInCity = wordsBeforeIn.includes(wLower);
+        return !isCity && !isBorough && !isBeforeInCity && (/^\d/.test(w) || !excludeWords.has(wLower));
       });
       
       if (words.length === 0) continue;
@@ -179,6 +191,12 @@ export function extractKeywords(query: string): ExtractedKeywords {
           
           if (phrase.length < 2 || excludeWords.has(phrase)) continue;
           if (len === 1 && excludeWords.has(phrase)) continue;
+          
+          // Don't extract phrases that appear before "in [city]" pattern
+          // Check if any word in the phrase appears in wordsBeforeIn
+          const phraseWords = phrase.split(/\s+/);
+          const hasWordBeforeIn = phraseWords.some(pw => wordsBeforeIn.includes(pw));
+          if (hasWordBeforeIn) continue;
           
           // Don't extract special query patterns (cynthia's favorites) as neighborhoods
           if ((phrase.includes('cynthia') && phrase.includes('favorite')) || 
@@ -312,22 +330,67 @@ export function extractKeywords(query: string): ExtractedKeywords {
       keywords.requiresCoffeeFocus = true;
     }
   } else {
-    // Then try single-word matches
-    const cuisineMatch = sortedCuisineTypes.find(cuisine => {
-      // Match whole words to avoid false positives (e.g., "sushi" shouldn't match "sushiya")
-      const words = lowerQuery.split(/\s+/);
-      return words.some(word => word === cuisine || word.startsWith(cuisine + '-'));
-    });
-    if (cuisineMatch) {
-      keywords.cuisineType = cuisineMatch;
+    // Handle queries with "X and Y" pattern for cuisine types (e.g., "galettes and crepes")
+    // Extract all matching cuisine types and use OR logic
+    const hasCuisineAndPattern = /\s+and\s+/i.test(lowerQuery) || /\s+or\s+/i.test(lowerQuery);
+    const matchedCuisines: string[] = [];
+    
+    if (hasCuisineAndPattern) {
+      // Extract all cuisine types from the query (before "in [city]" if present)
+      const queryWithoutCity = lowerQuery.replace(/\s+in\s+(tokyo|seoul|paris|new\s+york|new\s+york\s+city|nyc).*$/i, '').trim();
+      const cuisineParts = queryWithoutCity.split(/\s+(and|or)\s+/i);
       
+      for (const part of cuisineParts) {
+        const trimmedPart = part.trim().toLowerCase();
+        // Try to match multi-word cuisine types first
+        const multiWordMatch = sortedCuisineTypes
+          .filter(c => c.includes(' ') && trimmedPart.includes(c.toLowerCase()))
+          .find(cuisine => trimmedPart === cuisine.toLowerCase() || trimmedPart.includes(cuisine.toLowerCase()));
+        
+        if (multiWordMatch && !matchedCuisines.includes(multiWordMatch)) {
+          matchedCuisines.push(multiWordMatch);
+        } else {
+          // Try single-word matches
+          const singleWordMatch = sortedCuisineTypes.find(cuisine => {
+            const cuisineLower = cuisine.toLowerCase();
+            return trimmedPart === cuisineLower || 
+                   (trimmedPart.split(/\s+/).some(word => word === cuisineLower || word.startsWith(cuisineLower + '-')));
+          });
+          if (singleWordMatch && !matchedCuisines.includes(singleWordMatch)) {
+            matchedCuisines.push(singleWordMatch);
+          }
+        }
+      }
+    }
+    
+    // If we found multiple cuisine types from "and"/"or" pattern, use the first one for now
+    // (the matching logic will handle OR matching separately)
+    if (matchedCuisines.length > 0) {
+      keywords.cuisineType = matchedCuisines[0];
+      // Store additional cuisine types for OR matching (we'll add this to ExtractedKeywords if needed)
+      // For now, we'll handle OR logic in matchesCuisine function
+      (keywords as any).additionalCuisineTypes = matchedCuisines.slice(1);
+    } else {
+      // Then try single-word matches (original logic)
+      const cuisineMatch = sortedCuisineTypes.find(cuisine => {
+        // Match whole words to avoid false positives (e.g., "sushi" shouldn't match "sushiya")
+        const words = lowerQuery.split(/\s+/);
+        return words.some(word => word === cuisine || word.startsWith(cuisine + '-'));
+      });
+      if (cuisineMatch) {
+        keywords.cuisineType = cuisineMatch;
+      }
+    }
+    
+    // Apply special handling based on the primary cuisine type
+    if (keywords.cuisineType) {
       // Special handling: If query says "coffee" or "cafe", require stricter matching
-      if (cuisineMatch === 'coffee' || cuisineMatch === 'cafe') {
+      if (keywords.cuisineType === 'coffee' || keywords.cuisineType === 'cafe') {
         keywords.requiresCoffeeFocus = true;
       }
       
       // Special handling: If query says "dessert", "pastry", "cake", "pastries", require stricter matching
-      if (['dessert', 'pastry', 'cake', 'pastries', 'bakery', 'bakeries', 'sweets'].includes(cuisineMatch)) {
+      if (['dessert', 'pastry', 'cake', 'pastries', 'bakery', 'bakeries', 'sweets'].includes(keywords.cuisineType)) {
         keywords.requiresDessertFocus = true;
       }
     }
@@ -646,7 +709,23 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
     return true; // No cuisine filter
   }
 
-  const cuisineKeyword = keywords.cuisineType.toLowerCase();
+  // Handle multiple cuisine types (OR logic for "X and Y" queries)
+  const additionalCuisineTypes = (keywords as any).additionalCuisineTypes as string[] | undefined;
+  const cuisineTypesToMatch = additionalCuisineTypes && additionalCuisineTypes.length > 0
+    ? [keywords.cuisineType, ...additionalCuisineTypes]
+    : [keywords.cuisineType];
+
+  // Check if restaurant matches ANY of the cuisine types (OR logic)
+  return cuisineTypesToMatch.some(cuisineType => {
+    return matchesSingleCuisineType(restaurant, cuisineType);
+  });
+}
+
+/**
+ * Check if restaurant matches a single cuisine type
+ */
+function matchesSingleCuisineType(restaurant: Restaurant, cuisineType: string): boolean {
+  const cuisineKeyword = cuisineType.toLowerCase();
   const primaryType = restaurant.google_data.primaryType?.toLowerCase() || '';
   const specificType = restaurant.specific_type?.toLowerCase() || '';
   const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
