@@ -13,8 +13,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Configuration
-const INPUT_FILE = path.join(__dirname, 'api', 'data', '279_wo_photo_array.ts');
-const OUTPUT_FILE = path.join(__dirname, 'api', 'data', '279_wo_photo_array.ts');
+const INPUT_FILE = path.join(__dirname, 'api', 'data', 'latest_277.ts');
+const OUTPUT_FILE = path.join(__dirname, 'api', 'data', 'latest_277.ts');
 const CHECKPOINT_FILE = path.join(__dirname, 'api', 'data', 'enrichment_checkpoint.json');
 const CHECKPOINT_INTERVAL = 10; // Save every 10 restaurants
 const REQUESTS_PER_MINUTE = 10; // Safe mode: 10 requests/minute

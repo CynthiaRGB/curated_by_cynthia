@@ -6,7 +6,7 @@
  * This script automates the entire process of adding a new restaurant:
  * 1. Fetches restaurant data from Google Places API using Google Maps URL
  * 2. Formats data to match project structure
- * 3. Saves to 279_wo_photo_array.ts (main data file)
+ * 3. Saves to latest_277.ts (main data file)
  * 4. Removes unwanted metadata fields
  * 5. Downloads first 3 photos at highest resolution
  * 6. Enriches with metadata tags using Claude API (required)
@@ -30,7 +30,7 @@ const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || '';
 const RESTAURANT_URL = process.argv[2];
 
 // File paths
-const RESTAURANT_DATA_FILE = './api/data/279_wo_photo_array.ts';
+const RESTAURANT_DATA_FILE = './api/data/latest_277.ts';
 const OUTPUT_DIR = './public/restaurant-photos';
 const MAPPING_FILE = path.join(OUTPUT_DIR, 'photo-mapping.json');
 

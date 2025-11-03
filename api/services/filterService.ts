@@ -2,7 +2,7 @@
 // Pre-filters restaurants before sending to Claude API for smart ranking
 
 import { Restaurant, ExtractedKeywords } from '../../src/types/restaurant';
-import { restaurantData } from '../data/279_wo_photo_array.js';
+import { restaurantData } from '../data/latest_277.js';
 
 // Get restaurants from the data
 const restaurants: Restaurant[] = (restaurantData as any).places || (restaurantData as any) || [];
@@ -131,26 +131,17 @@ export function extractKeywords(query: string): ExtractedKeywords {
   if (hasExplicitConnector) {
     const parts = lowerQuery.split(/\s+(and|or)\s+/i).map(p => p.trim()).filter(p => p.length > 0);
     
-    // Extract neighborhood from each part
+    // Extract neighborhood from each part (neighborhood takes precedence over borough and city)
     for (const part of parts) {
-      // Skip if it's a borough (already handled above)
-      const isBorough = BOROUGHS.some(b => {
-        const boroughLower = b.toLowerCase();
-        return part.includes(boroughLower) || part === boroughLower;
-      });
-      if (isBorough) continue;
-      
-      // Skip if it's a city
-      if (part.includes('nyc') || part.includes('new york') || part.includes('tokyo') || 
-          part.includes('seoul') || part.includes('paris')) {
-        continue;
-      }
-      
       // Extract words from the part, but preserve numbers (for "4th arrondissement", etc.)
+      // Filter out borough and city names - they're already in excludeWords but handle explicitly too
       const tokens = part.match(/\S+/g) || [];
-      const words = tokens.filter(w => {
+      const words = tokens.filter((w: string) => {
         const wLower = w.toLowerCase();
-        return /^\d/.test(w) || !excludeWords.has(wLower);
+        // Exclude city names and boroughs from being extracted as neighborhoods
+        const isCity = ['nyc', 'new', 'york', 'city', 'tokyo', 'seoul', 'paris'].includes(wLower);
+        const isBorough = BOROUGHS.map(b => b.toLowerCase()).includes(wLower);
+        return !isCity && !isBorough && (/^\d/.test(w) || !excludeWords.has(wLower));
       });
       
       if (words.length === 0) continue;
@@ -163,6 +154,11 @@ export function extractKeywords(query: string): ExtractedKeywords {
           if (phrase.length < 2 || excludeWords.has(phrase)) continue;
           if (len === 1 && excludeWords.has(phrase)) continue;
           
+          // Don't extract borough or city names as neighborhoods
+          const isBoroughPhrase = BOROUGHS.map(b => b.toLowerCase()).includes(phrase) || phrase === 'bk';
+          const isCityPhrase = ['nyc', 'new york', 'new york city', 'tokyo', 'seoul', 'paris'].includes(phrase);
+          if (isBoroughPhrase || isCityPhrase) continue;
+          
           neighborhoods.push(phrase);
           break; // Only take one neighborhood per part
         }
@@ -171,40 +167,35 @@ export function extractKeywords(query: string): ExtractedKeywords {
     }
   } else {
     // No explicit connector - extract single neighborhood from anywhere in query
-    // Skip if it's a borough (already handled above)
-    const isBorough = BOROUGHS.some(b => {
-      const boroughLower = b.toLowerCase();
-      return lowerQuery.includes(boroughLower);
+    // Neighborhood takes precedence over borough and city, so extract even if they're present
+    // Extract words from query, excluding common words, borough names, and city names from neighborhood extraction
+    const tokens = lowerQuery.match(/\S+/g) || [];
+    const words = tokens.filter((w: string) => {
+      const wLower = w.toLowerCase();
+      // Exclude city names and boroughs from being extracted as neighborhoods
+      const isCity = ['nyc', 'new', 'york', 'city', 'tokyo', 'seoul', 'paris'].includes(wLower);
+      const isBorough = BOROUGHS.map(b => b.toLowerCase()).includes(wLower);
+      return !isCity && !isBorough && (/^\d/.test(w) || !excludeWords.has(wLower));
     });
     
-    if (!isBorough) {
-      // Skip if it's a city
-      if (!lowerQuery.includes('nyc') && !lowerQuery.includes('new york') && 
-          !lowerQuery.includes('tokyo') && !lowerQuery.includes('seoul') && 
-          !lowerQuery.includes('paris')) {
-        
-        // Extract words from query
-        const tokens = lowerQuery.match(/\S+/g) || [];
-        const words = tokens.filter((w: string) => {
-          const wLower = w.toLowerCase();
-          return /^\d/.test(w) || !excludeWords.has(wLower);
-        });
-        
-        if (words.length > 0) {
-          // Try to extract neighborhood phrases (prioritize longer phrases)
-          for (let len = Math.min(4, words.length); len >= 1; len--) {
-            for (let i = 0; i <= words.length - len; i++) {
-              const phrase = words.slice(i, i + len).join(' ').toLowerCase().trim();
-              
-              if (phrase.length < 2 || excludeWords.has(phrase)) continue;
-              if (len === 1 && excludeWords.has(phrase)) continue;
-              
-              neighborhoods.push(phrase);
-              break; // Only take one neighborhood
-            }
-            if (neighborhoods.length > 0 && neighborhoods[neighborhoods.length - 1].length >= 2) break;
-          }
+    if (words.length > 0) {
+      // Try to extract neighborhood phrases (prioritize longer phrases)
+      for (let len = Math.min(4, words.length); len >= 1; len--) {
+        for (let i = 0; i <= words.length - len; i++) {
+          const phrase = words.slice(i, i + len).join(' ').toLowerCase().trim();
+          
+          if (phrase.length < 2 || excludeWords.has(phrase)) continue;
+          if (len === 1 && excludeWords.has(phrase)) continue;
+          
+          // Don't extract borough or city names as neighborhoods
+          const isBoroughPhrase = BOROUGHS.map(b => b.toLowerCase()).includes(phrase) || phrase === 'bk';
+          const isCityPhrase = ['nyc', 'new york', 'new york city', 'tokyo', 'seoul', 'paris'].includes(phrase);
+          if (isBoroughPhrase || isCityPhrase) continue;
+          
+          neighborhoods.push(phrase);
+          break; // Only take one neighborhood
         }
+        if (neighborhoods.length > 0 && neighborhoods[neighborhoods.length - 1].length >= 2) break;
       }
     }
   }
