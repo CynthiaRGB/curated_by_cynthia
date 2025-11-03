@@ -154,10 +154,9 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
                 </h3>
                 <div className="restaurant-details">
                   <span className="cuisine">
-                    {restaurant.google_data.types[0] 
-                      ? restaurant.google_data.types[0]
+                    {restaurant.google_data.primaryType 
+                      ? restaurant.google_data.primaryType
                           .split('_')
-                          .filter(word => word !== 'restaurant')
                           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                           .join(' ')
                       : 'N/A'
