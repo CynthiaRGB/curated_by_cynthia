@@ -113,7 +113,14 @@ export function extractKeywords(query: string): ExtractedKeywords {
   // Works for all cities: NYC (e.g., "West Village"), Tokyo (e.g., "Shibuya"), Seoul (e.g., "Gangnam"), Paris (e.g., "7th arrondissement")
   const neighborhoods: string[] = [];
   
-  // Words to exclude (cuisine types, meal types, common words)
+  // Check for special query patterns FIRST before neighborhood extraction
+  // These patterns should never be extracted as neighborhoods
+  const hasCynthiasFavorites = lowerQuery.includes("cynthia's favorites") || lowerQuery.includes("cynthias favorites");
+  if (hasCynthiasFavorites) {
+    keywords.requiresCynthiasPick = true;
+  }
+  
+  // Words and phrases to exclude (cuisine types, meal types, common words, cuisine descriptors, special patterns)
   const excludeWords = new Set([
     ...CUISINE_TYPES.map(c => c.toLowerCase()),
     ...MEAL_TYPES.map(m => m.toLowerCase()),
@@ -121,18 +128,37 @@ export function extractKeywords(query: string): ExtractedKeywords {
     'restaurant', 'restaurants', 'food', 'dining', 'eat', 'place', 'places', 'spot', 'spots',
     'show', 'me', 'find', 'search', 'in', 'for', 'with', 'the', 'a', 'an',
     'nyc', 'new york', 'new york city', 'tokyo', 'seoul', 'paris', 'cheap', 'expensive',
-    'budget', 'upscale', 'fancy', 'good', 'best', 'top', 'rated', 'rating', 'star', 'michelin'
+    'budget', 'upscale', 'fancy', 'good', 'best', 'top', 'rated', 'rating', 'star', 'michelin',
+    // Cuisine descriptors (adjectives that describe cuisine types, not neighborhoods)
+    'traditional', 'authentic', 'modern', 'fusion', 'contemporary', 'classic', 'regional',
+    'street', 'fine', 'casual', 'upscale', 'gourmet', 'homestyle', 'home-style', 'homestyle',
+    // Special query patterns (should never be extracted as neighborhoods)
+    "cynthia's favorites", "cynthias favorites", "cynthia's favorite", "cynthias favorite",
+    'cynthia', "cynthia's", 'favorites', 'favorite'
   ]);
+  
+  // Skip neighborhood extraction entirely if we detect special query patterns
+  // (these should never be treated as neighborhoods)
+  const shouldSkipNeighborhoodExtraction = hasCynthiasFavorites;
   
   // Check if query has explicit "and" or "or" between potential neighborhoods
   const hasExplicitConnector = /\s+(and|or)\s+/i.test(lowerQuery);
   
   // If explicit connector found, split by "and" or "or" to get multiple neighborhoods
-  if (hasExplicitConnector) {
+  if (!shouldSkipNeighborhoodExtraction && hasExplicitConnector) {
+    // Check if any part has pattern "[something] in [city]" - exclude those parts from neighborhood extraction
+    const inCityPattern = /\s+in\s+(tokyo|seoul|paris|new\s+york|new\s+york\s+city|nyc)/i;
+    const hasInCityPattern = inCityPattern.test(lowerQuery);
+    
     const parts = lowerQuery.split(/\s+(and|or)\s+/i).map(p => p.trim()).filter(p => p.length > 0);
     
     // Extract neighborhood from each part (neighborhood takes precedence over borough and city)
     for (const part of parts) {
+      // Skip parts that have "in [city]" pattern - they're describing the query, not a neighborhood
+      if (hasInCityPattern && inCityPattern.test(part)) {
+        continue; // Skip this part - it's the city specification, not a neighborhood
+      }
+      
       // Extract words from the part, but preserve numbers (for "4th arrondissement", etc.)
       // Filter out borough and city names - they're already in excludeWords but handle explicitly too
       const tokens = part.match(/\S+/g) || [];
@@ -154,6 +180,12 @@ export function extractKeywords(query: string): ExtractedKeywords {
           if (phrase.length < 2 || excludeWords.has(phrase)) continue;
           if (len === 1 && excludeWords.has(phrase)) continue;
           
+          // Don't extract special query patterns (cynthia's favorites) as neighborhoods
+          if ((phrase.includes('cynthia') && phrase.includes('favorite')) || 
+              phrase.includes("cynthia's favorites") || phrase.includes("cynthias favorites")) {
+            continue;
+          }
+          
           // Don't extract borough or city names as neighborhoods
           const isBoroughPhrase = BOROUGHS.map(b => b.toLowerCase()).includes(phrase) || phrase === 'bk';
           const isCityPhrase = ['nyc', 'new york', 'new york city', 'tokyo', 'seoul', 'paris'].includes(phrase);
@@ -165,17 +197,35 @@ export function extractKeywords(query: string): ExtractedKeywords {
         if (neighborhoods.length > 0 && neighborhoods[neighborhoods.length - 1].length >= 2) break;
       }
     }
-  } else {
+  } else if (!shouldSkipNeighborhoodExtraction) {
     // No explicit connector - extract single neighborhood from anywhere in query
     // Neighborhood takes precedence over borough and city, so extract even if they're present
     // Extract words from query, excluding common words, borough names, and city names from neighborhood extraction
+    
+    // Check if query has pattern "[something] in [city]" - words before "in" should not be extracted as neighborhoods
+    // This prevents phrases like "food in Tokyo" from extracting "food" as a neighborhood
+    const inCityPattern = /\s+in\s+(tokyo|seoul|paris|new\s+york|new\s+york\s+city|nyc)/i;
+    const hasInCityPattern = inCityPattern.test(lowerQuery);
+    let wordsBeforeIn: string[] = [];
+    
+    if (hasInCityPattern) {
+      // Extract the part before "in [city]" to exclude it from neighborhood extraction
+      const match = lowerQuery.match(/^(.+?)\s+in\s+(tokyo|seoul|paris|new\s+york|new\s+york\s+city|nyc)/i);
+      if (match && match[1]) {
+        const beforeIn = match[1].trim();
+        wordsBeforeIn = beforeIn.split(/\s+/).map(w => w.toLowerCase());
+      }
+    }
+    
     const tokens = lowerQuery.match(/\S+/g) || [];
     const words = tokens.filter((w: string) => {
       const wLower = w.toLowerCase();
       // Exclude city names and boroughs from being extracted as neighborhoods
       const isCity = ['nyc', 'new', 'york', 'city', 'tokyo', 'seoul', 'paris'].includes(wLower);
       const isBorough = BOROUGHS.map(b => b.toLowerCase()).includes(wLower);
-      return !isCity && !isBorough && (/^\d/.test(w) || !excludeWords.has(wLower));
+      // Exclude words that appear before "in [city]" pattern
+      const isBeforeInCity = wordsBeforeIn.includes(wLower);
+      return !isCity && !isBorough && !isBeforeInCity && (/^\d/.test(w) || !excludeWords.has(wLower));
     });
     
     if (words.length > 0) {
@@ -186,6 +236,18 @@ export function extractKeywords(query: string): ExtractedKeywords {
           
           if (phrase.length < 2 || excludeWords.has(phrase)) continue;
           if (len === 1 && excludeWords.has(phrase)) continue;
+          
+          // Don't extract phrases that appear before "in [city]" pattern
+          // Check if any word in the phrase appears in wordsBeforeIn
+          const phraseWords = phrase.split(/\s+/);
+          const hasWordBeforeIn = phraseWords.some(pw => wordsBeforeIn.includes(pw));
+          if (hasWordBeforeIn) continue;
+          
+          // Don't extract special query patterns (cynthia's favorites) as neighborhoods
+          if ((phrase.includes('cynthia') && phrase.includes('favorite')) || 
+              phrase.includes("cynthia's favorites") || phrase.includes("cynthias favorites")) {
+            continue;
+          }
           
           // Don't extract borough or city names as neighborhoods
           const isBoroughPhrase = BOROUGHS.map(b => b.toLowerCase()).includes(phrase) || phrase === 'bk';
@@ -344,7 +406,9 @@ export function extractKeywords(query: string): ExtractedKeywords {
   }
 
   // Extract vibe keywords using mappings
-  for (const [phrase, tags] of Object.entries(VIBE_MAPPINGS)) {
+  // Sort by phrase length (longest first) to prioritize multi-word phrases like "good vibes" over single words
+  const sortedVibeMappings = Object.entries(VIBE_MAPPINGS).sort((a, b) => b[0].length - a[0].length);
+  for (const [phrase, tags] of sortedVibeMappings) {
     if (lowerQuery.includes(phrase)) {
       keywords.vibeKeywords.push(...tags);
       break; // Only match one vibe phrase to avoid over-matching
@@ -363,10 +427,8 @@ export function extractKeywords(query: string): ExtractedKeywords {
     keywords.requiresMichelin = true;
   }
 
-  // Check for Cynthia's favorites
-  if (lowerQuery.includes("cynthia's favorites") || lowerQuery.includes("cynthias favorites")) {
-    keywords.requiresCynthiasPick = true;
-  }
+  // Note: Cynthia's favorites is already checked earlier (before neighborhood extraction)
+  // This ensures it's never extracted as a neighborhood
 
   console.log('Extracted keywords:', keywords);
   return keywords;
@@ -964,10 +1026,44 @@ function matchesCynthiasPick(restaurant: Restaurant, keywords: ExtractedKeywords
 }
 
 /**
+ * Check if a query is a city-prompt-item (predefined prompt that should be handled deterministically)
+ */
+export function isCityPromptItem(query: string): boolean {
+  const lowerQuery = query.toLowerCase().trim();
+  
+  // List of city prompt patterns (matching CITY_PROMPTS from Chatbox component)
+  const cityPromptPatterns = [
+    "cynthia's favorites",
+    "cynthias favorites",
+    "sushi restaurants loved by locals",
+    "coffee shops",
+    "traditional japanese food",
+    "brunch restaurants",
+    "romantic dinner",
+    "best thai restaurants",
+    "traditional french fare",
+    "galettes and crepes",
+    "traditional korean food"
+  ];
+  
+  // Check if query matches any prompt pattern (allowing for city suffix)
+  return cityPromptPatterns.some(pattern => {
+    const patternLower = pattern.toLowerCase();
+    // Match exact pattern or pattern + " in [city]"
+    return lowerQuery === patternLower || 
+           lowerQuery.startsWith(patternLower + ' in ') ||
+           lowerQuery.endsWith(' ' + patternLower) ||
+           lowerQuery.includes(' ' + patternLower + ' ');
+  });
+}
+
+/**
  * Pre-filter restaurants based on natural language query
  * Returns filtered and sorted restaurants using enriched tags
+ * @param query - The user's query string
+ * @param keywords - Optional pre-parsed keywords. If not provided, will use extractKeywords
  */
-export function preFilterRestaurants(query: string): Restaurant[] {
+export function preFilterRestaurants(query: string, keywords?: ExtractedKeywords): Restaurant[] {
   try {
     console.log('Pre-filtering restaurants for query:', query);
     
@@ -976,23 +1072,23 @@ export function preFilterRestaurants(query: string): Restaurant[] {
       return [];
     }
     
-    // Extract keywords from query
-    const keywords = extractKeywords(query);
+    // Use provided keywords or extract from query
+    const extractedKeywords = keywords || extractKeywords(query);
     
     // Filter restaurants step by step
     let filteredRestaurants = restaurants.filter(restaurant => {
       try {
-        return matchesLocation(restaurant, keywords) &&
-               matchesCuisine(restaurant, keywords) &&
-               matchesMealType(restaurant, keywords) &&
-               matchesPrice(restaurant, keywords) &&
-               matchesAmenities(restaurant, keywords) &&
-               matchesVibe(restaurant, keywords) &&           // NEW: Vibe filtering
-               matchesOccasion(restaurant, keywords) &&       // NEW: Occasion filtering
-               matchesNoiseLevel(restaurant, keywords) &&     // NEW: Noise filtering
-               matchesInstagrammable(restaurant, keywords) && // NEW: Instagrammable filtering
-               matchesMichelin(restaurant, keywords) &&       // NEW: Michelin filtering
-               matchesCynthiasPick(restaurant, keywords);     // NEW: Cynthia's pick filtering
+        return matchesLocation(restaurant, extractedKeywords) &&
+               matchesCuisine(restaurant, extractedKeywords) &&
+               matchesMealType(restaurant, extractedKeywords) &&
+               matchesPrice(restaurant, extractedKeywords) &&
+               matchesAmenities(restaurant, extractedKeywords) &&
+               matchesVibe(restaurant, extractedKeywords) &&           // NEW: Vibe filtering
+               matchesOccasion(restaurant, extractedKeywords) &&       // NEW: Occasion filtering
+               matchesNoiseLevel(restaurant, extractedKeywords) &&     // NEW: Noise filtering
+               matchesInstagrammable(restaurant, extractedKeywords) && // NEW: Instagrammable filtering
+               matchesMichelin(restaurant, extractedKeywords) &&       // NEW: Michelin filtering
+               matchesCynthiasPick(restaurant, extractedKeywords);     // NEW: Cynthia's pick filtering
       } catch (error) {
         console.warn('Error filtering restaurant:', error);
         return false;
@@ -1002,7 +1098,7 @@ export function preFilterRestaurants(query: string): Restaurant[] {
     console.log(`Filtered from ${restaurants.length} to ${filteredRestaurants.length} restaurants`);
 
     // Sort using tiered ranking system
-    const sortedRestaurants = sortByTieredRanking(filteredRestaurants, keywords);
+    const sortedRestaurants = sortByTieredRanking(filteredRestaurants, extractedKeywords);
 
     console.log(`Returning all ${sortedRestaurants.length} matching restaurants`);
     return sortedRestaurants;

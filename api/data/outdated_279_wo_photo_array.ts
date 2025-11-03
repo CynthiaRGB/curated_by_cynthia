@@ -2,7 +2,6 @@
 // Do not edit manually - regenerate by running: node convert-data.js
 // Photos enriched on 2025-11-01T04:04:12.036Z
 // Updated: 2025-11-01T04:04:12.037Z
-// Renamed from 279_wo_photo_array.ts to latest_277.ts
 
 export const restaurantData = [
   {
@@ -85259,7 +85258,231 @@ export const restaurantData = [
     ],
     "accolades_tags": []
   },
-
+  {
+    "original_place": {
+      "geometry": {
+        "coordinates": [
+          127.0488184,
+          37.5119572
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "date": "2019-06-03T03:50:18Z",
+        "google_maps_url": "http://maps.google.com/?cid=2929316911465963725",
+        "location": {
+          "address": "449 Bongeunsa-ro, 삼성2동 Gangnam District, Seoul, South Korea",
+          "country_code": "KR",
+          "name": "Tea Collective"
+        }
+      },
+      "type": "Feature"
+    },
+    "google_place_id": "ChIJ7QivbkClfDUR8K3YNQnkpo4",
+    "google_data": {"name": "places/ChIJ7QivbkClfDUR8K3YNQnkpo4",
+      "id": "ChIJ7QivbkClfDUR8K3YNQnkpo4",
+      "types": [
+        "cafe",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 37.511983,
+        "longitude": 127.048993
+      },
+      "googleMapsUri": "https://maps.google.com/?cid=10279153927728967152&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "businessStatus": "OPERATIONAL",
+      "displayName": {
+        "text": "ティーコレクティブ",
+        "languageCode": "ja"
+      },
+      "primaryTypeDisplayName": {
+        "text": "Cafe",
+        "languageCode": "en-US"
+      },
+      "takeout": true,
+      "dineIn": true,
+      "primaryType": "cafe",
+      "shortFormattedAddress": "Bongeunsa-ro, Gangnam District",
+      "liveMusic": false,
+      "servesCoffee": true,
+      "restroom": true,
+      "goodForWatchingSports": false,
+      "paymentOptions": {
+        "acceptsCreditCards": true,
+        "acceptsDebitCards": true,
+        "acceptsCashOnly": false,
+        "acceptsNfc": true
+      },
+"generativeSummary":       {
+        "overview": {
+          "text": "Cozy Gangnam cafe offering an affordable tea-focused experience in a casual, welcoming atmosphere perfect for relaxing in Seoul's bustling district.",
+          "languageCode": "en-US"
+        },
+        "disclosureText": {
+          "text": "Summarized with Claude",
+          "languageCode": "en-US"
+        }
+      },
+      "googleMapsLinks": {
+        "directionsUri": "https://www.google.com/maps/dir//''/data=!4m7!4m6!1m1!4e2!1m2!1m1!1s0x357ca5406eaf08ed:0x8ea6e40935d8adf0!3e0?g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+        "placeUri": "https://maps.google.com/?cid=10279153927728967152&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+        "writeAReviewUri": "https://www.google.com/maps/place//data=!4m3!3m2!1s0x357ca5406eaf08ed:0x8ea6e40935d8adf0!12e1?g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+        "reviewsUri": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5406eaf08ed:0x8ea6e40935d8adf0!9m1!1b1?g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+        "photosUri": "https://www.google.com/maps/place//data=!4m3!3m2!1s0x357ca5406eaf08ed:0x8ea6e40935d8adf0!10e5?g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA"
+      },
+      "timeZone": {
+        "id": "Asia/Seoul"
+      },
+      "postalAddress": {
+        "regionCode": "KR",
+        "languageCode": "en-US",
+        "administrativeArea": "Seoul",
+        "locality": "Gangnam District",
+        "addressLines": [
+          "Bongeunsa-ro"
+        ]
+      },
+      "addressDescriptor": {
+        "landmarks": [
+          {
+            "name": "places/ChIJ1z7KOQ2kfDURZ1i-7M4ZMho",
+            "placeId": "ChIJ1z7KOQ2kfDURZ1i-7M4ZMho",
+            "displayName": {
+              "text": "캉카스백화점 강남 메종",
+              "languageCode": "ko"
+            },
+            "types": [
+              "establishment",
+              "point_of_interest",
+              "store"
+            ],
+            "straightLineDistanceMeters": 32.694534
+          },
+          {
+            "name": "places/ChIJIzCgBA2kfDURCW_uEXwqfZU",
+            "placeId": "ChIJIzCgBA2kfDURCW_uEXwqfZU",
+            "displayName": {
+              "text": "Spigen Hall",
+              "languageCode": "en"
+            },
+            "types": [
+              "establishment",
+              "point_of_interest"
+            ],
+            "straightLineDistanceMeters": 87.406944
+          },
+          {
+            "name": "places/ChIJAXvUNg2kfDURjzmkEO5AsiU",
+            "placeId": "ChIJAXvUNg2kfDURjzmkEO5AsiU",
+            "displayName": {
+              "text": "Samseong-dong Catholic Church",
+              "languageCode": "en"
+            },
+            "types": [
+              "church",
+              "establishment",
+              "place_of_worship",
+              "point_of_interest"
+            ],
+            "straightLineDistanceMeters": 50.81693
+          },
+          {
+            "name": "places/ChIJTx-BIg2kfDURQseNXNnaSSI",
+            "placeId": "ChIJTx-BIg2kfDURQseNXNnaSSI",
+            "displayName": {
+              "text": "Beerflage 비어플라주",
+              "languageCode": "ko"
+            },
+            "types": [
+              "bar",
+              "establishment",
+              "food",
+              "liquor_store",
+              "point_of_interest",
+              "store"
+            ],
+            "straightLineDistanceMeters": 30.99438
+          },
+          {
+            "name": "places/ChIJ7zoLPA2kfDURa91c1s__nHc",
+            "placeId": "ChIJ7zoLPA2kfDURa91c1s__nHc",
+            "displayName": {
+              "text": "Domino's Pizza Samseong",
+              "languageCode": "en"
+            },
+            "types": [
+              "establishment",
+              "food",
+              "point_of_interest",
+              "restaurant"
+            ],
+            "spatialRelationship": "BESIDE",
+            "straightLineDistanceMeters": 3.059665
+          }
+        ],
+        "areas": [
+          {
+            "name": "places/ChIJpxuj-AukfDURew-XymcWZCM",
+            "placeId": "ChIJpxuj-AukfDURew-XymcWZCM",
+            "displayName": {
+              "text": "Bongeunsa-ro",
+              "languageCode": "en"
+            },
+            "containment": "WITHIN"
+          },
+          {
+            "name": "places/ChIJvRK3Fg2kfDUR365ic98EGUQ",
+            "placeId": "ChIJvRK3Fg2kfDUR365ic98EGUQ",
+            "displayName": {
+              "text": "삼성2동",
+              "languageCode": "ko"
+            },
+            "containment": "WITHIN"
+          },
+          {
+            "name": "places/ChIJfxlFamykfDURzevcW1nNgR0",
+            "placeId": "ChIJfxlFamykfDURzevcW1nNgR0",
+            "displayName": {
+              "text": "Samseong-dong",
+              "languageCode": "en"
+            },
+            "containment": "WITHIN"
+          }
+        ]
+      }
+    },
+    "place_classification": "restaurant",
+    "specific_type": "cafe",
+    "neighborhood_extracted": "Gangnam District",
+    "enrichment_status": "success",
+    "enrichment_date": "2025-09-28T22:18:24.534181",
+    "cynthias_pick": false,
+    "price_display": null,
+    "city": "Seoul",
+    "vibe_tags": [
+      "casual",
+      "cozy"
+    ],
+    "occasion_tags": [
+      "casual_meetup",
+      "solo_dining"
+    ],
+    "crowd_tags": [
+      "locals_spot"
+    ],
+    "service_tags": [],
+    "noise_level": "quiet_ambiance",
+    "food_quality_tags": [],
+    "value_tag": "affordable",
+    "special_features": [],
+    "booking_tags": [
+      "walk_in_friendly"
+    ],
+    "negative_tags": [],
+    "accolades_tags": []
+  },
   {
     "original_place": {
       "geometry": {
