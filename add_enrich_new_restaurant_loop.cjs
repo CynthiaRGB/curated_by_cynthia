@@ -5,19 +5,24 @@
  * 
  * This script automates the entire process of adding a new restaurant:
  * 1. Fetches restaurant data from Google Places API using Google Maps URL
- * 2. Saves to additional_restaurants_google_api.ts
- * 3. Enriches with metadata tags using Claude API
+ * 2. Formats data to match project structure
+ * 3. Saves to 279_wo_photo_array.ts (main data file)
  * 4. Removes unwanted metadata fields
  * 5. Downloads first 3 photos at highest resolution
+ * 6. Enriches with metadata tags using Claude API (required)
  * 
- * Usage: node add-restaurant.cjs "https://www.google.com/maps/place/..."
+ * Requires:
+ * - GOOGLE_PLACES_API_KEY environment variable
+ * - ANTHROPIC_API_KEY environment variable
+ * 
+ * Usage: node add_enrich_new_restaurant_loop.cjs "https://www.google.com/maps/place/..."
  */
 
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const http = require('http');
-const { execSync } = require('child_process');
+const Anthropic = require('@anthropic-ai/sdk');
 
 // Configuration
 const GOOGLE_API_KEY = process.env.GOOGLE_PLACES_API_KEY || '';
@@ -25,9 +30,14 @@ const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || '';
 const RESTAURANT_URL = process.argv[2];
 
 // File paths
-const ADDITIONAL_RESTAURANTS_FILE = './api/data/additional_restaurants_google_api.ts';
+const RESTAURANT_DATA_FILE = './api/data/279_wo_photo_array.ts';
 const OUTPUT_DIR = './public/restaurant-photos';
 const MAPPING_FILE = path.join(OUTPUT_DIR, 'photo-mapping.json');
+
+// Initialize Anthropic client
+const anthropic = new Anthropic({
+  apiKey: ANTHROPIC_API_KEY,
+});
 
 // Metadata fields to remove
 const FIELDS_TO_REMOVE = [
@@ -46,9 +56,15 @@ if (!GOOGLE_API_KEY) {
   process.exit(1);
 }
 
+if (!ANTHROPIC_API_KEY) {
+  console.error('❌ ERROR: ANTHROPIC_API_KEY environment variable not set');
+  console.error('   Set it with: export ANTHROPIC_API_KEY="your-key"');
+  process.exit(1);
+}
+
 if (!RESTAURANT_URL) {
   console.error('❌ ERROR: Please provide a Google Maps URL');
-  console.error('   Usage: node add-restaurant.cjs "https://www.google.com/maps/place/..."');
+  console.error('   Usage: node add_enrich_new_restaurant_loop.cjs "https://www.google.com/maps/place/..."');
   process.exit(1);
 }
 
@@ -354,18 +370,129 @@ function formatRestaurantData(placeData, placeId, url) {
 }
 
 /**
- * Step 4: Save to additional restaurants file
+ * Helper: Smart review sampling - use best 6 reviews for high-volume restaurants
  */
-function saveToAdditionalRestaurants(restaurant) {
-  console.log(`💾 Step 4: Saving to additional restaurants file...\n`);
+function sampleReviews(reviews, maxCount = 6) {
+  if (!reviews || reviews.length === 0) return [];
+  if (reviews.length <= maxCount) return reviews;
+  
+  // Sort by rating (prefer 4-5 star reviews for sentiment)
+  const sorted = [...reviews].sort((a, b) => (b.rating || 0) - (a.rating || 0));
+  return sorted.slice(0, maxCount);
+}
+
+/**
+ * Helper: Extract relevant text from restaurant data for analysis
+ */
+function extractTextForAnalysis(restaurant) {
+  const reviews = sampleReviews(restaurant.google_data?.reviews || [], 6);
+  
+  const reviewTexts = reviews.map((review, idx) => 
+    `Review ${idx + 1} (${review.rating}★): ${review.text?.text || ''}`
+  ).join('\n\n');
+
+  const editorialSummary = restaurant.google_data?.editorialSummary?.text || '';
+  const generativeSummary = restaurant.google_data?.generativeSummary?.overview?.text || '';
+  const reviewSummary = restaurant.google_data?.reviewSummary?.text?.text || '';
+
+  return {
+    name: restaurant.google_data?.displayName?.text || 'Unknown',
+    primaryType: restaurant.google_data?.primaryType || '',
+    types: restaurant.google_data?.types || [],
+    rating: restaurant.google_data?.rating || 0,
+    reviewCount: restaurant.google_data?.userRatingCount || 0,
+    priceDisplay: restaurant.price_display || '',
+    reviewTexts,
+    editorialSummary,
+    generativeSummary,
+    reviewSummary
+  };
+}
+
+/**
+ * Helper: Create the enrichment prompt for Claude
+ */
+function createEnrichmentPrompt(restaurantData) {
+  return `You are analyzing restaurant review data to extract sentiment and thematic tags. Your goal is to identify the vibe, atmosphere, occasions, and notable features of this restaurant based on reviews and descriptions.
+
+Restaurant: ${restaurantData.name}
+Type: ${restaurantData.primaryType}
+Rating: ${restaurantData.rating}★ (${restaurantData.reviewCount} reviews)
+Price: ${restaurantData.priceDisplay}
+
+EDITORIAL SUMMARY:
+${restaurantData.editorialSummary || 'N/A'}
+
+REVIEW SUMMARY:
+${restaurantData.reviewSummary || 'N/A'}
+
+REVIEWS:
+${restaurantData.reviewTexts || 'No reviews available'}
+
+---
+
+Extract tags for the following categories. Return ONLY a valid JSON object with no markdown formatting, explanations, or extra text.
+
+TAG CATEGORIES:
+
+1. vibe_tags (5-8 tags): romantic, cozy, trendy, casual, upscale, lively, quiet, intimate, rustic, modern, traditional, quirky, sophisticated, hip
+
+2. occasion_tags (3-5 tags): date_night, first_date, second_date, anniversary, business_lunch, business_dinner, family_friendly, group_dining, solo_dining, celebration, casual_meetup, late_night, weekend_brunch
+
+3. crowd_tags (2-4 tags): young_crowd, mature_crowd, tourist_friendly, locals_spot, see_and_be_seen, low_key, diverse_crowd, industry_hangout
+
+4. service_tags (2-3 tags): attentive_service, quick_service, knowledgeable_staff, inconsistent_service, slow_service
+
+5. noise_level (1 tag ONLY): loud, moderate_noise, quiet_ambiance
+
+6. food_quality_tags (2-3 tags): exceptional_food, creative_menu, comfort_food, healthy_options, craft_cocktails, wine_focused, beer_selection, instagram_worthy_food
+
+7. value_tag (1 tag ONLY): good_value, overpriced, splurge_worthy, affordable
+
+8. special_features (1-4 tags): outdoor_seating, hidden_gem, speakeasy_vibe, historic_venue, scenic_views, unique_concept, chef_driven, instagrammable
+
+9. booking_tags (1-2 tags): reservations_required, walk_in_friendly, long_wait_times, hard_to_get_into
+
+10. negative_tags (0-2 tags): overrated, tourist_trap, cramped_space, service_issues
+
+11. accolades_tags (0-3 tags): michelin_starred, michelin_1_star, michelin_2_star, michelin_3_star, michelin_bib_gourmand, james_beard_winner, james_beard_nominated, worlds_50_best, zagat_rated, eater_featured, ny_times_reviewed
+
+IMPORTANT INSTRUCTIONS:
+- Only include tags that are clearly supported by the review text or descriptions
+- For instagrammable: look for mentions of "photogenic", "aesthetic", "beautiful space", "great for photos", "Instagram", "pretty"
+- For accolades: scan for any mentions of Michelin, James Beard, Zagat, World's 50 Best, Eater features, or NYT reviews
+- Be conservative - don't guess or assume tags
+- Return valid JSON only, no markdown code blocks or extra formatting
+- Use this exact structure:
+
+{
+  "vibe_tags": ["tag1", "tag2"],
+  "occasion_tags": ["tag1", "tag2"],
+  "crowd_tags": ["tag1", "tag2"],
+  "service_tags": ["tag1", "tag2"],
+  "noise_level": "tag",
+  "food_quality_tags": ["tag1", "tag2"],
+  "value_tag": "tag",
+  "special_features": ["tag1", "tag2"],
+  "booking_tags": ["tag1"],
+  "negative_tags": [],
+  "accolades_tags": []
+}`;
+}
+
+/**
+ * Step 4: Save to main restaurants file
+ */
+function saveToRestaurantData(restaurant) {
+  console.log(`💾 Step 4: Saving to main restaurant data file...\n`);
   
   let restaurants = [];
   let originalContent = '';
   
   // Read existing file
-  if (fs.existsSync(ADDITIONAL_RESTAURANTS_FILE)) {
-    originalContent = fs.readFileSync(ADDITIONAL_RESTAURANTS_FILE, 'utf8');
-    const match = originalContent.match(/export const restaurantData = (\[[\s\S]*\]);/);
+  if (fs.existsSync(RESTAURANT_DATA_FILE)) {
+    originalContent = fs.readFileSync(RESTAURANT_DATA_FILE, 'utf8');
+    const match = originalContent.match(/export const restaurantData = (\[[\s\S]*?\]);/);
     if (match) {
       restaurants = JSON.parse(match[1]);
     }
@@ -383,16 +510,16 @@ function saveToAdditionalRestaurants(restaurant) {
   }
   
   // Write back to file
-  const header = originalContent.match(/(\/\/.*\n)*/) ? originalContent.match(/(\/\/.*\n)*/)[0] : 
-                 '// Additional restaurants fetched from Google Places API\n' +
-                 '// Use this file to store restaurants added via Google API calls\n' +
+  const headerMatch = originalContent.match(/(\/\/.*\n)*/);
+  const header = headerMatch ? headerMatch[0] : 
+                 '// Restaurant data\n' +
                  `// Updated: ${new Date().toISOString()}\n\n`;
   
   const output = header + 'export const restaurantData = ' + 
                  JSON.stringify(restaurants, null, 2) + ';\n';
   
-  fs.writeFileSync(ADDITIONAL_RESTAURANTS_FILE, output, 'utf8');
-  console.log(`✓ Saved to ${ADDITIONAL_RESTAURANTS_FILE}\n`);
+  fs.writeFileSync(RESTAURANT_DATA_FILE, output, 'utf8');
+  console.log(`✓ Saved to ${RESTAURANT_DATA_FILE}\n`);
 }
 
 /**
@@ -410,18 +537,19 @@ function removeUnwantedFields(restaurant) {
   
   // Save back to file
   let restaurants = [];
-  const content = fs.readFileSync(ADDITIONAL_RESTAURANTS_FILE, 'utf8');
-  const match = content.match(/export const restaurantData = (\[[\s\S]*\]);/);
+  const content = fs.readFileSync(RESTAURANT_DATA_FILE, 'utf8');
+  const match = content.match(/export const restaurantData = (\[[\s\S]*?\]);/);
   if (match) {
     restaurants = JSON.parse(match[1]);
     restaurants = restaurants.map(r => 
       r.google_place_id === restaurant.google_place_id ? restaurant : r
     );
     
-    const header = content.match(/(\/\/.*\n)*/)[0];
+    const headerMatch = content.match(/(\/\/.*\n)*/);
+    const header = headerMatch ? headerMatch[0] : '';
     const output = header + 'export const restaurantData = ' + 
                    JSON.stringify(restaurants, null, 2) + ';\n';
-    fs.writeFileSync(ADDITIONAL_RESTAURANTS_FILE, output, 'utf8');
+    fs.writeFileSync(RESTAURANT_DATA_FILE, output, 'utf8');
   }
   
   console.log(`✓ Metadata cleaned\n`);
@@ -558,28 +686,75 @@ async function downloadPhotos(restaurant) {
 }
 
 /**
- * Step 7: Enrich with metadata tags (optional, requires Anthropic API key)
+ * Step 7: Enrich with metadata tags using Claude API
  */
-async function enrichRestaurant(placeId) {
-  if (!ANTHROPIC_API_KEY) {
-    console.log(`⚠️  Step 7: Skipping enrichment (ANTHROPIC_API_KEY not set)\n`);
-    console.log(`   To enable enrichment, set: export ANTHROPIC_API_KEY="your-key"`);
-    console.log(`   Then run: node enrich-additional-restaurants.js\n`);
-    return;
-  }
-  
+async function enrichRestaurantWithTags(restaurant, retries = 3) {
   console.log(`🤖 Step 7: Enriching with metadata tags...\n`);
-  console.log(`   Running enrichment script...\n`);
   
-  try {
-    execSync('node enrich-additional-restaurants.js', { 
-      stdio: 'inherit',
-      env: { ...process.env, ANTHROPIC_API_KEY }
-    });
-    console.log(`✓ Enrichment complete\n`);
-  } catch (error) {
-    console.error(`⚠️  Enrichment failed: ${error.message}\n`);
-    console.log(`   You can run it manually later: node enrich-additional-restaurants.js\n`);
+  const restaurantData = extractTextForAnalysis(restaurant);
+  const prompt = createEnrichmentPrompt(restaurantData);
+
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const message = await anthropic.messages.create({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 500,
+        messages: [
+          { role: 'user', content: prompt }
+        ]
+      });
+
+      // Parse response
+      let responseText = message.content[0].text;
+      
+      // Strip markdown code blocks if present
+      responseText = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      
+      const tags = JSON.parse(responseText);
+
+      // Update restaurant with tags
+      Object.assign(restaurant, tags);
+      
+      const tagCount = Object.values(tags).flat().length + (tags.noise_level ? 1 : 0) + (tags.value_tag ? 1 : 0);
+      console.log(`   ✓ Added ${tagCount} tags`);
+      console.log(`   Input tokens: ${message.usage.input_tokens}, Output tokens: ${message.usage.output_tokens}\n`);
+      
+      // Save back to file
+      let restaurants = [];
+      const content = fs.readFileSync(RESTAURANT_DATA_FILE, 'utf8');
+      const match = content.match(/export const restaurantData = (\[[\s\S]*?\]);/);
+      if (match) {
+        restaurants = JSON.parse(match[1]);
+        restaurants = restaurants.map(r => 
+          r.google_place_id === restaurant.google_place_id ? restaurant : r
+        );
+        
+        const headerMatch = content.match(/(\/\/.*\n)*/);
+        const header = headerMatch ? headerMatch[0] : '';
+        const output = header + 'export const restaurantData = ' + 
+                       JSON.stringify(restaurants, null, 2) + ';\n';
+        fs.writeFileSync(RESTAURANT_DATA_FILE, output, 'utf8');
+      }
+      
+      return;
+    } catch (error) {
+      const isRetryable = error.message.includes('529') || 
+                         error.message.includes('overloaded') ||
+                         error.message.includes('rate_limit') ||
+                         error.status === 529 ||
+                         error.status === 429;
+      
+      if (isRetryable && attempt < retries) {
+        const backoffMs = Math.pow(2, attempt) * 1000; // Exponential backoff: 2s, 4s, 8s
+        console.log(`   ⚠️  API error (attempt ${attempt}/${retries}), retrying in ${backoffMs/1000}s...`);
+        await new Promise(resolve => setTimeout(resolve, backoffMs));
+        continue;
+      }
+      
+      // Final attempt failed or non-retryable error
+      console.error(`   ❌ Enrichment failed: ${error.message}\n`);
+      throw new Error(`Failed to enrich restaurant: ${error.message}`);
+    }
   }
 }
 
@@ -604,7 +779,7 @@ async function main() {
     console.log(`✓ Formatted: ${restaurant.google_data.displayName?.text}\n`);
     
     // Step 4: Save
-    saveToAdditionalRestaurants(restaurant);
+    saveToRestaurantData(restaurant);
     
     // Step 5: Remove unwanted fields
     removeUnwantedFields(restaurant);
@@ -612,8 +787,8 @@ async function main() {
     // Step 6: Download photos
     await downloadPhotos(restaurant);
     
-    // Step 7: Enrich (optional)
-    await enrichRestaurant(placeId);
+    // Step 7: Enrich with tags (required)
+    await enrichRestaurantWithTags(restaurant);
     
     console.log('='.repeat(60));
     console.log('✅ SUCCESS! Restaurant added successfully');
@@ -624,14 +799,9 @@ async function main() {
     console.log(`   City: ${restaurant.city}`);
     console.log(`   Price: ${restaurant.price_display}`);
     console.log(`   Rating: ${restaurant.google_data.rating || 'N/A'}`);
-    console.log(`\n📁 Saved to: ${ADDITIONAL_RESTAURANTS_FILE}`);
+    console.log(`\n📁 Saved to: ${RESTAURANT_DATA_FILE}`);
     console.log(`📸 Photos: ${OUTPUT_DIR}`);
-    console.log(`\n💡 Next steps:`);
-    console.log(`   1. Review the restaurant data in ${ADDITIONAL_RESTAURANTS_FILE}`);
-    if (!ANTHROPIC_API_KEY) {
-      console.log(`   2. Run enrichment: export ANTHROPIC_API_KEY="your-key" && node enrich-additional-restaurants.js`);
-    }
-    console.log(`   3. Merge into your main data file when ready`);
+    console.log(`\n💡 Restaurant successfully added with all enrichment tags!`);
     console.log('='.repeat(60) + '\n');
     
   } catch (error) {

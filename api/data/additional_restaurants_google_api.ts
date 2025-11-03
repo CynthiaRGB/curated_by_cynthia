@@ -571,7 +571,7 @@ export const restaurantData = [
     },
     "place_classification": "restaurant",
     "specific_type": "bagel_shop",
-    "neighborhood_extracted": null,
+    "neighborhood_extracted": "Midtown West",
     "enrichment_status": "success",
     "enrichment_date": "2025-11-01T06:54:07.017Z",
     "cynthias_pick": false,

@@ -46398,7 +46398,6 @@ export const restaurantData = [
     ],
     "accolades_tags": []
   },
-  
   {
     "original_place": {
       "geometry": {
@@ -94896,15 +94895,40 @@ export const restaurantData = [
     "cynthias_pick": true,
     "price_display": "$$",
     "city": "Tokyo",
-    "vibe_tags": [],
-    "occasion_tags": [],
-    "crowd_tags": [],
-    "service_tags": [],
-    "noise_level": null,
-    "food_quality_tags": [],
-    "value_tag": null,
-    "special_features": [],
-    "booking_tags": [],
+    "vibe_tags": [
+      "upscale",
+      "sophisticated",
+      "intimate",
+      "modern",
+      "chic"
+    ],
+    "occasion_tags": [
+      "date_night",
+      "anniversary",
+      "celebration",
+      "special_occasion"
+    ],
+    "crowd_tags": [
+      "mature_crowd",
+      "see_and_be_seen"
+    ],
+    "service_tags": [
+      "attentive_service",
+      "knowledgeable_staff"
+    ],
+    "noise_level": "quiet_ambiance",
+    "food_quality_tags": [
+      "exceptional_food",
+      "wine_focused"
+    ],
+    "value_tag": "splurge_worthy",
+    "special_features": [
+      "chef_driven",
+      "unique_concept"
+    ],
+    "booking_tags": [
+      "reservations_required"
+    ],
     "negative_tags": [],
     "accolades_tags": []
   },

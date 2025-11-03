@@ -13,8 +13,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Configuration
-const INPUT_FILE = path.join(__dirname, 'api', 'data', '285_restaurants_reduced_metadata_backup.json');
-const OUTPUT_FILE = path.join(__dirname, 'api', 'data', '285_restaurants_enriched.json');
+const INPUT_FILE = path.join(__dirname, 'api', 'data', '279_wo_photo_array.ts');
+const OUTPUT_FILE = path.join(__dirname, 'api', 'data', '279_wo_photo_array.ts');
 const CHECKPOINT_FILE = path.join(__dirname, 'api', 'data', 'enrichment_checkpoint.json');
 const CHECKPOINT_INTERVAL = 10; // Save every 10 restaurants
 const REQUESTS_PER_MINUTE = 10; // Safe mode: 10 requests/minute
@@ -151,47 +151,63 @@ IMPORTANT INSTRUCTIONS:
 }
 
 /**
- * Call Claude API to enrich a single restaurant
+ * Call Claude API to enrich a single restaurant with retry logic
  */
-async function enrichRestaurant(restaurant) {
+async function enrichRestaurant(restaurant, retries = 3) {
   const restaurantData = extractTextForAnalysis(restaurant);
   const prompt = createEnrichmentPrompt(restaurantData);
 
-  try {
-    const message = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 500,
-      messages: [
-        { role: 'user', content: prompt }
-      ]
-    });
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const message = await anthropic.messages.create({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 500,
+        messages: [
+          { role: 'user', content: prompt }
+        ]
+      });
 
-    // Track costs
-    const inputTokens = message.usage.input_tokens;
-    const outputTokens = message.usage.output_tokens;
-    const cost = (inputTokens * COST_PER_INPUT_TOKEN) + (outputTokens * COST_PER_OUTPUT_TOKEN);
-    totalCost += cost;
+      // Track costs
+      const inputTokens = message.usage.input_tokens;
+      const outputTokens = message.usage.output_tokens;
+      const cost = (inputTokens * COST_PER_INPUT_TOKEN) + (outputTokens * COST_PER_OUTPUT_TOKEN);
+      totalCost += cost;
 
-    // Parse response
-    let responseText = message.content[0].text;
-    
-    // Strip markdown code blocks if present
-    responseText = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-    
-    const tags = JSON.parse(responseText);
+      // Parse response
+      let responseText = message.content[0].text;
+      
+      // Strip markdown code blocks if present
+      responseText = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      
+      const tags = JSON.parse(responseText);
 
-    return {
-      success: true,
-      tags,
-      cost,
-      tokens: { input: inputTokens, output: outputTokens }
-    };
-  } catch (error) {
-    console.error(`Error enriching ${restaurantData.name}:`, error.message);
-    return {
-      success: false,
-      error: error.message
-    };
+      return {
+        success: true,
+        tags,
+        cost,
+        tokens: { input: inputTokens, output: outputTokens }
+      };
+    } catch (error) {
+      const isRetryable = error.message.includes('529') || 
+                         error.message.includes('overloaded') ||
+                         error.message.includes('rate_limit') ||
+                         error.status === 529 ||
+                         error.status === 429;
+      
+      if (isRetryable && attempt < retries) {
+        const backoffMs = Math.pow(2, attempt) * 1000; // Exponential backoff: 2s, 4s, 8s
+        console.log(`   ⚠️  API error (attempt ${attempt}/${retries}), retrying in ${backoffMs/1000}s...`);
+        await sleep(backoffMs);
+        continue;
+      }
+      
+      // Final attempt failed or non-retryable error
+      console.error(`Error enriching ${restaurantData.name}:`, error.message);
+      return {
+        success: false,
+        error: error.message
+      };
+    }
   }
 }
 
@@ -208,16 +224,32 @@ function loadCheckpoint() {
 }
 
 /**
+ * Write restaurants back to TypeScript file
+ */
+function writeRestaurantsToTS(filePath, restaurants, originalContent) {
+  // Extract the header comments
+  const headerMatch = originalContent.match(/(\/\/.*\n)*/);
+  const header = headerMatch ? headerMatch[0] : '';
+  
+  // Format restaurants as JSON with 2-space indent
+  const restaurantsJSON = JSON.stringify(restaurants, null, 2);
+  
+  // Write back to TS file
+  const output = header + `\nexport const restaurantData = ${restaurantsJSON};\n`;
+  fs.writeFileSync(filePath, output, 'utf8');
+}
+
+/**
  * Save checkpoint
  */
-function saveCheckpoint(restaurants, processedCount) {
+function saveCheckpoint(restaurants, processedCount, originalContent) {
   const checkpoint = {
     processedCount,
     timestamp: new Date().toISOString(),
     totalCost
   };
   fs.writeFileSync(CHECKPOINT_FILE, JSON.stringify(checkpoint, null, 2));
-  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(restaurants, null, 2));
+  writeRestaurantsToTS(OUTPUT_FILE, restaurants, originalContent);
 }
 
 /**
@@ -237,18 +269,42 @@ async function main() {
   console.log('🚀 Restaurant Enrichment Script');
   console.log('='.repeat(60));
 
-  // Load restaurants
+  // Load original file content
+  const originalContent = fs.readFileSync(INPUT_FILE, 'utf8');
+
+  // Load restaurants from TS file
   console.log(`\n📂 Reading: ${INPUT_FILE}`);
   let restaurants;
   try {
-    const fileContent = fs.readFileSync(INPUT_FILE, 'utf8');
-    const data = JSON.parse(fileContent);
-    // Handle both array format and object with places array
-    restaurants = Array.isArray(data) ? data : data.places || [];
-    console.log(`✓ Loaded ${restaurants.length} restaurants`);
+    const content = fs.readFileSync(INPUT_FILE, 'utf8');
+    // Extract the array content between [ and ]; (excluding comments)
+    const match = content.match(/export const restaurantData = (\[[\s\S]*?\]);/);
+    if (match) {
+      const arrayStr = match[1];
+      restaurants = JSON.parse(arrayStr);
+      console.log(`✓ Loaded ${restaurants.length} restaurants`);
+    } else {
+      throw new Error('Could not find restaurantData array');
+    }
   } catch (error) {
     console.error('❌ Error reading file:', error.message);
-    process.exit(1);
+    console.error('   Trying alternative parsing method...');
+    
+    // Alternative: remove comments and try parsing
+    const cleaned = originalContent
+      .replace(/\/\/.*$/gm, '') // Remove line comments
+      .replace(/\/\*[\s\S]*?\*\//g, '') // Remove block comments
+      .replace(/export const restaurantData = /, '')
+      .replace(/;$/, '')
+      .trim();
+    
+    try {
+      restaurants = JSON.parse(cleaned);
+      console.log(`✓ Loaded ${restaurants.length} restaurants (after cleaning)`);
+    } catch (e2) {
+      console.error('❌ All parsing methods failed:', e2.message);
+      process.exit(1);
+    }
   }
 
   // Check for checkpoint
@@ -257,12 +313,22 @@ async function main() {
   
   if (checkpoint) {
     totalCost = checkpoint.totalCost || 0;
+    // Reload restaurants from the checkpoint file
+    try {
+      const checkpointContent = fs.readFileSync(OUTPUT_FILE, 'utf8');
+      const checkpointMatch = checkpointContent.match(/export const restaurantData = (\[[\s\S]*\]);/);
+      if (checkpointMatch) {
+        restaurants = JSON.parse(checkpointMatch[1]);
+      }
+    } catch (e) {
+      console.warn('Warning: Could not reload from checkpoint file, using original');
+    }
   }
 
   // Create backup
   if (startIndex === 0) {
-    const backupPath = INPUT_FILE.replace('.json', '.backup.json');
-    fs.writeFileSync(backupPath, JSON.stringify(restaurants, null, 2));
+    const backupPath = INPUT_FILE.replace('.ts', '.backup.ts');
+    fs.writeFileSync(backupPath, originalContent);
     console.log(`✓ Backup created: ${backupPath}`);
   }
 
@@ -286,16 +352,24 @@ async function main() {
     const restaurant = restaurants[i];
     const restaurantName = restaurant.google_data?.displayName?.text || `Restaurant ${i + 1}`;
     
+    // Skip if already enriched (has non-empty tags)
+    const hasTags = restaurant.vibe_tags && restaurant.vibe_tags.length > 0;
+    if (hasTags) {
+      console.log(`[${i + 1}/${restaurants.length}] Skipping ${restaurantName} (already enriched)`);
+      processedCount = i + 1;
+      continue;
+    }
+    
     console.log(`[${i + 1}/${restaurants.length}] Processing: ${restaurantName}`);
 
     // Enrich restaurant
     const result = await enrichRestaurant(restaurant);
 
     if (result.success) {
-      // Add enriched tags to restaurant
+      // Update enriched tags in restaurant (preserve existing fields)
       Object.assign(restaurant, result.tags);
       
-      const tagCount = Object.values(result.tags).flat().length;
+      const tagCount = Object.values(result.tags).flat().length + (result.tags.noise_level ? 1 : 0) + (result.tags.value_tag ? 1 : 0);
       console.log(`   ✓ Added ${tagCount} tags | Cost: $${result.cost.toFixed(4)} | Tokens: ${result.tokens.input}→${result.tokens.output}`);
     } else {
       console.log(`   ✗ Failed: ${result.error}`);
@@ -305,7 +379,7 @@ async function main() {
 
     // Save checkpoint every N restaurants
     if ((processedCount % CHECKPOINT_INTERVAL === 0) || (processedCount === restaurants.length)) {
-      saveCheckpoint(restaurants, processedCount);
+      saveCheckpoint(restaurants, processedCount, originalContent);
       console.log(`   💾 Checkpoint saved (${processedCount}/${restaurants.length})\n`);
     }
 
@@ -325,7 +399,7 @@ async function main() {
   }
 
   // Final save
-  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(restaurants, null, 2));
+  writeRestaurantsToTS(OUTPUT_FILE, restaurants, originalContent);
   
   // Clean up checkpoint
   if (fs.existsSync(CHECKPOINT_FILE)) {
@@ -343,11 +417,6 @@ async function main() {
   console.log(`   Total cost: $${totalCost.toFixed(2)}`);
   console.log(`   Average cost per restaurant: $${(totalCost / processedCount).toFixed(4)}`);
   console.log(`\n✓ Enriched data saved to: ${OUTPUT_FILE}`);
-  console.log('\nNext steps:');
-  console.log('   1. Review the enriched data in restaurants_enriched.json');
-  console.log('   2. Update your TypeScript types to include the new tag fields');
-  console.log('   3. Update filterService.ts to use the enriched tags');
-  console.log('   4. Test with queries like "romantic restaurant" or "business lunch"');
   console.log('='.repeat(60));
 }
 
