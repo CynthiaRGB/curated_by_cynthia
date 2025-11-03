@@ -4768,7 +4768,7 @@ export const restaurantData = [
     "neighborhood_extracted": "West Village",
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:09:28.684279",
-    "cynthias_pick": false,
+    "cynthias_pick": true,
     "price_display": "$$$$",
     "city": "New York City",
     "vibe_tags": [

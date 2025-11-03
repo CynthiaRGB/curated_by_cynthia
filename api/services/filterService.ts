@@ -143,12 +143,6 @@ export function extractKeywords(query: string): ExtractedKeywords {
   );
   if (mealMatch) {
     keywords.mealType = mealMatch as any;
-    
-    // Special handling: If query says "brunch restaurants" (plural), require stricter matching
-    // This indicates user wants brunch-focused restaurants, not just any that serve brunch
-    if (mealMatch === 'brunch' && lowerQuery.includes('brunch restaurant')) {
-      keywords.requiresBrunchFocus = true;
-    }
   }
 
   // Extract cuisine type - check for multi-word phrases first, then single words
@@ -600,8 +594,10 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
   }
   
   // For "asian" queries, match any Asian cuisine type
+  // Prioritize metadata fields (more reliable) over summary mentions (can have false positives)
   if (cuisineKeyword === 'asian') {
-    return ASIAN_CUISINES.some(asianCuisine => {
+    // First check metadata fields and restaurant name (strong signals)
+    const matchesInMetadata = ASIAN_CUISINES.some(asianCuisine => {
       const normalizedAsianCuisine = normalizeForMatching(asianCuisine);
       return primaryType.includes(asianCuisine) ||
              specificType.includes(asianCuisine) ||
@@ -610,13 +606,59 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
              normalizeForMatching(specificType).includes(normalizedAsianCuisine) ||
              types.some(t => normalizeForMatching(t).includes(normalizedAsianCuisine)) ||
              restaurantName.includes(asianCuisine) ||
-             normalizeForMatching(restaurantName).includes(normalizedAsianCuisine) ||
-             summary.includes(asianCuisine) ||
-             reviewSummary.includes(asianCuisine) ||
-             editorialSummary.includes(asianCuisine) ||
-             normalizeForMatching(summary).includes(normalizedAsianCuisine) ||
-             normalizeForMatching(reviewSummary).includes(normalizedAsianCuisine) ||
-             normalizeForMatching(editorialSummary).includes(normalizedAsianCuisine);
+             normalizeForMatching(restaurantName).includes(normalizedAsianCuisine);
+    });
+    
+    if (matchesInMetadata) {
+      return true;
+    }
+    
+    // Only check summaries if metadata didn't match (to avoid false positives from "influence" mentions)
+    // Exclude mentions that suggest fusion/influence rather than primary cuisine
+    return ASIAN_CUISINES.some(asianCuisine => {
+      const normalizedAsianCuisine = normalizeForMatching(asianCuisine);
+      
+      // Exclude patterns that indicate influence/fusion rather than primary cuisine
+      const exclusionPatterns = [
+        new RegExp(`${asianCuisine}\\s+(influence|inspired|fusion|style|elements|twist|flair|accent)`, 'i'),
+        new RegExp(`(subtle|hint of|hints of|touch of|bit of)\\s+${asianCuisine}`, 'i'),
+        new RegExp(`${asianCuisine}/[a-z]+\\s+influence`, 'i') // e.g., "Asian/Japanese influence"
+      ];
+      
+      // Check each summary field
+      const summariesToCheck = [summary, reviewSummary, editorialSummary];
+      
+      for (const summaryText of summariesToCheck) {
+        if (!summaryText) continue;
+        
+        // Skip if it matches exclusion patterns (suggests fusion/influence, not primary cuisine)
+        if (exclusionPatterns.some(pattern => pattern.test(summaryText))) {
+          continue;
+        }
+        
+        // Check for positive signals - cuisine mentioned with restaurant/cuisine context
+        const positiveContextPatterns = [
+          new RegExp(`${asianCuisine}\\s+(restaurant|cuisine|food|kitchen|eatery|dining|bistro|cafe)`, 'i'),
+          new RegExp(`(restaurant|cuisine|food|kitchen|eatery|dining|bistro|cafe)\\s+${asianCuisine}`, 'i'),
+          new RegExp(`serves\\s+${asianCuisine}`, 'i'),
+          new RegExp(`${asianCuisine}\\s+specialt`, 'i'),
+          new RegExp(`\\b${asianCuisine}\\s+(dish|dishes|menu|chef|chefs)`, 'i')
+        ];
+        
+        if (positiveContextPatterns.some(pattern => pattern.test(summaryText))) {
+          return true;
+        }
+        
+        // Also match if cuisine appears as standalone word (but only if not excluded above)
+        const cuisineRegex = new RegExp(`\\b${asianCuisine.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+        const normalizedCuisineRegex = new RegExp(`\\b${normalizedAsianCuisine.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+        
+        if (cuisineRegex.test(summaryText) || normalizedCuisineRegex.test(summaryText)) {
+          return true;
+        }
+      }
+      
+      return false;
     });
   }
   
@@ -708,47 +750,44 @@ function matchesMealType(restaurant: Restaurant, keywords: ExtractedKeywords): b
       return false;
     }
     
-    // If query requires brunch focus (e.g., "brunch restaurants"), apply stricter criteria
-    if (keywords.requiresBrunchFocus) {
-      const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
-      const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
-      const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
-      const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
-      
-      // Check metadata indicators first (most reliable)
-      const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
-      const hasBrunchRestaurantType = types.includes('brunch_restaurant');
-      
-      // Check for dedicated brunch hours
-      const googleData = restaurant.google_data as any; // Type assertion needed for secondary hours
-      const hasBrunchHours = googleData.currentSecondaryOpeningHours?.some(
-        (hours: any) => hours.secondaryHoursType === 'BRUNCH'
-      ) || googleData.secondaryOpeningHours?.some(
-        (hours: any) => hours.secondaryHoursType === 'BRUNCH'
-      );
-      
-      // Check for weekend_brunch occasion tag
-      const hasWeekendBrunchTag = restaurant.occasion_tags?.includes('weekend_brunch');
-      
-      // Check if brunch is mentioned prominently (name or summaries)
-      const mentionsBrunch = restaurantName.includes('brunch') ||
-                            summary.includes('brunch') ||
-                            reviewSummary.includes('brunch') ||
-                            editorialSummary.includes('brunch');
-      
-      // Restaurant must meet at least one of these criteria to be brunch-focused
-      const isBrunchFocused = hasBrunchRestaurantType || 
-                             hasBrunchHours || 
-                             hasWeekendBrunchTag || 
-                             mentionsBrunch;
-      
-      // If none of these indicators are present, exclude it (not a brunch-focused restaurant)
-      if (!isBrunchFocused) {
-        return false;
-      }
+    // Strict brunch filtering (similar to coffee shop/bakery logic)
+    // Prioritize metadata fields first, then use fallback criteria
+    
+    // Primary criteria: Check metadata indicators (most reliable)
+    const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
+    const hasBrunchRestaurantType = types.includes('brunch_restaurant');
+    const hasWeekendBrunchTag = restaurant.occasion_tags?.includes('weekend_brunch');
+    
+    // If primary criteria met, include immediately
+    if (hasBrunchRestaurantType || hasWeekendBrunchTag) {
+      return true;
     }
     
-    return true;
+    // Fallback criteria: Check brunch hours and mentions (less weight)
+    const googleData = restaurant.google_data as any; // Type assertion needed for secondary hours
+    const hasBrunchHours = googleData.currentSecondaryOpeningHours?.some(
+      (hours: any) => hours.secondaryHoursType === 'BRUNCH'
+    ) || googleData.secondaryOpeningHours?.some(
+      (hours: any) => hours.secondaryHoursType === 'BRUNCH'
+    );
+    
+    const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
+    const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
+    const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
+    const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
+    
+    const mentionsBrunch = restaurantName.includes('brunch') ||
+                          summary.includes('brunch') ||
+                          reviewSummary.includes('brunch') ||
+                          editorialSummary.includes('brunch');
+    
+    // If fallback criteria met, include
+    if (hasBrunchHours || mentionsBrunch) {
+      return true;
+    }
+    
+    // If none of the criteria are met, exclude (not a brunch-focused restaurant)
+    return false;
   }
   
   if (mealType === 'breakfast') {

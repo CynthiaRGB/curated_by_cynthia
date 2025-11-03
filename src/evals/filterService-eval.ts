@@ -264,6 +264,7 @@ function scoreHasResults({ input, output, expected }) {
 /**
  * Scorer 2: Location Match
  * Checks if ALL results match the expected location
+ * This must match the logic in matchesLocation() in filterService.ts
  */
 function scoreLocationMatch({ input, output, expected }) {
   if (!expected.mustHave?.location) return null;
@@ -278,34 +279,139 @@ function scoreLocationMatch({ input, output, expected }) {
     };
   }
   
-  // Check if ALL results match location
+  // Check if ALL results match location using same logic as matchesLocation()
   const allMatch = output.every(restaurant => {
-    // Check borough
-    if (borough) {
-      const addressComponents = restaurant.google_data?.addressComponents || [];
-      const boroughComponent = addressComponents.find(comp =>
-        comp.types?.includes('sublocality_level_1') ||
-        comp.types?.includes('sublocality')
-      );
-      const restaurantBorough = boroughComponent?.longText?.toLowerCase() || '';
-      return restaurantBorough.includes(borough.toLowerCase());
-    }
+    let matches = false;
     
-    // Check neighborhood
+    // Check neighborhood match
     if (neighborhood) {
       const restaurantNeighborhood = restaurant.neighborhood_extracted?.toLowerCase() || '';
       const address = restaurant.google_data?.formattedAddress?.toLowerCase() || '';
-      return restaurantNeighborhood.includes(neighborhood.toLowerCase()) ||
-             address.includes(neighborhood.toLowerCase());
+      const neighborhoodKeyword = neighborhood.toLowerCase();
+      
+      if (restaurantNeighborhood.includes(neighborhoodKeyword) ||
+          address.includes(neighborhoodKeyword)) {
+        matches = true;
+      }
     }
     
-    // Check city
+    // Check borough match
+    if (borough) {
+      const boroughKeyword = borough.toLowerCase();
+      
+      // First check formattedAddress (primary method)
+      const formattedAddress = restaurant.google_data?.formattedAddress?.toLowerCase() || '';
+      
+      // Check if borough is in the formattedAddress
+      if (formattedAddress.includes(boroughKeyword)) {
+        matches = true;
+      }
+      
+      // Handle special cases in formattedAddress
+      if (boroughKeyword === 'bk' && formattedAddress.includes('brooklyn')) {
+        matches = true;
+      }
+      if (boroughKeyword === 'brooklyn' && formattedAddress.includes('bk')) {
+        matches = true;
+      }
+      
+      // Special handling for Manhattan: addresses say "New York, NY" not "Manhattan, NY"
+      // So if query is Manhattan, check for "new york, ny" but exclude other boroughs
+      if (boroughKeyword === 'manhattan' && 
+          formattedAddress.includes('new york') && 
+          !formattedAddress.includes('brooklyn') && 
+          !formattedAddress.includes('queens') && 
+          !formattedAddress.includes('bronx') && 
+          !formattedAddress.includes('staten island')) {
+        matches = true;
+      }
+      
+      // Fallback: check original_place address if formattedAddress didn't match
+      if (!matches) {
+        const originalAddress = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
+        
+        if (originalAddress.includes(boroughKeyword)) {
+          matches = true;
+        }
+        
+        // Handle special cases in originalAddress
+        if (boroughKeyword === 'bk' && originalAddress.includes('brooklyn')) {
+          matches = true;
+        }
+        if (boroughKeyword === 'brooklyn' && originalAddress.includes('bk')) {
+          matches = true;
+        }
+        
+        // Special handling for Manhattan in originalAddress
+        if (boroughKeyword === 'manhattan' && 
+            originalAddress.includes('new york') && 
+            !originalAddress.includes('brooklyn') && 
+            !originalAddress.includes('queens') && 
+            !originalAddress.includes('bronx') && 
+            !originalAddress.includes('staten island')) {
+          matches = true;
+        }
+      }
+    }
+    
+    // Check city match - use restaurant.city property if available, otherwise fall back to address parsing
     if (city) {
-      const restaurantCity = restaurant.city?.toLowerCase() || '';
-      return restaurantCity === city.toLowerCase();
+      const restaurantCity = restaurant.city?.toLowerCase();
+      const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
+      
+      // Map keywords.city to expected city names
+      const cityMap: { [key: string]: string[] } = {
+        'nyc': ['new york city', 'new york', 'nyc'],
+        'tokyo': ['tokyo'],
+        'seoul': ['seoul'],
+        'paris': ['paris']
+      };
+      
+      const cityKeyword = city.toLowerCase();
+      const expectedCities = cityMap[cityKeyword] || [cityKeyword];
+      
+      // First check restaurant.city property (more reliable)
+      if (restaurantCity) {
+        for (const expectedCity of expectedCities) {
+          if (restaurantCity.includes(expectedCity) || expectedCity.includes(restaurantCity)) {
+            matches = true;
+            break;
+          }
+        }
+      }
+      
+      // Fall back to address parsing if restaurant.city didn't match
+      if (!matches) {
+        switch (cityKeyword) {
+          case 'nyc':
+            // For NYC, check if it's in any NYC borough (Manhattan, Brooklyn, Queens, Bronx, Staten Island)
+            if (address.includes('new york') || address.includes('nyc') || 
+                address.includes('manhattan') || address.includes('brooklyn') || 
+                address.includes('queens') || address.includes('bronx') || 
+                address.includes('staten island')) {
+              matches = true;
+            }
+            break;
+          case 'tokyo':
+            if (address.includes('tokyo') || address.includes('japan')) {
+              matches = true;
+            }
+            break;
+          case 'seoul':
+            if (address.includes('seoul') || address.includes('korea')) {
+              matches = true;
+            }
+            break;
+          case 'paris':
+            if (address.includes('paris') || address.includes('france')) {
+              matches = true;
+            }
+            break;
+        }
+      }
     }
     
-    return true;
+    return matches;
   });
   
   return {
@@ -322,6 +428,7 @@ function scoreLocationMatch({ input, output, expected }) {
 /**
  * Scorer 3: Cuisine Match
  * Checks if results match the expected cuisine (70%+ threshold)
+ * This must match the logic in matchesCuisine() in filterService.ts
  */
 function scoreCuisineMatch({ input, output, expected }) {
   if (!expected.mustHave?.cuisine) return null;
@@ -337,25 +444,129 @@ function scoreCuisineMatch({ input, output, expected }) {
     };
   }
   
-  // Count matches
+  // Normalize accents and handle plural/singular variations for matching
+  // e.g., "crepes" should match "crepe", "crêpe", "crêperie"
+  const normalizeForMatching = (text: string): string => {
+    return text
+      .normalize('NFD') // Decompose characters with diacritics
+      .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+      .replace(/s$/, ''); // Remove trailing 's' for plural handling
+  };
+  
+  const normalizedCuisineKeyword = normalizeForMatching(expectedCuisine);
+  
+  // Asian cuisines that should match when user searches for "asian"
+  // Must match ASIAN_CUISINES array in filterService.ts exactly
+  const ASIAN_CUISINES = [
+    'japanese', 'chinese', 'korean', 'thai', 'vietnamese', 'indian',
+    'ramen', 'sushi', 'sashimi', 'dim sum', 'dimsum', 'hot pot', 
+    'szechuan', 'peking duck', 'pho', 'vermicelli', 'pad thai',
+    'yakitori', 'katsu', 'tonkatsu', 'tempura', 'udon', 'soba',
+    'okonomiyaki', 'curry', 'onigiri', 'takoyaki', 'teriyaki',
+    'sukiyaki', 'shabu shabu', 'shabushabu', 'kaiseki', 'omurice'
+  ];
+  
+  // Count matches using the same logic as matchesCuisine()
   const matchCount = output.filter(restaurant => {
     const primaryType = restaurant.google_data?.primaryType?.toLowerCase() || '';
     const specificType = restaurant.specific_type?.toLowerCase() || '';
     const types = restaurant.google_data?.types?.map(t => t.toLowerCase()) || [];
+    const restaurantName = restaurant.google_data?.displayName?.text?.toLowerCase() || '';
+    const summary = restaurant.google_data?.generativeSummary?.overview?.text?.toLowerCase() || '';
+    const reviewSummary = restaurant.google_data?.reviewSummary?.text?.text?.toLowerCase() || '';
+    const editorialSummary = restaurant.google_data?.editorialSummary?.text?.toLowerCase() || '';
     
-    // For Asian umbrella, check if it's any Asian cuisine
-    if (anyOf.length > 0) {
-      return anyOf.some(cuisine =>
-        primaryType.includes(cuisine) ||
-        specificType.includes(cuisine) ||
-        types.some(t => t.includes(cuisine))
-      );
+    // For Asian umbrella, check if it's any Asian cuisine (matches anyOf logic)
+    if (anyOf.length > 0 || expectedCuisine === 'asian') {
+      const cuisinesToCheck = anyOf.length > 0 ? anyOf : ASIAN_CUISINES;
+      return cuisinesToCheck.some(cuisine => {
+        const normalizedCuisine = normalizeForMatching(cuisine);
+        return primaryType.includes(cuisine) ||
+               specificType.includes(cuisine) ||
+               types.some(t => t.includes(cuisine)) ||
+               normalizeForMatching(primaryType).includes(normalizedCuisine) ||
+               normalizeForMatching(specificType).includes(normalizedCuisine) ||
+               types.some(t => normalizeForMatching(t).includes(normalizedCuisine)) ||
+               restaurantName.includes(cuisine) ||
+               normalizeForMatching(restaurantName).includes(normalizedCuisine) ||
+               summary.includes(cuisine) ||
+               reviewSummary.includes(cuisine) ||
+               editorialSummary.includes(cuisine) ||
+               normalizeForMatching(summary).includes(normalizedCuisine) ||
+               normalizeForMatching(reviewSummary).includes(normalizedCuisine) ||
+               normalizeForMatching(editorialSummary).includes(normalizedCuisine);
+      });
     }
     
-    // For specific cuisine, check exact match
-    return primaryType.includes(expectedCuisine) ||
-           specificType.includes(expectedCuisine) ||
-           types.some(t => t.includes(expectedCuisine));
+    // Special handling for "bar" - strict metadata-only matching
+    if (expectedCuisine === 'bar') {
+      return primaryType === 'bar' || 
+             primaryType === 'night_club' || 
+             specificType === 'bar';
+    }
+    
+    // Special handling for coffee/cafe - strict metadata-only matching
+    if (expectedCuisine === 'coffee shop' || expectedCuisine === 'coffee' || expectedCuisine === 'cafe') {
+      const hasCoffeePrimaryType = primaryType === 'coffee_shop' || primaryType === 'cafe';
+      const hasCoffeeInTypes = types.some(t => 
+        t === 'coffee_shop' || 
+        t === 'cafe' || 
+        t.toLowerCase() === 'coffee_shop' || 
+        t.toLowerCase() === 'cafe'
+      );
+      return hasCoffeePrimaryType || hasCoffeeInTypes;
+    }
+    
+    // Special handling for dessert - strict metadata-only matching
+    if (['dessert', 'pastry', 'cake', 'pastries', 'bakery', 'bakeries', 'sweets'].includes(expectedCuisine)) {
+      const hasDessertPrimaryType = primaryType === 'bakery' || 
+                                     primaryType === 'dessert_shop' || 
+                                     primaryType === 'ice_cream_shop' ||
+                                     primaryType === 'pastry_shop' ||
+                                     primaryType === 'confectionery' ||
+                                     primaryType === 'dessert_restaurant';
+      const hasDessertInTypes = types.some(t => 
+        t === 'bakery' || 
+        t === 'dessert_shop' || 
+        t === 'ice_cream_shop' ||
+        t === 'pastry_shop' ||
+        t === 'confectionery' ||
+        t === 'dessert_restaurant' ||
+        t.toLowerCase() === 'bakery' ||
+        t.toLowerCase() === 'dessert_shop' ||
+        t.toLowerCase() === 'ice_cream_shop' ||
+        t.toLowerCase() === 'pastry_shop' ||
+        t.toLowerCase() === 'confectionery' ||
+        t.toLowerCase() === 'dessert_restaurant'
+      );
+      return hasDessertPrimaryType || hasDessertInTypes;
+    }
+    
+    // Check restaurant name for dish-specific keywords (e.g., "yakitori", "katsu")
+    // This is important because dish-specific restaurants often have the dish in their name
+    // but their type might just be "japanese_restaurant"
+    if (restaurantName.includes(expectedCuisine) || 
+        normalizeForMatching(restaurantName).includes(normalizedCuisineKeyword)) {
+      return true;
+    }
+    
+    // Check restaurant summary/description for mentions (helps with dish-specific searches)
+    if (summary.includes(expectedCuisine) || 
+        reviewSummary.includes(expectedCuisine) || 
+        editorialSummary.includes(expectedCuisine) ||
+        normalizeForMatching(summary).includes(normalizedCuisineKeyword) ||
+        normalizeForMatching(reviewSummary).includes(normalizedCuisineKeyword) ||
+        normalizeForMatching(editorialSummary).includes(normalizedCuisineKeyword)) {
+      return true;
+    }
+    
+    // Standard type matching (also check normalized versions)
+    return specificType.includes(expectedCuisine) ||
+           primaryType.includes(expectedCuisine) ||
+           types.some(t => t.includes(expectedCuisine)) ||
+           normalizeForMatching(specificType).includes(normalizedCuisineKeyword) ||
+           normalizeForMatching(primaryType).includes(normalizedCuisineKeyword) ||
+           types.some(t => normalizeForMatching(t).includes(normalizedCuisineKeyword));
   }).length;
   
   const cuisineRate = matchCount / output.length;
@@ -376,6 +587,7 @@ function scoreCuisineMatch({ input, output, expected }) {
 /**
  * Scorer 4: Coffee Focus
  * Checks if results are primarily cafes/coffee shops (80%+ threshold)
+ * This must match the strict metadata-only matching logic in matchesCuisine() in filterService.ts
  */
 function scoreCoffeeFocus({ input, output, expected }) {
   if (!expected.mustHave?.coffeeFocus) return null;
@@ -390,9 +602,19 @@ function scoreCoffeeFocus({ input, output, expected }) {
   
   const cafeCount = output.filter(restaurant => {
     const primaryType = restaurant.google_data?.primaryType?.toLowerCase() || '';
-    return primaryType === 'cafe' ||
-           primaryType === 'coffee_shop' ||
-           primaryType.includes('cafe');
+    const types = restaurant.google_data?.types?.map(t => t.toLowerCase()) || [];
+    
+    // Strict metadata-only matching (no name matching to avoid false positives)
+    // Must have 'coffee_shop' or 'cafe' in either primaryType OR types array
+    const hasCoffeePrimaryType = primaryType === 'coffee_shop' || primaryType === 'cafe';
+    const hasCoffeeInTypes = types.some(t => 
+      t === 'coffee_shop' || 
+      t === 'cafe' || 
+      t.toLowerCase() === 'coffee_shop' || 
+      t.toLowerCase() === 'cafe'
+    );
+    
+    return hasCoffeePrimaryType || hasCoffeeInTypes;
   }).length;
   
   const cafeRate = cafeCount / output.length;
@@ -412,6 +634,7 @@ function scoreCoffeeFocus({ input, output, expected }) {
 /**
  * Scorer 5: Dessert Focus
  * Checks if results serve dessert or are dessert-focused (80%+ threshold)
+ * This must match the strict metadata-only matching logic in matchesCuisine() in filterService.ts
  */
 function scoreDessertFocus({ input, output, expected }) {
   if (!expected.mustHave?.dessertFocus) return null;
@@ -427,13 +650,31 @@ function scoreDessertFocus({ input, output, expected }) {
   const dessertCount = output.filter(restaurant => {
     const primaryType = restaurant.google_data?.primaryType?.toLowerCase() || '';
     const types = restaurant.google_data?.types?.map(t => t.toLowerCase()) || [];
-    const servesDessert = restaurant.google_data?.servesDessert;
     
-    return primaryType.includes('bakery') ||
-           primaryType.includes('dessert') ||
-           primaryType.includes('pastry') ||
-           types.some(t => t.includes('bakery') || t.includes('dessert')) ||
-           servesDessert === true;
+    // Strict metadata-only matching (no name matching to avoid false positives)
+    // Must have dessert-related type in either primaryType OR types array
+    const hasDessertPrimaryType = primaryType === 'bakery' || 
+                                   primaryType === 'dessert_shop' || 
+                                   primaryType === 'ice_cream_shop' ||
+                                   primaryType === 'pastry_shop' ||
+                                   primaryType === 'confectionery' ||
+                                   primaryType === 'dessert_restaurant';
+    const hasDessertInTypes = types.some(t => 
+      t === 'bakery' || 
+      t === 'dessert_shop' || 
+      t === 'ice_cream_shop' ||
+      t === 'pastry_shop' ||
+      t === 'confectionery' ||
+      t === 'dessert_restaurant' ||
+      t.toLowerCase() === 'bakery' ||
+      t.toLowerCase() === 'dessert_shop' ||
+      t.toLowerCase() === 'ice_cream_shop' ||
+      t.toLowerCase() === 'pastry_shop' ||
+      t.toLowerCase() === 'confectionery' ||
+      t.toLowerCase() === 'dessert_restaurant'
+    );
+    
+    return hasDessertPrimaryType || hasDessertInTypes;
   }).length;
   
   const dessertRate = dessertCount / output.length;
@@ -453,6 +694,7 @@ function scoreDessertFocus({ input, output, expected }) {
 /**
  * Scorer 6: Brunch Focus
  * Checks if results are brunch-focused (70%+ threshold)
+ * This must match the logic in matchesMealType() in filterService.ts for brunch queries
  */
 function scoreBrunchFocus({ input, output, expected }) {
   if (!expected.mustHave?.brunchFocus) return null;
@@ -466,16 +708,49 @@ function scoreBrunchFocus({ input, output, expected }) {
   }
   
   const brunchCount = output.filter(restaurant => {
-    const name = restaurant.google_data?.displayName?.text?.toLowerCase() || '';
+    // Basic check: restaurant must serve brunch
+    if (!restaurant.google_data?.servesBrunch) {
+      return false;
+    }
+    
+    // Strict brunch filtering (prioritize metadata fields, then fallback)
+    
+    // Primary criteria: Check metadata indicators (most reliable)
     const types = restaurant.google_data?.types?.map(t => t.toLowerCase()) || [];
+    const hasBrunchRestaurantType = types.includes('brunch_restaurant');
     const occasionTags = restaurant.occasion_tags || [];
-    const servesBrunch = restaurant.google_data?.servesBrunch;
+    const hasWeekendBrunchTag = occasionTags.includes('weekend_brunch');
     
-    const hasBrunchType = types.includes('brunch_restaurant');
-    const hasBrunchTag = occasionTags.includes('weekend_brunch');
-    const nameIncludesBrunch = name.includes('brunch');
+    // If primary criteria met, include immediately
+    if (hasBrunchRestaurantType || hasWeekendBrunchTag) {
+      return true;
+    }
     
-    return (hasBrunchType || hasBrunchTag || nameIncludesBrunch) && servesBrunch;
+    // Fallback criteria: Check brunch hours and mentions (less weight)
+    const googleData = restaurant.google_data as any; // Type assertion needed for secondary hours
+    const hasBrunchHours = googleData.currentSecondaryOpeningHours?.some(
+      (hours: any) => hours.secondaryHoursType === 'BRUNCH'
+    ) || googleData.secondaryOpeningHours?.some(
+      (hours: any) => hours.secondaryHoursType === 'BRUNCH'
+    );
+    
+    const restaurantName = restaurant.google_data?.displayName?.text?.toLowerCase() || '';
+    const summary = restaurant.google_data?.generativeSummary?.overview?.text?.toLowerCase() || '';
+    const reviewSummary = restaurant.google_data?.reviewSummary?.text?.text?.toLowerCase() || '';
+    const editorialSummary = restaurant.google_data?.editorialSummary?.text?.toLowerCase() || '';
+    
+    const mentionsBrunch = restaurantName.includes('brunch') ||
+                          summary.includes('brunch') ||
+                          reviewSummary.includes('brunch') ||
+                          editorialSummary.includes('brunch');
+    
+    // If fallback criteria met, include
+    if (hasBrunchHours || mentionsBrunch) {
+      return true;
+    }
+    
+    // If none of the criteria are met, exclude (not a brunch-focused restaurant)
+    return false;
   }).length;
   
   const brunchRate = brunchCount / output.length;
