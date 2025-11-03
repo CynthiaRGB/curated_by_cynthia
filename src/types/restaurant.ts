@@ -39,6 +39,7 @@ export interface Restaurant {
       weekdayDescriptions: string[];
     };
     formattedAddress?: string;
+    shortFormattedAddress?: string;
     addressComponents?: Array<{
       longText: string;
       shortText: string;
@@ -112,7 +113,7 @@ export interface Restaurant {
 
 export interface ExtractedKeywords {
   // Location
-  neighborhood?: string;
+  neighborhood?: string | string[]; // Support single neighborhood or array for multiple
   borough?: string;
   city?: string;
   

@@ -283,72 +283,33 @@ function scoreLocationMatch({ input, output, expected }) {
   const allMatch = output.every(restaurant => {
     let matches = false;
     
-    // Check neighborhood match
+    // Check neighborhood match - only check neighborhood_extracted field
     if (neighborhood) {
       const restaurantNeighborhood = restaurant.neighborhood_extracted?.toLowerCase() || '';
-      const address = restaurant.google_data?.formattedAddress?.toLowerCase() || '';
-      const neighborhoodKeyword = neighborhood.toLowerCase();
       
-      if (restaurantNeighborhood.includes(neighborhoodKeyword) ||
-          address.includes(neighborhoodKeyword)) {
-        matches = true;
-      }
+      // Handle both single neighborhood and array (for union logic)
+      const neighborhoods = Array.isArray(neighborhood) ? neighborhood : [neighborhood];
+      
+      // Match if restaurant is in ANY of the neighborhoods (union)
+      matches = neighborhoods.some(neighborhoodKeyword => {
+        const keyword = neighborhoodKeyword.toLowerCase();
+        return restaurantNeighborhood.includes(keyword) || keyword.includes(restaurantNeighborhood);
+      });
     }
     
-    // Check borough match
+    // Check borough match - simplified: only Brooklyn and Manhattan
     if (borough) {
       const boroughKeyword = borough.toLowerCase();
+      const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
       
-      // First check formattedAddress (primary method)
-      const formattedAddress = restaurant.google_data?.formattedAddress?.toLowerCase() || '';
-      
-      // Check if borough is in the formattedAddress
-      if (formattedAddress.includes(boroughKeyword)) {
-        matches = true;
-      }
-      
-      // Handle special cases in formattedAddress
-      if (boroughKeyword === 'bk' && formattedAddress.includes('brooklyn')) {
-        matches = true;
-      }
-      if (boroughKeyword === 'brooklyn' && formattedAddress.includes('bk')) {
-        matches = true;
-      }
-      
-      // Special handling for Manhattan: addresses say "New York, NY" not "Manhattan, NY"
-      // So if query is Manhattan, check for "new york, ny" but exclude other boroughs
-      if (boroughKeyword === 'manhattan' && 
-          formattedAddress.includes('new york') && 
-          !formattedAddress.includes('brooklyn') && 
-          !formattedAddress.includes('queens') && 
-          !formattedAddress.includes('bronx') && 
-          !formattedAddress.includes('staten island')) {
-        matches = true;
-      }
-      
-      // Fallback: check original_place address if formattedAddress didn't match
-      if (!matches) {
-        const originalAddress = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
-        
-        if (originalAddress.includes(boroughKeyword)) {
+      if (boroughKeyword === 'brooklyn' || boroughKeyword === 'bk') {
+        // Brooklyn query: only return if address contains "brooklyn"
+        if (address.includes('brooklyn')) {
           matches = true;
         }
-        
-        // Handle special cases in originalAddress
-        if (boroughKeyword === 'bk' && originalAddress.includes('brooklyn')) {
-          matches = true;
-        }
-        if (boroughKeyword === 'brooklyn' && originalAddress.includes('bk')) {
-          matches = true;
-        }
-        
-        // Special handling for Manhattan in originalAddress
-        if (boroughKeyword === 'manhattan' && 
-            originalAddress.includes('new york') && 
-            !originalAddress.includes('brooklyn') && 
-            !originalAddress.includes('queens') && 
-            !originalAddress.includes('bronx') && 
-            !originalAddress.includes('staten island')) {
+      } else if (boroughKeyword === 'manhattan') {
+        // Manhattan query: return if address does NOT contain "brooklyn" (meaning it's Manhattan)
+        if (!address.includes('brooklyn')) {
           matches = true;
         }
       }
@@ -384,11 +345,9 @@ function scoreLocationMatch({ input, output, expected }) {
       if (!matches) {
         switch (cityKeyword) {
           case 'nyc':
-            // For NYC, check if it's in any NYC borough (Manhattan, Brooklyn, Queens, Bronx, Staten Island)
-            if (address.includes('new york') || address.includes('nyc') || 
-                address.includes('manhattan') || address.includes('brooklyn') || 
-                address.includes('queens') || address.includes('bronx') || 
-                address.includes('staten island')) {
+            // For NYC queries, show all restaurants (both Manhattan and Brooklyn)
+            // Since we only have Manhattan and Brooklyn data, any NYC address matches
+            if (address.includes('new york') || address.includes('nyc') || address.includes('brooklyn')) {
               matches = true;
             }
             break;

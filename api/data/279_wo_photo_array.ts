@@ -93635,6 +93635,7 @@ export const restaurantData = [
         ]
       }
     },
+    "place_classification": "restaurant",
     "neighborhood_extracted": "Midtown",
     "city": "New York City",
     "price_display": "$$",
@@ -93917,6 +93918,7 @@ export const restaurantData = [
         ]
       }
     },
+    "place_classification": "restaurant",
     "neighborhood_extracted": "Williamsburg",
     "city": "New York City",
     "price_display": "$$$$",
@@ -94161,6 +94163,7 @@ export const restaurantData = [
         ]
       }
     },
+    "place_classification": "restaurant",
     "neighborhood_extracted": "Jongno",
     "city": "Seoul",
     "price_display": "$$",
@@ -94415,6 +94418,7 @@ export const restaurantData = [
         ]
       }
     },
+    "place_classification": "restaurant",
     "neighborhood_extracted": "Jongno",
     "city": "Seoul",
     "price_display": "$$$",
