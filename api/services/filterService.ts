@@ -109,7 +109,7 @@ export function extractKeywords(query: string): ExtractedKeywords {
     }
   }
   
-  // Extract neighborhoods - look anywhere in query, support multiple with "and" or commas
+  // Extract neighborhoods - look anywhere in query, but only create array for explicit "and"/"or"
   const neighborhoods: string[] = [];
   
   // Words to exclude (cuisine types, meal types, common words)
@@ -118,59 +118,92 @@ export function extractKeywords(query: string): ExtractedKeywords {
     ...MEAL_TYPES.map(m => m.toLowerCase()),
     ...BOROUGHS.map(b => b.toLowerCase()),
     'restaurant', 'restaurants', 'food', 'dining', 'eat', 'place', 'places', 'spot', 'spots',
-    'show', 'me', 'find', 'search', 'in', 'for', 'with', 'and', 'or', 'the', 'a', 'an',
+    'show', 'me', 'find', 'search', 'in', 'for', 'with', 'the', 'a', 'an',
     'nyc', 'new york', 'new york city', 'tokyo', 'seoul', 'paris', 'cheap', 'expensive',
     'budget', 'upscale', 'fancy', 'good', 'best', 'top', 'rated', 'rating', 'star', 'michelin'
   ]);
   
-  // Split query by "and" and commas to extract multiple neighborhoods
-  const parts = lowerQuery.split(/\s+and\s+|,\s*|\sand\s+/i).map(p => p.trim());
+  // Check if query has explicit "and" or "or" between potential neighborhoods
+  const hasExplicitConnector = /\s+(and|or)\s+/i.test(lowerQuery);
   
-  // Also check full query without splitting
-  const allParts = [lowerQuery, ...parts];
-  
-  // Extract neighborhood phrases from each part
-  for (const part of allParts) {
+  // If explicit connector found, split by "and" or "or" to get multiple neighborhoods
+  if (hasExplicitConnector) {
+    const parts = lowerQuery.split(/\s+(and|or)\s+/i).map(p => p.trim()).filter(p => p.length > 0);
+    
+    // Extract neighborhood from each part
+    for (const part of parts) {
+      // Skip if it's a borough (already handled above)
+      const isBorough = BOROUGHS.some(b => {
+        const boroughLower = b.toLowerCase();
+        return part.includes(boroughLower) || part === boroughLower;
+      });
+      if (isBorough) continue;
+      
+      // Skip if it's a city
+      if (part.includes('nyc') || part.includes('new york') || part.includes('tokyo') || 
+          part.includes('seoul') || part.includes('paris')) {
+        continue;
+      }
+      
+      // Extract words from the part, but preserve numbers (for "4th arrondissement", etc.)
+      const tokens = part.match(/\S+/g) || [];
+      const words = tokens.filter(w => {
+        const wLower = w.toLowerCase();
+        return /^\d/.test(w) || !excludeWords.has(wLower);
+      });
+      
+      if (words.length === 0) continue;
+      
+      // Try to extract neighborhood phrases (prioritize longer phrases)
+      for (let len = Math.min(4, words.length); len >= 1; len--) {
+        for (let i = 0; i <= words.length - len; i++) {
+          const phrase = words.slice(i, i + len).join(' ').toLowerCase().trim();
+          
+          if (phrase.length < 2 || excludeWords.has(phrase)) continue;
+          if (len === 1 && excludeWords.has(phrase)) continue;
+          
+          neighborhoods.push(phrase);
+          break; // Only take one neighborhood per part
+        }
+        if (neighborhoods.length > 0 && neighborhoods[neighborhoods.length - 1].length >= 2) break;
+      }
+    }
+  } else {
+    // No explicit connector - extract single neighborhood from anywhere in query
     // Skip if it's a borough (already handled above)
     const isBorough = BOROUGHS.some(b => {
       const boroughLower = b.toLowerCase();
-      return part.includes(boroughLower) || part === boroughLower;
-    });
-    if (isBorough) continue;
-    
-    // Skip if it's a city
-    if (part.includes('nyc') || part.includes('new york') || part.includes('tokyo') || 
-        part.includes('seoul') || part.includes('paris')) {
-      continue;
-    }
-    
-    // Extract words from the part, but preserve numbers (for "4th arrondissement", etc.)
-    // Split by whitespace but keep numbers with their context
-    const tokens = part.match(/\S+/g) || [];
-    const words = tokens.filter(w => {
-      const wLower = w.toLowerCase();
-      // Keep numbers and words that aren't in exclude list
-      return /^\d/.test(w) || !excludeWords.has(wLower);
+      return lowerQuery.includes(boroughLower);
     });
     
-    if (words.length === 0) continue;
-    
-    // Try to extract neighborhood phrases (prioritize longer phrases)
-    // Try 4-word, 3-word, 2-word, then 1-word phrases
-    for (let len = Math.min(4, words.length); len >= 1; len--) {
-      for (let i = 0; i <= words.length - len; i++) {
-        const phrase = words.slice(i, i + len).join(' ').toLowerCase().trim();
+    if (!isBorough) {
+      // Skip if it's a city
+      if (!lowerQuery.includes('nyc') && !lowerQuery.includes('new york') && 
+          !lowerQuery.includes('tokyo') && !lowerQuery.includes('seoul') && 
+          !lowerQuery.includes('paris')) {
         
-        // Skip if empty or too short
-        if (phrase.length < 2) continue;
+        // Extract words from query
+        const tokens = lowerQuery.match(/\S+/g) || [];
+        const words = tokens.filter(w => {
+          const wLower = w.toLowerCase();
+          return /^\d/.test(w) || !excludeWords.has(wLower);
+        });
         
-        // Skip if the entire phrase is an excluded word
-        if (excludeWords.has(phrase)) continue;
-        
-        // Skip single-word phrases that are excluded
-        if (len === 1 && excludeWords.has(phrase)) continue;
-        
-        neighborhoods.push(phrase);
+        if (words.length > 0) {
+          // Try to extract neighborhood phrases (prioritize longer phrases)
+          for (let len = Math.min(4, words.length); len >= 1; len--) {
+            for (let i = 0; i <= words.length - len; i++) {
+              const phrase = words.slice(i, i + len).join(' ').toLowerCase().trim();
+              
+              if (phrase.length < 2 || excludeWords.has(phrase)) continue;
+              if (len === 1 && excludeWords.has(phrase)) continue;
+              
+              neighborhoods.push(phrase);
+              break; // Only take one neighborhood
+            }
+            if (neighborhoods.length > 0 && neighborhoods[neighborhoods.length - 1].length >= 2) break;
+          }
+        }
       }
     }
   }
@@ -431,46 +464,60 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
     return true; // No location filter
   }
 
-  let matches = false;
+  let hasNeighborhoodMatch = false;
+  let hasBoroughMatch = false;
+  let hasCityMatch = false;
 
   // Check neighborhood match - only check neighborhood_extracted field
+  // Neighborhood takes precedence over borough and city
   if (keywords.neighborhood) {
     const restaurantNeighborhood = restaurant.neighborhood_extracted?.toLowerCase() || '';
     
-    // Handle both single neighborhood and array of neighborhoods (union)
+    // Handle both single neighborhood and array of neighborhoods (union for explicit "and"/"or")
     if (Array.isArray(keywords.neighborhood)) {
-      // Multiple neighborhoods: match if restaurant is in ANY of them
-      matches = keywords.neighborhood.some(neighborhoodKeyword => {
+      // Multiple neighborhoods: match if restaurant is in ANY of them (union)
+      hasNeighborhoodMatch = keywords.neighborhood.some(neighborhoodKeyword => {
         const keyword = neighborhoodKeyword.toLowerCase();
         return restaurantNeighborhood.includes(keyword) || keyword.includes(restaurantNeighborhood);
       });
     } else {
       // Single neighborhood
       const neighborhoodKeyword = keywords.neighborhood.toLowerCase();
-      matches = restaurantNeighborhood.includes(neighborhoodKeyword) || 
-                neighborhoodKeyword.includes(restaurantNeighborhood);
+      hasNeighborhoodMatch = restaurantNeighborhood.includes(neighborhoodKeyword) || 
+                             neighborhoodKeyword.includes(restaurantNeighborhood);
     }
+    
+    // If neighborhood is specified, return immediately (neighborhood takes precedence over borough and city)
+    return hasNeighborhoodMatch;
+  } else {
+    // If no neighborhood specified, consider it as matching (no neighborhood filter)
+    hasNeighborhoodMatch = true;
   }
 
   // Check borough match - simplified: only Brooklyn and Manhattan
+  // Borough takes precedence over city - if borough is specified, ignore city
   if (keywords.borough) {
     const boroughKeyword = keywords.borough.toLowerCase();
     const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
     
     if (boroughKeyword === 'brooklyn') {
       // Brooklyn query: only return if address contains "brooklyn"
-      if (address.includes('brooklyn')) {
-        matches = true;
-      }
+      hasBoroughMatch = address.includes('brooklyn');
     } else if (boroughKeyword === 'manhattan') {
       // Manhattan query: return if address does NOT contain "brooklyn" (meaning it's Manhattan)
-      if (!address.includes('brooklyn')) {
-        matches = true;
-      }
+      hasBoroughMatch = !address.includes('brooklyn');
+    } else {
+      hasBoroughMatch = false;
     }
+    
+    // If borough is specified, use borough match (ignore city)
+    return hasBoroughMatch;
+  } else {
+    // If no borough specified, consider it as matching (no borough filter)
+    hasBoroughMatch = true;
   }
 
-  // Check city match - use restaurant.city property if available, otherwise fall back to address parsing
+  // Check city match - only if neighborhood and borough are not specified (they take precedence)
   if (keywords.city) {
     const restaurantCity = restaurant.city?.toLowerCase();
     const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
@@ -489,42 +536,46 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
     if (restaurantCity) {
       for (const expectedCity of expectedCities) {
         if (restaurantCity.includes(expectedCity) || expectedCity.includes(restaurantCity)) {
-          matches = true;
+          hasCityMatch = true;
           break;
         }
       }
     }
     
     // Fall back to address parsing if restaurant.city didn't match
-    if (!matches) {
+    if (!hasCityMatch) {
       switch (keywords.city) {
         case 'nyc':
           // For NYC queries, show all restaurants (both Manhattan and Brooklyn)
           // Since we only have Manhattan and Brooklyn data, any NYC address matches
           if (address.includes('new york') || address.includes('nyc') || address.includes('brooklyn')) {
-            matches = true;
+            hasCityMatch = true;
           }
           break;
         case 'tokyo':
           if (address.includes('tokyo') || address.includes('japan')) {
-            matches = true;
+            hasCityMatch = true;
           }
           break;
         case 'seoul':
           if (address.includes('seoul') || address.includes('korea')) {
-            matches = true;
+            hasCityMatch = true;
           }
           break;
         case 'paris':
           if (address.includes('paris') || address.includes('france')) {
-            matches = true;
+            hasCityMatch = true;
           }
           break;
       }
     }
+  } else {
+    // If no city specified, consider it as matching (no city filter)
+    hasCityMatch = true;
   }
-
-  return matches;
+  
+  // At this point, only city matching is left (neighborhood and borough already returned if specified)
+  return hasCityMatch;
 }
 
 /**
