@@ -117,7 +117,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     };
 
     // Try to fetch Dynamic Config from Statsig
-    let cynthiaBoost = 1.5; // Default fallback
+    let cynthiaBoost = 1.2; // Default fallback
     let maxResults = 10; // Default fallback
     let statsigConfigFetched = false;
     let statsigError = 'No error';
@@ -130,7 +130,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.log('[Statsig Config] Config type:', typeof rankingConfig);
       
       if (rankingConfig) {
-        cynthiaBoost = rankingConfig.get('cynthias_pick_multiplier', 1.5);
+        cynthiaBoost = rankingConfig.get('cynthias_pick_multiplier', 1.2);
         maxResults = rankingConfig.get('max_results', 10);
         statsigConfigFetched = true;
         console.log('[Statsig Config] Successfully fetched config values');

@@ -507,8 +507,8 @@ function calculateQualityScore(restaurant: Restaurant, keywords: ExtractedKeywor
   // Base formula: rating × log10(reviewCount + 1)
   const baseScore = rating * Math.log10(reviewCount + 1);
   
-  // Apply Cynthia's pick boost (1.5x)
-  const cynthiaMultiplier = restaurant.cynthias_pick ? 1.5 : 1.0;
+  // Apply Cynthia's pick boost (1.2x)
+  const cynthiaMultiplier = restaurant.cynthias_pick ? 1.2 : 1.0;
   
   return baseScore * cynthiaMultiplier;
 }
