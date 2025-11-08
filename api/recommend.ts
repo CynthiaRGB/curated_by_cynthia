@@ -116,31 +116,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       userID: userId
     };
 
+    // Dynamic Config is currently disabled - using default values
+    const ENABLE_STATSIG_DYNAMIC_CONFIG = false;
+    
     // Try to fetch Dynamic Config from Statsig
     let cynthiaBoost = 1.2; // Default fallback
     let maxResults = 10; // Default fallback
     let statsigConfigFetched = false;
     let statsigError = 'No error';
     
-    try {
-      console.log('[Statsig Config] Attempting to fetch Dynamic Config...');
-      const rankingConfig = Statsig.getConfig(statsigUser, 'results_ranking');
-      
-      console.log('[Statsig Config] Config object:', rankingConfig);
-      console.log('[Statsig Config] Config type:', typeof rankingConfig);
-      
-      if (rankingConfig) {
-        cynthiaBoost = rankingConfig.get('cynthias_pick_multiplier', 1.2);
-        maxResults = rankingConfig.get('max_results', 10);
-        statsigConfigFetched = true;
-        console.log('[Statsig Config] Successfully fetched config values');
-      } else {
-        statsigError = 'Config object is null or undefined';
-        console.log('[Statsig Config] Config object is null/undefined');
+    if (ENABLE_STATSIG_DYNAMIC_CONFIG) {
+      try {
+        console.log('[Statsig Config] Attempting to fetch Dynamic Config...');
+        const rankingConfig = Statsig.getConfig(statsigUser, 'results_ranking');
+        
+        console.log('[Statsig Config] Config object:', rankingConfig);
+        console.log('[Statsig Config] Config type:', typeof rankingConfig);
+        
+        if (rankingConfig) {
+          cynthiaBoost = rankingConfig.get('cynthias_pick_multiplier', 1.2);
+          maxResults = rankingConfig.get('max_results', 10);
+          statsigConfigFetched = true;
+          console.log('[Statsig Config] Successfully fetched config values');
+        } else {
+          statsigError = 'Config object is null or undefined';
+          console.log('[Statsig Config] Config object is null/undefined');
+        }
+      } catch (error) {
+        statsigError = error instanceof Error ? error.message : 'Unknown error';
+        console.error('[Statsig Config] Error fetching config:', error);
       }
-    } catch (error) {
-      statsigError = error instanceof Error ? error.message : 'Unknown error';
-      console.error('[Statsig Config] Error fetching config:', error);
+    } else {
+      console.log('[Statsig Config] Dynamic Config is disabled - using default values');
+      statsigError = 'Dynamic Config disabled';
     }
     
     console.log('[Statsig Config] Final values - Cynthia boost:', cynthiaBoost);

@@ -470,11 +470,16 @@ export function extractKeywords(query: string): ExtractedKeywords {
 
   // Extract vibe keywords using mappings
   // Sort by phrase length (longest first) to prioritize multi-word phrases like "good vibes" over single words
-  const sortedVibeMappings = Object.entries(VIBE_MAPPINGS).sort((a, b) => b[0].length - a[0].length);
-  for (const [phrase, tags] of sortedVibeMappings) {
-    if (lowerQuery.includes(phrase)) {
-      keywords.vibeKeywords.push(...tags);
-      break; // Only match one vibe phrase to avoid over-matching
+  // Special handling: If query contains "romantic dinner", extract "romantic" vibe
+  if (lowerQuery.includes('romantic dinner') || (lowerQuery.includes('romantic') && !keywords.vibeKeywords.length)) {
+    keywords.vibeKeywords.push('romantic', 'intimate', 'cozy');
+  } else {
+    const sortedVibeMappings = Object.entries(VIBE_MAPPINGS).sort((a, b) => b[0].length - a[0].length);
+    for (const [phrase, tags] of sortedVibeMappings) {
+      if (lowerQuery.includes(phrase)) {
+        keywords.vibeKeywords.push(...tags);
+        break; // Only match one vibe phrase to avoid over-matching
+      }
     }
   }
 
