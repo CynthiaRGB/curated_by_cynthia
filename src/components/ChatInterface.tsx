@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useStatsigClient } from '@statsig/react-bindings';
 import { Chatbox } from './Chatbox';
 import { ResponseScreen } from './ResponseScreen';
-import { Restaurant, City } from '../types/restaurant';
+import { Restaurant, City, QueryContext } from '../types/restaurant';
 // All filtering now happens on the backend - no local imports needed
 
 interface ChatInterfaceProps {
@@ -22,12 +22,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const [originalPromptText, setOriginalPromptText] = useState<string | null>(null);
   const [promptClickTimestamp, setPromptClickTimestamp] = useState<number | null>(null);
   const [isInConversation, setIsInConversation] = useState(false); // Track if we're in a conversation
-  // Track conversation context for follow-up queries
-  const [conversationContext, setConversationContext] = useState<{
-    previousQuery?: string;
-    previousResults?: Restaurant[];
-    previousRoute?: 'filterService' | 'claude' | 'default';
-  } | null>(null);
+  // Track query context for follow-up queries (using QueryContext type)
+  const [queryContext, setQueryContext] = useState<QueryContext | null>(null);
 
   // Helper function to detect if a query came from a prompt
   const checkIfPromptQuery = (query: string): boolean => {
@@ -51,29 +47,19 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
   const handleSendMessage = async (message: string, city?: City) => {
     console.log('handleSendMessage called with:', { message, city });
+    
+    // Validate city is provided
+    if (!city) {
+      console.error('City is required but not provided');
+      setBotResponse('Please select a city first.');
+      return;
+    }
+    
     setIsLoading(true);
     
-    // Create full query
-    let fullQuery = '';
-    if (message && city) {
-      // Check if message already contains the city name to avoid duplication
-      const cityLower = city.toLowerCase();
-      const messageLower = message.toLowerCase();
-      if (messageLower.includes(cityLower)) {
-        fullQuery = message; // Message already contains city
-      } else {
-        fullQuery = `${message} in ${city}`;
-      }
-      setLastQuery(fullQuery);
-    } else if (message) {
-      fullQuery = message;
-      setLastQuery(message);
-    } else if (city) {
-      fullQuery = `restaurants in ${city}`;
-      setLastQuery(city);
-    } else {
-      setLastQuery('');
-    }
+    // Use message as-is (don't append city to query - city is sent separately)
+    const fullQuery = message || '';
+    setLastQuery(fullQuery);
 
     // Check if this query came from a prompt by looking for common prompt patterns
     const isPromptQuery = checkIfPromptQuery(fullQuery);
@@ -100,20 +86,14 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       console.log('Calling backend for restaurant filtering...');
       console.log('🔥 ABOUT TO FETCH - CHECK NETWORK TAB NOW!'); 
 
-      // Prepare context for follow-up queries
-      const context = isInConversation && conversationContext ? {
-        previousQuery: conversationContext.previousQuery,
-        previousResults: conversationContext.previousResults,
-        previousRoute: conversationContext.previousRoute,
-      } : undefined;
-
       const response = await fetch('/api/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           query: fullQuery,
+          city: city, // Send selected city (required)
           userId: 'web-user', // Add userId for Statsig Dynamic Config
-          context, // Pass conversation context for routing decisions
+          context: queryContext || undefined, // Pass query context for follow-up queries
         }),
       });
 
@@ -157,12 +137,12 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
              setBotResponse(data.summary + ' ⚡');
              setUsedClaude(data.usedClaude || false);
              setIsInConversation(true); // Mark that we're in a conversation
-             // Update conversation context for follow-up queries
-             setConversationContext({
-               previousQuery: fullQuery,
-               previousResults: restaurants,
-               previousRoute: data.route || 'filterService',
-             });
+             // Update query context from API response (for follow-up queries)
+             if (data.context) {
+               setQueryContext(data.context as QueryContext);
+             } else {
+               setQueryContext(null); // Clear context if API doesn't return it
+             }
            } else {
              // Log search_no_results event when no results
              client.logEvent('search_no_results', fullQuery, {
@@ -174,12 +154,12 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
              setBotResponse(data.summary || `No spots found for "${fullQuery}". Try a different search!`);
              setUsedClaude(data.usedClaude || false);
              setIsInConversation(true); // Mark that we're in a conversation even with no results
-             // Update conversation context even with no results (for follow-ups)
-             setConversationContext({
-               previousQuery: fullQuery,
-               previousResults: [],
-               previousRoute: data.route || 'filterService',
-             });
+             // Update query context from API response (even with no results)
+             if (data.context) {
+               setQueryContext(data.context as QueryContext);
+             } else {
+               setQueryContext(null); // Clear context if API doesn't return it
+             }
            }
 
            // Only increment key for first query, not for follow-ups
@@ -230,7 +210,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           setOriginalPromptText(null);
           setPromptClickTimestamp(null);
           setIsInConversation(false); // Reset conversation state
-          setConversationContext(null); // Clear conversation context
+          setQueryContext(null); // Clear query context
           setResponseScreenKey(prev => prev + 1); // Increment key to reset ResponseScreen
         }}
         onSendMessage={handleSendMessage}

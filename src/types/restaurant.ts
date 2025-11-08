@@ -146,4 +146,13 @@ export interface ExtractedKeywords {
   requiresCoffeeFocus?: boolean; // For "coffee shop"/"coffee"/"cafe" queries - stricter matching
   requiresDessertFocus?: boolean; // For "dessert"/"pastry"/"cake" queries - stricter matching
 }
+
 export type City = 'New York City' | 'Tokyo' | 'Paris' | 'Seoul';
+
+// Query context for follow-up questions
+export interface QueryContext {
+  previousQuery: string;
+  previousKeywords: ExtractedKeywords;
+  previousResultIds: string[]; // google_place_id array
+  city?: string;
+}

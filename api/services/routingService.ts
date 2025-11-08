@@ -1,10 +1,9 @@
-// Intelligent routing service for restaurant queries
-// Decides whether to use filterService only, or call Claude API for nuanced queries
+// Simplified routing service for restaurant queries
+// Now only decides if query is irrelevant (everything else goes to parseAndFilter)
 
 import { Restaurant } from '../../../src/types/restaurant';
-import { extractKeywords } from './filterService.js';
 
-export type RouteDecision = 'filterService' | 'claude' | 'default';
+export type RouteDecision = 'parseAndFilter' | 'irrelevant';
 
 export interface RoutingContext {
   previousQuery?: string;
@@ -15,8 +14,6 @@ export interface RoutingContext {
 export interface RouteResult {
   route: RouteDecision;
   reason: string;
-  needsClaude?: boolean;
-  shouldFilterOnly?: boolean;
   isFollowUp?: boolean;
   isIrrelevant?: boolean;
 }
@@ -121,25 +118,6 @@ const IRRELEVANT_PATTERNS = [
   /who are you/i,
 ];
 
-// Nuanced queries that require Claude API
-// These are patterns that can't be handled by metadata tags alone
-const NUANCED_CLAUDE_PATTERNS = [
-  /celebrit(y|ies)/i,
-  /famous people/i,
-  /hidden gems/i,
-  /locals love/i,
-  /tourists don't/i,
-  /tourists dont/i,
-  /off the beaten path/i,
-  /underrated/i,
-  /overrated/i,
-  /best kept secret/i,
-  /not touristy/i,
-  /where.*celebrity/i,
-  /place where.*go/i, // e.g., "place where celebrities go"
-  /perfect.*but also/i, // Complex multi-criteria
-];
-
 // Keywords that indicate restaurant search intent
 const RESTAURANT_KEYWORDS = [
   'restaurant', 'cafe', 'bar', 'dining', 'food', 'eat', 'lunch', 'dinner',
@@ -192,52 +170,10 @@ function isIrrelevantQuery(query: string): boolean {
   return false;
 }
 
-/**
- * Check if query contains nuanced patterns that require Claude
- */
-function requiresClaudeForNuance(query: string): boolean {
-  return NUANCED_CLAUDE_PATTERNS.some(pattern => pattern.test(query));
-}
 
 /**
- * Check if query can be handled by filterService metadata tags
- * Returns true if all requirements can be met by tags, false if Claude is needed
- */
-function canFilterServiceHandle(query: string, keywords: ReturnType<typeof extractKeywords>): boolean {
-  const lowerQuery = query.toLowerCase();
-  
-  // If it has any nuanced Claude patterns, can't handle
-  if (requiresClaudeForNuance(query)) {
-    return false;
-  }
-  
-  // Check for complex multi-criteria that might need Claude
-  // e.g., "perfect for business lunch but also good for casual drinks after"
-  if (lowerQuery.includes('but also') || lowerQuery.includes('but also')) {
-    return false; // Complex multi-criteria needs Claude
-  }
-  
-  // Check if query mentions things that aren't in our metadata tags
-  // Things filterService CAN handle:
-  // - Cuisine types (keywords.cuisineType)
-  // - Locations (keywords.borough, keywords.neighborhood, keywords.city)
-  // - Price (keywords.priceLevel)
-  // - Meal types (keywords.mealType)
-  // - Vibes (keywords.vibeKeywords) - mapped to vibe_tags
-  // - Occasions (keywords.occasionType) - mapped to occasion_tags
-  // - Noise (keywords.noisePreference) - mapped to noise_level
-  // - Instagrammable (keywords.requiresInstagrammable) - mapped to special_features
-  // - Michelin (keywords.requiresMichelin) - mapped to accolades_tags
-  // - Cynthia's pick (keywords.requiresCynthiasPick) - mapped to cynthias_pick
-  
-  // If we extracted keywords, filterService can likely handle it
-  // The keyword extraction function already handles all the tag mappings
-  
-  return true; // Default: filterService can handle if keywords were extracted
-}
-
-/**
- * Main routing decision function
+ * Main routing decision function (simplified)
+ * Now only decides if query is irrelevant - everything else goes to parseAndFilter
  */
 export function decideRoute(query: string, context?: RoutingContext): RouteResult {
   const trimmedQuery = query.trim();
@@ -245,92 +181,21 @@ export function decideRoute(query: string, context?: RoutingContext): RouteResul
   // Step 1: Check if query is irrelevant
   if (isIrrelevantQuery(trimmedQuery)) {
     return {
-      route: 'default',
+      route: 'irrelevant',
       reason: 'Query is not related to restaurant search',
       isIrrelevant: true,
     };
   }
   
-  // Step 2: Extract keywords to understand query intent
-  const keywords = extractKeywords(trimmedQuery);
-  
-  // Step 3: Check if this is a follow-up query
+  // Step 2: Check if this is a follow-up query (for logging/debugging)
   const isFollowUp = isFollowUpQuery(trimmedQuery, context);
   
-  // Step 4: Handle follow-up queries
-  if (isFollowUp && context?.previousQuery) {
-    // "Show me more" - use filterService with same criteria, exclude previous results
-    if (/show me more|more options|more restaurants|more places|more results|what else|any other|any more/i.test(trimmedQuery)) {
-      return {
-        route: 'filterService',
-        reason: 'Follow-up query requesting more results with same criteria',
-        shouldFilterOnly: true,
-        isFollowUp: true,
-      };
-    }
-    
-    // Filter/sort requests - use filterService
-    if (/filter by|sort by|order by|show.*cheaper|show.*expensive|show.*rating/i.test(trimmedQuery)) {
-      return {
-        route: 'filterService',
-        reason: 'Follow-up query requesting filter/sort of previous results',
-        shouldFilterOnly: true,
-        isFollowUp: true,
-      };
-    }
-    
-    // If follow-up but doesn't match patterns, treat as new query
-    // (fall through to normal routing)
-  }
-  
-  // Step 5: Check if query has clear restaurant search intent
-  const hasRestaurantIntent = 
-    keywords.cuisineType !== undefined ||
-    keywords.occasionType !== null ||
-    keywords.vibeKeywords.length > 0 ||
-    keywords.mealType !== null ||
-    keywords.priceLevel !== undefined ||
-    keywords.neighborhood !== undefined ||
-    keywords.borough !== undefined ||
-    keywords.city !== undefined ||
-    RESTAURANT_KEYWORDS.some(keyword => trimmedQuery.toLowerCase().includes(keyword.toLowerCase()));
-  
-  if (!hasRestaurantIntent) {
-    // No clear restaurant intent - might be irrelevant or too vague
-    // If it's very short or matches irrelevant patterns, use default
-    if (trimmedQuery.split(/\s+/).length <= 3 && !trimmedQuery.includes('in ')) {
-      return {
-        route: 'default',
-        reason: 'Query lacks clear restaurant search intent',
-        isIrrelevant: true,
-      };
-    }
-  }
-  
-  // Step 6: Check if query requires Claude for nuanced understanding
-  if (requiresClaudeForNuance(trimmedQuery)) {
-    return {
-      route: 'claude',
-      reason: 'Query contains nuanced patterns that require Claude API',
-      needsClaude: true,
-    };
-  }
-  
-  // Step 7: Check if filterService can handle the query
-  if (!canFilterServiceHandle(trimmedQuery, keywords)) {
-    return {
-      route: 'claude',
-      reason: 'Query requires nuanced understanding beyond metadata tags',
-      needsClaude: true,
-    };
-  }
-  
-  // Step 8: Default to filterService (always pre-filter first, then decide if Claude needed)
-  // Since we always pre-filter by city, we can always use filterService first
+  // Step 3: Everything else goes to parseAndFilter
+  // (parseQuery.ts will handle Claude parsing, filterService will handle filtering)
   return {
-    route: 'filterService',
-    reason: 'Query can be handled by filterService with metadata tags',
-    shouldFilterOnly: true,
+    route: 'parseAndFilter',
+    reason: 'Query will be parsed and filtered',
+    isFollowUp: isFollowUp || undefined,
   };
 }
 

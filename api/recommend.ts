@@ -2,9 +2,10 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Statsig from "statsig-node";
 import { preFilterRestaurants, isCityPromptItem, extractKeywords } from './services/filterService.js';
 import { decideRoute, getMoreRestaurants, isShowMeMoreQuery, type RoutingContext } from './services/routingService.js';
-import { rankRestaurantsWithClaude, enrichRecommendations, parseQueryWithClaude } from '../src/claudeService.js';
+import { rankRestaurantsWithClaude, enrichRecommendations } from '../src/claudeService.js';
 import { getCachedResponse, setCachedResponse, generateCacheKey } from './services/claudeCache.js';
-import { Restaurant, ExtractedKeywords } from '../src/types/restaurant.js';
+import { parseQueryWithClaude } from './services/parseQuery.js';
+import { Restaurant, ExtractedKeywords, City, QueryContext } from '../src/types/restaurant.js';
 
 /**
  * Check if query is specifically asking for Cynthia's favorites (should return ALL results)
@@ -50,6 +51,72 @@ const initializeStatsig = async () => {
   }
 };
 
+// Supported cities
+const SUPPORTED_CITIES: City[] = ['New York City', 'Tokyo', 'Paris', 'Seoul'];
+const SUPPORTED_CITY_ALIASES: { [key: string]: City } = {
+  'nyc': 'New York City',
+  'new york': 'New York City',
+  'new york city': 'New York City',
+  'tokyo': 'Tokyo',
+  'paris': 'Paris',
+  'seoul': 'Seoul'
+};
+
+/**
+ * Validate city parameter
+ */
+function validateCity(city: string | undefined): city is City {
+  if (!city) return false;
+  return SUPPORTED_CITIES.includes(city as City) || 
+         Object.keys(SUPPORTED_CITY_ALIASES).includes(city.toLowerCase());
+}
+
+/**
+ * Normalize city name to standard format
+ */
+function normalizeCity(city: string | undefined): City | undefined {
+  if (!city) return undefined;
+  const lowerCity = city.toLowerCase();
+  if (SUPPORTED_CITIES.includes(city as City)) {
+    return city as City;
+  }
+  return SUPPORTED_CITY_ALIASES[lowerCity];
+}
+
+/**
+ * Detect unsupported cities in query
+ */
+function detectUnsupportedCityInQuery(query: string): string | null {
+  const unsupportedCities = [
+    'london', 'berlin', 'rome', 'madrid', 'barcelona', 'amsterdam',
+    'dublin', 'vienna', 'prague', 'lisbon', 'athens', 'stockholm',
+    'copenhagen', 'oslo', 'helsinki', 'warsaw', 'budapest', 'bucharest',
+    'moscow', 'istanbul', 'dubai', 'singapore', 'hong kong', 'bangkok',
+    'sydney', 'melbourne', 'toronto', 'vancouver', 'montreal', 'miami',
+    'los angeles', 'san francisco', 'chicago', 'boston', 'seattle',
+    'austin', 'denver', 'portland', 'philadelphia', 'washington'
+  ];
+  
+  const lowerQuery = query.toLowerCase();
+  for (const city of unsupportedCities) {
+    if (lowerQuery.includes(city)) {
+      return city;
+    }
+  }
+  return null;
+}
+
+/**
+ * Check if query needs Claude ranking (nuanced queries)
+ */
+function needsClaudeRanking(query: string): boolean {
+  const nuancedPatterns = [
+    /hidden gem/i, /locals love/i, /celebrity/i,
+    /underrated/i, /best kept secret/i, /off the beaten path/i
+  ];
+  return nuancedPatterns.some(p => p.test(query));
+}
+
 // Helper function to extract cuisine type from search query
 const getCuisineTypeFromQuery = (query: string): string => {
   const lowerQuery = query.toLowerCase();
@@ -94,8 +161,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     
     const { 
       query, 
+      city, // Selected city pill (required)
       userId = 'api-user',
-      context // Optional: { previousQuery, previousResults, previousRoute }
+      context // Optional: { previousQuery, previousKeywords, previousResultIds, city }
     } = req.body;
 
     if (!query || typeof query !== 'string') {
@@ -103,11 +171,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     console.log('[API] Query received:', query);
+    console.log('[API] City received:', city);
     if (context) {
       console.log('[API] Context provided:', {
         hasPreviousQuery: !!context.previousQuery,
-        previousResultsCount: context.previousResults?.length || 0,
-        previousRoute: context.previousRoute
+        previousResultIdsCount: context.previousResultIds?.length || 0,
+        previousCity: context.city
+      });
+    }
+
+    // Step 1: Validate city parameter
+    if (!validateCity(city)) {
+      return res.status(400).json({ 
+        error: 'Invalid city',
+        message: 'City must be one of: New York City, Tokyo, Paris, or Seoul'
+      });
+    }
+
+    // Normalize city to standard format
+    const normalizedCity = normalizeCity(city)!;
+    console.log('[API] Normalized city:', normalizedCity);
+
+    // Step 2: Check for unsupported cities in query
+    const unsupportedCity = detectUnsupportedCityInQuery(query);
+    if (unsupportedCity) {
+      return res.status(200).json({
+        recommendations: [],
+        summary: "We only support restaurants in New York City, Tokyo, Paris, and Seoul. Please select one of these cities.",
+        usedClaude: false,
+        usedClaudeRanking: false,
+        route: 'parseAndFilter',
+        context: undefined
       });
     }
 
@@ -158,66 +252,92 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const apiStartTime = Date.now();
 
-    // Step 1: Decide routing strategy
-    // Pass the CURRENT query to detect "show me more" pattern, but we'll use previous query for filtering
+    // Step 3: Decide routing strategy (simplified - just check if irrelevant)
     const routingContext: RoutingContext | undefined = context ? {
       previousQuery: context.previousQuery,
       previousResults: context.previousResults?.map((r: any) => r as Restaurant),
       previousRoute: context.previousRoute,
     } : undefined;
     
-    // Use current query for routing decision (to detect "show me more" pattern)
-    // But for "show me more", we'll force filterService route and use previous query for filtering
     const routeDecision = decideRoute(query, routingContext);
     console.log('[Routing] Decision:', routeDecision.route, '-', routeDecision.reason);
 
-    // Step 2: Handle irrelevant queries
-    if (routeDecision.route === 'default') {
+    // Step 4: Handle irrelevant queries
+    if (routeDecision.route === 'irrelevant') {
       return res.status(200).json({
         recommendations: [],
         summary: "Sorry, I'm designed to only answer questions related to restaurants. Try another question.",
         usedClaude: false,
-        route: 'default',
+        usedClaudeRanking: false,
+        route: 'irrelevant',
+        context: undefined
       });
     }
 
-    // Step 3: Parse query with Claude API (unless it's a city-prompt-item, which is deterministic)
-    // For "show me more" queries, use the previous query to preserve filters (cuisine, location, etc.)
+    // Step 5: Parse query (use previous query for "show me more" to preserve filters)
     const queryToFilter = isShowMeMoreQuery(query) && context?.previousQuery 
       ? context.previousQuery 
       : query;
     
     let parsedKeywords: ExtractedKeywords | undefined;
+    let usedClaudeForParsing = false;
     const isPromptItem = isCityPromptItem(queryToFilter);
+    
+    // Build query context for follow-ups
+    const queryContext: QueryContext | undefined = context ? {
+      previousQuery: context.previousQuery,
+      previousKeywords: context.previousKeywords,
+      previousResultIds: context.previousResultIds || [],
+      city: normalizedCity
+    } : undefined;
     
     if (!isPromptItem) {
       // Use Claude API to parse the query into structured keywords
       console.log('[API] Parsing query with Claude API (not a city-prompt-item)');
-      const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
-      
-      if (!anthropicApiKey) {
-        console.warn('[API] ANTHROPIC_API_KEY not set, falling back to deterministic keyword extraction');
-      } else {
-        try {
-          parsedKeywords = await parseQueryWithClaude(queryToFilter, anthropicApiKey);
-          console.log('[API] Successfully parsed query with Claude');
-        } catch (parseError: any) {
-          console.error('[API] Error parsing query with Claude, falling back to deterministic extraction:', parseError);
-          // Fallback to deterministic extraction on error
+      try {
+        parsedKeywords = await parseQueryWithClaude(queryToFilter, normalizedCity, queryContext);
+        usedClaudeForParsing = true;
+        console.log('[API] Successfully parsed query with Claude');
+      } catch (parseError: any) {
+        // Check if it's the "I don't quite get your question" error
+        if (parseError.message && parseError.message.includes("I don't quite get your question")) {
+          return res.status(200).json({
+            recommendations: [],
+            summary: "I don't quite get your question, try something else",
+            usedClaude: false,
+            usedClaudeRanking: false,
+            route: routeDecision.route,
+            context: undefined
+          });
         }
+        console.error('[API] Error parsing query with Claude, falling back to deterministic extraction:', parseError);
+        // Fallback to deterministic extraction on error
+        parsedKeywords = extractKeywords(queryToFilter);
       }
     } else {
       console.log('[API] Query is a city-prompt-item, using deterministic keyword extraction');
+      parsedKeywords = extractKeywords(queryToFilter);
     }
     
-    // Step 4: Pre-filter with filterService (using parsed keywords if available)
+    // Normalize city in keywords to use selected city (ignore city from query parsing if different)
+    if (parsedKeywords) {
+      // Map normalized city to filterService format
+      const cityMap: { [key in City]: string } = {
+        'New York City': 'nyc',
+        'Tokyo': 'tokyo',
+        'Paris': 'paris',
+        'Seoul': 'seoul'
+      };
+      parsedKeywords.city = cityMap[normalizedCity];
+    }
+    
+    // Step 6: Pre-filter with filterService (using parsed keywords if available)
     console.log('[API] Pre-filtering restaurants with filterService');
     console.log(`[API] Using query for filtering: "${queryToFilter}" (original query: "${query}")`);
     let filteredRestaurants = preFilterRestaurants(queryToFilter, parsedKeywords);
     console.log(`[API] Filter service returned ${filteredRestaurants.length} restaurants`);
 
-    // Step 4.5: Get final keywords to check if this is a Cynthia's favorites query
-    // (Use parsed keywords if available, otherwise extract them)
+    // Step 7: Get final keywords to check if this is a Cynthia's favorites query
     const finalKeywords = parsedKeywords || extractKeywords(queryToFilter);
     const isCynthiasFavorites = isCynthiasFavoritesQuery(queryToFilter, finalKeywords);
     
@@ -225,9 +345,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.log('[API] Query is for Cynthia\'s favorites - will return ALL matching restaurants (no limit)');
     }
 
-    // Step 5: Handle "show me more" follow-ups - exclude previously shown results
-    if (isShowMeMoreQuery(query) && context?.previousResults) {
-      const previousRestaurants = (context.previousResults as Restaurant[]) || [];
+    // Step 8: Handle "show me more" follow-ups - exclude previously shown results
+    if (isShowMeMoreQuery(query) && context?.previousResultIds && context.previousResultIds.length > 0) {
+      const previousRestaurants = filteredRestaurants.filter(r => 
+        context.previousResultIds!.includes(r.google_place_id)
+      );
       console.log(`[API] Excluding ${previousRestaurants.length} previously shown restaurants`);
       filteredRestaurants = getMoreRestaurants(filteredRestaurants, previousRestaurants);
       console.log(`[API] After excluding previous results: ${filteredRestaurants.length} restaurants`);
@@ -238,22 +360,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         recommendations: [],
         summary: "No more spots found matching your criteria. Try a different search!",
         usedClaude: false,
+        usedClaudeRanking: false,
         route: routeDecision.route,
+        context: undefined
       });
     }
 
-    // Step 6: Execute routing decision
-    // FORCE filterService route for "show me more" queries - never call Claude
-    const shouldUseFilterServiceOnly = isShowMeMoreQuery(query);
-    
+    // Step 9: Conditional Claude ranking (for nuanced queries only)
     let finalRestaurants: Restaurant[] = [];
     let summary = '';
-    let usedClaude = false;
+    let usedClaudeRanking = false;
+    const shouldUseClaudeRanking = needsClaudeRanking(query) && filteredRestaurants.length > 5;
 
-    if (!shouldUseFilterServiceOnly && routeDecision.route === 'claude' && routeDecision.needsClaude) {
+    if (shouldUseClaudeRanking && !isShowMeMoreQuery(query)) {
       // Use Claude API for nuanced queries
-      console.log('[API] Using Claude API for nuanced query');
-      usedClaude = true;
+      console.log('[API] Using Claude API for nuanced query ranking');
+      usedClaudeRanking = true;
 
       // Check cache first
       const restaurantIds = filteredRestaurants.map(r => r.google_place_id);
@@ -267,19 +389,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (!anthropicApiKey) {
           console.warn('[API] ANTHROPIC_API_KEY not set, falling back to filterService');
           // Fallback to filterService
-          // Special case: Cynthia's favorites queries should return ALL results
           if (isCynthiasFavorites) {
             finalRestaurants = filteredRestaurants; // Return all, no slice
           } else {
             finalRestaurants = filteredRestaurants.slice(0, maxResults);
           }
           summary = `Curated ${finalRestaurants.length} spots just for you`;
-          usedClaude = false;
+          usedClaudeRanking = false;
         } else {
           try {
             claudeResponse = await rankRestaurantsWithClaude(
               query,
-              filteredRestaurants,
+              filteredRestaurants.slice(0, 20), // Limit to top 20 for Claude ranking
               anthropicApiKey
             );
             
@@ -296,19 +417,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           } catch (claudeError: any) {
             console.error('[API] Claude API error, falling back to filterService:', claudeError);
             // Fallback to filterService on error
-            // Special case: Cynthia's favorites queries should return ALL results
             if (isCynthiasFavorites) {
               finalRestaurants = filteredRestaurants; // Return all, no slice
             } else {
               finalRestaurants = filteredRestaurants.slice(0, maxResults);
             }
             summary = `Curated ${finalRestaurants.length} spots just for you`;
-            usedClaude = false;
+            usedClaudeRanking = false;
           }
         }
       } else {
         // Cache hit - use cached response
-        console.log('[API] Using cached Claude response');
+        console.log('[API] Using cached Claude ranking response');
         finalRestaurants = enrichRecommendations(
           claudeResponse.recommendations,
           filteredRestaurants
@@ -316,8 +436,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         summary = claudeResponse.summary || `Curated ${finalRestaurants.length} spots just for you`;
       }
     } else {
-      // Use filterService only
-      console.log('[API] Using filterService only');
+      // Use filterService only (no Claude ranking)
+      console.log('[API] Using filterService only (no Claude ranking)');
       
       // Special case: Cynthia's favorites queries should return ALL results, not limited by maxResults
       if (isCynthiasFavorites) {
@@ -328,8 +448,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         finalRestaurants = filteredRestaurants.slice(0, maxResults);
         summary = `Curated ${finalRestaurants.length} spots just for you`;
       }
-      usedClaude = false;
     }
+
+    // Step 10: Build context for next query (for follow-ups)
+    const nextContext: QueryContext = {
+      previousQuery: query,
+      previousKeywords: finalKeywords,
+      previousResultIds: finalRestaurants.map(r => r.google_place_id),
+      city: normalizedCity
+    };
 
     // Log server-side API performance event
     const apiProcessingTime = Date.now() - apiStartTime;
@@ -342,12 +469,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         finalRestaurants.length,
         {
           search_query: query,
-          city: query.toLowerCase().includes(' in ') ? query.split(' in ')[1] : 'unknown',
+          city: normalizedCity,
           cuisine_type: getCuisineTypeFromQuery(query),
           results_found: finalRestaurants.length.toString(),
           cynthias_picks_count: finalRestaurants.filter(r => r.cynthias_pick).length.toString(),
           processing_time_ms: apiProcessingTime.toString(),
-          used_claude: usedClaude.toString(),
+          used_claude: (usedClaudeForParsing || usedClaudeRanking).toString(),
+          used_claude_ranking: usedClaudeRanking.toString(),
           route: routeDecision.route
         }
       );
@@ -358,15 +486,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({
       recommendations: finalRestaurants,
       summary,
-      usedClaude,
+      usedClaude: usedClaudeForParsing || usedClaudeRanking,
+      usedClaudeRanking,
       route: routeDecision.route,
+      context: nextContext, // Return context for follow-up queries
       debug: {
         cynthiaBoost,
         maxResults,
         statsigConfigFetched,
         statsigClientInitialized: statsigInitialized,
         errorMessage: statsigError,
-        routingReason: routeDecision.reason
+        routingReason: routeDecision.reason,
+        parsedKeywords: parsedKeywords
       }
     });
 
