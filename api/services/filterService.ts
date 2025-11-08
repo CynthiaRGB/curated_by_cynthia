@@ -559,10 +559,20 @@ function calculateTier(restaurant: Restaurant, keywords: ExtractedKeywords): num
 function sortByTieredRanking(restaurants: Restaurant[], keywords: ExtractedKeywords): Restaurant[] {
   return restaurants.sort((a, b) => {
     try {
+      // TIER 0: Specialty match (if user asked for specific dish)
+      if (keywords.cuisineSpecialty) {
+        const aMatchesSpecialty = (a as any)._matchesSpecialty || false;
+        const bMatchesSpecialty = (b as any)._matchesSpecialty || false;
+        
+        if (aMatchesSpecialty && !bMatchesSpecialty) return -1;
+        if (!aMatchesSpecialty && bMatchesSpecialty) return 1;
+      }
+      
+      // TIER 1: primaryType match (or other tier 1 criteria)
       const tierA = calculateTier(a, keywords);
       const tierB = calculateTier(b, keywords);
       
-      // First sort by tier (1 > 2 > 3)
+      // Sort by tier (1 > 2 > 3)
       if (tierA !== tierB) {
         return tierA - tierB;
       }
@@ -710,20 +720,47 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
  * Check if restaurant matches cuisine criteria
  */
 function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): boolean {
-  if (!keywords.cuisineType) {
+  if (!keywords.cuisineType && !keywords.cuisineSpecialty) {
     return true; // No cuisine filter
   }
+  
+  // Check broad cuisine
+  if (keywords.cuisineType) {
+    // Handle multiple cuisine types (OR logic for "X and Y" queries)
+    const additionalCuisineTypes = (keywords as any).additionalCuisineTypes as string[] | undefined;
+    const cuisineTypesToMatch = additionalCuisineTypes && additionalCuisineTypes.length > 0
+      ? [keywords.cuisineType, ...additionalCuisineTypes]
+      : [keywords.cuisineType];
 
-  // Handle multiple cuisine types (OR logic for "X and Y" queries)
-  const additionalCuisineTypes = (keywords as any).additionalCuisineTypes as string[] | undefined;
-  const cuisineTypesToMatch = additionalCuisineTypes && additionalCuisineTypes.length > 0
-    ? [keywords.cuisineType, ...additionalCuisineTypes]
-    : [keywords.cuisineType];
-
-  // Check if restaurant matches ANY of the cuisine types (OR logic)
-  return cuisineTypesToMatch.some(cuisineType => {
-    return matchesSingleCuisineType(restaurant, cuisineType);
-  });
+    // Check if restaurant matches ANY of the cuisine types (OR logic)
+    const matchesBroadCuisine = cuisineTypesToMatch.some(cuisineType => {
+      return matchesSingleCuisineType(restaurant, cuisineType);
+    });
+    
+    if (!matchesBroadCuisine) {
+      return false; // ❌ Wrong cuisine category entirely
+    }
+  }
+  
+  // Check specific specialty
+  if (keywords.cuisineSpecialty) {
+    const specialty = keywords.cuisineSpecialty.toLowerCase();
+    const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
+    const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
+    const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
+    const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
+    
+    const matchesSpecialty = 
+      restaurantName.includes(specialty) ||
+      summary.includes(specialty) ||
+      reviewSummary.includes(specialty) ||
+      editorialSummary.includes(specialty);
+    
+    // Mark for ranking boost (store on restaurant object for sorting)
+    (restaurant as any)._matchesSpecialty = matchesSpecialty;
+  }
+  
+  return true; // ✅ At least matches broad cuisine
 }
 
 /**

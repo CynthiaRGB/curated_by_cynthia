@@ -1,7 +1,7 @@
 // Claude query parser with caching and context-aware follow-up support
 // Parses ALL user queries into structured ExtractedKeywords using Claude API
 
-import { ExtractedKeywords, QueryContext } from '../../../src/types/restaurant';
+import { ExtractedKeywords, QueryContext } from '../../src/types/restaurant.js';
 import { extractKeywords } from './filterService.js';
 
 // Cache entry structure
@@ -153,7 +153,12 @@ This is a follow-up question. The user wants to modify or refine their previous 
 
   prompt += `\n\nExtract the following information:
 - Location (neighborhood, borough, city): Extract any location mentions. Support single neighborhood or array for multiple (e.g., "Shibuya or Ginza" -> ["shibuya", "ginza"])
-- Cuisine type: Extract cuisine or food type (e.g., "japanese", "italian", "sushi", "coffee", "cafe", "dessert", "pastry")
+- Cuisine type: Extract BROAD cuisine category (e.g., "japanese", "italian", "chinese", "french", "korean"). This is the general cuisine category.
+- Cuisine specialty: Extract SPECIFIC DISH or SPECIALTY if mentioned (e.g., "pizza", "ramen", "yakitori", "unagi", "dim sum", "sushi", "pasta", "galettes", "crepes"). If no specific dish is mentioned, set to null. Examples:
+  * "pizza in Manhattan" -> cuisineType: "italian", cuisineSpecialty: "pizza"
+  * "dim sum in Chinatown" -> cuisineType: "chinese", cuisineSpecialty: "dim sum"
+  * "yakitori in Tokyo" -> cuisineType: "japanese", cuisineSpecialty: "yakitori"
+  * "Italian restaurants" -> cuisineType: "italian", cuisineSpecialty: null
 - Meal type: Extract meal time preference ("breakfast", "brunch", "lunch", "dinner", "late-night", or null)
 - Price level: Extract price preference ("budget", "moderate", "upscale", "any", or undefined)
 - Amenities: Extract any amenity requirements (takeout, coffee availability)
@@ -168,11 +173,12 @@ IMPORTANT RULES:
 3. Never extract "cynthia's favorites" or related phrases as neighborhoods
 4. City names: Extract as city field ("nyc", "tokyo", "seoul", "paris", or undefined)
 5. Neighborhoods: Can be single string or array of strings
-6. Cuisine type: Use lowercase, match common cuisine names
-7. For special queries like "Cynthia's favorites", set requiresCynthiasPick to true
-8. Default all optional boolean fields to false if not mentioned
-9. Default arrays to empty arrays if not mentioned
-10. For follow-up queries, merge new information with previous keywords (don't lose previous criteria unless explicitly changed)
+6. Cuisine type: Use lowercase, match common cuisine names (broad categories: italian, japanese, chinese, french, korean, etc.)
+7. Cuisine specialty: Extract specific dishes/specialties separately from cuisine type. Common specialties include: pizza, ramen, yakitori, unagi, dim sum, sushi, pasta, galettes, crepes, pho, pad thai, etc. If no specific dish is mentioned, set to null.
+8. For special queries like "Cynthia's favorites", set requiresCynthiasPick to true
+9. Default all optional boolean fields to false if not mentioned
+10. Default arrays to empty arrays if not mentioned
+11. For follow-up queries, merge new information with previous keywords (don't lose previous criteria unless explicitly changed)
 
 RESPONSE FORMAT:
 Respond with ONLY valid JSON matching this exact structure (no markdown, no backticks, no extra text):
@@ -181,6 +187,7 @@ Respond with ONLY valid JSON matching this exact structure (no markdown, no back
   "borough": null | "brooklyn" | "manhattan",
   "city": null | "nyc" | "tokyo" | "seoul" | "paris",
   "cuisineType": null | string,
+  "cuisineSpecialty": null | string,
   "mealType": null | "breakfast" | "brunch" | "lunch" | "dinner" | "late-night",
   "priceLevel": null | "budget" | "moderate" | "upscale" | "any",
   "needsTakeout": boolean,
@@ -303,6 +310,7 @@ export async function parseQueryWithClaude(
       borough: parsedKeywords.borough || undefined,
       city: parsedKeywords.city || undefined,
       cuisineType: parsedKeywords.cuisineType || undefined,
+      cuisineSpecialty: parsedKeywords.cuisineSpecialty || null,
       mealType: parsedKeywords.mealType || null,
       priceLevel: parsedKeywords.priceLevel || undefined,
       needsTakeout: parsedKeywords.needsTakeout || false,

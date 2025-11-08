@@ -119,6 +119,7 @@ export interface ExtractedKeywords {
   
   // Cuisine/Type
   cuisineType?: string;
+  cuisineSpecialty?: string | null; // Specific dish/specialty (e.g., "pizza", "ramen", "yakitori", "dim sum")
   
   // Meal time
   mealType?: 'breakfast' | 'brunch' | 'lunch' | 'dinner' | 'late-night' | null;
