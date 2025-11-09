@@ -1005,6 +1005,12 @@ function matchesMealType(restaurant: Restaurant, keywords: ExtractedKeywords): b
   const mealType = keywords.mealType.toLowerCase();
   
   if (mealType === 'brunch') {
+    // Hardcoded exclusion: "The Dead Rabbit" should never show up as brunch result
+    const restaurantName = restaurant.google_data.displayName?.text || '';
+    if (restaurantName.toLowerCase().includes('dead rabbit')) {
+      return false;
+    }
+    
     // Basic check: restaurant must serve brunch
     if (!restaurant.google_data.servesBrunch) {
       return false;
@@ -1031,12 +1037,13 @@ function matchesMealType(restaurant: Restaurant, keywords: ExtractedKeywords): b
       (hours: any) => hours.secondaryHoursType === 'BRUNCH'
     );
     
-    const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
+    // Reuse restaurantName from earlier (already defined above)
+    const restaurantNameLower = restaurantName.toLowerCase();
     const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
     const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
     const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
     
-    const mentionsBrunch = restaurantName.includes('brunch') ||
+    const mentionsBrunch = restaurantNameLower.includes('brunch') ||
                           summary.includes('brunch') ||
                           reviewSummary.includes('brunch') ||
                           editorialSummary.includes('brunch');

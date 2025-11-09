@@ -48,18 +48,27 @@ This is a follow-up question. The user wants to modify or refine their previous 
 - Noise preference: Extract noise preference ("quiet", "any", or null)
 - Special requirements: Extract boolean flags for instagrammable, michelin, cynthia's pick, coffee focus, dessert focus
 
+HANDLING VAGUE QUERIES:
+For vague or subjective queries, make reasonable inferences based on common interpretations:
+- "good vibes" -> Extract common positive vibe keywords: ["cozy", "lively", "trendy", "casual"]
+- "something nice" -> Interpret as upscale/sophisticated: vibeKeywords: ["upscale", "sophisticated"], priceLevel: "moderate"
+- "nice pictures" / "take nice pictures" -> Implies instagrammable: requiresInstagrammable: true, vibeKeywords: ["aesthetic", "photogenic"]
+- "where should I eat?" / "what should I eat?" -> No specific criteria, return minimal fields (just city if provided)
+- If query is extremely vague with no clear criteria, return minimal extraction (only city if provided, empty arrays, null/undefined for optional fields)
+
 IMPORTANT RULES:
 1. Be precise - only extract information explicitly mentioned or strongly implied
-2. For cuisine descriptors like "traditional", "authentic", "modern", etc., include them as part of the cuisine context but don't extract as separate fields
-3. Never extract "cynthia's favorites" or related phrases as neighborhoods
-4. City names: Extract as city field ("nyc", "tokyo", "seoul", "paris", or undefined)
-5. Neighborhoods: Can be single string or array of strings
-6. Cuisine type: Use lowercase, match common cuisine names (broad categories: italian, japanese, chinese, french, korean, etc.)
-7. Cuisine specialty: Extract specific dishes/specialties separately from cuisine type. Common specialties include: pizza, ramen, yakitori, unagi, dim sum, sushi, pasta, galettes, crepes, pho, pad thai, etc. If no specific dish is mentioned, set to null.
-8. For special queries like "Cynthia's favorites", set requiresCynthiasPick to true
-9. Default all optional boolean fields to false if not mentioned
-10. Default arrays to empty arrays if not mentioned
-11. For follow-up queries, merge new information with previous keywords (don't lose previous criteria unless explicitly changed)
+2. For vague queries, make reasonable inferences based on common interpretations (see "HANDLING VAGUE QUERIES" above)
+3. For cuisine descriptors like "traditional", "authentic", "modern", etc., include them as part of the cuisine context but don't extract as separate fields
+4. Never extract "cynthia's favorites" or related phrases as neighborhoods
+5. City names: Extract as city field ("nyc", "tokyo", "seoul", "paris", or undefined). NOTE: The city is also provided as a parameter, so always include it in the output.
+6. Neighborhoods: Can be single string or array of strings
+7. Cuisine type: Use lowercase, match common cuisine names (broad categories: italian, japanese, chinese, french, korean, etc.)
+8. Cuisine specialty: Extract specific dishes/specialties separately from cuisine type. Common specialties include: pizza, ramen, yakitori, unagi, dim sum, sushi, pasta, galettes, crepes, pho, pad thai, etc. If no specific dish is mentioned, set to null.
+9. For special queries like "Cynthia's favorites", set requiresCynthiasPick to true
+10. Default all optional boolean fields to false if not mentioned
+11. Default arrays to empty arrays if not mentioned
+12. For follow-up queries, merge new information with previous keywords (don't lose previous criteria unless explicitly changed)
 
 RESPONSE FORMAT:
 Respond with ONLY valid JSON matching this exact structure (no markdown, no backticks, no extra text):
