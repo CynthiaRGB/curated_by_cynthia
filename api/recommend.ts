@@ -329,6 +329,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         'Seoul': 'seoul'
       };
       parsedKeywords.city = cityMap[normalizedCity];
+      
+      // Clean up keywords: remove fields with false/null/empty values for cleaner filtering
+      const cleanedKeywords: ExtractedKeywords = {
+        vibeKeywords: parsedKeywords.vibeKeywords || [] // Required field, always include
+      };
+      if (parsedKeywords.borough) cleanedKeywords.borough = parsedKeywords.borough;
+      if (parsedKeywords.city) cleanedKeywords.city = parsedKeywords.city;
+      if (parsedKeywords.neighborhood) cleanedKeywords.neighborhood = parsedKeywords.neighborhood;
+      if (parsedKeywords.cuisineType) cleanedKeywords.cuisineType = parsedKeywords.cuisineType;
+      if (parsedKeywords.cuisineSpecialty) cleanedKeywords.cuisineSpecialty = parsedKeywords.cuisineSpecialty;
+      if (parsedKeywords.mealType) cleanedKeywords.mealType = parsedKeywords.mealType;
+      if (parsedKeywords.priceLevel) cleanedKeywords.priceLevel = parsedKeywords.priceLevel;
+      if (parsedKeywords.occasionType) cleanedKeywords.occasionType = parsedKeywords.occasionType;
+      if (parsedKeywords.noisePreference) cleanedKeywords.noisePreference = parsedKeywords.noisePreference;
+      if (parsedKeywords.needsTakeout) cleanedKeywords.needsTakeout = parsedKeywords.needsTakeout;
+      if (parsedKeywords.needsCoffee) cleanedKeywords.needsCoffee = parsedKeywords.needsCoffee;
+      if (parsedKeywords.requiresInstagrammable) cleanedKeywords.requiresInstagrammable = parsedKeywords.requiresInstagrammable;
+      if (parsedKeywords.requiresMichelin) cleanedKeywords.requiresMichelin = parsedKeywords.requiresMichelin;
+      if (parsedKeywords.requiresCynthiasPick) cleanedKeywords.requiresCynthiasPick = parsedKeywords.requiresCynthiasPick;
+      if (parsedKeywords.requiresCoffeeFocus) cleanedKeywords.requiresCoffeeFocus = parsedKeywords.requiresCoffeeFocus;
+      if (parsedKeywords.requiresDessertFocus) cleanedKeywords.requiresDessertFocus = parsedKeywords.requiresDessertFocus;
+      
+      parsedKeywords = cleanedKeywords;
     }
     
     // Step 6: Pre-filter with filterService (using parsed keywords if available)
