@@ -7,6 +7,56 @@ import goldenQueries from "./golden_queries_clean.json";
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 /**
+ * Normalize price level formats for comparison
+ * Converts numeric (1,2,3,4) to string ("budget", "moderate", "upscale") format
+ * This normalizes expected values to match output format
+ */
+function normalizePriceLevel(value: any): any {
+  if (typeof value === 'number') {
+    // Convert numeric to string (expected format -> output format)
+    const priceMap: { [key: number]: string } = {
+      1: 'budget',
+      2: 'moderate',
+      3: 'upscale',
+      4: 'upscale' // 4 is also upscale (very expensive)
+    };
+    return priceMap[value] || value;
+  }
+  // If it's already a string or undefined, return as-is
+  return value;
+}
+
+/**
+ * Normalize neighborhood formats for comparison
+ * Converts between string and array formats
+ */
+function normalizeNeighborhood(value: any): any {
+  if (Array.isArray(value)) {
+    // If it's an array, return as-is
+    return value;
+  } else if (typeof value === 'string' && value) {
+    // If it's a string, convert to array
+    return [value];
+  } else if (value === null || value === undefined) {
+    // If it's null/undefined, return as-is
+    return value;
+  }
+  return value;
+}
+
+/**
+ * Normalize a value based on its field name
+ */
+function normalizeField(key: string, value: any): any {
+  if (key === 'priceLevel') {
+    return normalizePriceLevel(value);
+  } else if (key === 'neighborhood') {
+    return normalizeNeighborhood(value);
+  }
+  return value;
+}
+
+/**
  * Evaluation: NEW Architecture (Claude Parsing)
  * Tests the parseQueryWithClaude function against golden dataset
  */
@@ -63,8 +113,9 @@ Eval("Query Parser - NEW Architecture (Rate Limited)", {
       for (const key in expected) {
         totalFields++;
         
-        const outputVal = output[key];
-        const expectedVal = expected[key];
+        // Normalize both values before comparison
+        const outputVal = normalizeField(key, output[key]);
+        const expectedVal = normalizeField(key, expected[key]);
         
         // Compare using JSON stringify for deep equality
         if (JSON.stringify(outputVal) === JSON.stringify(expectedVal)) {
@@ -107,17 +158,22 @@ Eval("Query Parser - NEW Architecture (Rate Limited)", {
       
       // Determine which fields should remain unchanged
       for (const key in previousKeywords) {
+        // Normalize values before comparison
+        const normalizedExpected = normalizeField(key, expected[key]);
+        const normalizedPrev = normalizeField(key, previousKeywords[key]);
+        
         // Skip fields that are expected to change
-        if (expected[key] !== undefined && 
-            JSON.stringify(expected[key]) !== JSON.stringify(previousKeywords[key])) {
+        if (normalizedExpected !== undefined && 
+            JSON.stringify(normalizedExpected) !== JSON.stringify(normalizedPrev)) {
           // This field is supposed to change, skip it
           continue;
         }
         
         unchangedFields++;
         
-        // Check if field was preserved
-        if (JSON.stringify(output[key]) === JSON.stringify(previousKeywords[key])) {
+        // Check if field was preserved (normalize output too)
+        const normalizedOutput = normalizeField(key, output[key]);
+        if (JSON.stringify(normalizedOutput) === JSON.stringify(normalizedPrev)) {
           preservedFields++;
         }
       }
@@ -227,14 +283,18 @@ Eval("Query Parser - NEW Architecture (Rate Limited)", {
         };
       }
       
+      // Normalize both values before comparison
+      const outputPrice = normalizePriceLevel(output.priceLevel);
+      const expectedPrice = normalizePriceLevel(expected.priceLevel);
+      
       // Check if price level matches
-      const matches = output.priceLevel === expected.priceLevel;
+      const matches = outputPrice === expectedPrice;
       return {
         name: "price_level_accuracy",
         score: matches ? 1 : 0,
         metadata: {
-          expected: expected.priceLevel,
-          actual: output.priceLevel
+          expected: expectedPrice,
+          actual: outputPrice
         }
       };
     },
@@ -289,7 +349,10 @@ Eval("Query Parser - NEW Architecture (Rate Limited)", {
       let totalFields = 0;
       for (const key in expected) {
         totalFields++;
-        if (JSON.stringify(output[key]) === JSON.stringify(expected[key])) {
+        // Normalize both values before comparison
+        const outputVal = normalizeField(key, output[key]);
+        const expectedVal = normalizeField(key, expected[key]);
+        if (JSON.stringify(outputVal) === JSON.stringify(expectedVal)) {
           correctFields++;
         }
       }
@@ -319,12 +382,15 @@ Eval("Query Parser - NEW Architecture (Rate Limited)", {
         let total = 0;
         
         for (const key in prevKeywords) {
-          if (expected[key] !== undefined && 
-              JSON.stringify(expected[key]) !== JSON.stringify(prevKeywords[key])) {
+          const normalizedExpected = normalizeField(key, expected[key]);
+          const normalizedPrev = normalizeField(key, prevKeywords[key]);
+          if (normalizedExpected !== undefined && 
+              JSON.stringify(normalizedExpected) !== JSON.stringify(normalizedPrev)) {
             continue;
           }
           total++;
-          if (JSON.stringify(output[key]) === JSON.stringify(prevKeywords[key])) {
+          const normalizedOutput = normalizeField(key, output[key]);
+          if (JSON.stringify(normalizedOutput) === JSON.stringify(normalizedPrev)) {
             preserved++;
           }
         }

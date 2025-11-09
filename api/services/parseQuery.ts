@@ -1,127 +1,8 @@
-// Claude query parser with caching and context-aware follow-up support
+// Claude query parser with context-aware follow-up support
 // Parses ALL user queries into structured ExtractedKeywords using Claude API
 
 import { ExtractedKeywords, QueryContext } from '../../src/types/restaurant.js';
 import { extractKeywords } from './filterService.js';
-
-// Cache entry structure
-interface CacheEntry {
-  keywords: ExtractedKeywords;
-  timestamp: number;
-  query: string; // Store original query for debugging
-}
-
-// In-memory cache store
-const cache = new Map<string, CacheEntry>();
-
-// Default TTL: 24 hours (86,400,000 ms)
-const DEFAULT_TTL_MS = 24 * 60 * 60 * 1000;
-
-// Maximum cache size to prevent memory issues (200 entries)
-const MAX_CACHE_SIZE = 200;
-
-/**
- * Generate a cache key from query, city, and context
- * Normalizes the query (lowercase, trim, remove extra spaces) for better cache hits
- * Includes context hash for follow-up queries to ensure different cache keys
- */
-function generateCacheKey(query: string, city?: string, context?: QueryContext): string {
-  const normalizedQuery = query
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, ' '); // Replace multiple spaces with single space
-  
-  const cityKey = city ? `_${city.toLowerCase()}` : '';
-  
-  let key = `${normalizedQuery}${cityKey}`;
-  
-  // Add context hash if it's a follow-up query
-  // This ensures "show me more" after "Italian restaurants" has a different cache key
-  if (context) {
-    // Create a stable hash from previous keywords
-    // Sort keys to ensure consistent hash regardless of property order
-    const sortedKeys = Object.keys(context.previousKeywords).sort();
-    const contextHash = JSON.stringify(context.previousKeywords, sortedKeys);
-    
-    // Create a simple hash from the string (for deterministic short hash)
-    // This is a simple hash function - in production you might use crypto.createHash
-    let hash = 0;
-    for (let i = 0; i < contextHash.length; i++) {
-      const char = contextHash.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash; // Convert to 32-bit integer
-    }
-    // Convert to positive hex string (8 chars)
-    const shortHash = Math.abs(hash).toString(16).substring(0, 8);
-    key += `_ctx_${shortHash}`;
-  }
-  
-  return key;
-}
-
-/**
- * Get cached keywords if available and not expired
- */
-function getCachedKeywords(key: string): ExtractedKeywords | null {
-  const entry = cache.get(key);
-  
-  if (!entry) {
-    console.log(`[Parse Cache] Miss: ${key.substring(0, 50)}...`);
-    return null;
-  }
-  
-  // Check if expired
-  const age = Date.now() - entry.timestamp;
-  if (age > DEFAULT_TTL_MS) {
-    console.log(`[Parse Cache] Expired (age: ${Math.round(age / 1000 / 60)}min): ${key.substring(0, 50)}...`);
-    cache.delete(key);
-    return null;
-  }
-  
-  console.log(`[Parse Cache] Hit (age: ${Math.round(age / 1000 / 60)}min): ${key.substring(0, 50)}...`);
-  return entry.keywords;
-}
-
-/**
- * Store keywords in cache
- */
-function setCachedKeywords(key: string, keywords: ExtractedKeywords, query: string): void {
-  // Evict oldest entries if cache is full
-  if (cache.size >= MAX_CACHE_SIZE) {
-    const oldestKey = Array.from(cache.entries())
-      .sort((a, b) => a[1].timestamp - b[1].timestamp)[0][0];
-    cache.delete(oldestKey);
-    console.log(`[Parse Cache] Evicted oldest entry: ${oldestKey.substring(0, 50)}...`);
-  }
-  
-  cache.set(key, {
-    keywords,
-    timestamp: Date.now(),
-    query,
-  });
-  
-  console.log(`[Parse Cache] Stored: ${key.substring(0, 50)}... (cache size: ${cache.size})`);
-}
-
-/**
- * Check if query is a follow-up question
- */
-function isFollowUpQuery(query: string): boolean {
-  const lowerQuery = query.toLowerCase().trim();
-  
-  // Patterns that indicate follow-up queries
-  const followUpPatterns = [
-    /^(show me )?more/i,
-    /^(are there )?(any )?(cheaper|more affordable|less expensive)/i,
-    /^(are there )?(any )?(more expensive|upscale|fancier)/i,
-    /^(are there )?(any )?(better|higher rated)/i,
-    /^(what about|how about)/i,
-    /^(any )?(other|different)/i,
-    /^(show me )?(different|other)/i,
-  ];
-  
-  return followUpPatterns.some(pattern => pattern.test(lowerQuery));
-}
 
 /**
  * Build prompt for Claude API query parsing
@@ -212,7 +93,7 @@ DO NOT include markdown formatting. DO NOT include backticks. Return ONLY the ra
  * Supports follow-up questions with context merging
  * 
  * @param query - The user's query string
- * @param city - Optional city to include in cache key
+ * @param city - Optional city (for logging/debugging)
  * @param context - Optional context from previous query for follow-ups
  * @returns ExtractedKeywords matching the query intent
  */
@@ -223,14 +104,6 @@ export async function parseQueryWithClaude(
 ): Promise<ExtractedKeywords> {
   try {
     console.log(`[Parse Query] Parsing query: "${query}"${city ? ` (city: ${city})` : ''}${context ? ' (with context)' : ''}`);
-
-    // Check cache first (include context in cache key for follow-up queries)
-    const cacheKey = generateCacheKey(query, city, context);
-    const cachedKeywords = getCachedKeywords(cacheKey);
-    
-    if (cachedKeywords) {
-      return cachedKeywords;
-    }
 
     // Get API key
     const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
@@ -308,7 +181,9 @@ export async function parseQueryWithClaude(
       requiresDessertFocus: parsedKeywords.requiresDessertFocus || false,
       neighborhood: parsedKeywords.neighborhood || undefined,
       borough: parsedKeywords.borough || undefined,
-      city: parsedKeywords.city || undefined,
+      // Always include city from input parameter (city pill is always selected in UI)
+      // Claude may extract city from query, but we always use the input city as the source of truth
+      city: city ? city.toLowerCase() : (parsedKeywords.city || undefined),
       cuisineType: parsedKeywords.cuisineType || undefined,
       cuisineSpecialty: parsedKeywords.cuisineSpecialty || null,
       mealType: parsedKeywords.mealType || null,
@@ -319,9 +194,6 @@ export async function parseQueryWithClaude(
 
     console.log('[Parse Query] Parsed keywords:', JSON.stringify(keywords, null, 2));
 
-    // Cache the result (cache key already includes context if present)
-    setCachedKeywords(cacheKey, keywords, query);
-
     return keywords;
 
   } catch (error) {
@@ -329,7 +201,12 @@ export async function parseQueryWithClaude(
     // Fallback to deterministic extraction on error
     // This ensures we still get useful keywords even if Claude fails
     try {
-      return extractKeywords(query);
+      const fallbackKeywords = extractKeywords(query);
+      // Always include city from input parameter (city pill is always selected in UI)
+      if (city) {
+        fallbackKeywords.city = city.toLowerCase();
+      }
+      return fallbackKeywords;
     } catch (fallbackError) {
       console.error('[Parse Query] Fallback extraction also failed:', fallbackError);
       // Both Claude and fallback failed - throw error for recommend.ts to handle
@@ -337,49 +214,3 @@ export async function parseQueryWithClaude(
     }
   }
 }
-
-/**
- * Get empty ExtractedKeywords object (fallback on error)
- */
-function getEmptyKeywords(): ExtractedKeywords {
-  return {
-    vibeKeywords: [],
-    occasionType: null,
-    noisePreference: null,
-    requiresInstagrammable: false,
-    requiresMichelin: false,
-    requiresCynthiasPick: false,
-    requiresCoffeeFocus: false,
-    requiresDessertFocus: false,
-  };
-}
-
-/**
- * Clear all cache entries (useful for testing or cache invalidation)
- */
-export function clearParseCache(): void {
-  cache.clear();
-  console.log('[Parse Cache] Cleared all entries');
-}
-
-/**
- * Get cache statistics (for monitoring/debugging)
- */
-export function getParseCacheStats(): {
-  size: number;
-  maxSize: number;
-  entries: Array<{ key: string; age: number; query: string }>;
-} {
-  const entries = Array.from(cache.entries()).map(([key, entry]) => ({
-    key: key.substring(0, 50) + '...',
-    age: Date.now() - entry.timestamp,
-    query: entry.query.substring(0, 50),
-  }));
-  
-  return {
-    size: cache.size,
-    maxSize: MAX_CACHE_SIZE,
-    entries,
-  };
-}
-
