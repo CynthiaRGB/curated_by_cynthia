@@ -334,6 +334,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Step 6: Pre-filter with filterService (using parsed keywords if available)
     console.log('[API] Pre-filtering restaurants with filterService');
     console.log(`[API] Using query for filtering: "${queryToFilter}" (original query: "${query}")`);
+    console.log('[API] Parsed keywords being passed to filterService:', JSON.stringify(parsedKeywords, null, 2));
     let filteredRestaurants = preFilterRestaurants(queryToFilter, parsedKeywords);
     console.log(`[API] Filter service returned ${filteredRestaurants.length} restaurants`);
 

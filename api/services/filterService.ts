@@ -1203,8 +1203,12 @@ export function preFilterRestaurants(query: string, keywords?: ExtractedKeywords
     // Use provided keywords or extract from query
     const extractedKeywords = keywords || extractKeywords(query);
     
-    // Debug: Log the extracted keywords
-    console.log('[FilterService] Extracted keywords:', JSON.stringify(extractedKeywords, null, 2));
+    // Debug: Log the extracted keywords and whether we used provided keywords or extracted
+    if (keywords) {
+      console.log('[FilterService] Using PROVIDED keywords from Claude:', JSON.stringify(extractedKeywords, null, 2));
+    } else {
+      console.log('[FilterService] No keywords provided, EXTRACTING from query:', JSON.stringify(extractedKeywords, null, 2));
+    }
     
     // Filter restaurants step by step
     let debugFailureCount = 0;
