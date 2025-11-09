@@ -633,13 +633,19 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
   if (keywords.borough) {
     const boroughKeyword = keywords.borough.toLowerCase();
     const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
+    const restaurantCity = restaurant.city?.toLowerCase() || '';
     
     if (boroughKeyword === 'brooklyn') {
-      // Brooklyn query: only return if address contains "brooklyn"
-      hasBoroughMatch = address.includes('brooklyn');
+      // Brooklyn query: check if address contains "brooklyn" OR city is Brooklyn
+      // Also check if restaurant.city indicates Brooklyn
+      hasBoroughMatch = address.includes('brooklyn') || 
+                       restaurantCity.includes('brooklyn') ||
+                       (restaurant.neighborhood_extracted?.toLowerCase() || '').includes('brooklyn');
     } else if (boroughKeyword === 'manhattan') {
       // Manhattan query: return if address does NOT contain "brooklyn" (meaning it's Manhattan)
-      hasBoroughMatch = !address.includes('brooklyn');
+      // Also check if it's in NYC but not Brooklyn
+      hasBoroughMatch = !address.includes('brooklyn') && 
+                       (restaurantCity.includes('new york') || restaurantCity.includes('nyc') || address.includes('new york'));
     } else {
       hasBoroughMatch = false;
     }
@@ -1203,20 +1209,47 @@ export function preFilterRestaurants(query: string, keywords?: ExtractedKeywords
     // Use provided keywords or extract from query
     const extractedKeywords = keywords || extractKeywords(query);
     
+    // Debug: Log the extracted keywords
+    console.log('[FilterService] Extracted keywords:', JSON.stringify(extractedKeywords, null, 2));
+    
     // Filter restaurants step by step
     let filteredRestaurants = restaurants.filter(restaurant => {
       try {
-        return matchesLocation(restaurant, extractedKeywords) &&
-               matchesCuisine(restaurant, extractedKeywords) &&
-               matchesMealType(restaurant, extractedKeywords) &&
-               matchesPrice(restaurant, extractedKeywords) &&
-               matchesAmenities(restaurant, extractedKeywords) &&
-               matchesVibe(restaurant, extractedKeywords) &&           // NEW: Vibe filtering
-               matchesOccasion(restaurant, extractedKeywords) &&       // NEW: Occasion filtering
-               matchesNoiseLevel(restaurant, extractedKeywords) &&     // NEW: Noise filtering
-               matchesInstagrammable(restaurant, extractedKeywords) && // NEW: Instagrammable filtering
-               matchesMichelin(restaurant, extractedKeywords) &&       // NEW: Michelin filtering
-               matchesCynthiasPick(restaurant, extractedKeywords);     // NEW: Cynthia's pick filtering
+        const locationMatch = matchesLocation(restaurant, extractedKeywords);
+        const cuisineMatch = matchesCuisine(restaurant, extractedKeywords);
+        const mealTypeMatch = matchesMealType(restaurant, extractedKeywords);
+        const priceMatch = matchesPrice(restaurant, extractedKeywords);
+        const amenitiesMatch = matchesAmenities(restaurant, extractedKeywords);
+        const vibeMatch = matchesVibe(restaurant, extractedKeywords);
+        const occasionMatch = matchesOccasion(restaurant, extractedKeywords);
+        const noiseMatch = matchesNoiseLevel(restaurant, extractedKeywords);
+        const instagramMatch = matchesInstagrammable(restaurant, extractedKeywords);
+        const michelinMatch = matchesMichelin(restaurant, extractedKeywords);
+        const cynthiaMatch = matchesCynthiasPick(restaurant, extractedKeywords);
+        
+        const allMatch = locationMatch && cuisineMatch && mealTypeMatch && priceMatch &&
+                        amenitiesMatch && vibeMatch && occasionMatch && noiseMatch &&
+                        instagramMatch && michelinMatch && cynthiaMatch;
+        
+        // Debug: Log first few failures for diagnosis
+        if (!allMatch && filteredRestaurants.length < 3) {
+          const restaurantName = restaurant.google_data.displayName?.text || 'Unknown';
+          console.log(`[FilterService] Restaurant "${restaurantName}" failed filters:`, {
+            location: locationMatch,
+            cuisine: cuisineMatch,
+            mealType: mealTypeMatch,
+            price: priceMatch,
+            amenities: amenitiesMatch,
+            vibe: vibeMatch,
+            occasion: occasionMatch,
+            noise: noiseMatch,
+            instagram: instagramMatch,
+            michelin: michelinMatch,
+            cynthia: cynthiaMatch
+          });
+        }
+        
+        return allMatch;
       } catch (error) {
         console.warn('Error filtering restaurant:', error);
         return false;
