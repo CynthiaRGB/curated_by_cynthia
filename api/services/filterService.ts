@@ -1212,7 +1212,8 @@ export function preFilterRestaurants(query: string, keywords?: ExtractedKeywords
     
     // Filter restaurants step by step
     let debugFailureCount = 0;
-    let filteredRestaurants = restaurants.filter(restaurant => {
+    let debugCuisineCount = 0;
+    let filteredRestaurants = restaurants.filter((restaurant, index) => {
       try {
         const locationMatch = matchesLocation(restaurant, extractedKeywords);
         const cuisineMatch = matchesCuisine(restaurant, extractedKeywords);
@@ -1247,6 +1248,24 @@ export function preFilterRestaurants(query: string, keywords?: ExtractedKeywords
             cynthia: cynthiaMatch
           });
           debugFailureCount++;
+        }
+        
+        // Debug: Log cuisine matching details for first 3 restaurants when cuisineType is italian
+        if (extractedKeywords.cuisineType === 'italian' && !cuisineMatch && debugCuisineCount < 3) {
+          const restaurantName = restaurant.google_data.displayName?.text || 'Unknown';
+          const primaryType = restaurant.google_data.primaryType?.toLowerCase() || '';
+          const specificType = restaurant.specific_type?.toLowerCase() || '';
+          const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
+          console.log(`[FilterService] Cuisine match failed for "${restaurantName}":`, {
+            cuisineType: extractedKeywords.cuisineType,
+            primaryType,
+            specificType,
+            types: types.slice(0, 5),
+            primaryTypeIncludes: primaryType.includes('italian'),
+            specificTypeIncludes: specificType.includes('italian'),
+            typesIncludes: types.some(t => t.includes('italian'))
+          });
+          debugCuisineCount++;
         }
         
         return allMatch;
