@@ -1,0 +1,560 @@
+[
+  {
+    "input": {
+      "query": "Italian in Brooklyn",
+      "city": "NYC"
+    },
+    "expected": {
+      "cuisineType": "italian",
+      "borough": "brooklyn",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "simple_query",
+      "difficulty": "easy",
+      "description": "Basic cuisine + location query"
+    }
+  },
+  {
+    "input": {
+      "query": "somewhere I can take nice pictures in",
+      "city": "NYC"
+    },
+    "expected": {
+      "requiresInstagrammable": true,
+      "vibeKeywords": ["aesthetic", "photogenic"],
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "vague_query",
+      "difficulty": "hard",
+      "description": "Implicit instagrammable request - Claude must infer from nice pictures"
+    }
+  },
+  {
+    "input": {
+      "query": "French restaurants",
+      "city": "Paris"
+    },
+    "expected": {
+      "cuisineType": "french",
+      "city": "paris"
+    },
+    "metadata": {
+      "category": "simple_query",
+      "difficulty": "easy",
+      "description": "Cuisine only, no location within city"
+    }
+  },
+  {
+    "input": {
+      "query": "unagi in Tokyo",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "cuisineSpecialty": "unagi",
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "specific_dish",
+      "difficulty": "medium",
+      "description": "Specific Japanese dish - should extract specialty"
+    }
+  },
+  {
+    "input": {
+      "query": "yakitori in Shibuya",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "cuisineSpecialty": "yakitori",
+      "neighborhood": ["shibuya"],
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "specific_dish",
+      "difficulty": "medium",
+      "description": "Specific dish + neighborhood"
+    }
+  },
+  {
+    "input": {
+      "query": "dim sum in Chinatown",
+      "city": "NYC"
+    },
+    "expected": {
+      "cuisineType": "chinese",
+      "cuisineSpecialty": "dim sum",
+      "neighborhood": ["chinatown"],
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "specific_dish",
+      "difficulty": "medium",
+      "description": "Chinese specialty"
+    }
+  },
+  {
+    "input": {
+      "query": "ramen near Shinjuku station",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "cuisineSpecialty": "ramen",
+      "neighborhood": ["shinjuku"],
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "specific_dish",
+      "difficulty": "medium",
+      "description": "Ramen with landmark reference"
+    }
+  },
+  {
+    "input": {
+      "query": "pizza in West Village",
+      "city": "NYC"
+    },
+    "expected": {
+      "cuisineType": "italian",
+      "cuisineSpecialty": "pizza",
+      "neighborhood": ["west village"],
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "specific_dish",
+      "difficulty": "easy",
+      "description": "Italian specialty"
+    }
+  },
+  {
+    "input": {
+      "query": "romantic Italian in West Village",
+      "city": "NYC"
+    },
+    "expected": {
+      "cuisineType": "italian",
+      "neighborhood": ["west village"],
+      "occasionType": "date_night",
+      "vibeKeywords": ["romantic"],
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "multi_criteria",
+      "difficulty": "medium",
+      "description": "Cuisine + location + vibe + occasion"
+    }
+  },
+  {
+    "input": {
+      "query": "affordable sushi for date night",
+      "city": "NYC"
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "priceLevel": 1,
+      "occasionType": "date_night",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "multi_criteria",
+      "difficulty": "medium",
+      "description": "Cuisine + price + occasion"
+    }
+  },
+  {
+    "input": {
+      "query": "upscale French for business lunch in Midtown",
+      "city": "NYC"
+    },
+    "expected": {
+      "cuisineType": "french",
+      "priceLevel": 3,
+      "occasionType": "business_lunch",
+      "neighborhood": ["midtown"],
+      "vibeKeywords": ["upscale"],
+      "mealType": "lunch",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "multi_criteria",
+      "difficulty": "hard",
+      "description": "Multiple filters: cuisine, price, occasion, location, vibe, meal"
+    }
+  },
+  {
+    "input": {
+      "query": "good vibes",
+      "city": "NYC"
+    },
+    "expected": {
+      "vibeKeywords": ["cozy", "lively", "trendy", "casual"],
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "vague_query",
+      "difficulty": "hard",
+      "description": "Very vague - good vibes is subjective"
+    }
+  },
+  {
+    "input": {
+      "query": "something nice",
+      "city": "NYC"
+    },
+    "expected": {
+      "vibeKeywords": ["upscale", "sophisticated"],
+      "priceLevel": 2,
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "vague_query",
+      "difficulty": "hard",
+      "description": "Extremely vague - Claude must interpret nice"
+    }
+  },
+  {
+    "input": {
+      "query": "where should I eat?",
+      "city": "NYC"
+    },
+    "expected": {
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "vague_query",
+      "difficulty": "medium",
+      "description": "No criteria at all - should return empty filters"
+    }
+  },
+  {
+    "input": {
+      "query": "cheap eats in Brooklyn",
+      "city": "NYC"
+    },
+    "expected": {
+      "priceLevel": 1,
+      "borough": "brooklyn",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "price_query",
+      "difficulty": "easy",
+      "description": "Budget-friendly query"
+    }
+  },
+  {
+    "input": {
+      "query": "expensive Japanese",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "priceLevel": 4,
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "price_query",
+      "difficulty": "easy",
+      "description": "High-end query"
+    }
+  },
+  {
+    "input": {
+      "query": "Cynthia's favorites",
+      "city": "NYC"
+    },
+    "expected": {
+      "requiresCynthiasPick": true,
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "special_query",
+      "difficulty": "easy",
+      "description": "Should return ALL Cynthias picks (no limit)"
+    }
+  },
+  {
+    "input": {
+      "query": "Michelin star restaurants",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "requiresMichelin": true,
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "accolades_query",
+      "difficulty": "easy",
+      "description": "Explicit Michelin request"
+    }
+  },
+  {
+    "input": {
+      "query": "are there cheaper ones?",
+      "city": "NYC",
+      "context": {
+        "previousQuery": "romantic Italian in West Village",
+        "previousKeywords": {
+          "cuisineType": "italian",
+          "neighborhood": ["west village"],
+          "occasionType": "date_night",
+          "vibeKeywords": ["romantic"],
+          "priceLevel": 2,
+          "city": "nyc"
+        }
+      }
+    },
+    "expected": {
+      "cuisineType": "italian",
+      "neighborhood": ["west village"],
+      "occasionType": "date_night",
+      "vibeKeywords": ["romantic"],
+      "priceLevel": 1,
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "follow_up_price",
+      "difficulty": "hard",
+      "description": "Modify price, keep all other criteria"
+    }
+  },
+  {
+    "input": {
+      "query": "show me more expensive options",
+      "city": "NYC",
+      "context": {
+        "previousQuery": "sushi in Manhattan",
+        "previousKeywords": {
+          "cuisineType": "japanese",
+          "borough": "manhattan",
+          "priceLevel": 1,
+          "city": "nyc"
+        }
+      }
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "borough": "manhattan",
+      "priceLevel": 3,
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "follow_up_price",
+      "difficulty": "medium",
+      "description": "Increase price level"
+    }
+  },
+  {
+    "input": {
+      "query": "show me more",
+      "city": "NYC",
+      "context": {
+        "previousQuery": "Italian in Brooklyn",
+        "previousKeywords": {
+          "cuisineType": "italian",
+          "borough": "brooklyn",
+          "city": "nyc"
+        },
+        "previousResultIds": ["place_1", "place_2", "place_3"]
+      }
+    },
+    "expected": {
+      "cuisineType": "italian",
+      "borough": "brooklyn",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "follow_up_more",
+      "difficulty": "medium",
+      "description": "Same criteria, exclude previous results"
+    }
+  },
+  {
+    "input": {
+      "query": "any other options?",
+      "city": "Tokyo",
+      "context": {
+        "previousQuery": "ramen in Shibuya",
+        "previousKeywords": {
+          "cuisineType": "japanese",
+          "cuisineSpecialty": "ramen",
+          "neighborhood": ["shibuya"],
+          "city": "tokyo"
+        },
+        "previousResultIds": ["place_a", "place_b"]
+      }
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "cuisineSpecialty": "ramen",
+      "neighborhood": ["shibuya"],
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "follow_up_more",
+      "difficulty": "medium",
+      "description": "Natural language show more"
+    }
+  },
+  {
+    "input": {
+      "query": "what about in Manhattan?",
+      "city": "NYC",
+      "context": {
+        "previousQuery": "Italian in Brooklyn",
+        "previousKeywords": {
+          "cuisineType": "italian",
+          "borough": "brooklyn",
+          "priceLevel": 2,
+          "city": "nyc"
+        }
+      }
+    },
+    "expected": {
+      "cuisineType": "italian",
+      "borough": "manhattan",
+      "priceLevel": 2,
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "follow_up_location",
+      "difficulty": "medium",
+      "description": "Change borough, keep other criteria"
+    }
+  },
+  {
+    "input": {
+      "query": "actually, I want Japanese instead",
+      "city": "NYC",
+      "context": {
+        "previousQuery": "romantic Italian in West Village",
+        "previousKeywords": {
+          "cuisineType": "italian",
+          "neighborhood": ["west village"],
+          "occasionType": "date_night",
+          "vibeKeywords": ["romantic"],
+          "city": "nyc"
+        }
+      }
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "neighborhood": ["west village"],
+      "occasionType": "date_night",
+      "vibeKeywords": ["romantic"],
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "follow_up_cuisine",
+      "difficulty": "medium",
+      "description": "Change cuisine, keep location and vibe"
+    }
+  },
+  {
+    "input": {
+      "query": "make it Michelin-starred",
+      "city": "Tokyo",
+      "context": {
+        "previousQuery": "sushi in Ginza",
+        "previousKeywords": {
+          "cuisineType": "japanese",
+          "cuisineSpecialty": "sushi",
+          "neighborhood": ["ginza"],
+          "city": "tokyo"
+        }
+      }
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "cuisineSpecialty": "sushi",
+      "neighborhood": ["ginza"],
+      "requiresMichelin": true,
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "follow_up_add",
+      "difficulty": "medium",
+      "description": "Add Michelin filter to existing criteria"
+    }
+  },
+  {
+    "input": {
+      "query": "itlaian food",
+      "city": "NYC"
+    },
+    "expected": {
+      "cuisineType": "italian",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "edge_case_typo",
+      "difficulty": "medium",
+      "description": "Typo in cuisine name - Claude should correct"
+    }
+  },
+  {
+    "input": {
+      "query": "what's the weather today?",
+      "city": "NYC"
+    },
+    "expected": {
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "edge_case_irrelevant",
+      "difficulty": "easy",
+      "description": "Completely irrelevant - should return empty filters"
+    }
+  },
+  {
+    "input": {
+      "query": "romantic but not too fancy",
+      "city": "NYC"
+    },
+    "expected": {
+      "vibeKeywords": ["romantic", "casual"],
+      "priceLevel": 2,
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "edge_case_negation",
+      "difficulty": "hard",
+      "description": "Negation logic - not too fancy should moderate price"
+    }
+  },
+  {
+    "input": {
+      "query": "where do celebrities eat?",
+      "city": "NYC"
+    },
+    "expected": {
+      "vibeKeywords": ["upscale", "trendy"],
+      "priceLevel": 4,
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "real_user_query",
+      "difficulty": "hard",
+      "description": "Subjective query - needs Claude ranking"
+    }
+  },
+  {
+    "input": {
+      "query": "hidden gems locals love",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "vibeKeywords": ["authentic", "local_favorite"],
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "real_user_query",
+      "difficulty": "hard",
+      "description": "Subjective quality - needs Claude ranking"
+    }
+  }
+]

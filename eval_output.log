@@ -1,0 +1,768 @@
+Reading src/evals/test_query_parser.ts because it was specified directly. Rename it to end in .eval.ts or ..eval.js to include it automatically when you specify a directory.
+OpenTelemetry packages are not installed. Install them with: npm install @opentelemetry/api @opentelemetry/sdk-trace-base @opentelemetry/exporter-trace-otlp-http @opentelemetry/resources @opentelemetry/semantic-conventions
+Processing 1 evaluators...
+Experiment feature/claude-query-parser-1762654136 is running at https://www.braintrust.dev/app/Curated%20by%20Cynthia/p/curated-by-cynthia/experiments/feature%2Fclaude-query-parser-1762654136
+[Parse Query] Parsing query: "Italian in Brooklyn" (city: NYC)
+[Parse Cache] Miss: italian in brooklyn_nyc...
+[Parse Query] Parsing query: "somewhere I can take nice pictures in" (city: NYC)
+[Parse Cache] Miss: somewhere i can take nice pictures in_nyc...
+[Parse Query] Parsing query: "French restaurants" (city: Paris)
+[Parse Cache] Miss: french restaurants_paris...
+[Parse Query] Parsing query: "unagi in Tokyo" (city: Tokyo)
+[Parse Cache] Miss: unagi in tokyo_tokyo...
+[Parse Query] Parsing query: "yakitori in Shibuya" (city: Tokyo)
+[Parse Cache] Miss: yakitori in shibuya_tokyo...
+[Parse Query] Parsing query: "dim sum in Chinatown" (city: NYC)
+[Parse Cache] Miss: dim sum in chinatown_nyc...
+[Parse Query] Parsing query: "ramen near Shinjuku station" (city: Tokyo)
+[Parse Cache] Miss: ramen near shinjuku station_tokyo...
+[Parse Query] Parsing query: "pizza in West Village" (city: NYC)
+[Parse Cache] Miss: pizza in west village_nyc...
+[Parse Query] Parsing query: "romantic Italian in West Village" (city: NYC)
+[Parse Cache] Miss: romantic italian in west village_nyc...
+[Parse Query] Parsing query: "affordable sushi for date night" (city: NYC)
+[Parse Cache] Miss: affordable sushi for date night_nyc...
+[Parse Query] Parsing query: "upscale French for business lunch in Midtown" (city: NYC)
+[Parse Cache] Miss: upscale french for business lunch in midtown_nyc...
+[Parse Query] Parsing query: "good vibes" (city: NYC)
+[Parse Cache] Miss: good vibes_nyc...
+[Parse Query] Parsing query: "something nice" (city: NYC)
+[Parse Cache] Miss: something nice_nyc...
+[Parse Query] Parsing query: "where should I eat?" (city: NYC)
+[Parse Cache] Miss: where should i eat?_nyc...
+[Parse Query] Parsing query: "cheap eats in Brooklyn" (city: NYC)
+[Parse Cache] Miss: cheap eats in brooklyn_nyc...
+[Parse Query] Parsing query: "expensive Japanese" (city: Tokyo)
+[Parse Cache] Miss: expensive japanese_tokyo...
+[Parse Query] Parsing query: "Cynthia's favorites" (city: NYC)
+[Parse Cache] Miss: cynthia's favorites_nyc...
+[Parse Query] Parsing query: "Michelin star restaurants" (city: Tokyo)
+[Parse Cache] Miss: michelin star restaurants_tokyo...
+[Parse Query] Parsing query: "are there cheaper ones?" (city: NYC) (with context)
+[Parse Cache] Miss: are there cheaper ones?_nyc_ctx_24681406...
+[Parse Query] Parsing query: "show me more expensive options" (city: NYC) (with context)
+[Parse Cache] Miss: show me more expensive options_nyc_ctx_1d708478...
+[Parse Query] Parsing query: "show me more" (city: NYC) (with context)
+[Parse Cache] Miss: show me more_nyc_ctx_32198bbd...
+[Parse Query] Parsing query: "any other options?" (city: Tokyo) (with context)
+[Parse Cache] Miss: any other options?_tokyo_ctx_9f645c...
+[Parse Query] Parsing query: "what about in Manhattan?" (city: NYC) (with context)
+[Parse Cache] Miss: what about in manhattan?_nyc_ctx_41c7d52c...
+[Parse Query] Parsing query: "actually, I want Japanese instead" (city: NYC) (with context)
+[Parse Cache] Miss: actually, i want japanese instead_nyc_ctx_47951b8b...
+[Parse Query] Parsing query: "make it Michelin-starred" (city: Tokyo) (with context)
+[Parse Cache] Miss: make it michelin-starred_tokyo_ctx_476cf10b...
+[Parse Query] Parsing query: "itlaian food" (city: NYC)
+[Parse Cache] Miss: itlaian food_nyc...
+[Parse Query] Parsing query: "what's the weather today?" (city: NYC)
+[Parse Cache] Miss: what's the weather today?_nyc...
+[Parse Query] Parsing query: "romantic but not too fancy" (city: NYC)
+[Parse Cache] Miss: romantic but not too fancy_nyc...
+[Parse Query] Parsing query: "where do celebrities eat?" (city: NYC)
+[Parse Cache] Miss: where do celebrities eat?_nyc...
+[Parse Query] Parsing query: "hidden gems locals love" (city: Tokyo)
+[Parse Cache] Miss: hidden gems locals love_tokyo...
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1x6SPNxuXE3X8yF4r"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [],
+  occasionType: null,
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: false,
+  requiresCynthiasPick: false,
+  borough: 'manhattan',
+  neighborhood: 'what about manhattan?'
+}
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1wq4mmV54C8EWo2Yf"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [ 'cozy', 'lively', 'trendy', 'casual', 'hip' ],
+  occasionType: null,
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: false,
+  requiresCynthiasPick: false,
+  neighborhood: 'vibes'
+}
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1x7vkvPeFqGQf9BHv"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [],
+  occasionType: null,
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: false,
+  requiresCynthiasPick: false,
+  neighborhood: 'actually, i want instead',
+  cuisineType: 'japanese'
+}
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1x4x4iJC8bzkB3f4z"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [],
+  occasionType: null,
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: true,
+  requiresCynthiasPick: false,
+  neighborhood: 'make it michelin-starred'
+}
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1x7BJ2jakjqFETZmk"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [],
+  occasionType: null,
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: false,
+  requiresCynthiasPick: false,
+  neighborhood: 'hidden gems locals love'
+}
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1x7vfP9xnUypoJpee"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [ 'romantic', 'intimate', 'cozy' ],
+  occasionType: null,
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: false,
+  requiresCynthiasPick: false,
+  neighborhood: 'romantic but not too',
+  priceLevel: 'upscale'
+}
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1x5SoCne4Ga15cK4V"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [],
+  occasionType: null,
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: false,
+  requiresCynthiasPick: false,
+  neighborhood: 'itlaian'
+}
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1x3DJkcgaPT2YitzU"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [],
+  occasionType: null,
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: false,
+  requiresCynthiasPick: false,
+  neighborhood: 'more'
+}
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1x9uR3EcxM2bbp2Yq"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [ 'upscale', 'sophisticated', 'elegant' ],
+  occasionType: 'business_lunch',
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: false,
+  requiresCynthiasPick: false,
+  neighborhood: 'business midtown',
+  mealType: 'lunch',
+  cuisineType: 'french',
+  priceLevel: 'upscale'
+}
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1whNZstXiyaSpTHFQ"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [ 'romantic', 'intimate', 'cozy' ],
+  occasionType: null,
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: false,
+  requiresCynthiasPick: false,
+  neighborhood: 'romantic west village',
+  cuisineType: 'italian'
+}
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1x6BzhJMZNtSZrYKB"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [],
+  occasionType: null,
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: false,
+  requiresCynthiasPick: false,
+  neighborhood: "what's weather today?"
+}
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1x8RW7Rqe1p3HiWAN"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [],
+  occasionType: null,
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: false,
+  requiresCynthiasPick: false,
+  neighborhood: 'where do celebrities eat?'
+}
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1x4xAADdJrpagACEi"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [],
+  occasionType: null,
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: false,
+  requiresCynthiasPick: false,
+  neighborhood: 'are there cheaper ones?',
+  priceLevel: 'budget'
+}
+[Parse Query] Claude API error: 429 {"type":"error","error":{"type":"rate_limit_error","message":"Number of concurrent connections has exceeded your rate limit. Please try again later or contact sales at https://www.anthropic.com/contact-sales to discuss your options for a rate limit increase."},"request_id":"req_011CUwW1wp4vtknJRteR2FK3"}
+[Parse Query] Error calling Claude API, falling back to deterministic extraction: Error: Claude API error: 429 Too Many Requests
+    at parseQueryWithClaude (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:96839:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.task (eval at <anonymous> (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12870:5), <anonymous>:97455:22)
+    at async rootSpan.traced.name (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12210:26)
+    at async callback (/Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12188:11)
+    at async /Users/cynthiaprofx/Desktop/GitHub/node_modules/braintrust/dist/cli.js:12359:16
+Extracted keywords: {
+  vibeKeywords: [],
+  occasionType: null,
+  noisePreference: null,
+  requiresInstagrammable: false,
+  requiresMichelin: false,
+  requiresCynthiasPick: false,
+  neighborhood: 'near shinjuku station',
+  cuisineType: 'ramen'
+}
+[Parse Query] Raw Claude response: {
+  "neighborhood": null,
+  "borough": "brooklyn",
+  "city": "nyc",
+  "cuisineType": null,
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "priceLevel": "budget",
+  "needsTakeout": false,
+  "needsCo...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "borough": "brooklyn",
+  "city": "nyc",
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "priceLevel": "budget",
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: cheap eats in brooklyn_nyc... (cache size: 1)
+[Parse Query] Raw Claude response: {
+  "neighborhood": null,
+  "borough": null,
+  "city": null,
+  "cuisineType": "japanese",
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "priceLevel": "upscale",
+  "needsTakeout": false,
+  "needsCo...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "cuisineType": "japanese",
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "priceLevel": "upscale",
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: expensive japanese_tokyo... (cache size: 2)
+[Parse Query] Raw Claude response: {
+  "neighborhood": null,
+  "borough": null,
+  "city": null,
+  "cuisineType": "japanese",
+  "cuisineSpecialty": "sushi",
+  "mealType": null,
+  "priceLevel": "budget",
+  "needsTakeout": false,
+  "needs...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": "date_night",
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "cuisineType": "japanese",
+  "cuisineSpecialty": "sushi",
+  "mealType": null,
+  "priceLevel": "budget",
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: affordable sushi for date night_nyc... (cache size: 3)
+[Parse Query] Raw Claude response: {
+  "neighborhood": null,
+  "borough": null,
+  "city": null,
+  "cuisineType": null,
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "priceLevel": null,
+  "needsTakeout": false,
+  "needsCoffee": fals...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": true,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: cynthia's favorites_nyc... (cache size: 4)
+[Parse Query] Raw Claude response: {
+  "neighborhood": null,
+  "borough": null,
+  "city": null,
+  "cuisineType": null,
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "priceLevel": null,
+  "needsTakeout": false,
+  "needsCoffee": fals...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: where should i eat?_nyc... (cache size: 5)
+[Parse Query] Raw Claude response: {
+  "neighborhood": null,
+  "borough": null,
+  "city": null,
+  "cuisineType": null,
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "priceLevel": "upscale",
+  "needsTakeout": false,
+  "needsCoffee":...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [
+    "nice"
+  ],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "priceLevel": "upscale",
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: something nice_nyc... (cache size: 6)
+[Parse Query] Raw Claude response: {
+  "neighborhood": null,
+  "borough": null,
+  "city": null,
+  "cuisineType": "french",
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "priceLevel": null,
+  "needsTakeout": false,
+  "needsCoffee": ...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "cuisineType": "french",
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: french restaurants_paris... (cache size: 7)
+[Parse Query] Raw Claude response: {
+  "neighborhood": null,
+  "borough": null,
+  "city": null,
+  "cuisineType": null,
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "priceLevel": null,
+  "needsTakeout": false,
+  "needsCoffee": fals...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": true,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: michelin star restaurants_tokyo... (cache size: 8)
+[Parse Query] Raw Claude response: {
+  "neighborhood": null,
+  "borough": "brooklyn",
+  "city": "nyc",
+  "cuisineType": "italian",
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "priceLevel": null,
+  "needsTakeout": false,
+  "needsC...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "borough": "brooklyn",
+  "city": "nyc",
+  "cuisineType": "italian",
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: italian in brooklyn_nyc... (cache size: 9)
+[Parse Query] Raw Claude response: {
+  "neighborhood": ["shibuya"],
+  "borough": null,
+  "city": "tokyo",
+  "cuisineType": "japanese",
+  "cuisineSpecialty": "ramen",
+  "mealType": null,
+  "priceLevel": null,
+  "needsTakeout": false,
+  ...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "neighborhood": [
+    "shibuya"
+  ],
+  "city": "tokyo",
+  "cuisineType": "japanese",
+  "cuisineSpecialty": "ramen",
+  "mealType": null,
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: any other options?_tokyo_ctx_9f645c... (cache size: 10)
+[Parse Query] Raw Claude response: {
+  "neighborhood": null,
+  "borough": "manhattan",
+  "city": "nyc",
+  "cuisineType": "japanese",
+  "cuisineSpecialty": "sushi",
+  "mealType": null,
+  "priceLevel": "upscale",
+  "needsTakeout": false,...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "borough": "manhattan",
+  "city": "nyc",
+  "cuisineType": "japanese",
+  "cuisineSpecialty": "sushi",
+  "mealType": null,
+  "priceLevel": "upscale",
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: show me more expensive options_nyc_ctx_1d708478... (cache size: 11)
+[Parse Query] Raw Claude response: {
+  "neighborhood": "shibuya",
+  "borough": null,
+  "city": "tokyo",
+  "cuisineType": "japanese",
+  "cuisineSpecialty": "yakitori",
+  "mealType": null,
+  "priceLevel": null,
+  "needsTakeout": false,
+ ...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "neighborhood": "shibuya",
+  "city": "tokyo",
+  "cuisineType": "japanese",
+  "cuisineSpecialty": "yakitori",
+  "mealType": null,
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: yakitori in shibuya_tokyo... (cache size: 12)
+[Parse Query] Raw Claude response: {
+  "neighborhood": null,
+  "borough": null,
+  "city": "tokyo",
+  "cuisineType": "japanese",
+  "cuisineSpecialty": "unagi",
+  "mealType": null,
+  "priceLevel": null,
+  "needsTakeout": false,
+  "needsC...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "city": "tokyo",
+  "cuisineType": "japanese",
+  "cuisineSpecialty": "unagi",
+  "mealType": null,
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: unagi in tokyo_tokyo... (cache size: 13)
+[Parse Query] Raw Claude response: {
+  "neighborhood": "west village",
+  "borough": "manhattan",
+  "city": "nyc",
+  "cuisineType": "italian",
+  "cuisineSpecialty": "pizza",
+  "mealType": null,
+  "priceLevel": null,
+  "needsTakeout": fa...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "neighborhood": "west village",
+  "borough": "manhattan",
+  "city": "nyc",
+  "cuisineType": "italian",
+  "cuisineSpecialty": "pizza",
+  "mealType": null,
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: pizza in west village_nyc... (cache size: 14)
+[Parse Query] Raw Claude response: {
+  "neighborhood": null,
+  "borough": null,
+  "city": null,
+  "cuisineType": null,
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "priceLevel": null,
+  "needsTakeout": false,
+  "needsCoffee": fals...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": true,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "cuisineSpecialty": null,
+  "mealType": null,
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: somewhere i can take nice pictures in_nyc... (cache size: 15)
+[Parse Query] Raw Claude response: {
+  "neighborhood": "chinatown",
+  "borough": null,
+  "city": null,
+  "cuisineType": "chinese",
+  "cuisineSpecialty": "dim sum",
+  "mealType": null,
+  "priceLevel": null,
+  "needsTakeout": false,
+  "n...
+[Parse Query] Parsed keywords: {
+  "vibeKeywords": [],
+  "occasionType": null,
+  "noisePreference": null,
+  "requiresInstagrammable": false,
+  "requiresMichelin": false,
+  "requiresCynthiasPick": false,
+  "requiresCoffeeFocus": false,
+  "requiresDessertFocus": false,
+  "neighborhood": "chinatown",
+  "cuisineType": "chinese",
+  "cuisineSpecialty": "dim sum",
+  "mealType": null,
+  "needsTakeout": false,
+  "needsCoffee": false
+}
+[Parse Cache] Stored: dim sum in chinatown_nyc... (cache size: 16)
+ ████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░ | Query Parser - NEW Architecture (Clau... |  30% | 30/100 datapoints
+
+
+=========================SUMMARY=========================
+feature/claude-query-parser-1762654136 compared to feature/claude-query-parser-1762649161:
+34.54% (-3.83%) 'field_accuracy'           score	(1 improvements, 3 regressions)
+0.00% (0.00%) 'no_hallucination'         score	(0 improvements, 0 regressions)
+23.56% (-2.73%) 'overall_quality'          score	(1 improvements, 3 regressions)
+100.00% (0.00%) 'instagrammable_detection' score	(0 improvements, 0 regressions)
+28.57% (0.00%) 'context_preservation'     score	(1 improvements, 1 regressions)
+0.00% (0.00%) 'price_level_accuracy'     score	(0 improvements, 0 regressions)
+
+0 'llm_calls'                   	(0 improvements, 0 regressions)
+0 'tool_calls'                  	(0 improvements, 0 regressions)
+0 'errors'                      	(0 improvements, 0 regressions)
+0 'llm_errors'                  	(0 improvements, 0 regressions)
+0 'tool_errors'                 	(0 improvements, 0 regressions)
+0tok 'prompt_tokens'               	(0 improvements, 0 regressions)
+0tok 'prompt_cached_tokens'        	(0 improvements, 0 regressions)
+0tok 'prompt_cache_creation_tokens'	(0 improvements, 0 regressions)
+0tok 'completion_tokens'           	(0 improvements, 0 regressions)
+0tok 'total_tokens'                	(0 improvements, 0 regressions)
+2.40s 'duration'                    	(4 improvements, 26 regressions)
+
+See results for feature/claude-query-parser-1762654136 at https://www.braintrust.dev/app/Curated%20by%20Cynthia/p/curated-by-cynthia/experiments/feature%2Fclaude-query-parser-1762654136
