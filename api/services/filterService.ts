@@ -1197,24 +1197,59 @@ export function preFilterRestaurants(query: string, keywords?: ExtractedKeywords
     const extractedKeywords = keywords || extractKeywords(query);
     
     // Filter restaurants step by step
+    let italianCount = 0;
+    let italianInBrooklynCount = 0;
     let filteredRestaurants = restaurants.filter(restaurant => {
       try {
-        return matchesLocation(restaurant, extractedKeywords) &&
-               matchesCuisine(restaurant, extractedKeywords) &&
-               matchesMealType(restaurant, extractedKeywords) &&
-               matchesPrice(restaurant, extractedKeywords) &&
-               matchesAmenities(restaurant, extractedKeywords) &&
-               matchesVibe(restaurant, extractedKeywords) &&           // NEW: Vibe filtering
-               matchesOccasion(restaurant, extractedKeywords) &&       // NEW: Occasion filtering
-               matchesNoiseLevel(restaurant, extractedKeywords) &&     // NEW: Noise filtering
-               matchesInstagrammable(restaurant, extractedKeywords) && // NEW: Instagrammable filtering
-               matchesMichelin(restaurant, extractedKeywords) &&       // NEW: Michelin filtering
-               matchesCynthiasPick(restaurant, extractedKeywords);     // NEW: Cynthia's pick filtering
+        const locationMatch = matchesLocation(restaurant, extractedKeywords);
+        const cuisineMatch = matchesCuisine(restaurant, extractedKeywords);
+        const mealTypeMatch = matchesMealType(restaurant, extractedKeywords);
+        const priceMatch = matchesPrice(restaurant, extractedKeywords);
+        const amenitiesMatch = matchesAmenities(restaurant, extractedKeywords);
+        const vibeMatch = matchesVibe(restaurant, extractedKeywords);
+        const occasionMatch = matchesOccasion(restaurant, extractedKeywords);
+        const noiseMatch = matchesNoiseLevel(restaurant, extractedKeywords);
+        const instagramMatch = matchesInstagrammable(restaurant, extractedKeywords);
+        const michelinMatch = matchesMichelin(restaurant, extractedKeywords);
+        const cynthiaMatch = matchesCynthiasPick(restaurant, extractedKeywords);
+        
+        // Count Italian restaurants
+        if (extractedKeywords.cuisineType === 'italian') {
+          const primaryType = restaurant.google_data.primaryType?.toLowerCase() || '';
+          const specificType = restaurant.specific_type?.toLowerCase() || '';
+          const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
+          const isItalian = primaryType.includes('italian') || specificType.includes('italian') || types.some(t => t.includes('italian'));
+          
+          if (isItalian) {
+            italianCount++;
+            const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
+            if (address.includes('brooklyn')) {
+              italianInBrooklynCount++;
+              if (italianInBrooklynCount <= 3) {
+                console.log(`[FilterService] 🍝 Found Italian in Brooklyn: "${restaurant.google_data.displayName?.text}"`, {
+                  location: locationMatch,
+                  cuisine: cuisineMatch,
+                  address: restaurant.original_place?.properties?.location?.address?.substring(0, 80),
+                  primaryType,
+                  specificType
+                });
+              }
+            }
+          }
+        }
+        
+        return locationMatch && cuisineMatch && mealTypeMatch && priceMatch &&
+               amenitiesMatch && vibeMatch && occasionMatch && noiseMatch &&
+               instagramMatch && michelinMatch && cynthiaMatch;
       } catch (error) {
         console.warn('Error filtering restaurant:', error);
         return false;
       }
     });
+    
+    if (extractedKeywords.cuisineType === 'italian') {
+      console.log(`[FilterService] Summary: Found ${italianCount} Italian restaurants total, ${italianInBrooklynCount} in Brooklyn`);
+    }
 
     console.log(`Filtered from ${restaurants.length} to ${filteredRestaurants.length} restaurants`);
 
