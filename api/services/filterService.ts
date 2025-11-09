@@ -633,19 +633,13 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
   if (keywords.borough) {
     const boroughKeyword = keywords.borough.toLowerCase();
     const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
-    const restaurantCity = restaurant.city?.toLowerCase() || '';
     
     if (boroughKeyword === 'brooklyn') {
-      // Brooklyn query: check if address contains "brooklyn" OR city is Brooklyn
-      // Also check if restaurant.city indicates Brooklyn
-      hasBoroughMatch = address.includes('brooklyn') || 
-                       restaurantCity.includes('brooklyn') ||
-                       (restaurant.neighborhood_extracted?.toLowerCase() || '').includes('brooklyn');
+      // Brooklyn query: only return if address contains "brooklyn"
+      hasBoroughMatch = address.includes('brooklyn');
     } else if (boroughKeyword === 'manhattan') {
       // Manhattan query: return if address does NOT contain "brooklyn" (meaning it's Manhattan)
-      // Also check if it's in NYC but not Brooklyn
-      hasBoroughMatch = !address.includes('brooklyn') && 
-                       (restaurantCity.includes('new york') || restaurantCity.includes('nyc') || address.includes('new york'));
+      hasBoroughMatch = !address.includes('brooklyn');
     } else {
       hasBoroughMatch = false;
     }
@@ -1213,6 +1207,7 @@ export function preFilterRestaurants(query: string, keywords?: ExtractedKeywords
     console.log('[FilterService] Extracted keywords:', JSON.stringify(extractedKeywords, null, 2));
     
     // Filter restaurants step by step
+    let debugFailureCount = 0;
     let filteredRestaurants = restaurants.filter(restaurant => {
       try {
         const locationMatch = matchesLocation(restaurant, extractedKeywords);
@@ -1231,8 +1226,8 @@ export function preFilterRestaurants(query: string, keywords?: ExtractedKeywords
                         amenitiesMatch && vibeMatch && occasionMatch && noiseMatch &&
                         instagramMatch && michelinMatch && cynthiaMatch;
         
-        // Debug: Log first few failures for diagnosis
-        if (!allMatch && filteredRestaurants.length < 3) {
+        // Debug: Log first 5 failures for diagnosis
+        if (!allMatch && debugFailureCount < 5) {
           const restaurantName = restaurant.google_data.displayName?.text || 'Unknown';
           console.log(`[FilterService] Restaurant "${restaurantName}" failed filters:`, {
             location: locationMatch,
@@ -1247,6 +1242,7 @@ export function preFilterRestaurants(query: string, keywords?: ExtractedKeywords
             michelin: michelinMatch,
             cynthia: cynthiaMatch
           });
+          debugFailureCount++;
         }
         
         return allMatch;
