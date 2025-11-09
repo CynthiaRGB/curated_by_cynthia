@@ -77,10 +77,6 @@ Click the link to see detailed results in the dashboard!
 6. **instagrammable_detection** (0 or 1, relevant queries only)
    - Did it detect "nice pictures" → requiresInstagrammable: true?
 
-7. **overall_quality** (0-1)
-   - Weighted combination of all metrics
-   - Best indicator of overall performance
-
 ---
 
 ## 📈 Expected Results
@@ -95,7 +91,6 @@ Overall Scores:
 ✅ specialty_extracted: 0.90-1.0
 ✅ price_level_accuracy: 0.85-0.95
 ✅ instagrammable_detection: 0.80-1.0
-✅ overall_quality: 0.86-0.93
 ```
 
 ### OLD Architecture (Deterministic)
@@ -108,7 +103,6 @@ Overall Scores:
 ❌ specialty_extracted: 0.0-0.2 (doesn't extract separately)
 ⚠️ price_level_accuracy: 0.70-0.85
 ❌ instagrammable_detection: 0.20-0.40 (limited keyword matching)
-⚠️ overall_quality: 0.45-0.60
 ```
 
 ---
@@ -300,7 +294,6 @@ Your NEW architecture is ready to ship when:
 - ✅ field_accuracy > 0.85
 - ✅ context_preservation > 0.85 (for follow-ups)
 - ✅ specialty_extracted > 0.85 (for dish queries)
-- ✅ overall_quality > 0.85
 - ✅ All "high_priority" test cases pass
 
 Good luck! 🚀

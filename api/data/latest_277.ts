@@ -85259,7 +85259,6 @@ export const restaurantData = [
     ],
     "accolades_tags": []
   },
-
   {
     "original_place": {
       "geometry": {

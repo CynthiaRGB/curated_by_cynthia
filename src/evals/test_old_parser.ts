@@ -185,60 +185,6 @@ Eval("Query Parser - OLD Architecture (Deterministic Extraction)", {
         // Check if it detected instagrammable
         return output.requiresInstagrammable === true ? 1 : 0;
       }
-    },
-    
-    // ========================================
-    // SCORER 7: Overall Quality Score
-    // ========================================
-    {
-      name: "overall_quality",
-      scorer: (output, expected, input) => {
-        // Handle errors
-        if (output.error) {
-          return 0;
-        }
-        
-        // Weighted combination
-        let score = 0;
-        let weight = 0;
-        
-        // Field accuracy (weight: 0.4)
-        let correctFields = 0;
-        let totalFields = 0;
-        for (const key in expected) {
-          totalFields++;
-          if (JSON.stringify(output[key]) === JSON.stringify(expected[key])) {
-            correctFields++;
-          }
-        }
-        const fieldAccuracy = totalFields > 0 ? correctFields / totalFields : 1;
-        score += fieldAccuracy * 0.4;
-        weight += 0.4;
-        
-        // No extra fields (weight: 0.2)
-        let extraFields = 0;
-        for (const key in output) {
-          const val = output[key];
-          if (val !== null && val !== undefined && 
-              !(Array.isArray(val) && val.length === 0) &&
-              val !== "" &&
-              expected[key] === undefined) {
-            extraFields++;
-          }
-        }
-        const noExtraScore = extraFields === 0 ? 1 : 0;
-        score += noExtraScore * 0.2;
-        weight += 0.2;
-        
-        // Context preservation (weight: 0.4)
-        // OLD architecture always fails on follow-ups
-        if (input.context) {
-          score += 0 * 0.4; // Always 0 for OLD architecture
-          weight += 0.4;
-        }
-        
-        return weight > 0 ? score / weight : score;
-      }
     }
   ]
 });

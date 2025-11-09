@@ -98,6 +98,26 @@ DO NOT include markdown formatting. DO NOT include backticks. Return ONLY the ra
 }
 
 /**
+ * Normalize city name to filterService format
+ * Converts "New York City" -> "nyc", etc.
+ */
+function normalizeCityForFilter(city: string | undefined): string | undefined {
+  if (!city) return undefined;
+  const lowerCity = city.toLowerCase();
+  
+  // Map to filterService expected format
+  if (lowerCity === 'new york city' || lowerCity === 'new york' || lowerCity === 'nyc') {
+    return 'nyc';
+  }
+  if (lowerCity === 'tokyo') return 'tokyo';
+  if (lowerCity === 'seoul') return 'seoul';
+  if (lowerCity === 'paris') return 'paris';
+  
+  // If already in correct format, return as-is
+  return lowerCity;
+}
+
+/**
  * Parse user query into structured ExtractedKeywords using Claude API
  * Supports follow-up questions with context merging
  * 
@@ -192,7 +212,8 @@ export async function parseQueryWithClaude(
       borough: parsedKeywords.borough || undefined,
       // Always include city from input parameter (city pill is always selected in UI)
       // Claude may extract city from query, but we always use the input city as the source of truth
-      city: city ? city.toLowerCase() : (parsedKeywords.city || undefined),
+      // Normalize city to filterService format (e.g., "New York City" -> "nyc")
+      city: city ? normalizeCityForFilter(city) : normalizeCityForFilter(parsedKeywords.city),
       cuisineType: parsedKeywords.cuisineType || undefined,
       cuisineSpecialty: parsedKeywords.cuisineSpecialty || null,
       mealType: parsedKeywords.mealType || null,
@@ -212,8 +233,9 @@ export async function parseQueryWithClaude(
     try {
       const fallbackKeywords = extractKeywords(query);
       // Always include city from input parameter (city pill is always selected in UI)
+      // Normalize city to filterService format (e.g., "New York City" -> "nyc")
       if (city) {
-        fallbackKeywords.city = city.toLowerCase();
+        fallbackKeywords.city = normalizeCityForFilter(city);
       }
       return fallbackKeywords;
     } catch (fallbackError) {
