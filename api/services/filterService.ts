@@ -1005,12 +1005,6 @@ function matchesMealType(restaurant: Restaurant, keywords: ExtractedKeywords): b
   const mealType = keywords.mealType.toLowerCase();
   
   if (mealType === 'brunch') {
-    // Hardcoded exclusion: "The Dead Rabbit" should never show up as brunch result
-    const restaurantName = restaurant.google_data.displayName?.text || '';
-    if (restaurantName.toLowerCase().includes('dead rabbit')) {
-      return false;
-    }
-    
     // Basic check: restaurant must serve brunch
     if (!restaurant.google_data.servesBrunch) {
       return false;
@@ -1037,13 +1031,12 @@ function matchesMealType(restaurant: Restaurant, keywords: ExtractedKeywords): b
       (hours: any) => hours.secondaryHoursType === 'BRUNCH'
     );
     
-    // Reuse restaurantName from earlier (already defined above)
-    const restaurantNameLower = restaurantName.toLowerCase();
+    const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
     const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
     const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
     const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
     
-    const mentionsBrunch = restaurantNameLower.includes('brunch') ||
+    const mentionsBrunch = restaurantName.includes('brunch') ||
                           summary.includes('brunch') ||
                           reviewSummary.includes('brunch') ||
                           editorialSummary.includes('brunch');
@@ -1203,72 +1196,20 @@ export function preFilterRestaurants(query: string, keywords?: ExtractedKeywords
     // Use provided keywords or extract from query
     const extractedKeywords = keywords || extractKeywords(query);
     
-    // Debug: Log the extracted keywords and whether we used provided keywords or extracted
-    if (keywords) {
-      console.log('[FilterService] Using PROVIDED keywords from Claude:', JSON.stringify(extractedKeywords, null, 2));
-    } else {
-      console.log('[FilterService] No keywords provided, EXTRACTING from query:', JSON.stringify(extractedKeywords, null, 2));
-    }
-    
     // Filter restaurants step by step
-    let debugFailureCount = 0;
-    let debugCuisineCount = 0;
-    let filteredRestaurants = restaurants.filter((restaurant, index) => {
+    let filteredRestaurants = restaurants.filter(restaurant => {
       try {
-        const locationMatch = matchesLocation(restaurant, extractedKeywords);
-        const cuisineMatch = matchesCuisine(restaurant, extractedKeywords);
-        const mealTypeMatch = matchesMealType(restaurant, extractedKeywords);
-        const priceMatch = matchesPrice(restaurant, extractedKeywords);
-        const amenitiesMatch = matchesAmenities(restaurant, extractedKeywords);
-        const vibeMatch = matchesVibe(restaurant, extractedKeywords);
-        const occasionMatch = matchesOccasion(restaurant, extractedKeywords);
-        const noiseMatch = matchesNoiseLevel(restaurant, extractedKeywords);
-        const instagramMatch = matchesInstagrammable(restaurant, extractedKeywords);
-        const michelinMatch = matchesMichelin(restaurant, extractedKeywords);
-        const cynthiaMatch = matchesCynthiasPick(restaurant, extractedKeywords);
-        
-        const allMatch = locationMatch && cuisineMatch && mealTypeMatch && priceMatch &&
-                        amenitiesMatch && vibeMatch && occasionMatch && noiseMatch &&
-                        instagramMatch && michelinMatch && cynthiaMatch;
-        
-        // Debug: Log first 5 failures for diagnosis
-        if (!allMatch && debugFailureCount < 5) {
-          const restaurantName = restaurant.google_data.displayName?.text || 'Unknown';
-          console.log(`[FilterService] Restaurant "${restaurantName}" failed filters:`, {
-            location: locationMatch,
-            cuisine: cuisineMatch,
-            mealType: mealTypeMatch,
-            price: priceMatch,
-            amenities: amenitiesMatch,
-            vibe: vibeMatch,
-            occasion: occasionMatch,
-            noise: noiseMatch,
-            instagram: instagramMatch,
-            michelin: michelinMatch,
-            cynthia: cynthiaMatch
-          });
-          debugFailureCount++;
-        }
-        
-        // Debug: Log cuisine matching details for first 3 restaurants when cuisineType is italian
-        if (extractedKeywords.cuisineType === 'italian' && !cuisineMatch && debugCuisineCount < 3) {
-          const restaurantName = restaurant.google_data.displayName?.text || 'Unknown';
-          const primaryType = restaurant.google_data.primaryType?.toLowerCase() || '';
-          const specificType = restaurant.specific_type?.toLowerCase() || '';
-          const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
-          console.log(`[FilterService] Cuisine match failed for "${restaurantName}":`, {
-            cuisineType: extractedKeywords.cuisineType,
-            primaryType,
-            specificType,
-            types: types.slice(0, 5),
-            primaryTypeIncludes: primaryType.includes('italian'),
-            specificTypeIncludes: specificType.includes('italian'),
-            typesIncludes: types.some(t => t.includes('italian'))
-          });
-          debugCuisineCount++;
-        }
-        
-        return allMatch;
+        return matchesLocation(restaurant, extractedKeywords) &&
+               matchesCuisine(restaurant, extractedKeywords) &&
+               matchesMealType(restaurant, extractedKeywords) &&
+               matchesPrice(restaurant, extractedKeywords) &&
+               matchesAmenities(restaurant, extractedKeywords) &&
+               matchesVibe(restaurant, extractedKeywords) &&           // NEW: Vibe filtering
+               matchesOccasion(restaurant, extractedKeywords) &&       // NEW: Occasion filtering
+               matchesNoiseLevel(restaurant, extractedKeywords) &&     // NEW: Noise filtering
+               matchesInstagrammable(restaurant, extractedKeywords) && // NEW: Instagrammable filtering
+               matchesMichelin(restaurant, extractedKeywords) &&       // NEW: Michelin filtering
+               matchesCynthiasPick(restaurant, extractedKeywords);     // NEW: Cynthia's pick filtering
       } catch (error) {
         console.warn('Error filtering restaurant:', error);
         return false;
