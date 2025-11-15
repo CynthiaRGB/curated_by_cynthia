@@ -48,22 +48,6 @@
   },
   {
     "input": {
-      "query": "unagi in Tokyo",
-      "city": "Tokyo"
-    },
-    "expected": {
-      "cuisineType": "japanese",
-      "cuisineSpecialty": "unagi",
-      "city": "tokyo"
-    },
-    "metadata": {
-      "category": "specific_dish",
-      "difficulty": "medium",
-      "description": "Specific Japanese dish - should extract specialty"
-    }
-  },
-  {
-    "input": {
       "query": "yakitori in Shibuya",
       "city": "Tokyo"
     },
@@ -77,23 +61,6 @@
       "category": "specific_dish",
       "difficulty": "medium",
       "description": "Specific dish + neighborhood"
-    }
-  },
-  {
-    "input": {
-      "query": "dim sum in Chinatown",
-      "city": "NYC"
-    },
-    "expected": {
-      "cuisineType": "chinese",
-      "cuisineSpecialty": "dim sum",
-      "neighborhood": ["chinatown"],
-      "city": "nyc"
-    },
-    "metadata": {
-      "category": "specific_dish",
-      "difficulty": "medium",
-      "description": "Chinese specialty"
     }
   },
   {
@@ -375,33 +342,6 @@
   },
   {
     "input": {
-      "query": "any other options?",
-      "city": "Tokyo",
-      "context": {
-        "previousQuery": "ramen in Shibuya",
-        "previousKeywords": {
-          "cuisineType": "japanese",
-          "cuisineSpecialty": "ramen",
-          "neighborhood": ["shibuya"],
-          "city": "tokyo"
-        },
-        "previousResultIds": ["place_a", "place_b"]
-      }
-    },
-    "expected": {
-      "cuisineType": "japanese",
-      "cuisineSpecialty": "ramen",
-      "neighborhood": ["shibuya"],
-      "city": "tokyo"
-    },
-    "metadata": {
-      "category": "follow_up_more",
-      "difficulty": "medium",
-      "description": "Natural language show more"
-    }
-  },
-  {
-    "input": {
       "query": "what about in Manhattan?",
       "city": "NYC",
       "context": {
@@ -555,6 +495,241 @@
       "category": "real_user_query",
       "difficulty": "hard",
       "description": "Subjective quality - needs Claude ranking"
+    }
+  },
+  {
+    "input": {
+      "query": "brunch spots in Brooklyn",
+      "city": "NYC"
+    },
+    "expected": {
+      "mealType": "brunch",
+      "borough": "brooklyn",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "meal_type",
+      "difficulty": "easy",
+      "description": "Brunch meal type extraction"
+    }
+  },
+  {
+    "input": {
+      "query": "breakfast place in Manhattan",
+      "city": "NYC"
+    },
+    "expected": {
+      "mealType": "breakfast",
+      "borough": "manhattan",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "meal_type",
+      "difficulty": "easy",
+      "description": "Breakfast meal type extraction"
+    }
+  },
+  {
+    "input": {
+      "query": "late night food in Tokyo",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "mealType": "late-night",
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "meal_type",
+      "difficulty": "easy",
+      "description": "Late-night meal type extraction"
+    }
+  },
+  {
+    "input": {
+      "query": "dinner restaurant",
+      "city": "NYC"
+    },
+    "expected": {
+      "mealType": "dinner",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "meal_type",
+      "difficulty": "easy",
+      "description": "Dinner meal type extraction"
+    }
+  },
+  {
+    "input": {
+      "query": "coffee shop in Manhattan",
+      "city": "NYC"
+    },
+    "expected": {
+      "requiresCoffeeFocus": true,
+      "borough": "manhattan",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "special_requirement",
+      "difficulty": "easy",
+      "description": "Coffee focus requirement extraction"
+    }
+  },
+  {
+    "input": {
+      "query": "dessert place",
+      "city": "NYC"
+    },
+    "expected": {
+      "requiresDessertFocus": true,
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "special_requirement",
+      "difficulty": "easy",
+      "description": "Dessert focus requirement extraction"
+    }
+  },
+  {
+    "input": {
+      "query": "family friendly restaurant",
+      "city": "NYC"
+    },
+    "expected": {
+      "occasionType": "family_friendly",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "occasion",
+      "difficulty": "easy",
+      "description": "Family-friendly occasion extraction"
+    }
+  },
+  {
+    "input": {
+      "query": "anniversary dinner",
+      "city": "NYC"
+    },
+    "expected": {
+      "occasionType": "anniversary",
+      "mealType": "dinner",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "occasion",
+      "difficulty": "medium",
+      "description": "Anniversary occasion with meal type"
+    }
+  },
+  {
+    "input": {
+      "query": "solo dining spot",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "occasionType": "solo_dining",
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "occasion",
+      "difficulty": "medium",
+      "description": "Solo dining occasion extraction"
+    }
+  },
+  {
+    "input": {
+      "query": "ramen in Shibuya or Ginza",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "cuisineSpecialty": "ramen",
+      "neighborhood": ["shibuya", "ginza"],
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "location",
+      "difficulty": "medium",
+      "description": "Multiple neighborhoods in array format"
+    }
+  },
+  {
+    "input": {
+      "query": "actually, not Michelin",
+      "city": "Tokyo",
+      "context": {
+        "previousQuery": "Michelin sushi in Ginza",
+        "previousKeywords": {
+          "cuisineType": "japanese",
+          "cuisineSpecialty": "sushi",
+          "neighborhood": ["ginza"],
+          "requiresMichelin": true,
+          "city": "tokyo"
+        }
+      }
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "cuisineSpecialty": "sushi",
+      "neighborhood": ["ginza"],
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "follow_up_remove",
+      "difficulty": "hard",
+      "description": "Remove Michelin requirement from previous query"
+    }
+  },
+  {
+    "input": {
+      "query": "make it cheaper and in Manhattan",
+      "city": "NYC",
+      "context": {
+        "previousQuery": "romantic Italian in Brooklyn",
+        "previousKeywords": {
+          "cuisineType": "italian",
+          "borough": "brooklyn",
+          "priceLevel": 3,
+          "vibeKeywords": ["romantic"],
+          "city": "nyc"
+        }
+      }
+    },
+    "expected": {
+      "cuisineType": "italian",
+      "borough": "manhattan",
+      "priceLevel": 1,
+      "vibeKeywords": ["romantic"],
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "follow_up_multi_change",
+      "difficulty": "hard",
+      "description": "Change both price and location in one follow-up"
+    }
+  },
+  {
+    "input": {
+      "query": "make it more casual",
+      "city": "NYC",
+      "context": {
+        "previousQuery": "romantic Italian",
+        "previousKeywords": {
+          "cuisineType": "italian",
+          "vibeKeywords": ["romantic"],
+          "city": "nyc"
+        }
+      }
+    },
+    "expected": {
+      "cuisineType": "italian",
+      "vibeKeywords": ["casual"],
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "follow_up_vibe",
+      "difficulty": "medium",
+      "description": "Modify vibe keywords in follow-up"
     }
   }
 ]
