@@ -294,9 +294,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!isPromptItem) {
       // Use Claude API to parse the query into structured keywords
       console.log('[API] Parsing query with Claude API (not a city-prompt-item)');
+      const claudeParseStartTime = Date.now();
       try {
         parsedKeywords = await parseQueryWithClaude(queryToFilter, normalizedCity, queryContext);
         usedClaudeForParsing = true;
+        const claudeParseTime = Date.now() - claudeParseStartTime;
+        console.log(`[Performance] Claude query parsing took ${claudeParseTime}ms`);
         console.log('[API] Successfully parsed query with Claude');
       } catch (parseError: any) {
         // Check if it's the "I don't quite get your question" error
@@ -358,8 +361,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log('[API] Pre-filtering restaurants with filterService');
     console.log(`[API] Using query for filtering: "${queryToFilter}" (original query: "${query}")`);
     console.log('[API] Parsed keywords being passed to filterService:', JSON.stringify(parsedKeywords, null, 2));
+    const filterStartTime = Date.now();
     let filteredRestaurants = preFilterRestaurants(queryToFilter, parsedKeywords);
-    console.log(`[API] Filter service returned ${filteredRestaurants.length} restaurants`);
+    const filterTime = Date.now() - filterStartTime;
+    console.log(`[Performance] Filter service took ${filterTime}ms and returned ${filteredRestaurants.length} restaurants`);
 
     // Step 7: Get final keywords to check if this is a Cynthia's favorites query
     const finalKeywords = parsedKeywords || extractKeywords(queryToFilter);
@@ -484,6 +489,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Log server-side API performance event
     const apiProcessingTime = Date.now() - apiStartTime;
+    console.log(`[Performance] Total API processing time: ${apiProcessingTime}ms`);
 
     // Log restaurant search event using the correct Statsig format
     try {

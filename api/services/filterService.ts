@@ -2,10 +2,84 @@
 // Pre-filters restaurants before sending to Claude API for smart ranking
 
 import { Restaurant, ExtractedKeywords } from '../../src/types/restaurant';
-import { restaurantData } from '../data/latest_277.js';
 
-// Get restaurants from the data
-const restaurants: Restaurant[] = (restaurantData as any).places || (restaurantData as any) || [];
+// Lazy loading with caching - only load data once
+let restaurantsCache: Restaurant[] | null = null;
+let restaurantsByCityCache: Map<string, Restaurant[]> | null = null;
+
+/**
+ * Lazy load restaurants data (cached after first load)
+ */
+function getRestaurants(): Restaurant[] {
+  if (restaurantsCache === null) {
+    const startTime = Date.now();
+    // Import at runtime to avoid loading on module initialization
+    // Using require for serverless compatibility
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { restaurantData } = require('../data/latest_277.js');
+    restaurantsCache = (restaurantData as any).places || (restaurantData as any) || [];
+    const loadTime = Date.now() - startTime;
+    console.log(`[Performance] Loaded ${restaurantsCache.length} restaurants in ${loadTime}ms`);
+  }
+  return restaurantsCache;
+}
+
+/**
+ * Get restaurants filtered by city (cached by city)
+ * This dramatically reduces the dataset size before other filters
+ */
+function getRestaurantsByCity(city?: string): Restaurant[] {
+  if (!city) {
+    return getRestaurants();
+  }
+
+  // Initialize city cache if needed
+  if (restaurantsByCityCache === null) {
+    restaurantsByCityCache = new Map();
+  }
+
+  // Check cache first
+  if (restaurantsByCityCache.has(city)) {
+    return restaurantsByCityCache.get(city)!;
+  }
+
+  // Filter by city and cache result
+  const allRestaurants = getRestaurants();
+  const cityMap: { [key: string]: string[] } = {
+    'nyc': ['new york city', 'new york', 'nyc'],
+    'tokyo': ['tokyo'],
+    'seoul': ['seoul'],
+    'paris': ['paris']
+  };
+
+  const expectedCities = cityMap[city.toLowerCase()] || [];
+  const filtered = allRestaurants.filter(restaurant => {
+    const restaurantCity = restaurant.city?.toLowerCase();
+    const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
+    
+    // Check restaurant.city property
+    if (restaurantCity) {
+      for (const expectedCity of expectedCities) {
+        if (restaurantCity.includes(expectedCity) || expectedCity.includes(restaurantCity)) {
+          return true;
+        }
+      }
+    }
+    
+    // Fall back to address parsing
+    return expectedCities.some(expectedCity => 
+      address.includes(expectedCity) || 
+      (city.toLowerCase() === 'nyc' && (address.includes('new york') || address.includes('brooklyn'))) ||
+      (city.toLowerCase() === 'tokyo' && address.includes('japan')) ||
+      (city.toLowerCase() === 'seoul' && address.includes('korea')) ||
+      (city.toLowerCase() === 'paris' && address.includes('france'))
+    );
+  });
+
+  restaurantsByCityCache.set(city, filtered);
+  console.log(`[Performance] Filtered ${allRestaurants.length} restaurants to ${filtered.length} for city "${city}"`);
+  return filtered;
+}
 
 // Cuisine types to match against
 const CUISINE_TYPES = [
@@ -1185,77 +1259,81 @@ export function isCityPromptItem(query: string): boolean {
  * @param keywords - Optional pre-parsed keywords. If not provided, will use extractKeywords
  */
 export function preFilterRestaurants(query: string, keywords?: ExtractedKeywords): Restaurant[] {
+  const filterStartTime = Date.now();
   try {
     console.log('Pre-filtering restaurants for query:', query);
-    
-    if (!restaurants || restaurants.length === 0) {
-      console.warn('No restaurants data available');
-      return [];
-    }
     
     // Use provided keywords or extract from query
     const extractedKeywords = keywords || extractKeywords(query);
     
-    // Filter restaurants step by step
-    let italianCount = 0;
-    let italianInBrooklynCount = 0;
-    let filteredRestaurants = restaurants.filter(restaurant => {
+    // OPTIMIZATION: Filter by city FIRST to dramatically reduce dataset size
+    // This is the most selective filter and should be applied early
+    const cityFilterStartTime = Date.now();
+    let restaurantsToFilter = getRestaurants();
+    
+    if (extractedKeywords.city) {
+      restaurantsToFilter = getRestaurantsByCity(extractedKeywords.city);
+      const cityFilterTime = Date.now() - cityFilterStartTime;
+      console.log(`[Performance] City filtering took ${cityFilterTime}ms`);
+    }
+    
+    if (restaurantsToFilter.length === 0) {
+      console.warn('No restaurants data available after city filtering');
+      return [];
+    }
+    
+    // OPTIMIZATION: Apply filters in order of selectivity
+    // Most selective filters first to reduce iterations
+    const filterStart = Date.now();
+    let filteredRestaurants = restaurantsToFilter.filter(restaurant => {
       try {
-        const locationMatch = matchesLocation(restaurant, extractedKeywords);
-        const cuisineMatch = matchesCuisine(restaurant, extractedKeywords);
-        const mealTypeMatch = matchesMealType(restaurant, extractedKeywords);
-        const priceMatch = matchesPrice(restaurant, extractedKeywords);
-        const amenitiesMatch = matchesAmenities(restaurant, extractedKeywords);
-        const vibeMatch = matchesVibe(restaurant, extractedKeywords);
-        const occasionMatch = matchesOccasion(restaurant, extractedKeywords);
-        const noiseMatch = matchesNoiseLevel(restaurant, extractedKeywords);
-        const instagramMatch = matchesInstagrammable(restaurant, extractedKeywords);
-        const michelinMatch = matchesMichelin(restaurant, extractedKeywords);
-        const cynthiaMatch = matchesCynthiasPick(restaurant, extractedKeywords);
+        // Order filters by selectivity (most selective first):
+        // 1. Location (already filtered by city, but check neighborhood/borough)
+        if (!matchesLocation(restaurant, extractedKeywords)) return false;
         
-        // Count Italian restaurants
-        if (extractedKeywords.cuisineType === 'italian') {
-          const primaryType = restaurant.google_data.primaryType?.toLowerCase() || '';
-          const specificType = restaurant.specific_type?.toLowerCase() || '';
-          const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
-          const isItalian = primaryType.includes('italian') || specificType.includes('italian') || types.some(t => t.includes('italian'));
-          
-          if (isItalian) {
-            italianCount++;
-            const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
-            if (address.includes('brooklyn')) {
-              italianInBrooklynCount++;
-              if (italianInBrooklynCount <= 3) {
-                console.log(`[FilterService] 🍝 Found Italian in Brooklyn: "${restaurant.google_data.displayName?.text}"`, {
-                  location: locationMatch,
-                  cuisine: cuisineMatch,
-                  address: restaurant.original_place?.properties?.location?.address?.substring(0, 80),
-                  primaryType,
-                  specificType
-                });
-              }
-            }
-          }
-        }
+        // 2. Cynthia's pick (very selective boolean)
+        if (!matchesCynthiasPick(restaurant, extractedKeywords)) return false;
         
-        return locationMatch && cuisineMatch && mealTypeMatch && priceMatch &&
-               amenitiesMatch && vibeMatch && occasionMatch && noiseMatch &&
-               instagramMatch && michelinMatch && cynthiaMatch;
+        // 3. Cuisine (selective, reduces dataset significantly)
+        if (!matchesCuisine(restaurant, extractedKeywords)) return false;
+        
+        // 4. Meal type (moderately selective)
+        if (!matchesMealType(restaurant, extractedKeywords)) return false;
+        
+        // 5. Price (moderately selective)
+        if (!matchesPrice(restaurant, extractedKeywords)) return false;
+        
+        // 6. Special requirements (selective booleans)
+        if (!matchesInstagrammable(restaurant, extractedKeywords)) return false;
+        if (!matchesMichelin(restaurant, extractedKeywords)) return false;
+        
+        // 7. Amenities (less selective)
+        if (!matchesAmenities(restaurant, extractedKeywords)) return false;
+        
+        // 8. Vibe/Occasion/Noise (less selective, array checks)
+        if (!matchesVibe(restaurant, extractedKeywords)) return false;
+        if (!matchesOccasion(restaurant, extractedKeywords)) return false;
+        if (!matchesNoiseLevel(restaurant, extractedKeywords)) return false;
+        
+        return true;
       } catch (error) {
         console.warn('Error filtering restaurant:', error);
         return false;
       }
     });
-    
-    if (extractedKeywords.cuisineType === 'italian') {
-      console.log(`[FilterService] Summary: Found ${italianCount} Italian restaurants total, ${italianInBrooklynCount} in Brooklyn`);
-    }
 
-    console.log(`Filtered from ${restaurants.length} to ${filteredRestaurants.length} restaurants`);
+    const filterTime = Date.now() - filterStart;
+    console.log(`[Performance] Filtering ${restaurantsToFilter.length} restaurants took ${filterTime}ms`);
+    console.log(`Filtered from ${restaurantsToFilter.length} to ${filteredRestaurants.length} restaurants`);
 
     // Sort using tiered ranking system
+    const sortStart = Date.now();
     const sortedRestaurants = sortByTieredRanking(filteredRestaurants, extractedKeywords);
+    const sortTime = Date.now() - sortStart;
+    console.log(`[Performance] Sorting ${filteredRestaurants.length} restaurants took ${sortTime}ms`);
 
+    const totalTime = Date.now() - filterStartTime;
+    console.log(`[Performance] Total preFilterRestaurants took ${totalTime}ms`);
     console.log(`Returning all ${sortedRestaurants.length} matching restaurants`);
     return sortedRestaurants;
   } catch (error) {
