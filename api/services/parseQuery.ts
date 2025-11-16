@@ -27,8 +27,19 @@ This is a follow-up question. The user wants to modify or refine their previous 
       prompt += `\n\nThe user is asking for MORE EXPENSIVE/UPSCALE options. Update priceLevel to "upscale" while keeping all other criteria from the previous search.`;
     } else if (lowerQuery.includes('more') || lowerQuery.includes('other') || lowerQuery.includes('different')) {
       prompt += `\n\nThe user wants MORE results with the SAME criteria. Return the same keywords as the previous search.`;
+    } else if (lowerQuery.includes('not') && (lowerQuery.includes('michelin') || lowerQuery.includes('instagram') || lowerQuery.includes('cynthia'))) {
+      // Detect field removal requests
+      if (lowerQuery.includes('michelin')) {
+        prompt += `\n\nThe user wants to REMOVE the Michelin requirement. Set requiresMichelin to null (or omit it from the response) to remove this filter. Keep all other criteria from the previous search.`;
+      } else if (lowerQuery.includes('instagram')) {
+        prompt += `\n\nThe user wants to REMOVE the Instagrammable requirement. Set requiresInstagrammable to null (or omit it from the response) to remove this filter. Keep all other criteria from the previous search.`;
+      } else if (lowerQuery.includes('cynthia')) {
+        prompt += `\n\nThe user wants to REMOVE Cynthia's pick requirement. Set requiresCynthiasPick to null (or omit it from the response) to remove this filter. Keep all other criteria from the previous search.`;
+      }
     } else {
-      prompt += `\n\nMerge any new criteria from the current query with the previous keywords. If the current query mentions something new (like a different price level, cuisine, or location), update that field. Otherwise, keep the previous values.`;
+      prompt += `\n\nMerge any new criteria from the current query with the previous keywords. If the current query mentions something new (like a different price level, cuisine, or location), update that field. Otherwise, keep the previous values.
+      
+IMPORTANT: If the user explicitly says "not X" or "remove X" (e.g., "not Michelin", "remove the Michelin requirement"), you should REMOVE that field by setting it to null or omitting it from the response. Do NOT set it to false - that means the filter is still active but set to false. Setting to null/undefined means the filter is removed entirely.`;
     }
   }
 
@@ -43,7 +54,12 @@ This is a follow-up question. The user wants to modify or refine their previous 
 - Meal type: Extract meal time preference ("breakfast", "brunch", "lunch", "dinner", "late-night", or null)
 - Price level: Extract price preference ("budget", "moderate", "upscale", "any", or undefined)
 - Amenities: Extract any amenity requirements (takeout, coffee availability)
-- Vibes: Extract vibe keywords as an array (e.g., ["cozy", "lively", "romantic"])
+- Vibes: Extract vibe keywords as an array (e.g., ["cozy", "lively", "romantic"]). IMPORTANT: Words that describe both price AND atmosphere should be extracted in BOTH fields. Examples:
+  * "upscale French" -> priceLevel: "upscale", vibeKeywords: ["upscale"]
+  * "fancy restaurant" -> priceLevel: "upscale", vibeKeywords: ["upscale", "sophisticated", "elegant"]
+  * "casual Italian" -> priceLevel: undefined (or "moderate"), vibeKeywords: ["casual"]
+  * "romantic dinner" -> vibeKeywords: ["romantic", "intimate", "cozy"]
+  Common vibe keywords that may also indicate price: "upscale", "fancy", "casual", "budget-friendly", "cheap", "expensive"
 - Occasion type: Extract occasion (e.g., "date_night", "business_lunch", "family_friendly", or null)
 - Noise preference: Extract noise preference ("quiet", "any", or null)
 - Special requirements: Extract boolean flags for instagrammable, michelin, cynthia's pick, coffee focus, dessert focus
@@ -66,9 +82,10 @@ IMPORTANT RULES:
 7. Cuisine type: Use lowercase, match common cuisine names (broad categories: italian, japanese, chinese, french, korean, etc.)
 8. Cuisine specialty: Extract specific dishes/specialties separately from cuisine type. Common specialties include: pizza, ramen, yakitori, unagi, dim sum, sushi, pasta, galettes, crepes, pho, pad thai, etc. If no specific dish is mentioned, set to null.
 9. For special queries like "Cynthia's favorites", set requiresCynthiasPick to true
-10. Default all optional boolean fields to false if not mentioned
+10. Default all optional boolean fields to false if not mentioned (for initial queries)
 11. Default arrays to empty arrays if not mentioned
 12. For follow-up queries, merge new information with previous keywords (don't lose previous criteria unless explicitly changed)
+13. FIELD REMOVAL: If the user explicitly says "not X" or "remove X" (e.g., "not Michelin", "actually, not Michelin", "remove the Michelin requirement"), set that boolean field to null (or omit it from the response) to REMOVE the filter entirely. Do NOT set it to false - false means the filter is active but set to false, while null/undefined means the filter is removed.
 
 RESPONSE FORMAT:
 Respond with ONLY valid JSON matching this exact structure (no markdown, no backticks, no extra text):
@@ -85,11 +102,11 @@ Respond with ONLY valid JSON matching this exact structure (no markdown, no back
   "vibeKeywords": string[],
   "occasionType": null | string,
   "noisePreference": null | "quiet" | "any",
-  "requiresInstagrammable": boolean,
-  "requiresMichelin": boolean,
-  "requiresCynthiasPick": boolean,
-  "requiresCoffeeFocus": boolean,
-  "requiresDessertFocus": boolean
+  "requiresInstagrammable": boolean | null,
+  "requiresMichelin": boolean | null,
+  "requiresCynthiasPick": boolean | null,
+  "requiresCoffeeFocus": boolean | null,
+  "requiresDessertFocus": boolean | null
 }
 
 DO NOT include markdown formatting. DO NOT include backticks. Return ONLY the raw JSON object.`;
@@ -199,15 +216,17 @@ export async function parseQueryWithClaude(
     }
 
     // Ensure all required fields are present with proper defaults
+    // For boolean fields: null means "remove field" (set to undefined), false means "set to false", true means "set to true"
     const keywords: ExtractedKeywords = {
       vibeKeywords: parsedKeywords.vibeKeywords || [],
       occasionType: parsedKeywords.occasionType || null,
       noisePreference: parsedKeywords.noisePreference || null,
-      requiresInstagrammable: parsedKeywords.requiresInstagrammable || false,
-      requiresMichelin: parsedKeywords.requiresMichelin || false,
-      requiresCynthiasPick: parsedKeywords.requiresCynthiasPick || false,
-      requiresCoffeeFocus: parsedKeywords.requiresCoffeeFocus || false,
-      requiresDessertFocus: parsedKeywords.requiresDessertFocus || false,
+      // Handle null as field removal (undefined), preserve false/true, default to false if not present
+      requiresInstagrammable: parsedKeywords.requiresInstagrammable === null ? undefined : (parsedKeywords.requiresInstagrammable ?? false),
+      requiresMichelin: parsedKeywords.requiresMichelin === null ? undefined : (parsedKeywords.requiresMichelin ?? false),
+      requiresCynthiasPick: parsedKeywords.requiresCynthiasPick === null ? undefined : (parsedKeywords.requiresCynthiasPick ?? false),
+      requiresCoffeeFocus: parsedKeywords.requiresCoffeeFocus === null ? undefined : (parsedKeywords.requiresCoffeeFocus ?? false),
+      requiresDessertFocus: parsedKeywords.requiresDessertFocus === null ? undefined : (parsedKeywords.requiresDessertFocus ?? false),
       neighborhood: parsedKeywords.neighborhood || undefined,
       borough: parsedKeywords.borough || undefined,
       // Always include city from input parameter (city pill is always selected in UI)
