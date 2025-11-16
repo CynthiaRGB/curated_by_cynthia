@@ -56,7 +56,7 @@ Example: If previous keywords had priceLevel: 2 and the new query only changes l
   * "dim sum in Chinatown" -> cuisineType: "chinese", cuisineSpecialty: "dim sum"
   * "yakitori in Tokyo" -> cuisineType: "japanese", cuisineSpecialty: "yakitori"
   * "Italian restaurants" -> cuisineType: "italian", cuisineSpecialty: null
-- Meal type: Extract meal time preference ("breakfast", "brunch", "lunch", "dinner", "late-night", or null)
+- Meal type: Extract meal time preference ("breakfast", "brunch", "lunch", "dinner", or null). IMPORTANT: "late night", "late-night", "late night bites" should be extracted as occasionType: "late_night", NOT as mealType.
 - Price level: Extract price preference ("budget", "moderate", "upscale", "any", or undefined)
 - Amenities: Extract any amenity requirements (takeout, coffee availability)
 - Vibes: Extract vibe keywords as an array (e.g., ["cozy", "lively", "romantic"]). IMPORTANT: Words that describe both price AND atmosphere should be extracted in BOTH fields. Examples:
@@ -65,7 +65,7 @@ Example: If previous keywords had priceLevel: 2 and the new query only changes l
   * "casual Italian" -> priceLevel: undefined (or "moderate"), vibeKeywords: ["casual"]
   * "romantic dinner" -> vibeKeywords: ["romantic", "intimate", "cozy"]
   Common vibe keywords that may also indicate price: "upscale", "fancy", "casual", "budget-friendly", "cheap", "expensive"
-- Occasion type: Extract occasion (e.g., "date_night", "business_lunch", "family_friendly", or null)
+- Occasion type: Extract occasion (e.g., "date_night", "business_lunch", "family_friendly", "late_night", or null). IMPORTANT: If the query mentions "late night", "late-night", or "late night bites", extract as occasionType: "late_night" (not as mealType).
 - Noise preference: Extract noise preference ("quiet", "any", or null)
 - Special requirements: Extract boolean flags for instagrammable, michelin, cynthia's pick, coffee focus, dessert focus
 
@@ -100,7 +100,7 @@ Respond with ONLY valid JSON matching this exact structure (no markdown, no back
   "city": null | "nyc" | "tokyo" | "seoul" | "paris",
   "cuisineType": null | string,
   "cuisineSpecialty": null | string,
-  "mealType": null | "breakfast" | "brunch" | "lunch" | "dinner" | "late-night",
+  "mealType": null | "breakfast" | "brunch" | "lunch" | "dinner",
   "priceLevel": null | "budget" | "moderate" | "upscale" | "any",
   "needsTakeout": boolean,
   "needsCoffee": boolean,

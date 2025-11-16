@@ -1,12 +1,12 @@
 [
   {
     "input": {
-      "query": "Italian in Brooklyn",
+      "query": "french in Manhattan",
       "city": "NYC"
     },
     "expected": {
-      "cuisineType": "italian",
-      "borough": "brooklyn",
+      "cuisineType": "french",
+      "borough": "manhattan",
       "city": "nyc"
     },
     "metadata": {
@@ -320,18 +320,18 @@
       "query": "show me more",
       "city": "NYC",
       "context": {
-        "previousQuery": "Italian in Brooklyn",
+        "previousQuery": "french in Manhattan",
         "previousKeywords": {
-          "cuisineType": "italian",
-          "borough": "brooklyn",
+          "cuisineType": "french",
+          "borough": "manhattan",
           "city": "nyc"
         },
         "previousResultIds": ["place_1", "place_2", "place_3"]
       }
     },
     "expected": {
-      "cuisineType": "italian",
-      "borough": "brooklyn",
+      "cuisineType": "french",
+      "borough": "manhattan",
       "city": "nyc"
     },
     "metadata": {
@@ -342,22 +342,20 @@
   },
   {
     "input": {
-      "query": "what about in Manhattan?",
+      "query": "what about in Brooklyn?",
       "city": "NYC",
       "context": {
-        "previousQuery": "Italian in Brooklyn",
+        "previousQuery": "french in Manhattan",
         "previousKeywords": {
-          "cuisineType": "italian",
-          "borough": "brooklyn",
-          "priceLevel": 2,
+          "cuisineType": "french",
+          "borough": "manhattan",
           "city": "nyc"
         }
       }
     },
     "expected": {
-      "cuisineType": "italian",
-      "borough": "manhattan",
-      "priceLevel": 2,
+      "cuisineType": "french",
+      "borough": "brooklyn",
       "city": "nyc"
     },
     "metadata": {
@@ -535,13 +533,13 @@
       "city": "Tokyo"
     },
     "expected": {
-      "mealType": "late-night",
+      "occasionType": "late_night",
       "city": "tokyo"
     },
     "metadata": {
-      "category": "meal_type",
+      "category": "occasion_type",
       "difficulty": "easy",
-      "description": "Late-night meal type extraction"
+      "description": "Late-night occasion extraction"
     }
   },
   {
@@ -565,6 +563,7 @@
       "city": "NYC"
     },
     "expected": {
+      "cuisineType": "coffee shop",
       "requiresCoffeeFocus": true,
       "borough": "manhattan",
       "city": "nyc"
@@ -581,6 +580,7 @@
       "city": "NYC"
     },
     "expected": {
+      "cuisineType": "dessert",
       "requiresDessertFocus": true,
       "city": "nyc"
     },

@@ -817,24 +817,91 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
   }
   
   // Check specific specialty
+  // Prioritize metadata fields (more reliable) over text mentions (can have false positives)
+  // Follows same prioritization pattern as matchesSingleCuisineType
   if (keywords.cuisineSpecialty) {
     const specialty = keywords.cuisineSpecialty.toLowerCase();
     const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
     const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
     const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
     const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
+    const primaryType = restaurant.google_data.primaryType?.toLowerCase() || '';
+    const specificType = restaurant.specific_type?.toLowerCase() || '';
+    const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
     
-    const matchesSpecialty = 
+    // Normalize accents and handle plural/singular variations (same as cuisine type matching)
+    const normalizeForMatching = (text: string): string => {
+      return text
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/s$/, '');
+    };
+    const normalizedSpecialty = normalizeForMatching(specialty);
+    
+    // PRIORITY 1: Check metadata fields first (most reliable)
+    // Check primaryType, specificType, and types array
+    const matchesInMetadata = 
+      primaryType.includes(specialty) ||
+      specificType.includes(specialty) ||
+      types.some(t => t.includes(specialty)) ||
+      normalizeForMatching(primaryType).includes(normalizedSpecialty) ||
+      normalizeForMatching(specificType).includes(normalizedSpecialty) ||
+      types.some(t => normalizeForMatching(t).includes(normalizedSpecialty));
+    
+    if (matchesInMetadata) {
+      // Mark for ranking boost (store on restaurant object for sorting)
+      (restaurant as any)._matchesSpecialty = true;
+      // Metadata match is strong signal - return true
+      // (we'll continue to check other fields for ranking purposes, but metadata match is sufficient)
+    }
+    
+    // PRIORITY 2: Check restaurant name (dish-specific restaurants often have the dish in their name)
+    // This is important because dish-specific restaurants often have the dish in their name
+    // but their type might just be "japanese_restaurant" (e.g., "Yakitori Imai" has yakitori in name)
+    const matchesInName = 
       restaurantName.includes(specialty) ||
+      normalizeForMatching(restaurantName).includes(normalizedSpecialty);
+    
+    if (matchesInName) {
+      // Mark for ranking boost
+      (restaurant as any)._matchesSpecialty = true;
+      // Name match is also a strong signal - return true if we haven't already matched
+      if (matchesInMetadata) {
+        // Already matched in metadata, continue to check summaries for completeness
+      } else {
+        // Name match is sufficient - return true
+        // (we'll continue to check summaries for ranking purposes, but name match is sufficient)
+      }
+    }
+    
+    // PRIORITY 3: Check summaries (less reliable, can have false positives)
+    // Only check if metadata and name didn't match, or include for ranking boost
+    const matchesInSummaries = 
       summary.includes(specialty) ||
       reviewSummary.includes(specialty) ||
-      editorialSummary.includes(specialty);
+      editorialSummary.includes(specialty) ||
+      normalizeForMatching(summary).includes(normalizedSpecialty) ||
+      normalizeForMatching(reviewSummary).includes(normalizedSpecialty) ||
+      normalizeForMatching(editorialSummary).includes(normalizedSpecialty);
+    
+    if (matchesInSummaries) {
+      // Mark for ranking boost
+      (restaurant as any)._matchesSpecialty = true;
+    }
+    
+    // If specialty is specified, it MUST match in at least one of the above (filter, not just rank)
+    const matchesSpecialty = matchesInMetadata || matchesInName || matchesInSummaries;
+    
+    if (!matchesSpecialty) {
+      return false; // ❌ Doesn't match the required specialty
+    }
     
     // Mark for ranking boost (store on restaurant object for sorting)
-    (restaurant as any)._matchesSpecialty = matchesSpecialty;
+    // Already set above, but ensure it's set
+    (restaurant as any)._matchesSpecialty = true;
   }
   
-  return true; // ✅ At least matches broad cuisine
+  return true; // ✅ At least matches broad cuisine (and specialty if specified)
 }
 
 /**

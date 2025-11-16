@@ -232,7 +232,11 @@ function scoreCuisineMatch({ input, output, expected }: any) {
     'sukiyaki', 'shabu shabu', 'shabushabu', 'kaiseki', 'omurice'
   ];
   
-  // Count matches using the same logic as matchesCuisine()
+  // If cuisineSpecialty is present, validate specialty matching first (using same prioritization as filterService)
+  // Then validate cuisine type matching
+  const expectedSpecialty = keywords.cuisineSpecialty?.toLowerCase();
+  
+  // Count matches using the same logic as matchesCuisine() and specialty matching
   const matchCount = output.filter((restaurant: any) => {
     const primaryType = restaurant.google_data?.primaryType?.toLowerCase() || '';
     const specificType = restaurant.specific_type?.toLowerCase() || '';
@@ -241,6 +245,41 @@ function scoreCuisineMatch({ input, output, expected }: any) {
     const summary = restaurant.google_data?.generativeSummary?.overview?.text?.toLowerCase() || '';
     const reviewSummary = restaurant.google_data?.reviewSummary?.text?.text?.toLowerCase() || '';
     const editorialSummary = restaurant.google_data?.editorialSummary?.text?.toLowerCase() || '';
+    
+    // If specialty is specified, validate it matches (using same prioritization as filterService)
+    if (expectedSpecialty) {
+      const normalizedSpecialty = normalizeForMatching(expectedSpecialty);
+      
+      // PRIORITY 1: Check metadata fields first (most reliable)
+      const matchesSpecialtyInMetadata = 
+        primaryType.includes(expectedSpecialty) ||
+        specificType.includes(expectedSpecialty) ||
+        types.some(t => t.includes(expectedSpecialty)) ||
+        normalizeForMatching(primaryType).includes(normalizedSpecialty) ||
+        normalizeForMatching(specificType).includes(normalizedSpecialty) ||
+        types.some(t => normalizeForMatching(t).includes(normalizedSpecialty));
+      
+      // PRIORITY 2: Check restaurant name
+      const matchesSpecialtyInName = 
+        restaurantName.includes(expectedSpecialty) ||
+        normalizeForMatching(restaurantName).includes(normalizedSpecialty);
+      
+      // PRIORITY 3: Check summaries (less reliable)
+      const matchesSpecialtyInSummaries = 
+        summary.includes(expectedSpecialty) ||
+        reviewSummary.includes(expectedSpecialty) ||
+        editorialSummary.includes(expectedSpecialty) ||
+        normalizeForMatching(summary).includes(normalizedSpecialty) ||
+        normalizeForMatching(reviewSummary).includes(normalizedSpecialty) ||
+        normalizeForMatching(editorialSummary).includes(normalizedSpecialty);
+      
+      // Specialty must match in at least one of the above
+      const matchesSpecialty = matchesSpecialtyInMetadata || matchesSpecialtyInName || matchesSpecialtyInSummaries;
+      
+      if (!matchesSpecialty) {
+        return false; // ❌ Doesn't match the required specialty
+      }
+    }
     
     // For Asian umbrella
     if (expectedCuisine === 'asian') {
@@ -342,6 +381,7 @@ function scoreCuisineMatch({ input, output, expected }: any) {
       matchCount,
       totalResults: output.length,
       expectedCuisine,
+      expectedSpecialty: expectedSpecialty || undefined,
       threshold: 0.85
     }
   };
@@ -790,6 +830,192 @@ function scoreMichelinMatch({ input, output, expected }: any) {
   };
 }
 
+/**
+ * Summary scorer: Overall filtering accuracy
+ * Aggregates all individual scorer results into one overall score
+ * Similar to field_accuracy in test_query_parser.ts
+ */
+function scoreFilteringAccuracy({ input, output, expected }: any) {
+  const keywords = input.keywords as ExtractedKeywords;
+  
+  if (output.length === 0) {
+    // If no results, check if that's expected
+    // For now, return 0 if no results (could be improved to check if keywords are too restrictive)
+    return {
+      name: "filtering_accuracy",
+      score: 0,
+      metadata: { error: "No results to check" }
+    };
+  }
+  
+  // Collect all individual scorer results
+  const scorerResults: { name: string; score: number; passed: boolean }[] = [];
+  
+  // 1. Has results (always check)
+  const hasResults = output.length > 0;
+  scorerResults.push({ name: "has_results", score: hasResults ? 1 : 0, passed: hasResults });
+  
+  // 2. Location match
+  if (keywords.neighborhood || keywords.borough || keywords.city) {
+    const locationScore = scoreLocationMatch({ input, output, expected });
+    if (locationScore) {
+      scorerResults.push({ 
+        name: "location_match", 
+        score: locationScore.score, 
+        passed: locationScore.score >= 0.95 
+      });
+    }
+  }
+  
+  // 3. Cuisine match
+  if (keywords.cuisineType || keywords.cuisineSpecialty) {
+    const cuisineScore = scoreCuisineMatch({ input, output, expected });
+    if (cuisineScore) {
+      scorerResults.push({ 
+        name: "cuisine_match", 
+        score: cuisineScore.score, 
+        passed: cuisineScore.score >= 0.95 
+      });
+    }
+  }
+  
+  // 4. Coffee focus
+  if (keywords.requiresCoffeeFocus) {
+    const coffeeScore = scoreCoffeeFocus({ input, output, expected });
+    if (coffeeScore) {
+      scorerResults.push({ 
+        name: "coffee_focus", 
+        score: coffeeScore.score, 
+        passed: coffeeScore.score >= 0.95 
+      });
+    }
+  }
+  
+  // 5. Dessert focus
+  if (keywords.requiresDessertFocus) {
+    const dessertScore = scoreDessertFocus({ input, output, expected });
+    if (dessertScore) {
+      scorerResults.push({ 
+        name: "dessert_focus", 
+        score: dessertScore.score, 
+        passed: dessertScore.score >= 0.95 
+      });
+    }
+  }
+  
+  // 6. Brunch focus
+  if (keywords.mealType === 'brunch') {
+    const brunchScore = scoreBrunchFocus({ input, output, expected });
+    if (brunchScore) {
+      scorerResults.push({ 
+        name: "brunch_focus", 
+        score: brunchScore.score, 
+        passed: brunchScore.score >= 0.95 
+      });
+    }
+  }
+  
+  // 7. Meal type match
+  if (keywords.mealType && keywords.mealType !== 'brunch') {
+    const mealScore = scoreMealTypeMatch({ input, output, expected });
+    if (mealScore) {
+      scorerResults.push({ 
+        name: "meal_type_match", 
+        score: mealScore.score, 
+        passed: mealScore.score >= 0.95 
+      });
+    }
+  }
+  
+  // 8. Vibe match
+  if (keywords.vibeKeywords && keywords.vibeKeywords.length > 0) {
+    const vibeScore = scoreVibeMatch({ input, output, expected });
+    if (vibeScore) {
+      scorerResults.push({ 
+        name: "vibe_match", 
+        score: vibeScore.score, 
+        passed: vibeScore.score >= 0.85 
+      });
+    }
+  }
+  
+  // 9. Occasion match
+  if (keywords.occasionType) {
+    const occasionScore = scoreOccasionMatch({ input, output, expected });
+    if (occasionScore) {
+      scorerResults.push({ 
+        name: "occasion_match", 
+        score: occasionScore.score, 
+        passed: occasionScore.score >= 0.95 
+      });
+    }
+  }
+  
+  // 10. Price match
+  if (keywords.priceLevel && keywords.priceLevel !== 'any') {
+    const priceScore = scorePriceMatch({ input, output, expected });
+    if (priceScore) {
+      scorerResults.push({ 
+        name: "price_match", 
+        score: priceScore.score, 
+        passed: priceScore.score >= 0.95 
+      });
+    }
+  }
+  
+  // 11. Instagrammable match
+  if (keywords.requiresInstagrammable) {
+    const instagramScore = scoreInstagrammableMatch({ input, output, expected });
+    if (instagramScore) {
+      scorerResults.push({ 
+        name: "instagrammable_match", 
+        score: instagramScore.score, 
+        passed: instagramScore.score >= 0.95 
+      });
+    }
+  }
+  
+  // 12. Michelin match
+  if (keywords.requiresMichelin) {
+    const michelinScore = scoreMichelinMatch({ input, output, expected });
+    if (michelinScore) {
+      scorerResults.push({ 
+        name: "michelin_match", 
+        score: michelinScore.score, 
+        passed: michelinScore.score >= 0.95 
+      });
+    }
+  }
+  
+  // Calculate overall accuracy: average of all applicable scorer results
+  if (scorerResults.length === 0) {
+    return {
+      name: "filtering_accuracy",
+      score: 1, // No criteria to check, consider it correct
+      metadata: { message: "No applicable criteria to check" }
+    };
+  }
+  
+  const totalScore = scorerResults.reduce((sum, r) => sum + r.score, 0);
+  const averageScore = totalScore / scorerResults.length;
+  const passedCount = scorerResults.filter(r => r.passed).length;
+  
+  return {
+    name: "filtering_accuracy",
+    score: averageScore,
+    metadata: {
+      averageScore,
+      passedCount,
+      totalCriteria: scorerResults.length,
+      criteriaDetails: scorerResults.map(r => ({
+        name: r.name,
+        score: r.score,
+        passed: r.passed
+      }))
+    }
+  };
+}
+
 // ============================================================================
 // EVAL CONFIGURATION
 // ============================================================================
@@ -824,7 +1050,8 @@ Eval("filterService-quality-v2", {
     scoreOccasionMatch,
     scorePriceMatch,
     scoreInstagrammableMatch, // NEW
-    scoreMichelinMatch // NEW
+    scoreMichelinMatch, // NEW
+    scoreFilteringAccuracy // Summary scorer (aggregates all above)
   ],
   
   trialCount: 1, // Run each test once (deterministic filtering)
