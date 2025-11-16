@@ -146,6 +146,12 @@ export interface ExtractedKeywords {
   requiresCynthiasPick?: boolean;
   requiresCoffeeFocus?: boolean; // For "coffee shop"/"coffee"/"cafe" queries - stricter matching
   requiresDessertFocus?: boolean; // For "dessert"/"pastry"/"cake" queries - stricter matching
+  
+  // Special features: Array of special features extracted from query
+  // Available values: "cash_only", "chef_driven", "compact_seating", "counter_seating", "counter_service", 
+  // "craft_driven", "hard_to_get_into", "hidden_gem", "historic_venue", "iconic_venue", "instagrammable", 
+  // "outdoor_seating", "scenic_views", "speakeasy_vibe", "unique_concept"
+  specialFeatures?: string[];
 }
 
 export type City = 'New York City' | 'Tokyo' | 'Paris' | 'Seoul';

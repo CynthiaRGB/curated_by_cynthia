@@ -2,7 +2,6 @@
 // Parses ALL user queries into structured ExtractedKeywords using Claude API
 
 import { ExtractedKeywords, QueryContext } from '../../src/types/restaurant.js';
-import { extractKeywords } from './filterService.js';
 
 /**
  * Build prompt for Claude API query parsing
@@ -51,10 +50,17 @@ Example: If previous keywords had priceLevel: 2 and the new query only changes l
   prompt += `\n\nExtract the following information:
 - Location (neighborhood, borough, city): Extract any location mentions. Support single neighborhood or array for multiple (e.g., "Shibuya or Ginza" -> ["shibuya", "ginza"])
 - Cuisine type: Extract BROAD cuisine category (e.g., "japanese", "italian", "chinese", "french", "korean"). This is the general cuisine category.
-- Cuisine specialty: Extract SPECIFIC DISH or SPECIALTY if mentioned (e.g., "pizza", "ramen", "yakitori", "unagi", "dim sum", "sushi", "pasta", "galettes", "crepes"). If no specific dish is mentioned, set to null. Examples:
+- Cuisine specialty: Extract SPECIFIC DISH or SPECIALTY if mentioned. This is open-ended - extract any dish name the user mentions. The filterService uses flexible matching against restaurant metadata, names, and descriptions. Common examples:
+  * Japanese: "ramen", "yakitori", "sushi", "sashimi", "unagi", "tonkatsu", "katsu", "tempura", "udon", "soba", "okonomiyaki", "curry", "onigiri", "takoyaki", "teriyaki", "sukiyaki", "shabu shabu", "kaiseki", "omurice"
+  * Italian: "pizza", "pasta", "risotto"
+  * French: "galettes", "crepes", "duck confit", "croissant"
+  * Chinese: "dim sum", "hot pot", "szechuan", "peking duck"
+  * Other: "pho", "vermicelli", "pad thai", "tacos", "burritos"
+  Examples:
   * "pizza in Manhattan" -> cuisineType: "italian", cuisineSpecialty: "pizza"
   * "dim sum in Chinatown" -> cuisineType: "chinese", cuisineSpecialty: "dim sum"
   * "yakitori in Tokyo" -> cuisineType: "japanese", cuisineSpecialty: "yakitori"
+  * "tonkatsu restaurant" -> cuisineType: "japanese", cuisineSpecialty: "tonkatsu"
   * "Italian restaurants" -> cuisineType: "italian", cuisineSpecialty: null
 - Meal type: Extract meal time preference ("breakfast", "brunch", "lunch", "dinner", or null). IMPORTANT: "late night", "late-night", "late night bites" should be extracted as occasionType: "late_night", NOT as mealType.
 - Price level: Extract price preference ("budget", "moderate", "upscale", "any", or undefined)
@@ -65,17 +71,67 @@ Example: If previous keywords had priceLevel: 2 and the new query only changes l
   * "casual Italian" -> priceLevel: undefined (or "moderate"), vibeKeywords: ["casual"]
   * "romantic dinner" -> vibeKeywords: ["romantic", "intimate", "cozy"]
   Common vibe keywords that may also indicate price: "upscale", "fancy", "casual", "budget-friendly", "cheap", "expensive"
-- Occasion type: Extract occasion (e.g., "date_night", "business_lunch", "family_friendly", "late_night", or null). IMPORTANT: If the query mentions "late night", "late-night", or "late night bites", extract as occasionType: "late_night" (not as mealType).
+- Occasion type: Extract occasion. Available occasion types (use exact values):
+  * "anniversary": "anniversary", "anniversary dinner"
+  * "business_dinner": "business dinner", "client dinner", "work dinner"
+  * "business_lunch": "business lunch", "client lunch", "work lunch", "lunch meeting"
+  * "casual_meetup": "casual meetup", "hanging out", "catch up"
+  * "celebration": "celebration", "celebrating", "party"
+  * "coffee_break": "coffee break", "coffee meeting"
+  * "date_night": "date night", "date", "romantic dinner", "dinner date"
+  * "family_friendly": "family", "with kids", "family dinner", "kids friendly"
+  * "first_date": "first date"
+  * "group_dining": "group", "large group", "group dinner", "party of"
+  * "late_lunch": "late lunch"
+  * "late_night": "late night", "late-night", "late night bites", "late night food"
+  * "quick_meal": "quick", "fast", "quick bite", "quick lunch"
+  * "second_date": "second date"
+  * "solo_dining": "solo", "alone", "by myself", "solo dining"
+  * "special_occasion": "special occasion", "special event"
+  * "tourist_friendly": "tourist", "visiting", "tourist spot"
+  * "weekend_brunch": "weekend brunch", "sunday brunch", "saturday brunch"
+  
+  IMPORTANT: If the query mentions "late night", "late-night", or "late night bites", extract as occasionType: "late_night" (not as mealType). If no occasion is mentioned, set to null.
 - Noise preference: Extract noise preference ("quiet", "any", or null)
 - Special requirements: Extract boolean flags for instagrammable, michelin, cynthia's pick, coffee focus, dessert focus
+- Special features: Extract special features as an array of strings. Available special features and their indicators:
+  * "cash_only": "cash only", "cash payment", "no credit cards", "cash accepted"
+  * "chef_driven": "chef's restaurant", "chef-driven", "chef-owned", "chef's table", "chef's menu"
+  * "compact_seating": "small space", "intimate seating", "cozy seating", "tight seating", "compact"
+  * "counter_seating": "counter seats", "bar seating", "counter dining", "sit at counter"
+  * "counter_service": "counter service", "order at counter", "fast casual", "self-service"
+  * "craft_driven": "craft cocktails", "craft beer", "artisanal", "handcrafted", "craft-focused"
+  * "hard_to_get_into": "hard to get into", "difficult reservation", "exclusive", "hard to book", "popular spot"
+  * "hidden_gem": "hidden gem", "hidden gems", "off the beaten path", "underrated", "locals love", "local favorite", "secret spot", "undiscovered"
+  * "historic_venue": "historic", "historical", "landmark", "heritage", "oldest", "classic venue"
+  * "iconic_venue": "iconic", "famous", "legendary", "must-visit", "landmark restaurant"
+  * "instagrammable": "instagram", "photogenic", "aesthetic", "nice pictures", "beautiful space", "pretty", "instagram-worthy"
+  * "outdoor_seating": "outdoor", "patio", "terrace", "garden seating", "al fresco", "outdoor dining"
+  * "scenic_views": "scenic view", "ocean view", "city view", "waterfront", "rooftop", "panoramic view"
+  * "speakeasy_vibe": "speakeasy", "hidden bar", "secret bar", "prohibition-style", "underground"
+  * "unique_concept": "unique", "unusual", "one-of-a-kind", "creative concept", "innovative", "different"
+  
+  Examples:
+  * "hidden gems locals love" -> specialFeatures: ["hidden_gem"]
+  * "instagrammable restaurant with outdoor seating" -> specialFeatures: ["instagrammable", "outdoor_seating"]
+  * "chef-driven spot that's hard to get into" -> specialFeatures: ["chef_driven", "hard_to_get_into"]
+  * "cash only ramen shop with counter seating" -> specialFeatures: ["cash_only", "counter_seating"]
+  * "speakeasy with craft cocktails" -> specialFeatures: ["speakeasy_vibe", "craft_driven"]
 
 HANDLING VAGUE QUERIES:
 For vague or subjective queries, make reasonable inferences based on common interpretations:
 - "good vibes" -> Extract common positive vibe keywords: ["cozy", "lively", "trendy", "casual"]
 - "something nice" -> Interpret as upscale/sophisticated: vibeKeywords: ["upscale", "sophisticated"], priceLevel: "moderate"
-- "nice pictures" / "take nice pictures" -> Implies instagrammable: requiresInstagrammable: true, vibeKeywords: ["aesthetic", "photogenic"]
+- "nice pictures" / "take nice pictures" -> Implies instagrammable: specialFeatures: ["instagrammable"], requiresInstagrammable: true, vibeKeywords: ["aesthetic", "photogenic"]
+- "hidden gems" / "locals love" / "local favorite" -> specialFeatures: ["hidden_gem"]
 - "where should I eat?" / "what should I eat?" -> No specific criteria, return minimal fields (just city if provided)
 - If query is extremely vague with no clear criteria, return minimal extraction (only city if provided, empty arrays, null/undefined for optional fields)
+
+IMPORTANT FOR SPECIAL FEATURES:
+- Extract special features ONLY when explicitly mentioned or strongly implied in the query
+- If a query mentions "instagram", "photogenic", or "nice pictures", include BOTH specialFeatures: ["instagrammable"] AND requiresInstagrammable: true (for backward compatibility)
+- "hidden gems", "locals love", "local favorite", "off the beaten path" should extract specialFeatures: ["hidden_gem"]
+- Be smart about synonyms: "cash only" = "cash_only", "chef's restaurant" = "chef_driven", "patio" = "outdoor_seating", etc.
 
 IMPORTANT RULES:
 1. Be precise - only extract information explicitly mentioned or strongly implied
@@ -85,12 +141,17 @@ IMPORTANT RULES:
 5. City names: Extract as city field ("nyc", "tokyo", "seoul", "paris", or undefined). NOTE: The city is also provided as a parameter, so always include it in the output.
 6. Neighborhoods: Can be single string or array of strings
 7. Cuisine type: Use lowercase, match common cuisine names (broad categories: italian, japanese, chinese, french, korean, etc.)
-8. Cuisine specialty: Extract specific dishes/specialties separately from cuisine type. Common specialties include: pizza, ramen, yakitori, unagi, dim sum, sushi, pasta, galettes, crepes, pho, pad thai, etc. If no specific dish is mentioned, set to null.
+8. Cuisine specialty: Extract specific dishes/specialties separately from cuisine type. This field is open-ended - extract any dish name mentioned. The filterService uses flexible matching (checks restaurant metadata, names, and descriptions) so exact spelling isn't critical, but try to match common dish names. If no specific dish is mentioned, set to null.
 9. For special queries like "Cynthia's favorites", set requiresCynthiasPick to true
 10. Default all optional boolean fields to false if not mentioned (for initial queries)
 11. Default arrays to empty arrays if not mentioned
 12. For follow-up queries, merge new information with previous keywords (don't lose previous criteria unless explicitly changed)
 13. FIELD REMOVAL: If the user explicitly says "not X" or "remove X" (e.g., "not Michelin", "actually, not Michelin", "remove the Michelin requirement"), set that boolean field to null (or omit it from the response) to REMOVE the filter entirely. Do NOT set it to false - false means the filter is active but set to false, while null/undefined means the filter is removed.
+14. FLEXIBLE MATCHING: For open-ended fields like cuisine specialty, vibe keywords, and neighborhoods, the filterService uses flexible matching. This means:
+    - Cuisine specialty: Matches against restaurant metadata (primaryType, specificType, types), restaurant names, and descriptions with normalization (handles accents, plural/singular variations)
+    - Vibe keywords: Matches against restaurant vibe_tags array (exact match required)
+    - Neighborhoods: Matches against neighborhood_extracted field with partial matching
+    - You don't need to worry about exact spelling variations - extract what the user says, and the filterService will handle matching
 
 RESPONSE FORMAT:
 Respond with ONLY valid JSON matching this exact structure (no markdown, no backticks, no extra text):
@@ -111,7 +172,8 @@ Respond with ONLY valid JSON matching this exact structure (no markdown, no back
   "requiresMichelin": boolean | null,
   "requiresCynthiasPick": boolean | null,
   "requiresCoffeeFocus": boolean | null,
-  "requiresDessertFocus": boolean | null
+  "requiresDessertFocus": boolean | null,
+  "specialFeatures": string[]
 }
 
 DO NOT include markdown formatting. DO NOT include backticks. Return ONLY the raw JSON object.`;
@@ -160,15 +222,8 @@ export async function parseQueryWithClaude(
     const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
     
     if (!anthropicApiKey) {
-      console.warn('[Parse Query] ANTHROPIC_API_KEY not set, falling back to deterministic extraction');
-      // Fallback to deterministic extraction
-      try {
-        return extractKeywords(query);
-      } catch (fallbackError) {
-        console.error('[Parse Query] Fallback extraction failed:', fallbackError);
-        // Both API key missing and fallback failed - throw error
-        throw new Error("I don't quite get your question, try something else");
-      }
+      console.error('[Parse Query] ANTHROPIC_API_KEY not set - Claude API is required');
+      throw new Error("I don't quite get your question, try something else");
     }
 
     // Build the prompt
@@ -232,6 +287,7 @@ export async function parseQueryWithClaude(
       requiresCynthiasPick: parsedKeywords.requiresCynthiasPick === null ? undefined : (parsedKeywords.requiresCynthiasPick ?? false),
       requiresCoffeeFocus: parsedKeywords.requiresCoffeeFocus === null ? undefined : (parsedKeywords.requiresCoffeeFocus ?? false),
       requiresDessertFocus: parsedKeywords.requiresDessertFocus === null ? undefined : (parsedKeywords.requiresDessertFocus ?? false),
+      specialFeatures: parsedKeywords.specialFeatures || [],
       neighborhood: parsedKeywords.neighborhood || undefined,
       borough: parsedKeywords.borough || undefined,
       // Always include city from input parameter (city pill is always selected in UI)
@@ -251,21 +307,8 @@ export async function parseQueryWithClaude(
     return keywords;
 
   } catch (error) {
-    console.error('[Parse Query] Error calling Claude API, falling back to deterministic extraction:', error);
-    // Fallback to deterministic extraction on error
-    // This ensures we still get useful keywords even if Claude fails
-    try {
-      const fallbackKeywords = extractKeywords(query);
-      // Always include city from input parameter (city pill is always selected in UI)
-      // Normalize city to filterService format (e.g., "New York City" -> "nyc")
-      if (city) {
-        fallbackKeywords.city = normalizeCityForFilter(city);
-      }
-      return fallbackKeywords;
-    } catch (fallbackError) {
-      console.error('[Parse Query] Fallback extraction also failed:', fallbackError);
-      // Both Claude and fallback failed - throw error for recommend.ts to handle
-      throw new Error("I don't quite get your question, try something else");
-    }
+    console.error('[Parse Query] Error calling Claude API:', error);
+    // Claude API is required - throw error for recommend.ts to handle
+    throw new Error("I don't quite get your question, try something else");
   }
 }

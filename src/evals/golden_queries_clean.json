@@ -486,7 +486,7 @@
       "city": "Tokyo"
     },
     "expected": {
-      "vibeKeywords": ["authentic", "local_favorite"],
+      "specialFeatures": ["hidden_gem"],
       "city": "tokyo"
     },
     "metadata": {

@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Statsig from "statsig-node";
-import { preFilterRestaurants, isCityPromptItem, extractKeywords } from './services/filterService.js';
+import { preFilterRestaurants } from './services/filterService.js';
 import { decideRoute, getMoreRestaurants, isShowMeMoreQuery, type RoutingContext } from './services/routingService.js';
 import { rankRestaurantsWithClaude, enrichRecommendations } from '../src/claudeService.js';
 import { getCachedResponse, setCachedResponse, generateCacheKey } from './services/claudeCache.js';
@@ -281,7 +281,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     
     let parsedKeywords: ExtractedKeywords | undefined;
     let usedClaudeForParsing = false;
-    const isPromptItem = isCityPromptItem(queryToFilter);
     
     // Build query context for follow-ups
     const queryContext: QueryContext | undefined = context ? {
@@ -291,35 +290,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       city: normalizedCity
     } : undefined;
     
-    if (!isPromptItem) {
-      // Use Claude API to parse the query into structured keywords
-      console.log('[API] Parsing query with Claude API (not a city-prompt-item)');
-      const claudeParseStartTime = Date.now();
-      try {
-        parsedKeywords = await parseQueryWithClaude(queryToFilter, normalizedCity, queryContext);
-        usedClaudeForParsing = true;
-        const claudeParseTime = Date.now() - claudeParseStartTime;
-        console.log(`[Performance] Claude query parsing took ${claudeParseTime}ms`);
-        console.log('[API] Successfully parsed query with Claude');
-      } catch (parseError: any) {
-        // Check if it's the "I don't quite get your question" error
-        if (parseError.message && parseError.message.includes("I don't quite get your question")) {
-          return res.status(200).json({
-            recommendations: [],
-            summary: "I don't quite get your question, try something else",
-            usedClaude: false,
-            usedClaudeRanking: false,
-            route: routeDecision.route,
-            context: undefined
-          });
-        }
-        console.error('[API] Error parsing query with Claude, falling back to deterministic extraction:', parseError);
-        // Fallback to deterministic extraction on error
-        parsedKeywords = extractKeywords(queryToFilter);
+    // Always use Claude API to parse the query into structured keywords
+    console.log('[API] Parsing query with Claude API');
+    const claudeParseStartTime = Date.now();
+    try {
+      parsedKeywords = await parseQueryWithClaude(queryToFilter, normalizedCity, queryContext);
+      usedClaudeForParsing = true;
+      const claudeParseTime = Date.now() - claudeParseStartTime;
+      console.log(`[Performance] Claude query parsing took ${claudeParseTime}ms`);
+      console.log('[API] Successfully parsed query with Claude');
+    } catch (parseError: any) {
+      // Check if it's the "I don't quite get your question" error
+      if (parseError.message && parseError.message.includes("I don't quite get your question")) {
+        return res.status(200).json({
+          recommendations: [],
+          summary: "I don't quite get your question, try something else",
+          usedClaude: false,
+          usedClaudeRanking: false,
+          route: routeDecision.route,
+          context: undefined
+        });
       }
-    } else {
-      console.log('[API] Query is a city-prompt-item, using deterministic keyword extraction');
-      parsedKeywords = extractKeywords(queryToFilter);
+      console.error('[API] Error parsing query with Claude:', parseError);
+      // Claude API is required - return error
+      return res.status(200).json({
+        recommendations: [],
+        summary: "I don't quite get your question, try something else",
+        usedClaude: false,
+        usedClaudeRanking: false,
+        route: routeDecision.route,
+        context: undefined
+      });
     }
     
     // Normalize city in keywords to use selected city (ignore city from query parsing if different)
@@ -367,8 +368,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log(`[Performance] Filter service took ${filterTime}ms and returned ${filteredRestaurants.length} restaurants`);
 
     // Step 7: Get final keywords to check if this is a Cynthia's favorites query
-    const finalKeywords = parsedKeywords || extractKeywords(queryToFilter);
-    const isCynthiasFavorites = isCynthiasFavoritesQuery(queryToFilter, finalKeywords);
+    if (!parsedKeywords) {
+      return res.status(200).json({
+        recommendations: [],
+        summary: "I don't quite get your question, try something else",
+        usedClaude: false,
+        usedClaudeRanking: false,
+        route: routeDecision.route,
+        context: undefined
+      });
+    }
+    const isCynthiasFavorites = isCynthiasFavoritesQuery(queryToFilter, parsedKeywords);
     
     if (isCynthiasFavorites) {
       console.log('[API] Query is for Cynthia\'s favorites - will return ALL matching restaurants (no limit)');
@@ -482,7 +492,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Step 10: Build context for next query (for follow-ups)
     const nextContext: QueryContext = {
       previousQuery: query,
-      previousKeywords: finalKeywords,
+      previousKeywords: parsedKeywords,
       previousResultIds: finalRestaurants.map(r => r.google_place_id),
       city: normalizedCity
     };
