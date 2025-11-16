@@ -9,6 +9,8 @@ import { ExtractedKeywords, QueryContext } from '../../src/types/restaurant.js';
 function buildQueryParsingPrompt(query: string, context?: QueryContext): string {
   let prompt = `You are parsing a restaurant search query into structured data. Extract all relevant information from the user's query.
 
+ search (e.g., weather, time, general questions, jokes, etc.), you MUST return an error by setting "error": "NOT_RESTAURANT_QUERY" in your response. Do NOT attempt to extract keywords for non-restaurant queries.
+CRITICAL: If the query is NOT related to restaurant
 USER QUERY: "${query}"`;
 
   // Add context if this is a follow-up
@@ -63,7 +65,17 @@ Example: If previous keywords had priceLevel: 2 and the new query only changes l
   * "tonkatsu restaurant" -> cuisineType: "japanese", cuisineSpecialty: "tonkatsu"
   * "Italian restaurants" -> cuisineType: "italian", cuisineSpecialty: null
 - Meal type: Extract meal time preference ("breakfast", "brunch", "lunch", "dinner", or null). IMPORTANT: "late night", "late-night", "late night bites" should be extracted as occasionType: "late_night", NOT as mealType.
-- Price level: Extract price preference ("budget", "moderate", "upscale", "any", or undefined)
+- Price level: Extract price preference ("budget", "moderate", "upscale", "luxury", "any", or undefined). IMPORTANT: 
+  * Words like "expensive", "luxury", "high-end", "premium", "fine dining" should be extracted as priceLevel: "luxury" (which maps to ONLY $$$$ restaurants, not $$$).
+  * Words like "upscale", "fancy" should be extracted as priceLevel: "upscale" (which maps to both $$$ and $$$$ restaurants).
+  Examples:
+  * "expensive restaurant" -> priceLevel: "luxury"
+  * "luxury dining" -> priceLevel: "luxury"
+  * "high-end sushi" -> priceLevel: "luxury"
+  * "fine dining" -> priceLevel: "luxury"
+  * "premium restaurant" -> priceLevel: "luxury"
+  * "upscale French" -> priceLevel: "upscale"
+  * "fancy restaurant" -> priceLevel: "upscale"
 - Amenities: Extract any amenity requirements (takeout, coffee availability)
 - Vibes: Extract vibe keywords as an array (e.g., ["cozy", "lively", "romantic"]). IMPORTANT: Words that describe both price AND atmosphere should be extracted in BOTH fields. Examples:
   * "upscale French" -> priceLevel: "upscale", vibeKeywords: ["upscale"]
@@ -122,7 +134,7 @@ HANDLING VAGUE QUERIES:
 For vague or subjective queries, make reasonable inferences based on common interpretations:
 - "good vibes" -> Extract common positive vibe keywords: ["cozy", "lively", "trendy", "casual"]
 - "something nice" -> Interpret as upscale/sophisticated: vibeKeywords: ["upscale", "sophisticated"], priceLevel: "moderate"
-- "nice pictures" / "take nice pictures" -> Implies instagrammable: specialFeatures: ["instagrammable"], requiresInstagrammable: true, vibeKeywords: ["aesthetic", "photogenic"]
+- "nice pictures" / "take nice pictures" -> Implies instagrammable: specialFeatures: ["instagrammable"], requiresInstagrammable: true (do NOT extract vibe keywords like "aesthetic" or "photogenic" as they don't exist in the restaurant data)
 - "hidden gems" / "locals love" / "local favorite" -> specialFeatures: ["hidden_gem"]
 - "where should I eat?" / "what should I eat?" -> No specific criteria, return minimal fields (just city if provided)
 - If query is extremely vague with no clear criteria, return minimal extraction (only city if provided, empty arrays, null/undefined for optional fields)
@@ -155,6 +167,13 @@ IMPORTANT RULES:
 
 RESPONSE FORMAT:
 Respond with ONLY valid JSON matching this exact structure (no markdown, no backticks, no extra text):
+
+If the query is NOT related to restaurant search, return:
+{
+  "error": "NOT_RESTAURANT_QUERY"
+}
+
+Otherwise, return:
 {
   "neighborhood": null | string | string[],
   "borough": null | "brooklyn" | "manhattan",
@@ -162,7 +181,7 @@ Respond with ONLY valid JSON matching this exact structure (no markdown, no back
   "cuisineType": null | string,
   "cuisineSpecialty": null | string,
   "mealType": null | "breakfast" | "brunch" | "lunch" | "dinner",
-  "priceLevel": null | "budget" | "moderate" | "upscale" | "any",
+  "priceLevel": null | "budget" | "moderate" | "upscale" | "luxury" | "any",
   "needsTakeout": boolean,
   "needsCoffee": boolean,
   "vibeKeywords": string[],
@@ -267,12 +286,18 @@ export async function parseQueryWithClaude(
       .replace(/```\n?/g, '')
       .trim();
 
-    let parsedKeywords: ExtractedKeywords;
+    let parsedKeywords: any;
     try {
       parsedKeywords = JSON.parse(cleanedResponse);
     } catch (parseError) {
       console.error('[Parse Query] Failed to parse Claude response:', cleanedResponse);
       throw new Error('Claude returned invalid JSON for query parsing');
+    }
+
+    // Check if Claude detected an irrelevant query
+    if (parsedKeywords.error === 'NOT_RESTAURANT_QUERY') {
+      console.log('[Parse Query] Claude detected non-restaurant query');
+      throw new Error("I'm designed to only answer questions related to restaurants. Please ask about restaurants, dining, or food.");
     }
 
     // Ensure all required fields are present with proper defaults

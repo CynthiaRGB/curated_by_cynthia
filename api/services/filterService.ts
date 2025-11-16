@@ -676,8 +676,8 @@ function matchesPrice(restaurant: Restaurant, keywords: ExtractedKeywords): bool
   const priceDisplay = restaurant.price_display;
   
   if (!priceDisplay || priceDisplay === 'N/A') {
-    if (keywords.priceLevel === 'budget') {
-      return false;
+    if (keywords.priceLevel === 'budget' || keywords.priceLevel === 'luxury') {
+      return false; // Budget and luxury require explicit price information
     }
     return true;
   }
@@ -689,6 +689,8 @@ function matchesPrice(restaurant: Restaurant, keywords: ExtractedKeywords): bool
       return priceDisplay === '$$' || priceDisplay === '$$$';
     case 'upscale':
       return priceDisplay === '$$$' || priceDisplay === '$$$$';
+    case 'luxury':
+      return priceDisplay === '$$$$'; // Only $$$$ restaurants for luxury/expensive queries
     default:
       return true;
   }
@@ -795,6 +797,13 @@ function matchesVibe(restaurant: Restaurant, keywords: ExtractedKeywords): boole
     return true;
   }
 
+  // If requiresInstagrammable is true, vibe keywords are optional (just additional context)
+  // Don't filter out restaurants that don't match vibe keywords if the main requirement is instagrammable
+  if (keywords.requiresInstagrammable) {
+    // Vibe keywords are nice-to-have but not required when instagrammable is the main filter
+    return true;
+  }
+
   const restaurantVibes = restaurant.vibe_tags || [];
   
   // Check if restaurant has ANY of the desired vibes
@@ -812,7 +821,32 @@ function matchesOccasion(restaurant: Restaurant, keywords: ExtractedKeywords): b
   }
 
   const restaurantOccasions = restaurant.occasion_tags || [];
-  return restaurantOccasions.includes(keywords.occasionType);
+  
+  // Direct match
+  if (restaurantOccasions.includes(keywords.occasionType)) {
+    return true;
+  }
+  
+  // Flexible matching for business occasions:
+  // If query is for "business_lunch" and restaurant has "business_dinner" tag AND serves lunch, it's suitable
+  if (keywords.occasionType === 'business_lunch') {
+    const hasBusinessDinner = restaurantOccasions.includes('business_dinner');
+    const servesLunch = restaurant.google_data.servesLunch === true;
+    if (hasBusinessDinner && servesLunch) {
+      return true;
+    }
+  }
+  
+  // If query is for "business_dinner" and restaurant has "business_lunch" tag AND serves dinner, it's suitable
+  if (keywords.occasionType === 'business_dinner') {
+    const hasBusinessLunch = restaurantOccasions.includes('business_lunch');
+    const servesDinner = restaurant.google_data.servesDinner === true;
+    if (hasBusinessLunch && servesDinner) {
+      return true;
+    }
+  }
+  
+  return false;
 }
 
 /**

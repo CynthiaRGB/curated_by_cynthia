@@ -125,7 +125,7 @@ export interface ExtractedKeywords {
   mealType?: 'breakfast' | 'brunch' | 'lunch' | 'dinner' | 'late-night' | null;
   
   // Price preference
-  priceLevel?: 'budget' | 'moderate' | 'upscale' | 'any';
+  priceLevel?: 'budget' | 'moderate' | 'upscale' | 'luxury' | 'any';
   
   // Amenities
   needsTakeout?: boolean;

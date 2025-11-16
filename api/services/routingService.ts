@@ -109,13 +109,19 @@ const NEW_QUERY_PATTERNS = [
 const IRRELEVANT_PATTERNS = [
   /^(hi|hello|hey)$/i,
   /how are you/i,
-  /what's the weather/i,
+  /what'?s the weather/i,  // Matches "what's" or "whats"
   /what is the weather/i,
+  /weather today/i,
+  /weather forecast/i,
   /tell me a joke/i,
   /what time is it/i,
   /what day is it/i,
-  /what's your name/i,
+  /what'?s your name/i,
   /who are you/i,
+  /what can you do/i,
+  /help me with/i,  // Generic help requests (unless restaurant-related)
+  /how do i/i,  // Generic how-to questions (unless restaurant-related)
+  /what is/i,  // Generic "what is" questions (unless restaurant-related, but be careful)
 ];
 
 // Keywords that indicate restaurant search intent
@@ -154,15 +160,26 @@ function isFollowUpQuery(query: string, context?: RoutingContext): boolean {
  */
 function isIrrelevantQuery(query: string): boolean {
   const trimmed = query.trim();
+  const lowerQuery = trimmed.toLowerCase();
   
   // Check against irrelevant patterns
   if (IRRELEVANT_PATTERNS.some(pattern => pattern.test(trimmed))) {
+    // But check if it also contains restaurant keywords (e.g., "what's the weather at this restaurant?")
+    const hasRestaurantKeywords = RESTAURANT_KEYWORDS.some(keyword => 
+      lowerQuery.includes(keyword.toLowerCase())
+    );
+    
+    // If it has restaurant keywords, it's relevant even if it matches an irrelevant pattern
+    if (hasRestaurantKeywords) {
+      return false;
+    }
+    
     return true;
   }
   
   // Check if it contains restaurant keywords (if it does, it's relevant)
   const hasRestaurantKeywords = RESTAURANT_KEYWORDS.some(keyword => 
-    trimmed.toLowerCase().includes(keyword.toLowerCase())
+    lowerQuery.includes(keyword.toLowerCase())
   );
   
   // If no restaurant keywords and doesn't match patterns, might be irrelevant

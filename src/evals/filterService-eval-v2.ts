@@ -21,12 +21,12 @@ function normalizePriceLevel(value: any): string | undefined {
       1: 'budget',
       2: 'moderate',
       3: 'upscale',
-      4: 'upscale' // 4 is also upscale (very expensive)
+      4: 'luxury' // 4 is very expensive, map to luxury ($$$$ only)
     };
     return priceMap[value];
   }
   if (typeof value === 'string') {
-    // Already a string, return as-is
+    // Already a string, return as-is (handles 'budget', 'moderate', 'upscale', 'luxury', 'any')
     return value;
   }
   return undefined;
@@ -691,7 +691,32 @@ function scoreOccasionMatch({ input, output, expected }: any) {
   
   const occasionCount = output.filter((restaurant: any) => {
     const occasionTags = restaurant.occasion_tags || [];
-    return occasionTags.some(tag => acceptableOccasions.has(tag));
+    
+    // Direct match or interchangeable match
+    if (occasionTags.some(tag => acceptableOccasions.has(tag))) {
+      return true;
+    }
+    
+    // Flexible matching for business occasions (same as filterService):
+    // If query is for "business_lunch" and restaurant has "business_dinner" tag AND serves lunch, it's suitable
+    if (expectedOccasion === 'business_lunch') {
+      const hasBusinessDinner = occasionTags.includes('business_dinner');
+      const servesLunch = restaurant.google_data?.servesLunch === true;
+      if (hasBusinessDinner && servesLunch) {
+        return true;
+      }
+    }
+    
+    // If query is for "business_dinner" and restaurant has "business_lunch" tag AND serves dinner, it's suitable
+    if (expectedOccasion === 'business_dinner') {
+      const hasBusinessLunch = occasionTags.includes('business_lunch');
+      const servesDinner = restaurant.google_data?.servesDinner === true;
+      if (hasBusinessLunch && servesDinner) {
+        return true;
+      }
+    }
+    
+    return false;
   }).length;
   
   const occasionRate = occasionCount / output.length;
@@ -1021,6 +1046,14 @@ function scoreFilteringAccuracy({ input, output, expected }: any) {
 // ============================================================================
 
 Eval("filterService-quality-v2", {
+  // Version tracking
+  metadata: {
+    evalVersion: "v2.0",
+    description: "FilterService quality evaluation using golden dataset keywords",
+    testCount: goldenQueries.length,
+    focus: "Tests filtering accuracy with keywords from Claude parser eval",
+  },
+  
   data: transformGoldenDataset,
   
   task: async (input: any) => {
@@ -1055,13 +1088,5 @@ Eval("filterService-quality-v2", {
   ],
   
   trialCount: 1, // Run each test once (deterministic filtering)
-  
-  metadata: {
-    description: "FilterService quality evaluation using golden dataset keywords",
-    version: "2.0",
-    testCount: goldenQueries.length,
-    focus: "Tests filtering accuracy with keywords from Claude parser eval",
-    note: "Follow-up queries: Uses expected keywords (after Claude parsing) to test filtering"
-  }
 });
 

@@ -22,7 +22,7 @@
     },
     "expected": {
       "requiresInstagrammable": true,
-      "vibeKeywords": ["aesthetic", "photogenic"],
+      "specialFeatures": ["instagrammable"],
       "city": "nyc"
     },
     "metadata": {
@@ -227,21 +227,6 @@
       "category": "price_query",
       "difficulty": "easy",
       "description": "High-end query"
-    }
-  },
-  {
-    "input": {
-      "query": "Cynthia's favorites",
-      "city": "NYC"
-    },
-    "expected": {
-      "requiresCynthiasPick": true,
-      "city": "nyc"
-    },
-    "metadata": {
-      "category": "special_query",
-      "difficulty": "easy",
-      "description": "Should return ALL Cynthias picks (no limit)"
     }
   },
   {

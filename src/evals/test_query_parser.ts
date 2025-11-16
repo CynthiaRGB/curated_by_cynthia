@@ -18,7 +18,7 @@ function normalizePriceLevel(value: any): any {
       1: 'budget',
       2: 'moderate',
       3: 'upscale',
-      4: 'upscale' // 4 is also upscale (very expensive)
+      4: 'luxury' // 4 is very expensive, map to luxury ($$$$ only)
     };
     return priceMap[value] || value;
   }
@@ -29,6 +29,7 @@ function normalizePriceLevel(value: any): any {
       'budget': 1,
       'moderate': 2,
       'upscale': 3,
+      'luxury': 4,
       'any': undefined
     };
     // If mapping exists, convert to number, then back to string for comparison
@@ -40,7 +41,7 @@ function normalizePriceLevel(value: any): any {
         1: 'budget',
         2: 'moderate',
         3: 'upscale',
-        4: 'upscale'
+        4: 'luxury'
       };
       return priceMap[numValue] || value;
     }
@@ -86,6 +87,15 @@ function normalizeField(key: string, value: any): any {
  */
 Eval("Query Parser - NEW Architecture (Rate Limited)", {
   projectName: "curated-by-cynthia",
+  
+  // Prompt version tracking - update this when you change the prompt
+  metadata: {
+    promptVersion: "v2.2",
+    promptChanges: "Added all occasion types, expanded cuisine specialty examples, added flexible matching notes",
+    promptFile: "api/services/parseQuery.ts",
+    promptFunction: "buildQueryParsingPrompt",
+    testCount: goldenQueries.length,
+  },
   
   // Run tests sequentially to avoid rate limits
   maxConcurrency: 1,
