@@ -1,243 +1,39 @@
-// Braintrust evaluation for filterService
-// Tests filtering accuracy with enhanced metadata (vibes, occasions, noise, etc.)
+// Braintrust evaluation for filterService (v2)
+// Tests filtering accuracy using keywords from golden dataset
+// Uses expected keywords from test_query_parser.ts golden dataset
 
 import { Eval } from "braintrust";
 import { preFilterRestaurants } from "../../api/services/filterService";
+import { ExtractedKeywords } from "../../src/types/restaurant";
+import goldenQueries from "./golden_queries_clean.json";
 
 // ============================================================================
-// TEST CASES
+// TRANSFORM GOLDEN DATASET
 // ============================================================================
 
-const TEST_CASES = [
-  // Category 1: Basic Functionality
-  {
-    input: {
-      query: "Italian restaurant"
-    },
-    expected: {
-      mustHave: { hasResults: true }
-    },
-    metadata: { category: "basic", test: "has_results" }
-  },
-  
-  // Category 2: Location Filtering
-  {
-    input: {
-      query: "restaurant in Brooklyn"
-    },
-    expected: {
-      mustHave: { location: { borough: "brooklyn" } }
-    },
-    metadata: { category: "location", test: "borough_match" }
-  },
-  {
-    input: {
-      query: "restaurant in West Village"
-    },
-    expected: {
-      mustHave: { location: { neighborhood: "west village" } }
-    },
-    metadata: { category: "location", test: "neighborhood_match" }
-  },
-  {
-    input: {
-      query: "restaurant in Tokyo"
-    },
-    expected: {
-      mustHave: { location: { city: "tokyo" } }
-    },
-    metadata: { category: "location", test: "city_match" }
-  },
-  
-  // Category 3: Cuisine Filtering
-  {
-    input: {
-      query: "Italian restaurant"
-    },
-    expected: {
-      mustHave: { cuisine: "italian" }
-    },
-    metadata: { category: "cuisine", test: "exact_match" }
-  },
-  {
-    input: {
-      query: "Asian restaurant"
-    },
-    expected: {
-      mustHave: {
-        cuisine: "asian",
-        anyOf: ["japanese", "chinese", "korean", "thai", "vietnamese", "indian"]
+/**
+ * Transform golden dataset to filterService eval format
+ * Extracts expected keywords and uses them for filtering
+ */
+function transformGoldenDataset() {
+  return goldenQueries.map((testCase: any) => {
+    const keywords = testCase.expected as ExtractedKeywords;
+    
+    return {
+      input: {
+        query: testCase.input.query, // Keep for logging
+        keywords: keywords, // Use expected keywords from golden dataset
+        city: testCase.input.city // Keep for reference
+      },
+      expected: {}, // Empty - scorers read from input.keywords
+      metadata: {
+        ...testCase.metadata,
+        originalQuery: testCase.input.query,
+        hasContext: !!testCase.input.context // Track if this is a follow-up
       }
-    },
-    metadata: { category: "cuisine", test: "umbrella_match" }
-  },
-  {
-    input: {
-      query: "ramen restaurant"
-    },
-    expected: {
-      mustHave: { cuisine: "ramen" }
-    },
-    metadata: { category: "cuisine", test: "specific_dish" }
-  },
-  
-  // Category 4: Coffee Focus
-  {
-    input: {
-      query: "coffee shop in Tokyo"
-    },
-    expected: {
-      mustHave: {
-        coffeeFocus: true,
-        location: { city: "tokyo" }
-      }
-    },
-    metadata: { category: "focus", test: "coffee_strict" }
-  },
-  
-  // Category 5: Dessert Focus
-  {
-    input: {
-      query: "dessert place"
-    },
-    expected: {
-      mustHave: { dessertFocus: true }
-    },
-    metadata: { category: "focus", test: "dessert_strict" }
-  },
-  
-  // Category 6: Brunch Focus
-  {
-    input: {
-      query: "brunch restaurant"
-    },
-    expected: {
-      mustHave: { brunchFocus: true }
-    },
-    metadata: { category: "focus", test: "brunch_strict" }
-  },
-  
-  // Category 7: Vibe Filtering
-  {
-    input: {
-      query: "romantic restaurant"
-    },
-    expected: {
-      mustHave: { vibe: "romantic" }
-    },
-    metadata: { category: "vibe", test: "romantic" }
-  },
-  {
-    input: {
-      query: "cozy cafe"
-    },
-    expected: {
-      mustHave: { vibe: "cozy" }
-    },
-    metadata: { category: "vibe", test: "cozy" }
-  },
-  
-  // Category 8: Occasion Filtering
-  {
-    input: {
-      query: "first date restaurant"
-    },
-    expected: {
-      mustHave: { occasion: "first_date" }
-    },
-    metadata: { category: "occasion", test: "first_date" }
-  },
-  {
-    input: {
-      query: "business lunch restaurant"
-    },
-    expected: {
-      mustHave: { occasion: "business_lunch" }
-    },
-    metadata: { category: "occasion", test: "business_lunch" }
-  },
-  
-  // Category 9: Multi-Criteria (2 Keywords)
-  {
-    input: {
-      query: "Italian restaurant in Brooklyn"
-    },
-    expected: {
-      mustHave: {
-        location: { borough: "brooklyn" },
-        cuisine: "italian"
-      }
-    },
-    metadata: { category: "multi_2", test: "location_cuisine" }
-  },
-  {
-    input: {
-      query: "ramen in Manhattan"
-    },
-    expected: {
-      mustHave: {
-        location: { borough: "manhattan" },
-        cuisine: "ramen"
-      }
-    },
-    metadata: { category: "multi_2", test: "location_cuisine" }
-  },
-  
-  // Category 10: Multi-Criteria (3 Keywords)
-  {
-    input: {
-      query: "romantic Italian in Brooklyn"
-    },
-    expected: {
-      mustHave: {
-        location: { borough: "brooklyn" },
-        cuisine: "italian",
-        vibe: "romantic"
-      }
-    },
-    metadata: { category: "multi_3", test: "location_cuisine_vibe" }
-  },
-  {
-    input: {
-      query: "cozy cafe in Manhattan"
-    },
-    expected: {
-      mustHave: {
-        location: { borough: "manhattan" },
-        cuisine: "cafe",
-        vibe: "cozy"
-      }
-    },
-    metadata: { category: "multi_3", test: "location_cuisine_vibe" }
-  },
-  {
-    input: {
-      query: "business lunch Italian in Manhattan"
-    },
-    expected: {
-      mustHave: {
-        location: { borough: "manhattan" },
-        cuisine: "italian",
-        occasion: "business_lunch"
-      }
-    },
-    metadata: { category: "multi_3", test: "location_cuisine_occasion" }
-  },
-  
-  // Category 11: Price Filtering
-  {
-    input: {
-      query: "cheap Italian restaurant"
-    },
-    expected: {
-      mustHave: {
-        cuisine: "italian",
-        priceLevel: "budget"
-      }
-    },
-    metadata: { category: "price", test: "budget" }
-  }
-];
+    };
+  });
+}
 
 // ============================================================================
 // SCORERS
@@ -247,29 +43,31 @@ const TEST_CASES = [
  * Scorer 1: Has Results
  * Checks if query returns any results
  */
-function scoreHasResults({ input, output, expected }) {
-  if (!expected.mustHave?.hasResults) return null;
-  
-  const hasResults = output.length > 0;
+function scoreHasResults({ input, output, expected }: any) {
+  if (output.length === 0) {
+    return {
+      name: "has_results",
+      score: 0,
+      metadata: { resultCount: 0 }
+    };
+  }
   
   return {
     name: "has_results",
-    score: hasResults ? 1 : 0,
-    metadata: {
-      resultCount: output.length
-    }
+    score: 1,
+    metadata: { resultCount: output.length }
   };
 }
 
 /**
  * Scorer 2: Location Match
- * Checks if ALL results match the expected location
- * This must match the logic in matchesLocation() in filterService.ts
+ * Checks if ALL results match the expected location (100% threshold)
  */
-function scoreLocationMatch({ input, output, expected }) {
-  if (!expected.mustHave?.location) return null;
-  
-  const { borough, neighborhood, city } = expected.mustHave.location;
+function scoreLocationMatch({ input, output, expected }: any) {
+  const keywords = input.keywords as ExtractedKeywords;
+  if (!keywords.borough && !keywords.neighborhood && !keywords.city) {
+    return null; // Skip if no location keywords
+  }
   
   if (output.length === 0) {
     return {
@@ -279,50 +77,44 @@ function scoreLocationMatch({ input, output, expected }) {
     };
   }
   
+  const borough = keywords.borough;
+  const neighborhood = keywords.neighborhood;
+  const city = keywords.city;
+  
   // Check if ALL results match location using same logic as matchesLocation()
-  const allMatch = output.every(restaurant => {
+  const allMatch = output.every((restaurant: any) => {
     let matches = false;
     
-    // Check neighborhood match - only check neighborhood_extracted field (works for all cities: NYC, Tokyo, Seoul, Paris)
+    // Check neighborhood match
     if (neighborhood) {
       const restaurantNeighborhood = restaurant.neighborhood_extracted?.toLowerCase() || '';
-      
-      // Handle both single neighborhood and array (for union logic)
-      // Works for all cities: e.g., "Shibuya or Ginza" (Tokyo), "Gangnam or Jongno" (Seoul), "1st arrondissement or 7th arrondissement" (Paris)
       const neighborhoods = Array.isArray(neighborhood) ? neighborhood : [neighborhood];
       
-      // Match if restaurant is in ANY of the neighborhoods (union)
-      matches = neighborhoods.some(neighborhoodKeyword => {
+      matches = neighborhoods.some((neighborhoodKeyword: string) => {
         const keyword = neighborhoodKeyword.toLowerCase();
         return restaurantNeighborhood.includes(keyword) || keyword.includes(restaurantNeighborhood);
       });
+      
+      if (matches) return true; // Neighborhood takes precedence
     }
     
-    // Check borough match - simplified: only Brooklyn and Manhattan
+    // Check borough match
     if (borough) {
       const boroughKeyword = borough.toLowerCase();
       const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
       
       if (boroughKeyword === 'brooklyn' || boroughKeyword === 'bk') {
-        // Brooklyn query: only return if address contains "brooklyn"
-        if (address.includes('brooklyn')) {
-          matches = true;
-        }
+        matches = address.includes('brooklyn');
       } else if (boroughKeyword === 'manhattan') {
-        // Manhattan query: return if address does NOT contain "brooklyn" (meaning it's Manhattan)
-        if (!address.includes('brooklyn')) {
-          matches = true;
-        }
+        matches = !address.includes('brooklyn');
       }
     }
     
-    // Check city match - use restaurant.city property if available, otherwise fall back to address parsing
-    // Works consistently for all cities: NYC, Tokyo, Seoul, Paris
+    // Check city match
     if (city) {
       const restaurantCity = restaurant.city?.toLowerCase();
       const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
       
-      // Map keywords.city to expected city names (all supported cities)
       const cityMap: { [key: string]: string[] } = {
         'nyc': ['new york city', 'new york', 'nyc'],
         'tokyo': ['tokyo'],
@@ -333,7 +125,6 @@ function scoreLocationMatch({ input, output, expected }) {
       const cityKeyword = city.toLowerCase();
       const expectedCities = cityMap[cityKeyword] || [cityKeyword];
       
-      // First check restaurant.city property (more reliable for all cities)
       if (restaurantCity) {
         for (const expectedCity of expectedCities) {
           if (restaurantCity.includes(expectedCity) || expectedCity.includes(restaurantCity)) {
@@ -343,32 +134,19 @@ function scoreLocationMatch({ input, output, expected }) {
         }
       }
       
-      // Fall back to address parsing if restaurant.city didn't match (same pattern for all cities)
       if (!matches) {
         switch (cityKeyword) {
           case 'nyc':
-            // For NYC queries, show all restaurants (both Manhattan and Brooklyn)
-            if (address.includes('new york') || address.includes('nyc') || address.includes('brooklyn')) {
-              matches = true;
-            }
+            matches = address.includes('new york') || address.includes('nyc') || address.includes('brooklyn');
             break;
           case 'tokyo':
-            // For Tokyo: match addresses containing "tokyo" or "japan"
-            if (address.includes('tokyo') || address.includes('japan')) {
-              matches = true;
-            }
+            matches = address.includes('tokyo') || address.includes('japan');
             break;
           case 'seoul':
-            // For Seoul: match addresses containing "seoul" or "korea"
-            if (address.includes('seoul') || address.includes('korea')) {
-              matches = true;
-            }
+            matches = address.includes('seoul') || address.includes('korea');
             break;
           case 'paris':
-            // For Paris: match addresses containing "paris" or "france"
-            if (address.includes('paris') || address.includes('france')) {
-              matches = true;
-            }
+            matches = address.includes('paris') || address.includes('france');
             break;
         }
       }
@@ -390,14 +168,13 @@ function scoreLocationMatch({ input, output, expected }) {
 
 /**
  * Scorer 3: Cuisine Match
- * Checks if results match the expected cuisine (70%+ threshold)
- * This must match the logic in matchesCuisine() in filterService.ts
+ * Checks if results match the expected cuisine (85% threshold for fuzzy matching)
  */
-function scoreCuisineMatch({ input, output, expected }) {
-  if (!expected.mustHave?.cuisine) return null;
-  
-  const expectedCuisine = expected.mustHave.cuisine.toLowerCase();
-  const anyOf = expected.mustHave.anyOf?.map(c => c.toLowerCase()) || [];
+function scoreCuisineMatch({ input, output, expected }: any) {
+  const keywords = input.keywords as ExtractedKeywords;
+  if (!keywords.cuisineType && !keywords.cuisineSpecialty) {
+    return null;
+  }
   
   if (output.length === 0) {
     return {
@@ -407,19 +184,19 @@ function scoreCuisineMatch({ input, output, expected }) {
     };
   }
   
-  // Normalize accents and handle plural/singular variations for matching
-  // e.g., "crepes" should match "crepe", "crêpe", "crêperie"
+  const expectedCuisine = keywords.cuisineType?.toLowerCase() || '';
+  
+  // Normalize accents and handle plural/singular variations
   const normalizeForMatching = (text: string): string => {
     return text
-      .normalize('NFD') // Decompose characters with diacritics
-      .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
-      .replace(/s$/, ''); // Remove trailing 's' for plural handling
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/s$/, '');
   };
   
   const normalizedCuisineKeyword = normalizeForMatching(expectedCuisine);
   
   // Asian cuisines that should match when user searches for "asian"
-  // Must match ASIAN_CUISINES array in filterService.ts exactly
   const ASIAN_CUISINES = [
     'japanese', 'chinese', 'korean', 'thai', 'vietnamese', 'indian',
     'ramen', 'sushi', 'sashimi', 'dim sum', 'dimsum', 'hot pot', 
@@ -430,19 +207,18 @@ function scoreCuisineMatch({ input, output, expected }) {
   ];
   
   // Count matches using the same logic as matchesCuisine()
-  const matchCount = output.filter(restaurant => {
+  const matchCount = output.filter((restaurant: any) => {
     const primaryType = restaurant.google_data?.primaryType?.toLowerCase() || '';
     const specificType = restaurant.specific_type?.toLowerCase() || '';
-    const types = restaurant.google_data?.types?.map(t => t.toLowerCase()) || [];
+    const types = restaurant.google_data?.types?.map((t: string) => t.toLowerCase()) || [];
     const restaurantName = restaurant.google_data?.displayName?.text?.toLowerCase() || '';
     const summary = restaurant.google_data?.generativeSummary?.overview?.text?.toLowerCase() || '';
     const reviewSummary = restaurant.google_data?.reviewSummary?.text?.text?.toLowerCase() || '';
     const editorialSummary = restaurant.google_data?.editorialSummary?.text?.toLowerCase() || '';
     
-    // For Asian umbrella, check if it's any Asian cuisine (matches anyOf logic)
-    if (anyOf.length > 0 || expectedCuisine === 'asian') {
-      const cuisinesToCheck = anyOf.length > 0 ? anyOf : ASIAN_CUISINES;
-      return cuisinesToCheck.some(cuisine => {
+    // For Asian umbrella
+    if (expectedCuisine === 'asian') {
+      return ASIAN_CUISINES.some(cuisine => {
         const normalizedCuisine = normalizeForMatching(cuisine);
         return primaryType.includes(cuisine) ||
                specificType.includes(cuisine) ||
@@ -471,7 +247,7 @@ function scoreCuisineMatch({ input, output, expected }) {
     // Special handling for coffee/cafe - strict metadata-only matching
     if (expectedCuisine === 'coffee shop' || expectedCuisine === 'coffee' || expectedCuisine === 'cafe') {
       const hasCoffeePrimaryType = primaryType === 'coffee_shop' || primaryType === 'cafe';
-      const hasCoffeeInTypes = types.some(t => 
+      const hasCoffeeInTypes = types.some((t: string) => 
         t === 'coffee_shop' || 
         t === 'cafe' || 
         t.toLowerCase() === 'coffee_shop' || 
@@ -488,7 +264,7 @@ function scoreCuisineMatch({ input, output, expected }) {
                                      primaryType === 'pastry_shop' ||
                                      primaryType === 'confectionery' ||
                                      primaryType === 'dessert_restaurant';
-      const hasDessertInTypes = types.some(t => 
+      const hasDessertInTypes = types.some((t: string) => 
         t === 'bakery' || 
         t === 'dessert_shop' || 
         t === 'ice_cream_shop' ||
@@ -505,15 +281,13 @@ function scoreCuisineMatch({ input, output, expected }) {
       return hasDessertPrimaryType || hasDessertInTypes;
     }
     
-    // Check restaurant name for dish-specific keywords (e.g., "yakitori", "katsu")
-    // This is important because dish-specific restaurants often have the dish in their name
-    // but their type might just be "japanese_restaurant"
+    // Check restaurant name
     if (restaurantName.includes(expectedCuisine) || 
         normalizeForMatching(restaurantName).includes(normalizedCuisineKeyword)) {
       return true;
     }
     
-    // Check restaurant summary/description for mentions (helps with dish-specific searches)
+    // Check summaries
     if (summary.includes(expectedCuisine) || 
         reviewSummary.includes(expectedCuisine) || 
         editorialSummary.includes(expectedCuisine) ||
@@ -523,37 +297,39 @@ function scoreCuisineMatch({ input, output, expected }) {
       return true;
     }
     
-    // Standard type matching (also check normalized versions)
+    // Standard type matching
     return specificType.includes(expectedCuisine) ||
            primaryType.includes(expectedCuisine) ||
-           types.some(t => t.includes(expectedCuisine)) ||
+           types.some((t: string) => t.includes(expectedCuisine)) ||
            normalizeForMatching(specificType).includes(normalizedCuisineKeyword) ||
            normalizeForMatching(primaryType).includes(normalizedCuisineKeyword) ||
-           types.some(t => normalizeForMatching(t).includes(normalizedCuisineKeyword));
+           types.some((t: string) => normalizeForMatching(t).includes(normalizedCuisineKeyword));
   }).length;
   
   const cuisineRate = matchCount / output.length;
   
   return {
     name: "cuisine_match",
-    score: cuisineRate >= 0.7 ? 1 : 0,
+    score: cuisineRate >= 0.85 ? 1 : 0, // 85% threshold for fuzzy matching
     metadata: {
       cuisineRate,
       matchCount,
       totalResults: output.length,
       expectedCuisine,
-      threshold: 0.7
+      threshold: 0.85
     }
   };
 }
 
 /**
  * Scorer 4: Coffee Focus
- * Checks if results are primarily cafes/coffee shops (80%+ threshold)
- * This must match the strict metadata-only matching logic in matchesCuisine() in filterService.ts
+ * Checks if results are primarily cafes/coffee shops (95% threshold)
  */
-function scoreCoffeeFocus({ input, output, expected }) {
-  if (!expected.mustHave?.coffeeFocus) return null;
+function scoreCoffeeFocus({ input, output, expected }: any) {
+  const keywords = input.keywords as ExtractedKeywords;
+  if (!keywords.requiresCoffeeFocus) {
+    return null;
+  }
   
   if (output.length === 0) {
     return {
@@ -563,14 +339,12 @@ function scoreCoffeeFocus({ input, output, expected }) {
     };
   }
   
-  const cafeCount = output.filter(restaurant => {
+  const cafeCount = output.filter((restaurant: any) => {
     const primaryType = restaurant.google_data?.primaryType?.toLowerCase() || '';
-    const types = restaurant.google_data?.types?.map(t => t.toLowerCase()) || [];
+    const types = restaurant.google_data?.types?.map((t: string) => t.toLowerCase()) || [];
     
-    // Strict metadata-only matching (no name matching to avoid false positives)
-    // Must have 'coffee_shop' or 'cafe' in either primaryType OR types array
     const hasCoffeePrimaryType = primaryType === 'coffee_shop' || primaryType === 'cafe';
-    const hasCoffeeInTypes = types.some(t => 
+    const hasCoffeeInTypes = types.some((t: string) => 
       t === 'coffee_shop' || 
       t === 'cafe' || 
       t.toLowerCase() === 'coffee_shop' || 
@@ -584,23 +358,25 @@ function scoreCoffeeFocus({ input, output, expected }) {
   
   return {
     name: "coffee_focus",
-    score: cafeRate >= 0.8 ? 1 : 0,
+    score: cafeRate >= 0.95 ? 1 : 0, // 95% threshold
     metadata: {
       cafeRate,
       cafeCount,
       totalResults: output.length,
-      threshold: 0.8
+      threshold: 0.95
     }
   };
 }
 
 /**
  * Scorer 5: Dessert Focus
- * Checks if results serve dessert or are dessert-focused (80%+ threshold)
- * This must match the strict metadata-only matching logic in matchesCuisine() in filterService.ts
+ * Checks if results serve dessert or are dessert-focused (95% threshold)
  */
-function scoreDessertFocus({ input, output, expected }) {
-  if (!expected.mustHave?.dessertFocus) return null;
+function scoreDessertFocus({ input, output, expected }: any) {
+  const keywords = input.keywords as ExtractedKeywords;
+  if (!keywords.requiresDessertFocus) {
+    return null;
+  }
   
   if (output.length === 0) {
     return {
@@ -610,19 +386,17 @@ function scoreDessertFocus({ input, output, expected }) {
     };
   }
   
-  const dessertCount = output.filter(restaurant => {
+  const dessertCount = output.filter((restaurant: any) => {
     const primaryType = restaurant.google_data?.primaryType?.toLowerCase() || '';
-    const types = restaurant.google_data?.types?.map(t => t.toLowerCase()) || [];
+    const types = restaurant.google_data?.types?.map((t: string) => t.toLowerCase()) || [];
     
-    // Strict metadata-only matching (no name matching to avoid false positives)
-    // Must have dessert-related type in either primaryType OR types array
     const hasDessertPrimaryType = primaryType === 'bakery' || 
                                    primaryType === 'dessert_shop' || 
                                    primaryType === 'ice_cream_shop' ||
                                    primaryType === 'pastry_shop' ||
                                    primaryType === 'confectionery' ||
                                    primaryType === 'dessert_restaurant';
-    const hasDessertInTypes = types.some(t => 
+    const hasDessertInTypes = types.some((t: string) => 
       t === 'bakery' || 
       t === 'dessert_shop' || 
       t === 'ice_cream_shop' ||
@@ -644,23 +418,25 @@ function scoreDessertFocus({ input, output, expected }) {
   
   return {
     name: "dessert_focus",
-    score: dessertRate >= 0.8 ? 1 : 0,
+    score: dessertRate >= 0.95 ? 1 : 0, // 95% threshold
     metadata: {
       dessertRate,
       dessertCount,
       totalResults: output.length,
-      threshold: 0.8
+      threshold: 0.95
     }
   };
 }
 
 /**
  * Scorer 6: Brunch Focus
- * Checks if results are brunch-focused (70%+ threshold)
- * This must match the logic in matchesMealType() in filterService.ts for brunch queries
+ * Checks if results are brunch-focused (85% threshold)
  */
-function scoreBrunchFocus({ input, output, expected }) {
-  if (!expected.mustHave?.brunchFocus) return null;
+function scoreBrunchFocus({ input, output, expected }: any) {
+  const keywords = input.keywords as ExtractedKeywords;
+  if (keywords.mealType !== 'brunch') {
+    return null;
+  }
   
   if (output.length === 0) {
     return {
@@ -670,27 +446,21 @@ function scoreBrunchFocus({ input, output, expected }) {
     };
   }
   
-  const brunchCount = output.filter(restaurant => {
-    // Basic check: restaurant must serve brunch
+  const brunchCount = output.filter((restaurant: any) => {
     if (!restaurant.google_data?.servesBrunch) {
       return false;
     }
     
-    // Strict brunch filtering (prioritize metadata fields, then fallback)
-    
-    // Primary criteria: Check metadata indicators (most reliable)
-    const types = restaurant.google_data?.types?.map(t => t.toLowerCase()) || [];
+    const types = restaurant.google_data?.types?.map((t: string) => t.toLowerCase()) || [];
     const hasBrunchRestaurantType = types.includes('brunch_restaurant');
     const occasionTags = restaurant.occasion_tags || [];
     const hasWeekendBrunchTag = occasionTags.includes('weekend_brunch');
     
-    // If primary criteria met, include immediately
     if (hasBrunchRestaurantType || hasWeekendBrunchTag) {
       return true;
     }
     
-    // Fallback criteria: Check brunch hours and mentions (less weight)
-    const googleData = restaurant.google_data as any; // Type assertion needed for secondary hours
+    const googleData = restaurant.google_data as any;
     const hasBrunchHours = googleData.currentSecondaryOpeningHours?.some(
       (hours: any) => hours.secondaryHoursType === 'BRUNCH'
     ) || googleData.secondaryOpeningHours?.some(
@@ -707,37 +477,86 @@ function scoreBrunchFocus({ input, output, expected }) {
                           reviewSummary.includes('brunch') ||
                           editorialSummary.includes('brunch');
     
-    // If fallback criteria met, include
-    if (hasBrunchHours || mentionsBrunch) {
-      return true;
-    }
-    
-    // If none of the criteria are met, exclude (not a brunch-focused restaurant)
-    return false;
+    return hasBrunchHours || mentionsBrunch;
   }).length;
   
   const brunchRate = brunchCount / output.length;
   
   return {
     name: "brunch_focus",
-    score: brunchRate >= 0.7 ? 1 : 0,
+    score: brunchRate >= 0.85 ? 1 : 0, // 85% threshold
     metadata: {
       brunchRate,
       brunchCount,
       totalResults: output.length,
-      threshold: 0.7
+      threshold: 0.85
     }
   };
 }
 
 /**
- * Scorer 7: Vibe Match
- * Checks if results match expected vibe (70%+ threshold)
+ * Scorer 7: Meal Type Match (NEW)
+ * Checks if results match expected meal type (95% threshold)
+ * Handles: breakfast, lunch, dinner, late-night
  */
-function scoreVibeMatch({ input, output, expected }) {
-  if (!expected.mustHave?.vibe) return null;
+function scoreMealTypeMatch({ input, output, expected }: any) {
+  const keywords = input.keywords as ExtractedKeywords;
+  if (!keywords.mealType || keywords.mealType === 'brunch') {
+    return null; // Brunch handled by scoreBrunchFocus
+  }
   
-  const expectedVibe = expected.mustHave.vibe.toLowerCase();
+  if (output.length === 0) {
+    return {
+      name: "meal_type_match",
+      score: 0,
+      metadata: { error: "No results to check" }
+    };
+  }
+  
+  const mealType = keywords.mealType.toLowerCase();
+  
+  const matchCount = output.filter((restaurant: any) => {
+    if (mealType === 'breakfast') {
+      return restaurant.google_data?.servesBreakfast === true;
+    }
+    if (mealType === 'lunch') {
+      return restaurant.google_data?.servesLunch === true;
+    }
+    if (mealType === 'dinner') {
+      return restaurant.google_data?.servesDinner === true;
+    }
+    if (mealType === 'late-night' || mealType === 'late night') {
+      // Check if restaurant serves late night (might need to check hours or other indicators)
+      // For now, if it serves dinner, it likely serves late night
+      return restaurant.google_data?.servesDinner === true;
+    }
+    return true;
+  }).length;
+  
+  const mealRate = matchCount / output.length;
+  
+  return {
+    name: "meal_type_match",
+    score: mealRate >= 0.95 ? 1 : 0, // 95% threshold
+    metadata: {
+      mealRate,
+      matchCount,
+      totalResults: output.length,
+      expectedMealType: mealType,
+      threshold: 0.95
+    }
+  };
+}
+
+/**
+ * Scorer 8: Vibe Match
+ * Checks if results match expected vibe (95% threshold)
+ */
+function scoreVibeMatch({ input, output, expected }: any) {
+  const keywords = input.keywords as ExtractedKeywords;
+  if (!keywords.vibeKeywords || keywords.vibeKeywords.length === 0) {
+    return null;
+  }
   
   if (output.length === 0) {
     return {
@@ -747,34 +566,40 @@ function scoreVibeMatch({ input, output, expected }) {
     };
   }
   
-  const vibeCount = output.filter(restaurant => {
+  const expectedVibes = keywords.vibeKeywords.map((v: string) => v.toLowerCase());
+  
+  const vibeCount = output.filter((restaurant: any) => {
     const vibeTags = restaurant.vibe_tags || [];
-    return vibeTags.includes(expectedVibe);
+    const restaurantVibes = vibeTags.map((v: string) => v.toLowerCase());
+    
+    // Check if restaurant has ANY of the expected vibes
+    return expectedVibes.some(vibe => restaurantVibes.includes(vibe));
   }).length;
   
   const vibeRate = vibeCount / output.length;
   
   return {
     name: "vibe_match",
-    score: vibeRate >= 0.7 ? 1 : 0,
+    score: vibeRate >= 0.95 ? 1 : 0, // 95% threshold
     metadata: {
       vibeRate,
       vibeCount,
       totalResults: output.length,
-      expectedVibe,
-      threshold: 0.7
+      expectedVibes,
+      threshold: 0.95
     }
   };
 }
 
 /**
- * Scorer 8: Occasion Match
- * Checks if results match expected occasion (70%+ threshold)
+ * Scorer 9: Occasion Match
+ * Checks if results match expected occasion (95% threshold with interchangeable types)
  */
-function scoreOccasionMatch({ input, output, expected }) {
-  if (!expected.mustHave?.occasion) return null;
-  
-  const expectedOccasion = expected.mustHave.occasion;
+function scoreOccasionMatch({ input, output, expected }: any) {
+  const keywords = input.keywords as ExtractedKeywords;
+  if (!keywords.occasionType) {
+    return null;
+  }
   
   if (output.length === 0) {
     return {
@@ -784,34 +609,50 @@ function scoreOccasionMatch({ input, output, expected }) {
     };
   }
   
-  const occasionCount = output.filter(restaurant => {
+  const expectedOccasion = keywords.occasionType;
+  
+  // Interchangeable occasion types (same as test_query_parser.ts)
+  const interchangeableOccasions: { [key: string]: string[] } = {
+    'anniversary': ['date_night', 'special_occasion'],
+    'date_night': ['anniversary', 'special_occasion'],
+    'special_occasion': ['anniversary', 'date_night', 'celebration'],
+    'celebration': ['special_occasion']
+  };
+  
+  const acceptableOccasions = new Set([expectedOccasion]);
+  const interchangeable = interchangeableOccasions[expectedOccasion] || [];
+  interchangeable.forEach(occ => acceptableOccasions.add(occ));
+  
+  const occasionCount = output.filter((restaurant: any) => {
     const occasionTags = restaurant.occasion_tags || [];
-    return occasionTags.includes(expectedOccasion);
+    return occasionTags.some(tag => acceptableOccasions.has(tag));
   }).length;
   
   const occasionRate = occasionCount / output.length;
   
   return {
     name: "occasion_match",
-    score: occasionRate >= 0.7 ? 1 : 0,
+    score: occasionRate >= 0.95 ? 1 : 0, // 95% threshold
     metadata: {
       occasionRate,
       occasionCount,
       totalResults: output.length,
       expectedOccasion,
-      threshold: 0.7
+      acceptableOccasions: Array.from(acceptableOccasions),
+      threshold: 0.95
     }
   };
 }
 
 /**
- * Scorer 9: Price Match
- * Checks if results match expected price level (70%+ threshold)
+ * Scorer 10: Price Match
+ * Checks if results match expected price level (95% threshold)
  */
-function scorePriceMatch({ input, output, expected }) {
-  if (!expected.mustHave?.priceLevel) return null;
-  
-  const expectedPrice = expected.mustHave.priceLevel;
+function scorePriceMatch({ input, output, expected }: any) {
+  const keywords = input.keywords as ExtractedKeywords;
+  if (!keywords.priceLevel || keywords.priceLevel === 'any') {
+    return null;
+  }
   
   if (output.length === 0) {
     return {
@@ -821,7 +662,9 @@ function scorePriceMatch({ input, output, expected }) {
     };
   }
   
-  const priceCount = output.filter(restaurant => {
+  const expectedPrice = keywords.priceLevel;
+  
+  const priceCount = output.filter((restaurant: any) => {
     const priceDisplay = restaurant.price_display;
     
     if (!priceDisplay || priceDisplay === 'N/A') {
@@ -844,13 +687,79 @@ function scorePriceMatch({ input, output, expected }) {
   
   return {
     name: "price_match",
-    score: priceRate >= 0.7 ? 1 : 0,
+    score: priceRate >= 0.95 ? 1 : 0, // 95% threshold
     metadata: {
       priceRate,
       priceCount,
       totalResults: output.length,
       expectedPrice,
-      threshold: 0.7
+      threshold: 0.95
+    }
+  };
+}
+
+/**
+ * Scorer 11: Instagrammable Match (NEW)
+ * Checks if results are instagrammable (100% threshold - boolean filter)
+ */
+function scoreInstagrammableMatch({ input, output, expected }: any) {
+  const keywords = input.keywords as ExtractedKeywords;
+  if (!keywords.requiresInstagrammable) {
+    return null;
+  }
+  
+  if (output.length === 0) {
+    return {
+      name: "instagrammable_match",
+      score: 0,
+      metadata: { error: "No results to check" }
+    };
+  }
+  
+  const allMatch = output.every((restaurant: any) => {
+    const specialFeatures = restaurant.special_features || [];
+    return specialFeatures.includes('instagrammable');
+  });
+  
+  return {
+    name: "instagrammable_match",
+    score: allMatch ? 1 : 0, // 100% threshold (boolean filter)
+    metadata: {
+      totalResults: output.length,
+      allMatch
+    }
+  };
+}
+
+/**
+ * Scorer 12: Michelin Match (NEW)
+ * Checks if results have Michelin recognition (100% threshold - boolean filter)
+ */
+function scoreMichelinMatch({ input, output, expected }: any) {
+  const keywords = input.keywords as ExtractedKeywords;
+  if (!keywords.requiresMichelin) {
+    return null;
+  }
+  
+  if (output.length === 0) {
+    return {
+      name: "michelin_match",
+      score: 0,
+      metadata: { error: "No results to check" }
+    };
+  }
+  
+  const allMatch = output.every((restaurant: any) => {
+    const accolades = restaurant.accolades_tags || [];
+    return accolades.some((tag: string) => tag.toLowerCase().includes('michelin'));
+  });
+  
+  return {
+    name: "michelin_match",
+    score: allMatch ? 1 : 0, // 100% threshold (boolean filter)
+    metadata: {
+      totalResults: output.length,
+      allMatch
     }
   };
 }
@@ -859,13 +768,22 @@ function scorePriceMatch({ input, output, expected }) {
 // EVAL CONFIGURATION
 // ============================================================================
 
-Eval("filterService-quality", {
+Eval("filterService-quality-v2", {
   projectName: "curated-by-cynthia",
-  data: TEST_CASES,
+  data: transformGoldenDataset,
   
-  task: async (input) => {
-    // Call filterService with the query
-    const results = preFilterRestaurants(input.query);
+  task: async (input: any) => {
+    // Use keywords from golden dataset (expected keywords from Claude parsing)
+    // For follow-up queries, these are already merged (previous + new keywords)
+    const keywords = input.keywords as ExtractedKeywords;
+    const results = preFilterRestaurants(input.query, keywords);
+    
+    // Limit to 10 results (except Cynthia's favorites)
+    const isCynthiasFavorites = keywords.requiresCynthiasPick === true;
+    if (!isCynthiasFavorites && results.length > 10) {
+      return results.slice(0, 10);
+    }
+    
     return results;
   },
   
@@ -876,17 +794,22 @@ Eval("filterService-quality", {
     scoreCoffeeFocus,
     scoreDessertFocus,
     scoreBrunchFocus,
+    scoreMealTypeMatch, // NEW
     scoreVibeMatch,
     scoreOccasionMatch,
-    scorePriceMatch
+    scorePriceMatch,
+    scoreInstagrammableMatch, // NEW
+    scoreMichelinMatch // NEW
   ],
   
   trialCount: 1, // Run each test once (deterministic filtering)
   
   metadata: {
-    description: "FilterService quality evaluation with enhanced metadata",
+    description: "FilterService quality evaluation using golden dataset keywords",
     version: "2.0",
-    testCount: TEST_CASES.length,
-    focus: "Accuracy over count - all results must be correct"
+    testCount: goldenQueries.length,
+    focus: "Tests filtering accuracy with keywords from Claude parser eval",
+    note: "Follow-up queries: Uses expected keywords (after Claude parsing) to test filtering"
   }
 });
+
