@@ -10,13 +10,11 @@ let restaurantsByCityCache: Map<string, Restaurant[]> | null = null;
 /**
  * Lazy load restaurants data (cached after first load)
  */
-function getRestaurants(): Restaurant[] {
+async function getRestaurantsAsync(): Promise<Restaurant[]> {
   if (restaurantsCache === null) {
     const startTime = Date.now();
     // Import at runtime to avoid loading on module initialization
-    // Using require for serverless compatibility
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { restaurantData } = require('../data/latest_277.js');
+    const { restaurantData } = await import('../data/latest_277.js');
     restaurantsCache = (restaurantData as any).places || (restaurantData as any) || [];
     const loadTime = Date.now() - startTime;
     console.log(`[Performance] Loaded ${restaurantsCache.length} restaurants in ${loadTime}ms`);
@@ -25,10 +23,22 @@ function getRestaurants(): Restaurant[] {
 }
 
 /**
+ * Synchronous version - throws error if cache not initialized
+ * Use getRestaurantsAsync() for async contexts
+ */
+function getRestaurants(): Restaurant[] {
+  if (restaurantsCache === null) {
+    throw new Error('Restaurants cache not initialized. Call getRestaurantsAsync() first or ensure preFilterRestaurants is called.');
+  }
+  return restaurantsCache;
+}
+
+/**
  * Get restaurants filtered by city (cached by city)
  * This dramatically reduces the dataset size before other filters
  */
-function getRestaurantsByCity(city?: string): Restaurant[] {
+async function getRestaurantsByCityAsync(city?: string): Promise<Restaurant[]> {
+  await getRestaurantsAsync();
   if (!city) {
     return getRestaurants();
   }
@@ -950,7 +960,7 @@ export function isCityPromptItem(query: string): boolean {
  * @param query - The user's query string
  * @param keywords - Required pre-parsed keywords from Claude API
  */
-export function preFilterRestaurants(query: string, keywords: ExtractedKeywords): Restaurant[] {
+export async function preFilterRestaurants(query: string, keywords: ExtractedKeywords): Promise<Restaurant[]> {
   const filterStartTime = Date.now();
   try {
     console.log('Pre-filtering restaurants for query:', query);
@@ -961,10 +971,12 @@ export function preFilterRestaurants(query: string, keywords: ExtractedKeywords)
     // OPTIMIZATION: Filter by city FIRST to dramatically reduce dataset size
     // This is the most selective filter and should be applied early
     const cityFilterStartTime = Date.now();
+    // Ensure restaurants are loaded
+    await getRestaurantsAsync();
     let restaurantsToFilter = getRestaurants();
     
     if (extractedKeywords.city) {
-      restaurantsToFilter = getRestaurantsByCity(extractedKeywords.city);
+      restaurantsToFilter = await getRestaurantsByCityAsync(extractedKeywords.city);
       const cityFilterTime = Date.now() - cityFilterStartTime;
       console.log(`[Performance] City filtering took ${cityFilterTime}ms`);
     }

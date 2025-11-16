@@ -363,7 +363,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log(`[API] Using query for filtering: "${queryToFilter}" (original query: "${query}")`);
     console.log('[API] Parsed keywords being passed to filterService:', JSON.stringify(parsedKeywords, null, 2));
     const filterStartTime = Date.now();
-    let filteredRestaurants = preFilterRestaurants(queryToFilter, parsedKeywords);
+    let filteredRestaurants = await preFilterRestaurants(queryToFilter, parsedKeywords);
     const filterTime = Date.now() - filterStartTime;
     console.log(`[Performance] Filter service took ${filterTime}ms and returned ${filteredRestaurants.length} restaurants`);
 

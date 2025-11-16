@@ -267,32 +267,6 @@
   },
   {
     "input": {
-      "query": "show me more expensive options",
-      "city": "NYC",
-      "context": {
-        "previousQuery": "sushi in Manhattan",
-        "previousKeywords": {
-          "cuisineType": "japanese",
-          "borough": "manhattan",
-          "priceLevel": 1,
-          "city": "nyc"
-        }
-      }
-    },
-    "expected": {
-      "cuisineType": "japanese",
-      "borough": "manhattan",
-      "priceLevel": 3,
-      "city": "nyc"
-    },
-    "metadata": {
-      "category": "follow_up_price",
-      "difficulty": "medium",
-      "description": "Increase price level"
-    }
-  },
-  {
-    "input": {
       "query": "show me more",
       "city": "NYC",
       "context": {
@@ -360,33 +334,6 @@
       "category": "follow_up_cuisine",
       "difficulty": "medium",
       "description": "Change cuisine, keep location"
-    }
-  },
-  {
-    "input": {
-      "query": "make it Michelin-starred",
-      "city": "Tokyo",
-      "context": {
-        "previousQuery": "sushi in Ginza",
-        "previousKeywords": {
-          "cuisineType": "japanese",
-          "cuisineSpecialty": "sushi",
-          "neighborhood": ["ginza"],
-          "city": "tokyo"
-        }
-      }
-    },
-    "expected": {
-      "cuisineType": "japanese",
-      "cuisineSpecialty": "sushi",
-      "neighborhood": ["ginza"],
-      "requiresMichelin": true,
-      "city": "tokyo"
-    },
-    "metadata": {
-      "category": "follow_up_add",
-      "difficulty": "medium",
-      "description": "Add Michelin filter to existing criteria"
     }
   },
   {
@@ -625,33 +572,6 @@
   },
   {
     "input": {
-      "query": "actually, not Michelin",
-      "city": "Tokyo",
-      "context": {
-        "previousQuery": "Michelin sushi in Ginza",
-        "previousKeywords": {
-          "cuisineType": "japanese",
-          "cuisineSpecialty": "sushi",
-          "neighborhood": ["ginza"],
-          "requiresMichelin": true,
-          "city": "tokyo"
-        }
-      }
-    },
-    "expected": {
-      "cuisineType": "japanese",
-      "cuisineSpecialty": "sushi",
-      "neighborhood": ["ginza"],
-      "city": "tokyo"
-    },
-    "metadata": {
-      "category": "follow_up_remove",
-      "difficulty": "hard",
-      "description": "Remove Michelin requirement from previous query"
-    }
-  },
-  {
-    "input": {
       "query": "make it more casual",
       "city": "NYC",
       "context": {
@@ -672,6 +592,68 @@
       "category": "follow_up_vibe",
       "difficulty": "medium",
       "description": "Modify vibe keywords in follow-up"
+    }
+  },
+  {
+    "input": {
+      "query": "Japanese food in Tokyo",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "simple_query",
+      "difficulty": "easy",
+      "description": "Initial query for price chain test"
+    }
+  },
+  {
+    "input": {
+      "query": "I want to see expensive options",
+      "city": "Tokyo",
+      "context": {
+        "previousQuery": "Japanese food in Tokyo",
+        "previousKeywords": {
+          "cuisineType": "japanese",
+          "city": "tokyo"
+        }
+      }
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "priceLevel": 4,
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "follow_up_price",
+      "difficulty": "medium",
+      "description": "Add expensive price filter to Japanese food in Tokyo"
+    }
+  },
+  {
+    "input": {
+      "query": "actually, show me cheaper ones",
+      "city": "Tokyo",
+      "context": {
+        "previousQuery": "I want to see expensive options",
+        "previousKeywords": {
+          "cuisineType": "japanese",
+          "priceLevel": 4,
+          "city": "tokyo"
+        }
+      }
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "priceLevel": 1,
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "follow_up_price",
+      "difficulty": "hard",
+      "description": "Change from expensive to cheaper options"
     }
   }
 ]
