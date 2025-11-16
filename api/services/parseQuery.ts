@@ -37,9 +37,14 @@ This is a follow-up question. The user wants to modify or refine their previous 
         prompt += `\n\nThe user wants to REMOVE Cynthia's pick requirement. Set requiresCynthiasPick to null (or omit it from the response) to remove this filter. Keep all other criteria from the previous search.`;
       }
     } else {
-      prompt += `\n\nMerge any new criteria from the current query with the previous keywords. If the current query mentions something new (like a different price level, cuisine, or location), update that field. Otherwise, keep the previous values.
+      prompt += `\n\nMerge any new criteria from the current query with the previous keywords. 
       
-IMPORTANT: If the user explicitly says "not X" or "remove X" (e.g., "not Michelin", "remove the Michelin requirement"), you should REMOVE that field by setting it to null or omitting it from the response. Do NOT set it to false - that means the filter is still active but set to false. Setting to null/undefined means the filter is removed entirely.`;
+CRITICAL RULES FOR FOLLOW-UP QUERIES:
+1. If the current query mentions something new or different (like a different price level, cuisine, or location), update ONLY that field.
+2. PRESERVE ALL OTHER FIELDS from the previous keywords - do NOT set them to null or undefined. Copy them exactly as they were in the previous keywords.
+3. If the user explicitly says "not X" or "remove X" (e.g., "not Michelin", "remove the Michelin requirement"), you should REMOVE that field by setting it to null or omitting it from the response. Do NOT set it to false - that means the filter is still active but set to false. Setting to null/undefined means the filter is removed entirely.
+
+Example: If previous keywords had priceLevel: 2 and the new query only changes location, you MUST include priceLevel: 2 in your response (preserve it from previous).`;
     }
   }
 
