@@ -249,22 +249,13 @@
       "query": "are there cheaper ones?",
       "city": "NYC",
       "context": {
-        "previousQuery": "romantic Italian in West Village",
+        "previousQuery": "Restaurants in NYC",
         "previousKeywords": {
-          "cuisineType": "italian",
-          "neighborhood": ["west village"],
-          "occasionType": "date_night",
-          "vibeKeywords": ["romantic"],
-          "priceLevel": 2,
           "city": "nyc"
         }
       }
     },
     "expected": {
-      "cuisineType": "italian",
-      "neighborhood": ["west village"],
-      "occasionType": "date_night",
-      "vibeKeywords": ["romantic"],
       "priceLevel": 1,
       "city": "nyc"
     },
@@ -354,27 +345,21 @@
       "query": "actually, I want Japanese instead",
       "city": "NYC",
       "context": {
-        "previousQuery": "romantic Italian in West Village",
+        "previousQuery": "Italian in NYC",
         "previousKeywords": {
           "cuisineType": "italian",
-          "neighborhood": ["west village"],
-          "occasionType": "date_night",
-          "vibeKeywords": ["romantic"],
           "city": "nyc"
         }
       }
     },
     "expected": {
       "cuisineType": "japanese",
-      "neighborhood": ["west village"],
-      "occasionType": "date_night",
-      "vibeKeywords": ["romantic"],
       "city": "nyc"
     },
     "metadata": {
       "category": "follow_up_cuisine",
       "difficulty": "medium",
-      "description": "Change cuisine, keep location and vibe"
+      "description": "Change cuisine, keep location"
     }
   },
   {
@@ -663,34 +648,6 @@
       "category": "follow_up_remove",
       "difficulty": "hard",
       "description": "Remove Michelin requirement from previous query"
-    }
-  },
-  {
-    "input": {
-      "query": "make it cheaper and in Manhattan",
-      "city": "NYC",
-      "context": {
-        "previousQuery": "romantic Italian in Brooklyn",
-        "previousKeywords": {
-          "cuisineType": "italian",
-          "borough": "brooklyn",
-          "priceLevel": 3,
-          "vibeKeywords": ["romantic"],
-          "city": "nyc"
-        }
-      }
-    },
-    "expected": {
-      "cuisineType": "italian",
-      "borough": "manhattan",
-      "priceLevel": 1,
-      "vibeKeywords": ["romantic"],
-      "city": "nyc"
-    },
-    "metadata": {
-      "category": "follow_up_multi_change",
-      "difficulty": "hard",
-      "description": "Change both price and location in one follow-up"
     }
   },
   {

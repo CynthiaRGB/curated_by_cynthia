@@ -127,13 +127,10 @@ function scoreLocationMatch({ input, output, expected }: any) {
     // Check borough match
     if (borough) {
       const boroughKeyword = borough.toLowerCase();
-      const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
+      const restaurantBorough = restaurant.borough?.toLowerCase();
       
-      if (boroughKeyword === 'brooklyn' || boroughKeyword === 'bk') {
-        matches = address.includes('brooklyn');
-      } else if (boroughKeyword === 'manhattan') {
-        matches = !address.includes('brooklyn');
-      }
+      // Simple direct match - borough data is now in the restaurant object
+      matches = restaurantBorough === boroughKeyword;
     }
     
     // Check city match

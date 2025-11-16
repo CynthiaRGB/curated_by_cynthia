@@ -287,17 +287,10 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
   // Borough takes precedence over city - if borough is specified, ignore city
   if (keywords.borough) {
     const boroughKeyword = keywords.borough.toLowerCase();
-    const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
+    const restaurantBorough = restaurant.borough?.toLowerCase();
     
-    if (boroughKeyword === 'brooklyn') {
-      // Brooklyn query: only return if address contains "brooklyn"
-      hasBoroughMatch = address.includes('brooklyn');
-    } else if (boroughKeyword === 'manhattan') {
-      // Manhattan query: return if address does NOT contain "brooklyn" (meaning it's Manhattan)
-      hasBoroughMatch = !address.includes('brooklyn');
-    } else {
-      hasBoroughMatch = false;
-    }
+    // Simple direct match - borough data is now in the restaurant object
+    hasBoroughMatch = restaurantBorough === boroughKeyword;
     
     // If borough is specified, use borough match (ignore city)
     return hasBoroughMatch;
@@ -730,11 +723,12 @@ function matchesMealType(restaurant: Restaurant, keywords: ExtractedKeywords): b
   
   if (mealType === 'brunch') {
     // Basic check: restaurant must serve brunch
-    if (!restaurant.google_data.servesBrunch) {
-      return false;
+    // If servesBrunch is true, that's a strong signal - accept it
+    if (restaurant.google_data.servesBrunch === true) {
+      return true;
     }
     
-    // Strict brunch filtering (similar to coffee shop/bakery logic)
+    // If servesBrunch is not explicitly true, check other indicators
     // Prioritize metadata fields first, then use fallback criteria
     
     // Primary criteria: Check metadata indicators (most reliable)

@@ -95,6 +95,7 @@ export interface Restaurant {
   neighborhood_extracted?: string;
   price_display?: string;
   city?: string;
+  borough?: string; // NYC borough: "brooklyn" or "manhattan"
   cynthias_pick?: boolean;
 
   // ENRICHED TAGS (NEW)
