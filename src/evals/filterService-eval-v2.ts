@@ -12,17 +12,43 @@ import goldenQueries from "./golden_queries_clean.json";
 // ============================================================================
 
 /**
+ * Normalize price level from numeric (1,2,3,4) to string ("budget", "moderate", "upscale")
+ * Golden dataset uses numbers, but filterService expects strings
+ */
+function normalizePriceLevel(value: any): string | undefined {
+  if (typeof value === 'number') {
+    const priceMap: { [key: number]: string } = {
+      1: 'budget',
+      2: 'moderate',
+      3: 'upscale',
+      4: 'upscale' // 4 is also upscale (very expensive)
+    };
+    return priceMap[value];
+  }
+  if (typeof value === 'string') {
+    // Already a string, return as-is
+    return value;
+  }
+  return undefined;
+}
+
+/**
  * Transform golden dataset to filterService eval format
  * Extracts expected keywords and uses them for filtering
  */
 function transformGoldenDataset() {
   return goldenQueries.map((testCase: any) => {
-    const keywords = testCase.expected as ExtractedKeywords;
+    const keywords = { ...testCase.expected } as any;
+    
+    // Normalize price level from number to string
+    if (keywords.priceLevel !== undefined) {
+      keywords.priceLevel = normalizePriceLevel(keywords.priceLevel);
+    }
     
     return {
       input: {
         query: testCase.input.query, // Keep for logging
-        keywords: keywords, // Use expected keywords from golden dataset
+        keywords: keywords as ExtractedKeywords, // Use expected keywords from golden dataset
         city: testCase.input.city // Keep for reference
       },
       expected: {}, // Empty - scorers read from input.keywords
@@ -769,7 +795,6 @@ function scoreMichelinMatch({ input, output, expected }: any) {
 // ============================================================================
 
 Eval("filterService-quality-v2", {
-  projectName: "curated-by-cynthia",
   data: transformGoldenDataset,
   
   task: async (input: any) => {
