@@ -7,13 +7,6 @@
 export const restaurantData = [
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9576802,
-          40.6726207
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-06-14T20:59:00Z",
         "google_maps_url": "http://maps.google.com/?cid=3094352225398678143",
@@ -280,13 +273,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0042594,
-          40.7329799
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-06-04T04:52:56Z",
         "google_maps_url": "http://maps.google.com/?cid=11037233859561372654",
@@ -526,7 +512,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:05:10.380656",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -571,13 +557,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9847053,
-          40.7575065
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-06-04T03:34:47Z",
         "google_maps_url": "http://maps.google.com/?cid=6165302224064545639",
@@ -845,13 +824,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9986785,
-          40.7529706
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-06-04T00:26:01Z",
         "google_maps_url": "http://maps.google.com/?cid=15379348448960698669",
@@ -1112,7 +1084,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:05:13.044317",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -1156,13 +1128,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9770134,
-          40.7602251
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-06-02T05:51:02Z",
         "google_maps_url": "http://maps.google.com/?cid=6308383629148967506",
@@ -1460,13 +1425,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9429659,
-          40.7072427
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-06-01T18:17:15Z",
         "google_maps_url": "http://maps.google.com/?cid=9746463236990346255",
@@ -1753,13 +1711,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9578691,
-          40.7116053
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-06-01T17:48:12Z",
         "google_maps_url": "http://maps.google.com/?cid=10791742978073970501",
@@ -2065,13 +2016,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.982357,
-          40.6657148
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-06-01T17:05:38Z",
         "google_maps_url": "http://maps.google.com/?cid=10681425745611645651",
@@ -2363,13 +2307,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9880375,
-          40.7642107
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-05-31T17:34:22Z",
         "google_maps_url": "http://maps.google.com/?cid=12086348580664766977",
@@ -2670,13 +2607,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9948983,
-          40.7189498
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-05-31T02:51:20Z",
         "google_maps_url": "http://maps.google.com/?cid=6188640438867370180",
@@ -2954,13 +2884,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0015815,
-          40.7178766
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-05-30T23:49:45Z",
         "google_maps_url": "http://maps.google.com/?cid=14340283439544557086",
@@ -3196,7 +3119,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:09:19.256297",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "intimate",
@@ -3242,13 +3165,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9833073,
-          40.7464411
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-05-30T23:27:46Z",
         "google_maps_url": "http://maps.google.com/?cid=121591186117386335",
@@ -3497,7 +3413,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:09:20.803486",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -3538,13 +3454,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9839775,
-          40.720171
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-04-24T05:57:11Z",
         "google_maps_url": "http://maps.google.com/?cid=11439466680680809794",
@@ -3594,178 +3503,6 @@ export const restaurantData = [
       "servesBeer": true,
       "servesWine": true,
       "servesVegetarianFood": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 22,
-                "minute": 50,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 22,
-                "minute": 50,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 50,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 50,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 50,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 50,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 50,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 12:00 – 10:50 PM",
-            "Tuesday: 12:00 – 10:50 PM",
-            "Wednesday: 12:00 – 10:50 PM",
-            "Thursday: 12:00 – 10:50 PM",
-            "Friday: 12:00 – 10:50 PM",
-            "Saturday: 12:00 – 10:50 PM",
-            "Sunday: 12:00 – 10:50 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextOpenTime": "2025-09-29T16:00:00Z"
-        }
-      ],
       "primaryType": "japanese_restaurant",
       "shortFormattedAddress": "178 Stanton St, New York",
       "outdoorSeating": false,
@@ -3959,7 +3696,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:09:24.847122",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "casual",
@@ -4001,13 +3738,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6973161,
-          35.629033
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-04-12T07:09:32Z",
         "google_maps_url": "http://maps.google.com/?cid=6305809165445111569",
@@ -4244,7 +3974,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:09:26.101391",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "casual",
@@ -4285,13 +4015,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0023412,
-          40.7312011
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-03-08T09:25:51Z",
         "google_maps_url": "http://maps.google.com/?cid=18136098206138855333",
@@ -4350,68 +4073,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: Closed",
-            "Wednesday: Closed",
-            "Thursday: Closed",
-            "Friday: Closed",
-            "Saturday: 12:00 – 3:00 PM",
-            "Sunday: 12:00 – 3:00 PM"
-          ],
-          "secondaryHoursType": "BRUNCH",
-          "nextOpenTime": "2025-10-04T16:00:00Z"
-        }
-      ],
       "primaryType": "italian_restaurant",
       "shortFormattedAddress": "28 Cornelia St, New York",
       "editorialSummary": {
@@ -4621,7 +4282,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:09:28.684279",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "intimate",
@@ -4665,13 +4326,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7830228,
-          35.6857292
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-01-05T07:51:05Z",
         "google_maps_url": "http://maps.google.com/?cid=15898149186404107695",
@@ -4917,7 +4571,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:09:29.997076",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "upscale",
@@ -4958,13 +4612,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7687447,
-          35.6695925
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-12-15T06:21:29Z",
         "google_maps_url": "http://maps.google.com/?cid=6631171128921633605",
@@ -5246,13 +4893,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.8143766,
-          35.7199925
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-11-16T03:16:20Z",
         "google_maps_url": "http://maps.google.com/?cid=1532132383146045950",
@@ -5533,13 +5173,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7849207,
-          35.6819299
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-10-18T05:12:09Z",
         "google_maps_url": "http://maps.google.com/?cid=994359549924274451",
@@ -5779,7 +5412,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:09:35.430671",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "traditional",
@@ -5821,13 +5454,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7167184,
-          35.6713881
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-10-18T05:11:46Z",
         "google_maps_url": "http://maps.google.com/?cid=1131640916101748421",
@@ -6074,7 +5700,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:09:36.729323",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "intimate",
@@ -6115,13 +5741,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9863884,
-          40.7395356
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-09-01T08:00:39Z",
         "google_maps_url": "http://maps.google.com/?cid=9305077177677857201",
@@ -6174,288 +5793,6 @@ export const restaurantData = [
       "servesBeer": true,
       "servesWine": true,
       "servesVegetarianFood": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 16,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 5:00 – 10:30 PM",
-            "Tuesday: 5:00 – 10:30 PM",
-            "Wednesday: 12:00 – 3:00 PM, 5:00 – 10:30 PM",
-            "Thursday: 12:00 – 3:00 PM, 5:00 – 10:30 PM",
-            "Friday: 12:00 – 3:00 PM, 5:00 – 10:30 PM",
-            "Saturday: 12:00 – 3:00 PM, 5:00 – 10:30 PM",
-            "Sunday: 12:00 – 4:30 PM, 5:30 – 9:30 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextOpenTime": "2025-09-29T21:00:00Z"
-        }
-      ],
       "primaryType": "steak_house",
       "shortFormattedAddress": "109 E 22nd St, New York",
       "editorialSummary": {
@@ -6661,7 +5998,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:09:38.258416",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -6703,13 +6040,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.996116,
-          40.7139743
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-04-18T20:39:55Z",
         "google_maps_url": "http://maps.google.com/?cid=9861019613347387418",
@@ -6995,13 +6325,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.963171,
-          40.7744215
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-04-01T17:19:22Z",
         "google_maps_url": "http://maps.google.com/?cid=12209127318447516235",
@@ -7248,7 +6571,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:09:44.816868",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -7290,13 +6613,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0015683,
-          40.7420166
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-30T09:56:21Z",
         "google_maps_url": "http://maps.google.com/?cid=12785811528062615373",
@@ -7540,7 +6856,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:09:46.094889",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -7586,13 +6902,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3061987,
-          48.857448
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-22T16:29:44Z",
         "google_maps_url": "http://maps.google.com/?cid=1366507682409663679",
@@ -7880,13 +7189,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.339586,
-          48.862727
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-22T12:11:26Z",
         "google_maps_url": "http://maps.google.com/?cid=15202926543965956677",
@@ -8117,7 +7419,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:09:50.895372",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "cozy",
@@ -8155,13 +7457,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3655368,
-          48.8623212
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-21T10:30:30Z",
         "google_maps_url": "http://maps.google.com/?cid=4834270201794965774",
@@ -8408,13 +7703,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3505458,
-          48.8657849
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-21T09:24:19Z",
         "google_maps_url": "http://maps.google.com/?cid=13753712568556638976",
@@ -8685,13 +7973,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3563106,
-          48.8601927
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-21T09:13:31Z",
         "google_maps_url": "http://maps.google.com/?cid=2255029480645699050",
@@ -8739,178 +8020,6 @@ export const restaurantData = [
       "delivery": true,
       "dineIn": true,
       "servesBreakfast": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:30 AM – 6:30 PM",
-            "Tuesday: 11:30 AM – 6:30 PM",
-            "Wednesday: 11:30 AM – 6:30 PM",
-            "Thursday: 11:30 AM – 6:30 PM",
-            "Friday: 11:30 AM – 6:30 PM",
-            "Saturday: 11:30 AM – 6:30 PM",
-            "Sunday: 11:30 AM – 6:30 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextOpenTime": "2025-09-29T09:30:00Z"
-        }
-      ],
       "primaryType": "bakery",
       "shortFormattedAddress": "5 Rue Rambuteau, Paris",
       "editorialSummary": {
@@ -9119,13 +8228,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3687572,
-          48.8653767
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-21T09:12:25Z",
         "google_maps_url": "http://maps.google.com/?cid=15980176562209535098",
@@ -9385,13 +8487,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9549709,
-          40.7701183
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-19T22:21:13Z",
         "google_maps_url": "http://maps.google.com/?cid=17241321858026179812",
@@ -9643,7 +8738,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:03.046454",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -9684,13 +8779,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0057385,
-          40.739047
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-19T00:47:56Z",
         "google_maps_url": "http://maps.google.com/?cid=11835826344916881018",
@@ -9937,7 +9025,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:04.321668",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -9979,13 +9067,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0040532,
-          40.7327893
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-19T00:47:28Z",
         "google_maps_url": "http://maps.google.com/?cid=6212780368167714337",
@@ -10246,7 +9327,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:05.739680",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "romantic",
@@ -10292,13 +9373,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9847775,
-          40.7457255
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-19T00:30:50Z",
         "google_maps_url": "http://maps.google.com/?cid=386978824452407439",
@@ -10348,688 +9422,6 @@ export const restaurantData = [
       "servesBeer": true,
       "servesWine": true,
       "servesBrunch": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: Closed",
-            "Wednesday: Closed",
-            "Thursday: Closed",
-            "Friday: Closed",
-            "Saturday: 11:00 AM – 3:00 PM",
-            "Sunday: 11:00 AM – 3:00 PM"
-          ],
-          "secondaryHoursType": "BRUNCH",
-          "nextOpenTime": "2025-10-04T15:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 14,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 21,
-                "minute": 45,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 14,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 21,
-                "minute": 45,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 21,
-                "minute": 45,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 21,
-                "minute": 45,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 21,
-                "minute": 45,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 45,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 14,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 45,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 12:00 – 2:15 PM, 5:00 – 9:45 PM",
-            "Tuesday: 12:00 – 2:15 PM, 5:00 – 9:45 PM",
-            "Wednesday: 12:00 – 2:15 PM, 5:00 – 9:45 PM",
-            "Thursday: 12:00 – 2:15 PM, 5:00 – 9:45 PM",
-            "Friday: 12:00 – 2:15 PM, 5:00 – 10:45 PM",
-            "Saturday: 11:00 AM – 2:15 PM, 5:00 – 10:45 PM",
-            "Sunday: 11:00 AM – 2:15 PM, 5:00 – 9:45 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextOpenTime": "2025-09-29T16:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 1,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 12:00 – 3:00 PM",
-            "Tuesday: 12:00 – 3:00 PM",
-            "Wednesday: 12:00 – 3:00 PM",
-            "Thursday: 12:00 – 3:00 PM",
-            "Friday: 12:00 – 3:00 PM",
-            "Saturday: Closed",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "LUNCH",
-          "nextOpenTime": "2025-09-29T16:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 0,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 0,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 5:00 – 11:00 PM",
-            "Tuesday: 5:00 – 11:00 PM",
-            "Wednesday: 5:00 – 11:00 PM",
-            "Thursday: 5:00 – 11:00 PM",
-            "Friday: 5:00 PM – 12:00 AM",
-            "Saturday: 5:00 PM – 12:00 AM",
-            "Sunday: 5:00 – 11:00 PM"
-          ],
-          "secondaryHoursType": "DINNER",
-          "nextOpenTime": "2025-09-29T21:00:00Z"
-        }
-      ],
       "primaryType": "korean_restaurant",
       "shortFormattedAddress": "128 Madison Ave, New York",
       "outdoorSeating": false,
@@ -11227,7 +9619,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:07.184026",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "trendy",
@@ -11270,13 +9662,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9877283,
-          40.7210476
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-19T00:17:47Z",
         "google_maps_url": "http://maps.google.com/?cid=8262152798986058955",
@@ -11325,156 +9710,6 @@ export const restaurantData = [
       "reservable": true,
       "servesBeer": true,
       "servesWine": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: 6:00 – 8:00 PM",
-            "Wednesday: 6:00 – 8:00 PM",
-            "Thursday: 4:00 – 8:00 PM",
-            "Friday: 4:00 – 8:00 PM",
-            "Saturday: 4:00 – 8:00 PM",
-            "Sunday: 4:00 – 8:00 PM"
-          ],
-          "secondaryHoursType": "HAPPY_HOUR",
-          "nextOpenTime": "2025-09-30T22:00:00Z"
-        }
-      ],
       "primaryType": "bar",
       "shortFormattedAddress": "158 Ludlow St, New York",
       "editorialSummary": {
@@ -11719,13 +9954,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9947502,
-          40.7231237
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-18T20:46:46Z",
         "google_maps_url": "http://maps.google.com/?cid=18364619719654876118",
@@ -12015,13 +10243,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9524272,
-          40.717694
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-15T02:33:23Z",
         "google_maps_url": "http://maps.google.com/?cid=9673394016794914709",
@@ -12278,7 +10499,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:11.017246",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -12323,13 +10544,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9924255,
-          40.7220384
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-14T23:58:29Z",
         "google_maps_url": "http://maps.google.com/?cid=7142848026959386812",
@@ -12383,178 +10597,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 15,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 15,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 15,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 15,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 15,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 15,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 15,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:00 AM – 3:30 PM",
-            "Tuesday: 11:00 AM – 3:30 PM",
-            "Wednesday: 11:00 AM – 3:30 PM",
-            "Thursday: 11:00 AM – 3:30 PM",
-            "Friday: 11:00 AM – 3:30 PM",
-            "Saturday: 10:00 AM – 3:30 PM",
-            "Sunday: 10:00 AM – 3:30 PM"
-          ],
-          "secondaryHoursType": "BRUNCH",
-          "nextOpenTime": "2025-09-29T15:00:00Z"
-        }
-      ],
       "primaryType": "american_restaurant",
       "shortFormattedAddress": "Freeman Alley, New York",
       "editorialSummary": {
@@ -12764,7 +10806,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:12.459171",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -12809,13 +10851,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3284019,
-          48.8437602
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-09T05:01:28Z",
         "google_maps_url": "http://maps.google.com/?cid=9045173215651603280",
@@ -13069,13 +11104,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3467171,
-          48.8641932
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-09T04:03:10Z",
         "google_maps_url": "http://maps.google.com/?cid=6096119715668495071",
@@ -13297,7 +11325,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:18.040408",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "cozy",
@@ -13339,13 +11367,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0020939,
-          40.7378037
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-08T08:12:35Z",
         "google_maps_url": "http://maps.google.com/?cid=13247068925734841183",
@@ -13591,7 +11612,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:20.984855",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "trendy",
@@ -13636,13 +11657,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9997931,
-          40.7338208
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-08T08:08:47Z",
         "google_maps_url": "http://maps.google.com/?cid=2975234135803511093",
@@ -13892,7 +11906,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:22.309876",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -13933,13 +11947,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9883564,
-          40.7395952
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-03-08T07:30:50Z",
         "google_maps_url": "http://maps.google.com/?cid=3833293956369346540",
@@ -14198,7 +12205,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:23.754851",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "trendy",
@@ -14240,13 +12247,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7084563,
-          35.6471601
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-02-02T08:48:47Z",
         "google_maps_url": "http://maps.google.com/?cid=3053824264765451100",
@@ -14487,7 +12487,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:25.205963",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "cozy",
@@ -14528,13 +12528,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7347677,
-          35.6555932
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-26T16:50:47Z",
         "google_maps_url": "http://maps.google.com/?cid=9627467433454788375",
@@ -14774,7 +12767,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:26.623647",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "upscale",
@@ -14818,13 +12811,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7252579,
-          35.6600357
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-26T16:50:36Z",
         "google_maps_url": "http://maps.google.com/?cid=11538905460647638799",
@@ -15063,7 +13049,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:27.920750",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "upscale",
@@ -15104,13 +13090,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.696679,
-          35.64691
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-26T16:42:18Z",
         "google_maps_url": "http://maps.google.com/?cid=1149678473840103145",
@@ -15402,13 +13381,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.8009077,
-          35.678424
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-19T09:45:29Z",
         "google_maps_url": "http://maps.google.com/?cid=6920805925508036595",
@@ -15674,13 +13646,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.8069611,
-          35.6812984
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-19T08:41:42Z",
         "google_maps_url": "http://maps.google.com/?cid=6700710721277136220",
@@ -15731,194 +13696,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": false,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: Closed",
-            "Wednesday: Closed",
-            "Thursday: Closed",
-            "Friday: Closed",
-            "Saturday: 12:00 – 2:30 PM",
-            "Sunday: 12:00 – 2:30 PM"
-          ],
-          "secondaryHoursType": "LUNCH",
-          "nextOpenTime": "2025-10-04T03:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 16,
-                "minute": 45,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 18,
-                "minute": 45,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 18,
-                "minute": 45,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 18,
-                "minute": 45,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 16,
-                "minute": 45,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: Closed",
-            "Wednesday: 6:45 – 9:30 PM",
-            "Thursday: 6:45 – 9:30 PM",
-            "Friday: 6:45 – 9:30 PM",
-            "Saturday: 4:45 – 10:00 PM",
-            "Sunday: 4:45 – 10:00 PM"
-          ],
-          "secondaryHoursType": "DINNER",
-          "nextOpenTime": "2025-10-01T09:45:00Z"
-        }
-      ],
       "primaryType": "italian_restaurant",
       "shortFormattedAddress": "Koto City, Miyoshi, 4-chōme−9−5 1F",
       "editorialSummary": {
@@ -16099,7 +13876,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:31.716019",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "intimate",
@@ -16146,13 +13923,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7222333,
-          35.6609667
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-18T07:28:31Z",
         "google_maps_url": "http://maps.google.com/?cid=6917793626511058506",
@@ -16425,13 +14195,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6819879,
-          35.6678734
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-16T09:06:08Z",
         "google_maps_url": "http://maps.google.com/?cid=13184562602633665812",
@@ -16711,13 +14474,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6825626,
-          35.6688903
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-16T08:14:10Z",
         "google_maps_url": "http://maps.google.com/?cid=2495869168979599819",
@@ -16763,156 +14519,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 9,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 9,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 9,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 9,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 9:30 AM – 9:30 PM",
-            "Tuesday: 9:30 AM – 9:30 PM",
-            "Wednesday: Closed",
-            "Thursday: 9:30 AM – 9:30 PM",
-            "Friday: 9:30 AM – 10:00 PM",
-            "Saturday: 10:00 AM – 10:00 PM",
-            "Sunday: 10:00 AM – 9:30 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextCloseTime": "2025-09-29T12:30:00Z"
-        }
-      ],
       "primaryType": "cafe",
       "shortFormattedAddress": "Shibuya, Uehara, 1-chōme−17−7 フレニティハウス 2F",
       "outdoorSeating": false,
@@ -17155,13 +14761,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.73098,
-          35.7049298
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-15T12:22:16Z",
         "google_maps_url": "http://maps.google.com/?cid=1548607362675722152",
@@ -17454,13 +15053,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7717367,
-          35.6702219
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-15T12:18:02Z",
         "google_maps_url": "http://maps.google.com/?cid=5629181508185015781",
@@ -17676,7 +15268,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:46.527286",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "intimate",
@@ -17721,13 +15313,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7157907,
-          35.6696082
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-15T12:17:32Z",
         "google_maps_url": "http://maps.google.com/?cid=7656548156590142025",
@@ -17990,7 +15575,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:47.819598",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "upscale",
@@ -18034,13 +15619,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7126363,
-          35.6628892
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-15T12:17:00Z",
         "google_maps_url": "http://maps.google.com/?cid=10540623270425960213",
@@ -18275,7 +15853,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:49.052967",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "romantic",
@@ -18318,13 +15896,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.699576,
-          35.6929435
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-15T04:06:02Z",
         "google_maps_url": "http://maps.google.com/?cid=2735508626244387776",
@@ -18603,13 +16174,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6710691,
-          35.625949
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-15T04:04:37Z",
         "google_maps_url": "http://maps.google.com/?cid=14775284102131382135",
@@ -18895,13 +16459,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7294024,
-          35.6614225
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-13T15:09:46Z",
         "google_maps_url": "http://maps.google.com/?cid=13673194007097591326",
@@ -19195,13 +16752,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.725032,
-          35.6599372
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-13T15:09:02Z",
         "google_maps_url": "http://maps.google.com/?cid=18107839456032237824",
@@ -19473,13 +17023,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.5782834,
-          35.7041956
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-13T14:03:39Z",
         "google_maps_url": "http://maps.google.com/?cid=8821830832423419406",
@@ -19759,13 +17302,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6670259,
-          35.6646918
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-13T13:56:49Z",
         "google_maps_url": "http://maps.google.com/?cid=7719812570159839213",
@@ -19817,288 +17353,6 @@ export const restaurantData = [
       "servesWine": false,
       "servesBrunch": false,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 20,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 20,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 20,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 20,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 20,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 20,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 20,
-                "minute": 15,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:00 AM – 3:00 PM, 5:30 – 8:15 PM",
-            "Tuesday: 11:00 AM – 3:00 PM, 5:30 – 8:15 PM",
-            "Wednesday: 11:00 AM – 3:00 PM, 5:30 – 8:15 PM",
-            "Thursday: 11:00 AM – 3:00 PM, 5:30 – 8:15 PM",
-            "Friday: 11:00 AM – 3:00 PM, 5:30 – 8:15 PM",
-            "Saturday: 11:00 AM – 8:15 PM",
-            "Sunday: 11:00 AM – 8:15 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextCloseTime": "2025-09-29T06:00:00Z"
-        }
-      ],
       "primaryType": "japanese_restaurant",
       "shortFormattedAddress": "3-chōme-31-14 Kitazawa, Setagaya City",
       "outdoorSeating": false,
@@ -20350,13 +17604,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6980318,
-          35.6431767
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-12T04:07:29Z",
         "google_maps_url": "http://maps.google.com/?cid=11876988200528194964",
@@ -20650,13 +17897,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7075519,
-          35.6495351
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-12T04:06:34Z",
         "google_maps_url": "http://maps.google.com/?cid=12912858259391097909",
@@ -20884,7 +18124,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:10:59.819943",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "intimate",
@@ -20928,13 +18168,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.699943,
-          35.649358
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-12T03:48:02Z",
         "google_maps_url": "http://maps.google.com/?cid=8766793253772205047",
@@ -21233,13 +18466,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.709467,
-          35.636208
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-11T12:51:58Z",
         "google_maps_url": "http://maps.google.com/?cid=750964352663309189",
@@ -21509,13 +18735,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6977784,
-          35.6624278
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-11T06:46:16Z",
         "google_maps_url": "http://maps.google.com/?cid=602410646331367474",
@@ -21559,348 +18778,6 @@ export const restaurantData = [
       "delivery": true,
       "dineIn": true,
       "curbsidePickup": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 9:00 AM – 10:00 PM",
-            "Tuesday: 9:00 AM – 10:00 PM",
-            "Wednesday: 9:00 AM – 10:00 PM",
-            "Thursday: 9:00 AM – 10:00 PM",
-            "Friday: 9:00 AM – 10:00 PM",
-            "Saturday: 9:00 AM – 10:00 PM",
-            "Sunday: 9:00 AM – 7:00 PM"
-          ],
-          "secondaryHoursType": "TAKEOUT",
-          "nextCloseTime": "2025-09-29T13:00:00Z"
-        },
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 9:00 AM – 10:00 PM",
-            "Tuesday: 9:00 AM – 10:00 PM",
-            "Wednesday: 9:00 AM – 10:00 PM",
-            "Thursday: 9:00 AM – 10:00 PM",
-            "Friday: 9:00 AM – 10:00 PM",
-            "Saturday: 9:00 AM – 10:00 PM",
-            "Sunday: 9:00 AM – 7:00 PM"
-          ],
-          "secondaryHoursType": "ACCESS",
-          "nextCloseTime": "2025-09-29T13:00:00Z"
-        }
-      ],
       "primaryType": "coffee_shop",
       "shortFormattedAddress": "4-8 Udagawachō, Shibuya",
       "paymentOptions": {
@@ -22129,13 +19006,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7978326,
-          35.7027051
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-10T05:37:13Z",
         "google_maps_url": "http://maps.google.com/?cid=4490303138371859698",
@@ -22387,13 +19257,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7686324,
-          35.6689171
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-09T14:08:10Z",
         "google_maps_url": "http://maps.google.com/?cid=7690982991018637456",
@@ -22687,13 +19550,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7613047,
-          35.6937428
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-09T14:07:35Z",
         "google_maps_url": "http://maps.google.com/?cid=3889302273933363529",
@@ -22985,13 +19841,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6905932,
-          35.6720937
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-09T14:07:01Z",
         "google_maps_url": "http://maps.google.com/?cid=15727658044756457963",
@@ -23257,13 +20106,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7282404,
-          35.6591869
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-09T14:04:45Z",
         "google_maps_url": "http://maps.google.com/?cid=11341471369970278259",
@@ -23540,13 +20382,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6993436,
-          35.6484985
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2024-01-09T13:35:35Z",
         "google_maps_url": "http://maps.google.com/?cid=12770715883088942310",
@@ -23801,7 +20636,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:29.541750",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "romantic",
@@ -23845,13 +20680,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.721803,
-          35.6609998
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-12-24T14:34:14Z",
         "google_maps_url": "http://maps.google.com/?cid=3678203312204113952",
@@ -24097,7 +20925,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:33.587019",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "upscale",
@@ -24139,13 +20967,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7619023,
-          35.6685784
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-12-06T00:58:42Z",
         "google_maps_url": "http://maps.google.com/?cid=1399409768662328054",
@@ -24197,156 +21018,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": false,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 20,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 20,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 20,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 20,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 20,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 20,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: 11:30 AM – 8:30 PM",
-            "Wednesday: 11:30 AM – 8:30 PM",
-            "Thursday: 11:30 AM – 8:30 PM",
-            "Friday: 11:30 AM – 8:30 PM",
-            "Saturday: 11:30 AM – 8:30 PM",
-            "Sunday: 11:30 AM – 8:30 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextOpenTime": "2025-09-30T02:30:00Z"
-        }
-      ],
       "primaryType": "japanese_restaurant",
       "shortFormattedAddress": "Chuo City, Ginza, 8-chōme−8−3 4 5F",
       "outdoorSeating": false,
@@ -24539,7 +21210,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:35.085860",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "upscale",
@@ -24582,13 +21253,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7618816,
-          35.6685624
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-12-06T00:58:06Z",
         "google_maps_url": "http://maps.google.com/?cid=15582786958502891519",
@@ -24880,13 +21544,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7700164,
-          35.6972492
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-12-05T04:16:23Z",
         "google_maps_url": "http://maps.google.com/?cid=12968767829348517199",
@@ -25181,13 +21838,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7123979,
-          35.6743246
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-12-04T09:49:43Z",
         "google_maps_url": "http://maps.google.com/?cid=2666454894139991736",
@@ -25424,7 +22074,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:40.591602",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "trendy",
@@ -25468,13 +22118,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7046754,
-          35.6644409
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-12-01T21:41:32Z",
         "google_maps_url": "http://maps.google.com/?cid=2924344717648783128",
@@ -25711,7 +22354,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:41.905873",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "traditional",
@@ -25753,13 +22396,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7524,
-          35.7799264
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-12-01T21:04:49Z",
         "google_maps_url": "http://maps.google.com/?cid=3943126986856177915",
@@ -25999,7 +22635,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:43.206369",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "traditional",
@@ -26044,13 +22680,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7652439,
-          35.6704625
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-12-01T21:03:00Z",
         "google_maps_url": "http://maps.google.com/?cid=8276131982377292806",
@@ -26277,7 +22906,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:44.582927",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "intimate",
@@ -26323,13 +22952,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7470809,
-          35.6554792
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-12-01T17:03:36Z",
         "google_maps_url": "http://maps.google.com/?cid=7716454475835076393",
@@ -26543,7 +23165,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:45.829625",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "upscale",
@@ -26588,13 +23210,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7352702,
-          35.671373
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-11-27T05:37:44Z",
         "google_maps_url": "http://maps.google.com/?cid=16516596142576342363",
@@ -26818,7 +23433,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:47.041481",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "traditional",
@@ -26859,13 +23474,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3381036,
-          48.8546339
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-11-24T03:40:04Z",
         "google_maps_url": "http://maps.google.com/?cid=16662473853684625669",
@@ -27147,13 +23755,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9931371,
-          40.7246816
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-11-15T23:09:59Z",
         "google_maps_url": "http://maps.google.com/?cid=10453415072360976530",
@@ -27203,288 +23804,6 @@ export const restaurantData = [
       "servesDinner": true,
       "servesWine": true,
       "servesBrunch": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: 9:00 AM – 2:00 PM, 5:00 – 10:00 PM",
-            "Wednesday: 9:00 AM – 2:00 PM, 5:00 – 10:00 PM",
-            "Thursday: 9:00 AM – 2:00 PM, 5:00 – 10:00 PM",
-            "Friday: 9:00 AM – 3:00 PM, 5:00 – 10:30 PM",
-            "Saturday: 9:00 AM – 3:00 PM, 5:00 – 10:30 PM",
-            "Sunday: 9:00 AM – 3:00 PM, 5:00 – 10:00 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextOpenTime": "2025-09-30T13:00:00Z"
-        }
-      ],
       "primaryType": "restaurant",
       "shortFormattedAddress": "290 Elizabeth St, New York",
       "outdoorSeating": false,
@@ -27683,7 +24002,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:49.605013",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -27728,13 +24047,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0025839,
-          40.7277451
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-11-15T22:50:22Z",
         "google_maps_url": "http://maps.google.com/?cid=1300187817461726190",
@@ -27782,178 +24094,6 @@ export const restaurantData = [
       "servesDinner": true,
       "servesBeer": true,
       "servesWine": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 5:00 – 11:00 PM",
-            "Tuesday: 5:00 – 11:00 PM",
-            "Wednesday: 5:00 – 11:00 PM",
-            "Thursday: 5:00 – 11:00 PM",
-            "Friday: 5:00 – 11:00 PM",
-            "Saturday: 5:00 – 11:00 PM",
-            "Sunday: 5:00 – 11:00 PM"
-          ],
-          "secondaryHoursType": "DINNER",
-          "nextOpenTime": "2025-09-29T21:00:00Z"
-        }
-      ],
       "primaryType": "italian_restaurant",
       "shortFormattedAddress": "43 MacDougal St, New York",
       "outdoorSeating": false,
@@ -28150,7 +24290,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:51.832415",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -28193,13 +24333,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0076645,
-          40.7329643
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-11-15T22:49:04Z",
         "google_maps_url": "http://maps.google.com/?cid=15347605901390464103",
@@ -28446,7 +24579,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:53.064273",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -28489,13 +24622,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0031569,
-          40.7437056
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-11-15T22:41:58Z",
         "google_maps_url": "http://maps.google.com/?cid=13320461970520069430",
@@ -28550,134 +24676,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": false,
       "servesVegetarianFood": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: 5:30 – 9:00 PM",
-            "Wednesday: 5:30 – 9:00 PM",
-            "Thursday: 5:30 – 9:30 PM",
-            "Friday: 5:30 – 10:30 PM",
-            "Saturday: 5:30 – 10:30 PM",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextOpenTime": "2025-09-30T21:30:00Z"
-        }
-      ],
       "primaryType": "spanish_restaurant",
       "shortFormattedAddress": "136 9th Ave, New York",
       "editorialSummary": {
@@ -28885,7 +24883,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:54.270369",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "romantic",
@@ -28927,13 +24925,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0034186,
-          40.7504133
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-11-15T22:33:45Z",
         "google_maps_url": "http://maps.google.com/?cid=4780850079730141125",
@@ -28980,276 +24971,6 @@ export const restaurantData = [
       "servesDinner": true,
       "servesBeer": true,
       "servesWine": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 4,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: Closed",
-            "Wednesday: Closed",
-            "Thursday: 4:00 – 7:00 PM",
-            "Friday: 4:00 – 7:00 PM",
-            "Saturday: Closed",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "HAPPY_HOUR",
-          "nextOpenTime": "2025-10-02T20:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 4:00 – 9:00 PM",
-            "Tuesday: 4:00 – 9:00 PM",
-            "Wednesday: 4:00 – 9:00 PM",
-            "Thursday: 4:00 – 9:00 PM",
-            "Friday: 4:00 – 9:00 PM",
-            "Saturday: 4:00 – 9:00 PM",
-            "Sunday: 4:00 – 9:00 PM"
-          ],
-          "secondaryHoursType": "DELIVERY",
-          "nextOpenTime": "2025-09-29T20:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: Closed",
-            "Wednesday: Closed",
-            "Thursday: Closed",
-            "Friday: Closed",
-            "Saturday: 11:00 AM – 4:00 PM",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "BRUNCH",
-          "nextOpenTime": "2025-10-04T15:00:00Z"
-        }
-      ],
       "primaryType": "bar",
       "shortFormattedAddress": "518 W 27th St, New York",
       "editorialSummary": {
@@ -29482,13 +25203,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9903145,
-          40.7490239
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-11-14T23:19:34Z",
         "google_maps_url": "http://maps.google.com/?cid=3251180556436005192",
@@ -29745,7 +25459,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:11:57.060988",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -29786,13 +25500,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7709737,
-          35.6672081
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-10-02T01:08:33Z",
         "google_maps_url": "http://maps.google.com/?cid=14256434231976026327",
@@ -30064,13 +25771,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7131173,
-          35.6609177
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-10-02T00:40:48Z",
         "google_maps_url": "http://maps.google.com/?cid=14111419781947894586",
@@ -30336,13 +26036,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6955049,
-          35.6474223
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-09-26T08:16:24Z",
         "google_maps_url": "http://maps.google.com/?cid=7452659350571859612",
@@ -30628,13 +26321,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7591762,
-          35.6737436
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-09-26T08:11:10Z",
         "google_maps_url": "http://maps.google.com/?cid=17646136054406396949",
@@ -30929,13 +26615,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.804184,
-          35.6764735
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-09-26T03:10:36Z",
         "google_maps_url": "http://maps.google.com/?cid=1258432457959215324",
@@ -31199,13 +26878,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6679668,
-          35.6607369
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-09-25T06:14:01Z",
         "google_maps_url": "http://maps.google.com/?cid=6263005612006630984",
@@ -31464,13 +27136,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6682946,
-          35.6609444
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-09-25T04:49:22Z",
         "google_maps_url": "http://maps.google.com/?cid=1894226476914730511",
@@ -31751,13 +27416,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7040512,
-          35.7323757
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-09-25T04:48:40Z",
         "google_maps_url": "http://maps.google.com/?cid=1820406683982898162",
@@ -32057,13 +27715,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6830856,
-          35.671289
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-09-23T11:57:37Z",
         "google_maps_url": "http://maps.google.com/?cid=16899432139972149368",
@@ -32308,13 +27959,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7117597,
-          35.6630634
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-09-23T06:58:49Z",
         "google_maps_url": "http://maps.google.com/?cid=4139650864990956015",
@@ -32601,13 +28245,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7004728,
-          35.6952037
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-09-22T13:07:45Z",
         "google_maps_url": "http://maps.google.com/?cid=542925033822128779",
@@ -32659,178 +28296,6 @@ export const restaurantData = [
       "servesWine": false,
       "servesBrunch": false,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 3,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 3,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:00 AM – 11:00 PM",
-            "Tuesday: 11:00 AM – 11:00 PM",
-            "Wednesday: 11:00 AM – 11:00 PM",
-            "Thursday: 11:00 AM – 11:00 PM",
-            "Friday: 11:00 AM – 3:30 AM",
-            "Saturday: 11:00 AM – 3:30 AM",
-            "Sunday: 10:00 AM – 11:00 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextCloseTime": "2025-09-29T14:00:00Z"
-        }
-      ],
       "primaryType": "ramen_restaurant",
       "shortFormattedAddress": "Shinjuku City, Kabukichō, 1-chōme−27−3 KKビル １階",
       "outdoorSeating": false,
@@ -33072,13 +28537,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6665345,
-          35.6603068
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-09-22T08:40:25Z",
         "google_maps_url": "http://maps.google.com/?cid=16557377429298774198",
@@ -33366,13 +28824,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.796742,
-          35.711713
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-09-22T08:08:13Z",
         "google_maps_url": "http://maps.google.com/?cid=13909133467795774038",
@@ -33606,7 +29057,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:12:25.843730",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "traditional",
@@ -33648,13 +29099,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6673471,
-          35.6592465
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-09-21T06:18:54Z",
         "google_maps_url": "http://maps.google.com/?cid=4579694143476235961",
@@ -33940,13 +29384,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7164832,
-          35.6711984
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-09-13T07:47:03Z",
         "google_maps_url": "http://maps.google.com/?cid=16990367905622404081",
@@ -33998,178 +29435,6 @@ export const restaurantData = [
       "servesBeer": false,
       "servesBrunch": true,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 8:00 AM – 11:00 PM",
-            "Tuesday: 8:00 AM – 11:00 PM",
-            "Wednesday: 8:00 AM – 11:00 PM",
-            "Thursday: 8:00 AM – 11:00 PM",
-            "Friday: 8:00 AM – 11:00 PM",
-            "Saturday: 8:00 AM – 11:00 PM",
-            "Sunday: 8:00 AM – 11:00 PM"
-          ],
-          "secondaryHoursType": "TAKEOUT",
-          "nextCloseTime": "2025-09-29T14:00:00Z"
-        }
-      ],
       "primaryType": "coffee_shop",
       "shortFormattedAddress": "Minato City, Kitaaoyama, 2-chōme−9−13 斉藤ビル 1F",
       "outdoorSeating": false,
@@ -34413,13 +29678,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.1100609,
-          37.507991
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T15:04:49Z",
         "google_maps_url": "http://maps.google.com/?cid=15403395204975190078",
@@ -34668,13 +29926,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0434697,
-          37.5468691
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T14:59:40Z",
         "google_maps_url": "http://maps.google.com/?cid=12103920351544157376",
@@ -34930,13 +30181,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0534637,
-          37.54284
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T14:56:37Z",
         "google_maps_url": "http://maps.google.com/?cid=5297029666048992764",
@@ -35199,13 +30443,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.043733,
-          37.5472514
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T14:52:30Z",
         "google_maps_url": "http://maps.google.com/?cid=15051328089771452129",
@@ -35481,13 +30718,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0441452,
-          37.5253386
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T14:49:35Z",
         "google_maps_url": "http://maps.google.com/?cid=5996245046681667915",
@@ -35711,7 +30941,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:12:37.026023",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Seoul",
     "vibe_tags": [
       "upscale",
@@ -35756,13 +30986,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9274249,
-          37.5662399
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T13:59:37Z",
         "google_maps_url": "http://maps.google.com/?cid=16482463345569528516",
@@ -35808,178 +31031,6 @@ export const restaurantData = [
       "servesLunch": true,
       "servesDinner": true,
       "servesBrunch": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 9:00 AM – 4:00 PM",
-            "Tuesday: 9:00 AM – 4:00 PM",
-            "Wednesday: 9:00 AM – 4:00 PM",
-            "Thursday: 9:00 AM – 4:00 PM",
-            "Friday: 9:00 AM – 4:00 PM",
-            "Saturday: 9:00 AM – 4:00 PM",
-            "Sunday: 9:00 AM – 4:00 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextCloseTime": "2025-09-29T07:00:00Z"
-        }
-      ],
       "primaryType": "brunch_restaurant",
       "shortFormattedAddress": "53 Yeonhui-ro 11ga-gil, Seodaemun-gu",
       "outdoorSeating": true,
@@ -36199,13 +31250,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9258969,
-          37.5627335
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T13:57:52Z",
         "google_maps_url": "http://maps.google.com/?cid=10220038710765077514",
@@ -36465,13 +31509,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9890218,
-          37.5336795
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T13:57:04Z",
         "google_maps_url": "http://maps.google.com/?cid=13998871943069366055",
@@ -36706,13 +31743,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0015029,
-          37.5335442
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T07:16:15Z",
         "google_maps_url": "http://maps.google.com/?cid=5916518264556430273",
@@ -36920,7 +31950,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:12:45.942055",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Seoul",
     "vibe_tags": [
       "cozy",
@@ -36963,13 +31993,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0373475,
-          37.5243274
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T07:12:34Z",
         "google_maps_url": "http://maps.google.com/?cid=6841638342991788728",
@@ -37194,7 +32217,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:12:47.236542",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Seoul",
     "vibe_tags": [
       "upscale",
@@ -37235,13 +32258,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9817201,
-          37.5787726
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T07:07:33Z",
         "google_maps_url": "http://maps.google.com/?cid=16034552950188881089",
@@ -37504,13 +32520,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9733488,
-          37.5804867
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T07:07:03Z",
         "google_maps_url": "http://maps.google.com/?cid=2138934176330157648",
@@ -37727,7 +32736,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:12:49.685581",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Seoul",
     "vibe_tags": [
       "upscale",
@@ -37769,13 +32778,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9686467,
-          37.5288369
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T07:02:20Z",
         "google_maps_url": "http://maps.google.com/?cid=4195356902066416517",
@@ -38038,13 +33040,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.1084539,
-          37.5071415
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T05:31:42Z",
         "google_maps_url": "http://maps.google.com/?cid=13291524503952490448",
@@ -38290,13 +33285,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0518624,
-          37.5446995
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-24T05:18:38Z",
         "google_maps_url": "http://maps.google.com/?cid=15120421761838564639",
@@ -38542,13 +33530,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7110558,
-          35.6645406
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-15T11:53:35Z",
         "google_maps_url": "http://maps.google.com/?cid=458511399196080674",
@@ -38819,13 +33800,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7342623,
-          35.6564878
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-15T11:42:26Z",
         "google_maps_url": "http://maps.google.com/?cid=9087814451927436466",
@@ -39043,7 +34017,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:13:03.279026",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "intimate",
@@ -39086,13 +34060,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7352758,
-          35.6537405
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-14T22:48:30Z",
         "google_maps_url": "http://maps.google.com/?cid=6939745919936915676",
@@ -39373,13 +34340,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7653544,
-          35.6743653
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-11T03:24:14Z",
         "google_maps_url": "http://maps.google.com/?cid=11425134349324146809",
@@ -39430,1304 +34390,6 @@ export const restaurantData = [
       "servesBeer": true,
       "servesWine": true,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Tuesday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Wednesday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Thursday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Friday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Saturday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Sunday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM"
-          ],
-          "secondaryHoursType": "DELIVERY",
-          "nextCloseTime": "2025-09-29T05:30:00Z"
-        },
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Tuesday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Wednesday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Thursday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Friday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Saturday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Sunday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM"
-          ],
-          "secondaryHoursType": "TAKEOUT",
-          "nextCloseTime": "2025-09-29T05:30:00Z"
-        },
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Tuesday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Wednesday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Thursday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Friday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Saturday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Sunday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM"
-          ],
-          "secondaryHoursType": "ACCESS",
-          "nextCloseTime": "2025-09-29T05:30:00Z"
-        },
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Tuesday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Wednesday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Thursday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Friday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Saturday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM",
-            "Sunday: 11:00 AM – 2:30 PM, 5:00 – 8:00 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextCloseTime": "2025-09-29T05:30:00Z"
-        }
-      ],
       "primaryType": "japanese_restaurant",
       "shortFormattedAddress": "Chuo City, Ginza, 2-chōme−2−14 マロニエゲート銀座1 12F",
       "outdoorSeating": false,
@@ -40930,7 +34592,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:13:06.124382",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "traditional",
@@ -40969,13 +34631,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7138059,
-          35.6718243
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-10T05:46:22Z",
         "google_maps_url": "http://maps.google.com/?cid=14695989131797742489",
@@ -41266,13 +34921,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7000473,
-          35.6883129
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-09T22:41:32Z",
         "google_maps_url": "http://maps.google.com/?cid=3389828153134170785",
@@ -41576,13 +35224,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7707712,
-          35.67491
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-09T09:29:12Z",
         "google_maps_url": "http://maps.google.com/?cid=5169399005864841247",
@@ -41873,13 +35514,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.693568,
-          35.6416194
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-08T06:13:32Z",
         "google_maps_url": "http://maps.google.com/?cid=94997357445889808",
@@ -42175,13 +35809,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6903164,
-          35.6683264
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-08T06:05:31Z",
         "google_maps_url": "http://maps.google.com/?cid=6753365911233652536",
@@ -42452,13 +36079,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6901657,
-          35.6684075
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-08T06:00:31Z",
         "google_maps_url": "http://maps.google.com/?cid=132371635234145387",
@@ -42505,156 +36125,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:30 AM – 10:30 PM",
-            "Tuesday: 11:30 AM – 10:30 PM",
-            "Wednesday: Closed",
-            "Thursday: 11:30 AM – 10:30 PM",
-            "Friday: 11:30 AM – 10:30 PM",
-            "Saturday: 11:30 AM – 10:30 PM",
-            "Sunday: 11:30 AM – 10:30 PM"
-          ],
-          "secondaryHoursType": "ACCESS",
-          "nextCloseTime": "2025-09-29T13:30:00Z"
-        }
-      ],
       "primaryType": "cafe",
       "shortFormattedAddress": "Shibuya, Tomigaya, 1-chōme−9−20 コシゴエビル 1階",
       "outdoorSeating": false,
@@ -42897,13 +36367,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.4487874,
-          35.5411955
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-08T05:50:40Z",
         "google_maps_url": "http://maps.google.com/?cid=5180984426912373011",
@@ -43178,13 +36641,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6899099,
-          35.6685131
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-08T05:40:08Z",
         "google_maps_url": "http://maps.google.com/?cid=15605256470079840928",
@@ -43474,13 +36930,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7221289,
-          35.6609663
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-08T04:39:50Z",
         "google_maps_url": "http://maps.google.com/?cid=7603239805685047243",
@@ -43532,568 +36981,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": false,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 13,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 13,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 13,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 13,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 13,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 13,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 20,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: 12:00 – 1:30 PM, 6:30 – 8:00 PM",
-            "Wednesday: 12:00 – 1:30 PM, 6:30 – 8:00 PM",
-            "Thursday: 12:00 – 1:30 PM, 6:30 – 8:00 PM",
-            "Friday: 12:00 – 1:30 PM, 6:30 – 8:00 PM",
-            "Saturday: 12:00 – 1:30 PM, 6:30 – 8:00 PM",
-            "Sunday: 12:00 – 1:30 PM, 6:30 – 8:00 PM"
-          ],
-          "secondaryHoursType": "TAKEOUT",
-          "nextOpenTime": "2025-09-30T03:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 20,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 20,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 20,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 20,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 20,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 20,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: 11:30 AM – 2:00 PM, 6:00 – 8:30 PM",
-            "Wednesday: 11:30 AM – 2:00 PM, 6:00 – 8:30 PM",
-            "Thursday: 11:30 AM – 2:00 PM, 6:00 – 8:30 PM",
-            "Friday: 11:30 AM – 2:00 PM, 6:00 – 8:30 PM",
-            "Saturday: 11:30 AM – 2:00 PM, 6:00 – 8:30 PM",
-            "Sunday: 11:30 AM – 2:00 PM, 6:00 – 8:30 PM"
-          ],
-          "secondaryHoursType": "ACCESS",
-          "nextOpenTime": "2025-09-30T02:30:00Z"
-        }
-      ],
       "primaryType": "japanese_restaurant",
       "shortFormattedAddress": "2-chōme-24-9 Nishiazabu, Minato City",
       "outdoorSeating": false,
@@ -44289,7 +37176,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:13:17.947191",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "cozy",
@@ -44330,13 +37217,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7139354,
-          35.6718214
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-08T04:37:00Z",
         "google_maps_url": "http://maps.google.com/?cid=17628781881532605721",
@@ -44574,7 +37454,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:13:19.228282",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "intimate",
@@ -44618,13 +37498,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7636256,
-          35.6707126
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-08-08T04:25:07Z",
         "google_maps_url": "http://maps.google.com/?cid=17663241651111966538",
@@ -44865,7 +37738,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:13:20.874119",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "upscale",
@@ -44907,13 +37780,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7686589,
-          35.6694644
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-07-25T06:41:00Z",
         "google_maps_url": "http://maps.google.com/?cid=5254053800351163798",
@@ -45194,13 +38060,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6886846,
-          35.6555707
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-07-20T06:38:13Z",
         "google_maps_url": "http://maps.google.com/?cid=7197757021394863333",
@@ -45480,13 +38339,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7696865,
-          35.6953564
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-07-20T06:29:28Z",
         "google_maps_url": "http://maps.google.com/?cid=8056078318519120624",
@@ -45780,13 +38632,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7107328,
-          35.673662
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-07-18T07:10:33Z",
         "google_maps_url": "http://maps.google.com/?cid=10756374597835223752",
@@ -46068,13 +38913,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0558934,
-          37.5372397
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-04-04T23:51:21Z",
         "google_maps_url": "http://maps.google.com/?cid=8923043449249008392",
@@ -46341,13 +39179,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0359871,
-          37.5234472
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-04-04T23:51:08Z",
         "google_maps_url": "http://maps.google.com/?cid=9920272069658550457",
@@ -46612,13 +39443,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9867455,
-          40.7370091
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-21T00:37:04Z",
         "google_maps_url": "http://maps.google.com/?cid=14816887239185880838",
@@ -46908,13 +39732,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.008156,
-          40.741486
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-18T18:49:53Z",
         "google_maps_url": "http://maps.google.com/?cid=2448955767007563360",
@@ -47170,7 +39987,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:13:40.256201",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -47216,13 +40033,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9873417,
-          40.7323017
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-17T21:32:32Z",
         "google_maps_url": "http://maps.google.com/?cid=6610913188635627298",
@@ -47480,7 +40290,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:13:41.479897",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "lively",
@@ -47525,13 +40335,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9575167,
-          40.7343778
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-17T19:41:13Z",
         "google_maps_url": "http://maps.google.com/?cid=13187827927149000964",
@@ -47808,13 +40611,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9990079,
-          40.7152346
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-16T23:21:17Z",
         "google_maps_url": "http://maps.google.com/?cid=11361653143840308587",
@@ -48071,7 +40867,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:13:46.297562",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "casual",
@@ -48110,13 +40906,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0009847,
-          40.7279278
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-14T11:36:25Z",
         "google_maps_url": "http://maps.google.com/?cid=14361571918821879415",
@@ -48421,13 +41210,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0057191,
-          40.7391397
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-14T11:35:30Z",
         "google_maps_url": "http://maps.google.com/?cid=2412005674062939272",
@@ -48731,13 +41513,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0001695,
-          40.7262701
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-14T11:35:04Z",
         "google_maps_url": "http://maps.google.com/?cid=5978540425955072644",
@@ -48997,7 +41772,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:13:49.967768",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "trendy",
@@ -49039,13 +41814,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9868353,
-          40.7294459
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-14T07:35:25Z",
         "google_maps_url": "http://maps.google.com/?cid=494793754659523190",
@@ -49352,13 +42120,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9868068,
-          40.7027655
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-14T07:28:26Z",
         "google_maps_url": "http://maps.google.com/?cid=9471052216233259261",
@@ -49629,13 +42390,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9896956,
-          40.713914
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-07T03:58:56Z",
         "google_maps_url": "http://maps.google.com/?cid=9863317648355659058",
@@ -49886,7 +42640,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:13:55.436090",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -49929,13 +42683,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0110218,
-          40.7032685
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-02T10:34:57Z",
         "google_maps_url": "http://maps.google.com/?cid=16891641895788260568",
@@ -49988,320 +42735,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 1,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 3:00 – 6:00 PM",
-            "Tuesday: 3:00 – 6:00 PM",
-            "Wednesday: 3:00 – 6:00 PM",
-            "Thursday: 3:00 – 6:00 PM",
-            "Friday: 3:00 – 6:00 PM",
-            "Saturday: Closed",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "HAPPY_HOUR",
-          "nextOpenTime": "2025-09-29T19:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: Closed",
-            "Wednesday: Closed",
-            "Thursday: Closed",
-            "Friday: Closed",
-            "Saturday: 11:00 AM – 4:00 PM",
-            "Sunday: 11:00 AM – 4:00 PM"
-          ],
-          "secondaryHoursType": "BRUNCH",
-          "nextOpenTime": "2025-10-04T15:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:00 AM – 4:00 PM",
-            "Tuesday: 11:00 AM – 4:00 PM",
-            "Wednesday: 11:00 AM – 4:00 PM",
-            "Thursday: 11:00 AM – 4:00 PM",
-            "Friday: 11:00 AM – 4:00 PM",
-            "Saturday: Closed",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "LUNCH",
-          "nextOpenTime": "2025-09-29T15:00:00Z"
-        }
-      ],
       "primaryType": "bar",
       "shortFormattedAddress": "30 Water St, New York",
       "editorialSummary": {
@@ -50541,13 +42974,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9591804,
-          40.7157953
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-01T07:52:55Z",
         "google_maps_url": "http://maps.google.com/?cid=279749284295678964",
@@ -50843,13 +43269,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9599664,
-          40.7197416
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-03-01T07:48:07Z",
         "google_maps_url": "http://maps.google.com/?cid=5991808855924494194",
@@ -51099,7 +43518,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:14:00.480607",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -51141,13 +43560,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9858313,
-          40.7272708
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-02-26T23:28:52Z",
         "google_maps_url": "http://maps.google.com/?cid=7693712546969276816",
@@ -51403,7 +43815,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:14:01.803200",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -51444,13 +43856,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7453639,
-          35.6572889
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-02-12T22:50:04Z",
         "google_maps_url": "http://maps.google.com/?cid=8925043977992108543",
@@ -51691,7 +44096,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:14:03.015309",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "upscale",
@@ -51734,13 +44139,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7627141,
-          35.6680723
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-02-12T22:49:08Z",
         "google_maps_url": "http://maps.google.com/?cid=14805743228074384882",
@@ -51978,7 +44376,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:14:04.445867",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "upscale",
@@ -52020,13 +44418,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.767078,
-          35.6749497
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2023-02-12T22:44:42Z",
         "google_maps_url": "http://maps.google.com/?cid=11705898939677483077",
@@ -52261,7 +44652,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:14:05.906066",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "upscale",
@@ -52306,13 +44697,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6966393,
-          35.6868343
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-20T03:08:54Z",
         "google_maps_url": "http://maps.google.com/?cid=3272539110311166620",
@@ -52609,13 +44993,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7061697,
-          35.6664907
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-19T04:30:24Z",
         "google_maps_url": "http://maps.google.com/?cid=5571226775801367661",
@@ -52884,13 +45261,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.710888,
-          35.668368
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-18T11:57:00Z",
         "google_maps_url": "http://maps.google.com/?cid=5064916712424889855",
@@ -53175,13 +45545,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7585509,
-          35.6955899
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-15T13:59:01Z",
         "google_maps_url": "http://maps.google.com/?cid=7217124114790713989",
@@ -53229,156 +45592,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:00 AM – 7:00 PM",
-            "Tuesday: 11:00 AM – 7:00 PM",
-            "Wednesday: 11:00 AM – 7:00 PM",
-            "Thursday: 11:00 AM – 7:00 PM",
-            "Friday: 11:00 AM – 7:00 PM",
-            "Saturday: 11:00 AM – 7:00 PM",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextCloseTime": "2025-09-29T10:00:00Z"
-        }
-      ],
       "primaryType": "restaurant",
       "shortFormattedAddress": "Chiyoda City, Kanda Jinbōchō, 1-chōme−１１",
       "editorialSummary": {
@@ -53622,13 +45835,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0406178,
-          37.5139316
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-13T04:18:57Z",
         "google_maps_url": "http://maps.google.com/?cid=1992658347791626477",
@@ -53881,13 +46087,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7231347,
-          35.6560546
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-09T09:48:21Z",
         "google_maps_url": "http://maps.google.com/?cid=5738332165599999302",
@@ -53939,1320 +46138,6 @@ export const restaurantData = [
       "servesBeer": true,
       "servesWine": true,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:30 AM – 3:00 PM, 5:00 – 10:00 PM",
-            "Tuesday: 11:30 AM – 3:00 PM, 5:00 – 10:00 PM",
-            "Wednesday: 11:30 AM – 3:00 PM, 5:00 – 10:00 PM",
-            "Thursday: 11:30 AM – 3:00 PM, 5:00 – 10:00 PM",
-            "Friday: 11:30 AM – 3:00 PM, 5:00 – 10:00 PM",
-            "Saturday: 11:30 AM – 3:00 PM, 5:00 – 10:00 PM",
-            "Sunday: 11:30 AM – 3:00 PM, 5:00 – 10:00 PM"
-          ],
-          "secondaryHoursType": "TAKEOUT",
-          "nextCloseTime": "2025-09-29T06:00:00Z"
-        },
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM",
-            "Tuesday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM",
-            "Wednesday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM",
-            "Thursday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM",
-            "Friday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM",
-            "Saturday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM",
-            "Sunday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM"
-          ],
-          "secondaryHoursType": "ACCESS",
-          "nextCloseTime": "2025-09-29T05:30:00Z"
-        },
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM",
-            "Tuesday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM",
-            "Wednesday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM",
-            "Thursday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM",
-            "Friday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM",
-            "Saturday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM",
-            "Sunday: 11:30 AM – 2:30 PM, 5:30 – 9:00 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextCloseTime": "2025-09-29T05:30:00Z"
-        },
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:30 AM – 3:00 PM",
-            "Tuesday: 11:30 AM – 3:00 PM",
-            "Wednesday: 11:30 AM – 3:00 PM",
-            "Thursday: 11:30 AM – 3:00 PM",
-            "Friday: 11:30 AM – 3:00 PM",
-            "Saturday: 11:30 AM – 3:00 PM",
-            "Sunday: 11:30 AM – 3:00 PM"
-          ],
-          "secondaryHoursType": "LUNCH",
-          "nextCloseTime": "2025-09-29T06:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 5:30 – 10:00 PM",
-            "Tuesday: 5:30 – 10:00 PM",
-            "Wednesday: 5:30 – 10:00 PM",
-            "Thursday: 5:30 – 10:00 PM",
-            "Friday: 5:30 – 10:00 PM",
-            "Saturday: 5:30 – 10:00 PM",
-            "Sunday: 5:30 – 10:00 PM"
-          ],
-          "secondaryHoursType": "DINNER",
-          "nextOpenTime": "2025-09-29T08:30:00Z"
-        }
-      ],
       "primaryType": "restaurant",
       "shortFormattedAddress": "Minato City, Nishiazabu, 4-chōme−6−5 協立興産西麻布ビル 1F",
       "outdoorSeating": false,
@@ -55504,13 +46389,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7204065,
-          35.6581802
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-09T09:44:01Z",
         "google_maps_url": "http://maps.google.com/?cid=12321301309214717290",
@@ -55789,13 +46667,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7240797,
-          35.6576308
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-09T06:22:37Z",
         "google_maps_url": "http://maps.google.com/?cid=13332206316291252632",
@@ -56093,13 +46964,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7022455,
-          35.65852
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-09T06:22:32Z",
         "google_maps_url": "http://maps.google.com/?cid=9442398513964518929",
@@ -56357,13 +47221,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7109476,
-          35.647707
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-09T06:21:05Z",
         "google_maps_url": "http://maps.google.com/?cid=15934258766550158701",
@@ -56414,178 +47271,6 @@ export const restaurantData = [
       "servesDinner": false,
       "servesBeer": false,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 23,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 23,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 8:00 AM – 10:30 PM",
-            "Tuesday: 8:00 AM – 10:30 PM",
-            "Wednesday: 8:00 AM – 10:30 PM",
-            "Thursday: 8:00 AM – 10:30 PM",
-            "Friday: 8:00 AM – 11:30 PM",
-            "Saturday: 10:00 AM – 11:30 PM",
-            "Sunday: 10:00 AM – 10:30 PM"
-          ],
-          "secondaryHoursType": "TAKEOUT",
-          "nextCloseTime": "2025-09-29T13:30:00Z"
-        }
-      ],
       "primaryType": "coffee_shop",
       "shortFormattedAddress": "Shibuya, Ebisu, 1-chōme−6−6 Saito Bldg., １階",
       "outdoorSeating": true,
@@ -56829,13 +47514,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.6923999,
-          35.6666181
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-05T09:14:25Z",
         "google_maps_url": "http://maps.google.com/?cid=17164645774726874279",
@@ -57131,13 +47809,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7293584,
-          35.6740506
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-05T09:12:26Z",
         "google_maps_url": "http://maps.google.com/?cid=11157691625221215263",
@@ -57187,134 +47858,6 @@ export const restaurantData = [
       "servesDinner": false,
       "servesBeer": true,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 1,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 10:00 AM – 5:30 PM",
-            "Tuesday: 10:00 AM – 5:30 PM",
-            "Wednesday: 10:00 AM – 5:30 PM",
-            "Thursday: 10:00 AM – 5:30 PM",
-            "Friday: 10:00 AM – 5:30 PM",
-            "Saturday: Closed",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "TAKEOUT",
-          "nextCloseTime": "2025-09-29T08:30:00Z"
-        }
-      ],
       "primaryType": "coffee_shop",
       "shortFormattedAddress": "Minato City, Akasaka, 7-chōme−2−21 2階",
       "outdoorSeating": false,
@@ -57537,13 +48080,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7138581,
-          35.665273
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-05T09:11:34Z",
         "google_maps_url": "http://maps.google.com/?cid=5183820147445012076",
@@ -57837,13 +48373,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7246791,
-          35.666869
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-05T08:25:26Z",
         "google_maps_url": "http://maps.google.com/?cid=8474969907568954715",
@@ -58137,13 +48666,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7054774,
-          35.6498856
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-12-05T07:54:53Z",
         "google_maps_url": "http://maps.google.com/?cid=3207746518421528298",
@@ -58442,13 +48964,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9859631,
-          40.7293258
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-08-15T11:37:36Z",
         "google_maps_url": "http://maps.google.com/?cid=7461727515440419725",
@@ -58731,13 +49246,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3360176,
-          48.8660238
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-08-03T13:47:12Z",
         "google_maps_url": "http://maps.google.com/?cid=16618592594127800623",
@@ -59010,13 +49518,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3733822,
-          48.8644193
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-30T00:50:44Z",
         "google_maps_url": "http://maps.google.com/?cid=9476269460468780158",
@@ -59287,13 +49788,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3284434,
-          48.8650898
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-30T00:49:06Z",
         "google_maps_url": "http://maps.google.com/?cid=1363937141080808774",
@@ -59352,348 +49846,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 7:30 AM – 6:30 PM",
-            "Tuesday: 7:30 AM – 6:30 PM",
-            "Wednesday: 7:30 AM – 6:30 PM",
-            "Thursday: 7:30 AM – 6:30 PM",
-            "Friday: 7:30 AM – 6:30 PM",
-            "Saturday: 8:00 AM – 7:00 PM",
-            "Sunday: 8:00 AM – 7:00 PM"
-          ],
-          "secondaryHoursType": "TAKEOUT",
-          "nextOpenTime": "2025-09-29T05:30:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 7:30 AM – 6:30 PM",
-            "Tuesday: 7:30 AM – 6:30 PM",
-            "Wednesday: 7:30 AM – 6:30 PM",
-            "Thursday: 7:30 AM – 6:30 PM",
-            "Friday: 7:30 AM – 6:30 PM",
-            "Saturday: 8:00 AM – 6:30 PM",
-            "Sunday: 8:00 AM – 6:30 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextOpenTime": "2025-09-29T05:30:00Z"
-        }
-      ],
       "primaryType": "tea_house",
       "shortFormattedAddress": "226 Rue de Rivoli, Paris",
       "editorialSummary": {
@@ -59878,7 +50030,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:15:16.462456",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "cozy",
@@ -59920,13 +50072,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3332982,
-          48.8678522
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-30T00:45:35Z",
         "google_maps_url": "http://maps.google.com/?cid=17037326640025769829",
@@ -60148,7 +50293,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:15:17.792342",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "upscale",
@@ -60191,13 +50336,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3605683,
-          48.8631791
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-23T04:15:55Z",
         "google_maps_url": "http://maps.google.com/?cid=6135959094474761439",
@@ -60465,13 +50603,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3060999,
-          48.8570566
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-23T04:09:33Z",
         "google_maps_url": "http://maps.google.com/?cid=17229020575329773938",
@@ -60742,13 +50873,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3304964,
-          48.8701724
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-23T04:01:06Z",
         "google_maps_url": "http://maps.google.com/?cid=10741336276662574391",
@@ -60955,7 +51079,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:15:25.544793",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "romantic",
@@ -60999,13 +51123,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3370663,
-          48.8849583
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-23T03:20:49Z",
         "google_maps_url": "http://maps.google.com/?cid=11594391901812270544",
@@ -61269,13 +51386,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.2951612,
-          48.8546771
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-23T03:05:47Z",
         "google_maps_url": "http://maps.google.com/?cid=14874280682086605245",
@@ -61545,13 +51655,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3359927,
-          48.8616689
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-20T20:56:43Z",
         "google_maps_url": "http://maps.google.com/?cid=16795178711890245481",
@@ -61776,7 +51879,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:15:34.174084",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "upscale",
@@ -61819,13 +51922,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3620472,
-          48.8573369
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-20T01:54:42Z",
         "google_maps_url": "http://maps.google.com/?cid=15817068630680968529",
@@ -62077,13 +52173,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3546683,
-          48.8499507
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-19T17:55:50Z",
         "google_maps_url": "http://maps.google.com/?cid=6617096495883696522",
@@ -62134,326 +52223,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": false,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 12:00 – 2:00 PM",
-            "Tuesday: 12:00 – 2:00 PM",
-            "Wednesday: 12:00 – 2:00 PM",
-            "Thursday: 12:00 – 2:00 PM",
-            "Friday: 12:00 – 2:00 PM",
-            "Saturday: 12:00 – 2:00 PM",
-            "Sunday: 12:00 – 2:00 PM"
-          ],
-          "secondaryHoursType": "LUNCH",
-          "nextOpenTime": "2025-09-29T10:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 7:00 – 10:00 PM",
-            "Tuesday: 7:00 – 10:00 PM",
-            "Wednesday: 7:00 – 10:00 PM",
-            "Thursday: 7:00 – 10:00 PM",
-            "Friday: 7:00 PM – 12:00 AM",
-            "Saturday: 12:00 AM – 10:00 PM",
-            "Sunday: 7:00 – 10:00 PM"
-          ],
-          "secondaryHoursType": "DINNER",
-          "nextOpenTime": "2025-09-29T17:00:00Z"
-        }
-      ],
       "primaryType": "restaurant",
       "shortFormattedAddress": "19 Quai de la Tournelle, Paris",
       "editorialSummary": {
@@ -62645,7 +52414,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:15:39.201071",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "upscale",
@@ -62687,13 +52456,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3442824,
-          48.8454016
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-19T05:20:51Z",
         "google_maps_url": "http://maps.google.com/?cid=4690526668540782970",
@@ -62965,13 +52727,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9937017,
-          40.7275934
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-18T19:12:42Z",
         "google_maps_url": "http://maps.google.com/?cid=12653293656822825187",
@@ -63027,178 +52782,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 8,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 8:00 – 11:00 AM",
-            "Tuesday: 8:00 – 11:00 AM",
-            "Wednesday: 8:00 – 11:00 AM",
-            "Thursday: 8:00 – 11:00 AM",
-            "Friday: 8:00 – 11:00 AM",
-            "Saturday: 8:00 – 10:00 AM",
-            "Sunday: 8:00 – 10:00 AM"
-          ],
-          "secondaryHoursType": "BREAKFAST",
-          "nextOpenTime": "2025-09-29T12:00:00Z"
-        }
-      ],
       "primaryType": "french_restaurant",
       "shortFormattedAddress": "380 Lafayette St, New York",
       "editorialSummary": {
@@ -63397,7 +52980,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:15:43.173615",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -63440,13 +53023,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.99565,
-          40.7207143
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-14T08:45:36Z",
         "google_maps_url": "http://maps.google.com/?cid=17937629165256273327",
@@ -63497,178 +53073,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 8,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 8,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 8,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 8,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 8,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 8:30 AM – 10:00 PM",
-            "Tuesday: 8:30 AM – 10:00 PM",
-            "Wednesday: 8:30 AM – 10:00 PM",
-            "Thursday: 8:30 AM – 11:00 PM",
-            "Friday: 8:30 AM – 11:00 PM",
-            "Saturday: 10:00 AM – 11:00 PM",
-            "Sunday: 10:00 AM – 10:00 PM"
-          ],
-          "secondaryHoursType": "TAKEOUT",
-          "nextOpenTime": "2025-09-29T12:30:00Z"
-        }
-      ],
       "primaryType": "thai_restaurant",
       "shortFormattedAddress": "186 Mott St, New York",
       "editorialSummary": {
@@ -63882,7 +53286,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:15:44.454560",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "trendy",
@@ -63930,13 +53334,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3371844,
-          48.8871994
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-14T05:05:13Z",
         "google_maps_url": "http://maps.google.com/?cid=4003567663840885322",
@@ -63987,217 +53384,6 @@ export const restaurantData = [
       "servesBeer": true,
       "servesWine": true,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 12:00 – 11:00 PM",
-            "Tuesday: 12:00 – 11:00 PM",
-            "Wednesday: 12:00 – 11:00 PM",
-            "Thursday: 12:00 – 11:00 PM",
-            "Friday: 12:00 – 11:00 PM",
-            "Saturday: 12:00 – 11:00 PM",
-            "Sunday: 12:00 – 11:00 PM"
-          ],
-          "secondaryHoursType": "TAKEOUT",
-          "nextOpenTime": "2025-09-29T10:00:00Z"
-        },
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 1,
-                "hour": 0,
-                "minute": 0,
-                "truncated": true,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 23,
-                "minute": 59,
-                "truncated": true,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Open 24 hours",
-            "Tuesday: Open 24 hours",
-            "Wednesday: Open 24 hours",
-            "Thursday: Open 24 hours",
-            "Friday: Open 24 hours",
-            "Saturday: Open 24 hours",
-            "Sunday: Open 24 hours"
-          ],
-          "secondaryHoursType": "ONLINE_SERVICE_HOURS"
-        }
-      ],
       "primaryType": "restaurant",
       "shortFormattedAddress": "98 Rue Lepic, Paris",
       "editorialSummary": {
@@ -64365,7 +53551,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:15:45.645916",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "upscale",
@@ -64407,13 +53593,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3444701,
-          48.8866557
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-14T05:04:37Z",
         "google_maps_url": "http://maps.google.com/?cid=7952514413078837931",
@@ -64644,7 +53823,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:15:46.968777",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "cozy",
@@ -64686,13 +53865,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.333603,
-          48.852416
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-14T04:50:36Z",
         "google_maps_url": "http://maps.google.com/?cid=16306357157950020216",
@@ -64960,13 +54132,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.988781,
-          40.7216663
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-11T05:04:27Z",
         "google_maps_url": "http://maps.google.com/?cid=6255364065134087964",
@@ -65216,7 +54381,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:15:49.490281",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "trendy",
@@ -65261,13 +54426,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9909993,
-          40.7141008
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-10T18:48:30Z",
         "google_maps_url": "http://maps.google.com/?cid=11995385246958571624",
@@ -65540,13 +54698,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3291618,
-          48.842362
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-07T05:40:22Z",
         "google_maps_url": "http://maps.google.com/?cid=8525423648943641338",
@@ -65775,7 +54926,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:15:51.928771",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "upscale",
@@ -65817,13 +54968,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3379479,
-          48.8532154
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-07T05:11:57Z",
         "google_maps_url": "http://maps.google.com/?cid=1850145431308192856",
@@ -66091,13 +55235,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.2987172,
-          48.8490914
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-07T05:10:41Z",
         "google_maps_url": "http://maps.google.com/?cid=15908140412454089397",
@@ -66360,13 +55497,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3468149,
-          48.8652644
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-07T04:25:16Z",
         "google_maps_url": "http://maps.google.com/?cid=10364766292052201131",
@@ -66576,7 +55706,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:15:55.687678",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "elegant",
@@ -66617,13 +55747,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3399692,
-          48.8869276
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-07T03:59:33Z",
         "google_maps_url": "http://maps.google.com/?cid=5993315933362488653",
@@ -66902,13 +56025,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3429723,
-          48.8727593
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-07-06T06:46:06Z",
         "google_maps_url": "http://maps.google.com/?cid=11435982971143180235",
@@ -67184,13 +56300,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3809333,
-          48.8535723
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-30T07:25:57Z",
         "google_maps_url": "http://maps.google.com/?cid=226032196792640665",
@@ -67415,7 +56524,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:15:59.677363",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "upscale",
@@ -67465,13 +56574,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3280563,
-          48.8652915
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-30T07:24:58Z",
         "google_maps_url": "http://maps.google.com/?cid=13224050389388022022",
@@ -67714,7 +56816,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:16:00.943357",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "upscale",
@@ -67758,13 +56860,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.368052,
-          48.8545233
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-30T07:23:06Z",
         "google_maps_url": "http://maps.google.com/?cid=7512222147656146757",
@@ -67988,7 +57083,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:16:02.150517",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "romantic",
@@ -68034,13 +57129,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.311283,
-          48.8702721
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-30T07:22:01Z",
         "google_maps_url": "http://maps.google.com/?cid=4879775224577609369",
@@ -68276,7 +57364,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:16:03.515395",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "upscale",
@@ -68320,13 +57408,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.344001,
-          48.861534
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-30T07:09:41Z",
         "google_maps_url": "http://maps.google.com/?cid=8302090940691035364",
@@ -68603,13 +57684,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.345431,
-          48.8645528
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-30T06:52:34Z",
         "google_maps_url": "http://maps.google.com/?cid=10950259227340670947",
@@ -68662,408 +57736,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": false,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 1,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 9,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 9:00 AM – 7:00 PM",
-            "Tuesday: 9:00 AM – 10:30 PM",
-            "Wednesday: 9:00 AM – 10:30 PM",
-            "Thursday: 9:00 AM – 11:00 PM",
-            "Friday: 9:00 AM – 11:00 PM",
-            "Saturday: 9:00 AM – 11:00 PM",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "ACCESS",
-          "nextOpenTime": "2025-09-29T07:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 2,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: 12:00 – 7:00 PM",
-            "Wednesday: 12:00 – 7:00 PM",
-            "Thursday: 12:00 – 7:00 PM",
-            "Friday: 12:00 – 7:00 PM",
-            "Saturday: 12:00 – 7:00 PM",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "LUNCH",
-          "nextOpenTime": "2025-09-30T10:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 2,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 23,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 23,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 23,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 23,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: 7:00 – 11:00 PM",
-            "Wednesday: 7:00 – 11:00 PM",
-            "Thursday: 7:00 – 11:30 PM",
-            "Friday: 7:00 – 11:30 PM",
-            "Saturday: 7:00 – 11:30 PM",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "DINNER",
-          "nextOpenTime": "2025-09-30T17:00:00Z"
-        }
-      ],
       "primaryType": "restaurant",
       "shortFormattedAddress": "34 Rue Montmartre, Paris",
       "outdoorSeating": true,
@@ -69284,13 +57956,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3660742,
-          48.8573383
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-30T04:18:44Z",
         "google_maps_url": "http://maps.google.com/?cid=7958250058111075904",
@@ -69525,7 +58190,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:16:18.316638",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "cozy",
@@ -69571,13 +58236,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9881953,
-          40.7391283
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-29T02:27:16Z",
         "google_maps_url": "http://maps.google.com/?cid=13306609497048601226",
@@ -69849,13 +58507,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3099627,
-          48.8599938
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-25T08:00:45Z",
         "google_maps_url": "http://maps.google.com/?cid=1746567632390951573",
@@ -70136,13 +58787,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3288088,
-          48.8586582
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-25T07:44:51Z",
         "google_maps_url": "http://maps.google.com/?cid=12853372006547624140",
@@ -70426,13 +59070,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3443485,
-          48.8893011
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-25T07:44:07Z",
         "google_maps_url": "http://maps.google.com/?cid=2753600237250213513",
@@ -70716,13 +59353,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3396449,
-          48.8879815
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-25T07:36:31Z",
         "google_maps_url": "http://maps.google.com/?cid=11076658090421871794",
@@ -70772,260 +59402,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": false,
       "servesVegetarianFood": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: Closed",
-            "Wednesday: 12:00 – 10:30 PM",
-            "Thursday: 12:00 – 10:30 PM",
-            "Friday: 12:00 – 10:30 PM",
-            "Saturday: 12:00 – 10:30 PM",
-            "Sunday: 12:00 – 10:30 PM"
-          ],
-          "secondaryHoursType": "LUNCH",
-          "nextOpenTime": "2025-10-01T10:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: Closed",
-            "Wednesday: 12:00 – 10:30 PM",
-            "Thursday: 12:00 – 10:30 PM",
-            "Friday: 12:00 – 10:30 PM",
-            "Saturday: 12:00 – 10:30 PM",
-            "Sunday: 12:00 – 10:30 PM"
-          ],
-          "secondaryHoursType": "DINNER",
-          "nextOpenTime": "2025-10-01T10:00:00Z"
-        }
-      ],
       "primaryType": "french_restaurant",
       "shortFormattedAddress": "2 Rue de l'Abreuvoir, Paris",
       "editorialSummary": {
@@ -71211,7 +59587,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:16:24.530417",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "romantic",
@@ -71255,13 +59631,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.338916,
-          48.851696
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-25T07:31:54Z",
         "google_maps_url": "http://maps.google.com/?cid=16450996431689885772",
@@ -71545,13 +59914,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3618066,
-          48.8606206
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-06-25T07:31:36Z",
         "google_maps_url": "http://maps.google.com/?cid=2739135305373629346",
@@ -71823,13 +60185,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0036671,
-          40.7331437
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-05-20T22:43:07Z",
         "google_maps_url": "http://maps.google.com/?cid=16472713729583313083",
@@ -72092,7 +60447,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:16:29.546771",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -72137,13 +60492,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0051396,
-          40.7337833
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-05-20T22:42:36Z",
         "google_maps_url": "http://maps.google.com/?cid=13043619403751283894",
@@ -72406,7 +60754,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:16:30.873098",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -72447,13 +60795,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9934222,
-          40.7170028
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-04-22T23:32:45Z",
         "google_maps_url": "http://maps.google.com/?cid=1080343780287652582",
@@ -72753,13 +61094,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9958467,
-          40.7235132
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-04-22T22:06:00Z",
         "google_maps_url": "http://maps.google.com/?cid=9254654848985064486",
@@ -73023,7 +61357,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:16:34.833899",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "stylish",
@@ -73066,13 +61400,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.978102,
-          40.74621
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-04-10T21:15:55Z",
         "google_maps_url": "http://maps.google.com/?cid=2201357785614541146",
@@ -73374,13 +61701,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9986308,
-          40.7371073
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-04-08T22:13:32Z",
         "google_maps_url": "http://maps.google.com/?cid=3954954063771909099",
@@ -73635,7 +61955,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:16:37.305042",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "intimate",
@@ -73680,13 +62000,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.996049,
-          40.7221985
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-04-08T06:59:07Z",
         "google_maps_url": "http://maps.google.com/?cid=15663219115392379996",
@@ -73981,13 +62294,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9945617,
-          40.745199
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2022-04-08T06:57:35Z",
         "google_maps_url": "http://maps.google.com/?cid=4021870718225789442",
@@ -74281,13 +62587,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0041104,
-          40.730423
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2021-11-28T22:48:59Z",
         "google_maps_url": "http://maps.google.com/?cid=12905253893934211543",
@@ -74585,13 +62884,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0043284,
-          40.7326259
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2021-11-23T04:46:30Z",
         "google_maps_url": "http://maps.google.com/?cid=10637820235526725107",
@@ -74853,7 +63145,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:16:43.422790",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -74898,13 +63190,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0076004,
-          40.7399703
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2021-10-26T01:48:19Z",
         "google_maps_url": "http://maps.google.com/?cid=5037720116419245966",
@@ -75170,13 +63455,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0364524,
-          37.5247887
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2021-09-24T02:15:12Z",
         "google_maps_url": "http://maps.google.com/?cid=10386978876485477215",
@@ -75439,13 +63717,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9897623,
-          37.5738825
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2021-08-15T22:58:33Z",
         "google_maps_url": "http://maps.google.com/?cid=6866984292403809692",
@@ -75710,13 +63981,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9880419,
-          40.721048
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2021-05-01T19:56:02Z",
         "google_maps_url": "http://maps.google.com/?cid=10585002051708657527",
@@ -76002,13 +64266,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9565396,
-          40.722297
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2020-10-31T18:22:04Z",
         "google_maps_url": "http://maps.google.com/?cid=5305007946342074985",
@@ -76256,7 +64513,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:16:56.057132",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -76302,13 +64559,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.333787,
-          48.864718
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2020-02-22T17:36:12Z",
         "google_maps_url": "http://maps.google.com/?cid=542933730229580498",
@@ -76583,13 +64833,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3502938,
-          48.8542532
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2020-02-20T03:06:43Z",
         "google_maps_url": "http://maps.google.com/?cid=16599165822106917205",
@@ -76856,13 +65099,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3331062,
-          48.854052
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2020-02-20T03:05:32Z",
         "google_maps_url": "http://maps.google.com/?cid=18029711228931295926",
@@ -76915,579 +65151,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 7:30 AM – 12:00 PM",
-            "Tuesday: 7:30 AM – 12:00 PM",
-            "Wednesday: 7:30 AM – 12:00 PM",
-            "Thursday: 7:30 AM – 12:00 PM",
-            "Friday: 7:30 AM – 12:00 PM",
-            "Saturday: 7:30 AM – 12:00 PM",
-            "Sunday: 7:30 AM – 12:00 PM"
-          ],
-          "secondaryHoursType": "BREAKFAST",
-          "nextOpenTime": "2025-09-29T05:30:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 15,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 15,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: Closed",
-            "Wednesday: Closed",
-            "Thursday: Closed",
-            "Friday: Closed",
-            "Saturday: 11:00 AM – 3:30 PM",
-            "Sunday: 11:00 AM – 3:30 PM"
-          ],
-          "secondaryHoursType": "BRUNCH",
-          "nextOpenTime": "2025-10-04T09:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:30 AM – 5:30 PM",
-            "Tuesday: 11:30 AM – 5:30 PM",
-            "Wednesday: 11:30 AM – 5:30 PM",
-            "Thursday: 11:30 AM – 5:30 PM",
-            "Friday: 11:30 AM – 5:30 PM",
-            "Saturday: 11:30 AM – 5:30 PM",
-            "Sunday: 11:30 AM – 5:30 PM"
-          ],
-          "secondaryHoursType": "LUNCH",
-          "nextOpenTime": "2025-09-29T09:30:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 23,
-                "minute": 59,
-                "truncated": true,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 0,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 0,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 0,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 0,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 0,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 0,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 5:30 PM – 12:00 AM",
-            "Tuesday: 5:30 PM – 12:00 AM",
-            "Wednesday: 5:30 PM – 12:00 AM",
-            "Thursday: 5:30 PM – 12:00 AM",
-            "Friday: 5:30 PM – 12:00 AM",
-            "Saturday: 5:30 PM – 12:00 AM",
-            "Sunday: 5:30 PM – 12:00 AM"
-          ],
-          "secondaryHoursType": "DINNER",
-          "nextOpenTime": "2025-09-29T15:30:00Z"
-        }
-      ],
       "primaryType": "cafe",
       "shortFormattedAddress": "6 Pl. Saint-Germain des Prés, Paris",
       "editorialSummary": {
@@ -77666,7 +65329,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:17:07.207690",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "upscale",
@@ -77710,13 +65373,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3628904,
-          48.8712453
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2020-02-20T03:04:48Z",
         "google_maps_url": "http://maps.google.com/?cid=3752405038616106515",
@@ -77974,13 +65630,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3732694,
-          48.8448989
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2020-02-20T02:54:31Z",
         "google_maps_url": "http://maps.google.com/?cid=1959510726884638818",
@@ -78032,332 +65681,6 @@ export const restaurantData = [
       "servesBeer": true,
       "servesWine": true,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 19,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:30 AM – 2:30 PM, 7:00 – 10:30 PM",
-            "Tuesday: 11:30 AM – 2:30 PM, 7:00 – 10:30 PM",
-            "Wednesday: 11:30 AM – 2:30 PM, 7:00 – 10:30 PM",
-            "Thursday: 11:30 AM – 2:30 PM, 7:00 – 10:30 PM",
-            "Friday: 11:30 AM – 2:30 PM, 7:00 – 10:30 PM",
-            "Saturday: 11:30 AM – 2:30 PM, 7:00 – 10:30 PM",
-            "Sunday: 11:30 AM – 2:30 PM, 7:00 – 10:30 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextOpenTime": "2025-09-29T09:30:00Z"
-        }
-      ],
       "primaryType": "restaurant",
       "shortFormattedAddress": "Gare de Lyon, Pl. Louis Armand hall 1, Paris",
       "editorialSummary": {
@@ -78534,7 +65857,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:17:09.706473",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Paris",
     "vibe_tags": [
       "upscale",
@@ -78581,13 +65904,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9591725,
-          40.7180107
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2020-02-09T18:34:27Z",
         "google_maps_url": "http://maps.google.com/?cid=4263775024399800642",
@@ -78892,13 +66208,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9646597,
-          40.7160682
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2020-02-09T07:36:24Z",
         "google_maps_url": "http://maps.google.com/?cid=16796682886572511758",
@@ -79204,13 +66513,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          2.3326046,
-          48.8541588
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2020-01-28T06:26:11Z",
         "google_maps_url": "http://maps.google.com/?cid=1782201546845549567",
@@ -79486,13 +66788,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0105217,
-          40.7173663
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-11-05T22:39:08Z",
         "google_maps_url": "http://maps.google.com/?cid=10024358948179420026",
@@ -79745,7 +67040,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:17:34.637624",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -79788,13 +67083,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0422066,
-          37.5244976
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-10-05T10:51:57Z",
         "google_maps_url": "http://maps.google.com/?cid=6634343126200503297",
@@ -80047,13 +67335,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0729449,
-          37.548153
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-10-02T04:02:02Z",
         "google_maps_url": "http://maps.google.com/?cid=11796780736815502428",
@@ -80311,13 +67592,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9903425,
-          37.5731192
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-10-02T03:59:27Z",
         "google_maps_url": "http://maps.google.com/?cid=15225950234829982745",
@@ -80593,13 +67867,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9896005,
-          37.5734039
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-10-02T03:59:06Z",
         "google_maps_url": "http://maps.google.com/?cid=2276853696896446055",
@@ -80870,13 +68137,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9901747,
-          37.5729609
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-10-02T03:58:59Z",
         "google_maps_url": "http://maps.google.com/?cid=12763949988749889614",
@@ -81145,13 +68405,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9579424,
-          37.4778919
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-09-29T04:41:54Z",
         "google_maps_url": "http://maps.google.com/?cid=6023786132310853672",
@@ -81408,13 +68661,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7167947,
-          35.6625662
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-09-22T21:12:24Z",
         "google_maps_url": "http://maps.google.com/?cid=10228871817977135893",
@@ -81697,13 +68943,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9969281,
-          40.7194026
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-08-19T01:47:49Z",
         "google_maps_url": "http://maps.google.com/?cid=6540617318049996181",
@@ -81755,134 +68994,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 1,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 16,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 18,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 4:00 – 6:00 PM",
-            "Tuesday: 4:00 – 6:00 PM",
-            "Wednesday: 4:00 – 6:00 PM",
-            "Thursday: 4:00 – 6:00 PM",
-            "Friday: 4:00 – 6:00 PM",
-            "Saturday: Closed",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "HAPPY_HOUR",
-          "nextOpenTime": "2025-09-29T20:00:00Z"
-        }
-      ],
       "primaryType": "spanish_restaurant",
       "shortFormattedAddress": "192 Grand St, New York",
       "editorialSummary": {
@@ -82097,7 +69208,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:18:10.423342",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "casual",
@@ -82140,13 +69251,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0423822,
-          37.5268648
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-08-12T22:32:59Z",
         "google_maps_url": "http://maps.google.com/?cid=1784107910238677566",
@@ -82361,7 +69465,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:18:15.718670",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Seoul",
     "vibe_tags": [
       "upscale",
@@ -82400,13 +69504,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9860676,
-          40.7185385
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-08-09T23:47:45Z",
         "google_maps_url": "http://maps.google.com/?cid=5861517072687391690",
@@ -82691,13 +69788,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9202076,
-          37.5664441
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-06-03T03:53:17Z",
         "google_maps_url": "http://maps.google.com/?cid=2963018488429202102",
@@ -82964,13 +70054,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9038413,
-          37.5588472
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-06-03T03:49:29Z",
         "google_maps_url": "http://maps.google.com/?cid=4812181840813996316",
@@ -83185,13 +70268,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9939961,
-          40.7388459
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-05-25T17:54:03Z",
         "google_maps_url": "http://maps.google.com/?cid=1931337383618347886",
@@ -83444,7 +70520,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:18:32.042961",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -83488,13 +70564,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0075229,
-          40.7061962
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-03-30T02:49:57Z",
         "google_maps_url": "http://maps.google.com/?cid=15549094825839982866",
@@ -83755,7 +70824,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:18:37.139958",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -83799,13 +70868,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9582848,
-          40.7296511
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-03-30T01:08:53Z",
         "google_maps_url": "http://maps.google.com/?cid=796199237544708976",
@@ -84060,7 +71122,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:18:38.370394",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "hip",
@@ -84100,13 +71162,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9866729,
-          40.7272093
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2019-01-20T20:57:37Z",
         "google_maps_url": "http://maps.google.com/?cid=17604981668767345709",
@@ -84390,13 +71445,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9844536,
-          40.7499711
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2018-11-18T01:56:33Z",
         "google_maps_url": "http://maps.google.com/?cid=13462698481716873882",
@@ -84654,7 +71702,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:18:47.355068",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -84694,13 +71742,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9776077,
-          40.756504
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2018-08-31T17:55:13Z",
         "google_maps_url": "http://maps.google.com/?cid=10882747563605327046",
@@ -85007,13 +72048,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7027761,
-          35.6604614
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2018-07-02T01:26:16Z",
         "google_maps_url": "http://maps.google.com/?cid=9376497034417561664",
@@ -85304,13 +72338,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0021708,
-          40.7201478
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2018-05-04T02:50:57Z",
         "google_maps_url": "http://maps.google.com/?cid=3627763791650318674",
@@ -85366,490 +72393,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 1,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 3:00 – 5:00 PM",
-            "Tuesday: 3:00 – 5:00 PM",
-            "Wednesday: 3:00 – 5:00 PM",
-            "Thursday: 3:00 – 5:00 PM",
-            "Friday: 3:00 – 5:00 PM",
-            "Saturday: Closed",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "HAPPY_HOUR",
-          "nextOpenTime": "2025-09-29T19:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 10,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 15,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: Closed",
-            "Tuesday: Closed",
-            "Wednesday: Closed",
-            "Thursday: Closed",
-            "Friday: Closed",
-            "Saturday: 10:00 AM – 3:00 PM",
-            "Sunday: 10:00 AM – 3:00 PM"
-          ],
-          "secondaryHoursType": "BRUNCH",
-          "nextOpenTime": "2025-10-04T14:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 1,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 11:30 AM – 5:00 PM",
-            "Tuesday: 11:30 AM – 5:00 PM",
-            "Wednesday: 11:30 AM – 5:00 PM",
-            "Thursday: 11:30 AM – 5:00 PM",
-            "Friday: 11:30 AM – 5:00 PM",
-            "Saturday: Closed",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "LUNCH",
-          "nextOpenTime": "2025-09-29T15:30:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 5:00 – 10:00 PM",
-            "Tuesday: 5:00 – 10:00 PM",
-            "Wednesday: 5:00 – 10:00 PM",
-            "Thursday: 5:00 – 10:00 PM",
-            "Friday: 5:00 – 10:00 PM",
-            "Saturday: 5:00 – 10:00 PM",
-            "Sunday: 5:00 – 10:00 PM"
-          ],
-          "secondaryHoursType": "DINNER",
-          "nextOpenTime": "2025-09-29T21:00:00Z"
-        }
-      ],
       "primaryType": "restaurant",
       "shortFormattedAddress": "53 Howard St, New York",
       "outdoorSeating": true,
@@ -86053,7 +72596,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:19:00.547422",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "elegant",
@@ -86096,13 +72639,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0117038,
-          37.5404633
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2018-01-03T03:54:35Z",
         "google_maps_url": "http://maps.google.com/?cid=15599248793451476758",
@@ -86345,13 +72881,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9487831,
-          40.7125269
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2017-08-27T16:38:09Z",
         "google_maps_url": "http://maps.google.com/?cid=18074618479173799443",
@@ -86607,7 +73136,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:19:28.573969",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "cozy",
@@ -86651,13 +73180,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9878013,
-          40.7647756
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2017-08-21T19:08:24Z",
         "google_maps_url": "http://maps.google.com/?cid=6931423625647914093",
@@ -86956,13 +73478,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9906704,
-          40.7390045
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2017-08-21T19:07:46Z",
         "google_maps_url": "http://maps.google.com/?cid=1981675325619466234",
@@ -87224,7 +73739,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:19:31.132466",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -87270,13 +73785,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9816255,
-          40.7690255
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2017-08-14T17:35:38Z",
         "google_maps_url": "http://maps.google.com/?cid=7383537244603605453",
@@ -87327,178 +73835,6 @@ export const restaurantData = [
       "servesBeer": true,
       "servesWine": true,
       "servesBrunch": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 12:00 – 9:00 PM",
-            "Tuesday: 12:00 – 9:00 PM",
-            "Wednesday: 12:00 – 9:00 PM",
-            "Thursday: 12:00 – 9:00 PM",
-            "Friday: 12:00 – 9:00 PM",
-            "Saturday: 12:00 – 9:00 PM",
-            "Sunday: 12:00 – 9:00 PM"
-          ],
-          "secondaryHoursType": "TAKEOUT",
-          "nextOpenTime": "2025-09-29T16:00:00Z"
-        }
-      ],
       "primaryType": "french_restaurant",
       "shortFormattedAddress": "1 Central Prk W, New York",
       "editorialSummary": {
@@ -87692,7 +74028,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:19:32.431284",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -87735,13 +74071,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9837835,
-          40.7500752
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2017-08-14T17:35:30Z",
         "google_maps_url": "http://maps.google.com/?cid=16876928203934392678",
@@ -87792,1946 +74121,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": true,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 16,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 16,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 16,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 16,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 16,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 16,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 16,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 18,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 4:30 – 6:30 PM",
-            "Tuesday: 4:30 – 6:30 PM",
-            "Wednesday: 4:30 – 6:30 PM",
-            "Thursday: 4:30 – 6:30 PM",
-            "Friday: 4:30 – 6:30 PM",
-            "Saturday: 4:30 – 6:30 PM",
-            "Sunday: 4:30 – 6:30 PM"
-          ],
-          "secondaryHoursType": "HAPPY_HOUR",
-          "nextOpenTime": "2025-09-29T20:30:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 9:30 PM",
-            "Tuesday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 9:30 PM",
-            "Wednesday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 9:30 PM",
-            "Thursday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 9:30 PM",
-            "Friday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 10:00 PM",
-            "Saturday: 7:30 – 11:30 AM, 5:00 – 10:00 PM",
-            "Sunday: 7:30 – 11:30 AM, 5:00 – 9:00 PM"
-          ],
-          "secondaryHoursType": "DELIVERY",
-          "nextOpenTime": "2025-09-29T11:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 9:30 PM",
-            "Tuesday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 9:30 PM",
-            "Wednesday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 9:30 PM",
-            "Thursday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 9:30 PM",
-            "Friday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 10:00 PM",
-            "Saturday: 7:30 – 11:30 AM, 5:00 – 10:00 PM",
-            "Sunday: 7:30 – 11:30 AM, 5:00 – 9:00 PM"
-          ],
-          "secondaryHoursType": "TAKEOUT",
-          "nextOpenTime": "2025-09-29T11:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 7:00 – 11:00 AM",
-            "Tuesday: 7:00 – 11:00 AM",
-            "Wednesday: 7:00 – 11:00 AM",
-            "Thursday: 7:00 – 11:00 AM",
-            "Friday: 7:00 – 11:00 AM",
-            "Saturday: 7:30 – 11:30 AM",
-            "Sunday: 7:30 – 11:30 AM"
-          ],
-          "secondaryHoursType": "BREAKFAST",
-          "nextOpenTime": "2025-09-29T11:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 7,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 11,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 7,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 11,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 14,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 9:30 PM",
-            "Tuesday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 9:30 PM",
-            "Wednesday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 9:30 PM",
-            "Thursday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 9:30 PM",
-            "Friday: 7:00 – 11:00 AM, 12:00 – 2:30 PM, 5:00 – 10:00 PM",
-            "Saturday: 7:30 – 11:30 AM, 2:00 – 10:00 PM",
-            "Sunday: 7:30 – 11:30 AM, 5:00 – 9:00 PM"
-          ],
-          "secondaryHoursType": "KITCHEN",
-          "nextOpenTime": "2025-09-29T11:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 1,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 12,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 14,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 12:00 – 2:30 PM",
-            "Tuesday: 12:00 – 2:30 PM",
-            "Wednesday: 12:00 – 2:30 PM",
-            "Thursday: 12:00 – 2:30 PM",
-            "Friday: 12:00 – 2:30 PM",
-            "Saturday: Closed",
-            "Sunday: Closed"
-          ],
-          "secondaryHoursType": "LUNCH",
-          "nextOpenTime": "2025-09-29T16:00:00Z"
-        },
-        {
-          "openNow": false,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 21,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 5
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 29
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 9,
-                  "day": 30
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 1
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 21,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 2
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 3
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 22,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 4
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 5:00 – 9:30 PM",
-            "Tuesday: 5:00 – 9:30 PM",
-            "Wednesday: 5:00 – 9:30 PM",
-            "Thursday: 5:00 – 9:30 PM",
-            "Friday: 5:00 – 10:00 PM",
-            "Saturday: 5:00 – 10:00 PM",
-            "Sunday: 5:00 – 9:00 PM"
-          ],
-          "secondaryHoursType": "DINNER",
-          "nextOpenTime": "2025-09-29T21:00:00Z"
-        }
-      ],
       "primaryType": "restaurant",
       "shortFormattedAddress": "400 5th Ave #2, New York",
       "editorialSummary": {
@@ -89935,7 +74324,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:19:33.885181",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -89977,13 +74366,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9918591,
-          40.7145497
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2017-08-04T20:51:00Z",
         "google_maps_url": "http://maps.google.com/?cid=2223505307817096349",
@@ -90243,7 +74625,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:19:35.128698",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "lively",
@@ -90287,13 +74669,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9878324,
-          40.7295831
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2017-07-12T15:34:00Z",
         "google_maps_url": "http://maps.google.com/?cid=14981804375993332968",
@@ -90595,13 +74970,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.9815796,
-          40.7690576
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2017-04-28T05:48:28Z",
         "google_maps_url": "http://maps.google.com/?cid=13127760818662453831",
@@ -90839,7 +75207,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:19:47.766573",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "upscale",
@@ -90883,13 +75251,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -74.0065947,
-          40.7342131
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2017-03-15T19:43:03Z",
         "google_maps_url": "http://maps.google.com/?cid=16308926389113588026",
@@ -91135,7 +75496,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-09-28T22:19:54.250063",
     "cynthias_pick": false,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "New York City",
     "vibe_tags": [
       "intimate",
@@ -91182,13 +75543,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.997193,
-          40.7137006
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2016-12-18T02:00:06Z",
         "google_maps_url": "http://maps.google.com/?cid=17142260180301623930",
@@ -91530,202 +75884,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": false,
-      "currentSecondaryOpeningHours": [
-        {
-          "openNow": true,
-          "periods": [
-            {
-              "open": {
-                "day": 0,
-                "hour": 0,
-                "minute": 0,
-                "truncated": true,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 12
-                }
-              },
-              "close": {
-                "day": 0,
-                "hour": 2,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 12
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 0,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 12
-                }
-              },
-              "close": {
-                "day": 1,
-                "hour": 0,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 13
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 1,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 13
-                }
-              },
-              "close": {
-                "day": 2,
-                "hour": 0,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 14
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 2,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 14
-                }
-              },
-              "close": {
-                "day": 3,
-                "hour": 0,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 15
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 3,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 15
-                }
-              },
-              "close": {
-                "day": 4,
-                "hour": 0,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 16
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 4,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 16
-                }
-              },
-              "close": {
-                "day": 5,
-                "hour": 0,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 17
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 5,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 17
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 2,
-                "minute": 30,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 18
-                }
-              }
-            },
-            {
-              "open": {
-                "day": 6,
-                "hour": 17,
-                "minute": 0,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 18
-                }
-              },
-              "close": {
-                "day": 6,
-                "hour": 23,
-                "minute": 59,
-                "truncated": true,
-                "date": {
-                  "year": 2025,
-                  "month": 10,
-                  "day": 18
-                }
-              }
-            }
-          ],
-          "weekdayDescriptions": [
-            "Monday: 5:00 PM – 12:30 AM",
-            "Tuesday: 5:00 PM – 12:30 AM",
-            "Wednesday: 5:00 PM – 12:30 AM",
-            "Thursday: 5:00 PM – 12:30 AM",
-            "Friday: 5:00 PM – 2:30 AM",
-            "Saturday: 5:00 PM – 2:30 AM",
-            "Sunday: 5:00 PM – 12:30 AM"
-          ],
-          "secondaryHoursType": "DINNER",
-          "nextCloseTime": "2025-10-13T04:30:00Z"
-        }
-      ],
       "primaryType": "korean_restaurant",
       "shortFormattedAddress": "15 E 31st St, New York",
       "editorialSummary": {
@@ -92191,7 +76349,7 @@ export const restaurantData = [
     "place_classification": "restaurant",
     "neighborhood_extracted": "Williamsburg",
     "city": "New York City",
-    "price_display": "$$",
+    "price_display": "$",
     "cynthias_pick": true,
     "specific_type": "steak_house",
     "vibe_tags": [
@@ -92235,13 +76393,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9865541,
-          37.5776235
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-11-03T04:08:45.750Z",
         "google_maps_url": "https://maps.google.com/?cid=5123135895525407385&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
@@ -92500,13 +76651,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.985492,
-          37.578714
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-11-03T04:08:45.920Z",
         "google_maps_url": "https://maps.google.com/?cid=11685613566355197390&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
@@ -92732,7 +76876,7 @@ export const restaurantData = [
     "place_classification": "restaurant",
     "neighborhood_extracted": "Jongno",
     "city": "Seoul",
-    "price_display": "$$",
+    "price_display": "$",
     "cynthias_pick": true,
     "specific_type": "korean_restaurant",
     "vibe_tags": [
@@ -92777,13 +76921,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7469855,
-          35.6674824
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-11-01T04:39:10.803Z",
         "google_maps_url": "https://maps.google.com/?cid=11680264112446360524&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
@@ -92813,177 +76950,6 @@ export const restaurantData = [
       "rating": 4.6,
       "googleMapsUri": "https://maps.google.com/?cid=11680264112446360524&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
       "regularOpeningHours": {
-        "openNow": true,
-        "periods": [
-          {
-            "open": {
-              "day": 0,
-              "hour": 11,
-              "minute": 0
-            },
-            "close": {
-              "day": 0,
-              "hour": 14,
-              "minute": 30
-            }
-          },
-          {
-            "open": {
-              "day": 0,
-              "hour": 17,
-              "minute": 0
-            },
-            "close": {
-              "day": 0,
-              "hour": 22,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 1,
-              "hour": 11,
-              "minute": 0
-            },
-            "close": {
-              "day": 1,
-              "hour": 14,
-              "minute": 30
-            }
-          },
-          {
-            "open": {
-              "day": 1,
-              "hour": 17,
-              "minute": 0
-            },
-            "close": {
-              "day": 1,
-              "hour": 23,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 2,
-              "hour": 11,
-              "minute": 0
-            },
-            "close": {
-              "day": 2,
-              "hour": 14,
-              "minute": 30
-            }
-          },
-          {
-            "open": {
-              "day": 2,
-              "hour": 17,
-              "minute": 0
-            },
-            "close": {
-              "day": 2,
-              "hour": 23,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 3,
-              "hour": 11,
-              "minute": 0
-            },
-            "close": {
-              "day": 3,
-              "hour": 14,
-              "minute": 30
-            }
-          },
-          {
-            "open": {
-              "day": 3,
-              "hour": 17,
-              "minute": 0
-            },
-            "close": {
-              "day": 3,
-              "hour": 23,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 4,
-              "hour": 11,
-              "minute": 0
-            },
-            "close": {
-              "day": 4,
-              "hour": 14,
-              "minute": 30
-            }
-          },
-          {
-            "open": {
-              "day": 4,
-              "hour": 17,
-              "minute": 0
-            },
-            "close": {
-              "day": 4,
-              "hour": 23,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 5,
-              "hour": 11,
-              "minute": 0
-            },
-            "close": {
-              "day": 5,
-              "hour": 14,
-              "minute": 30
-            }
-          },
-          {
-            "open": {
-              "day": 5,
-              "hour": 17,
-              "minute": 0
-            },
-            "close": {
-              "day": 5,
-              "hour": 23,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 6,
-              "hour": 11,
-              "minute": 0
-            },
-            "close": {
-              "day": 6,
-              "hour": 14,
-              "minute": 30
-            }
-          },
-          {
-            "open": {
-              "day": 6,
-              "hour": 17,
-              "minute": 0
-            },
-            "close": {
-              "day": 6,
-              "hour": 23,
-              "minute": 0
-            }
-          }
-        ],
         "weekdayDescriptions": [
           "Monday: 11:00 AM – 2:30 PM, 5:00 – 11:00 PM",
           "Tuesday: 11:00 AM – 2:30 PM, 5:00 – 11:00 PM",
@@ -93249,13 +77215,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          139.7836715,
-          35.6857703
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-11-01T04:59:13.532Z",
         "google_maps_url": "https://maps.google.com/?cid=3488825498050417103&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
@@ -93492,7 +77451,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-11-01T04:59:13.532Z",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Tokyo",
     "vibe_tags": [
       "upscale",
@@ -93532,13 +77491,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          126.9906213,
-          37.565819999999995
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-11-17T05:03:16.790Z",
         "google_maps_url": "https://maps.google.com/?cid=1875235036061397283&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
@@ -93592,255 +77544,6 @@ export const restaurantData = [
       "servesVegetarianFood": false,
       "primaryType": "restaurant",
       "shortFormattedAddress": "114-6 Eulji-ro, Jung District",
-      "reviews": [
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/reviews/Ci9DQUlRQUNvZENodHljRjlvT25KVlNraHBXblpRTjJacFJqZzJhRXBpYjNobFJYYxAB",
-          "relativePublishTimeDescription": "2 months ago",
-          "rating": 5,
-          "text": {
-            "text": "This is a fantastic restaurant. The staff, the food, the service, and the atmosphere are all spot on. It’s not just an Instagram hype as some people suggest—you really get a genuine, authentic feel here.\n\nI find it quite amusing when people complain about not being able to book a table. Many restaurants don’t take bookings, and since this place is so popular, they use Catch Table to manage the flow of customers. At the end of the day, the staff are human, not robots, and they do an incredible job. They work tirelessly, are very attentive, and their service is flawless.\n\nThe food was outstanding. The beef was melt-in-the-mouth tender and juicy—honestly one of the best I’ve ever had. The fried rice and grilled meats were also excellent, and the variety of side dishes was just right. It was easily one of the best dining experiences I’ve had, and I didn’t regret a single penny. I’d definitely come back and highly recommend it.",
-            "languageCode": "en"
-          },
-          "originalText": {
-            "text": "This is a fantastic restaurant. The staff, the food, the service, and the atmosphere are all spot on. It’s not just an Instagram hype as some people suggest—you really get a genuine, authentic feel here.\n\nI find it quite amusing when people complain about not being able to book a table. Many restaurants don’t take bookings, and since this place is so popular, they use Catch Table to manage the flow of customers. At the end of the day, the staff are human, not robots, and they do an incredible job. They work tirelessly, are very attentive, and their service is flawless.\n\nThe food was outstanding. The beef was melt-in-the-mouth tender and juicy—honestly one of the best I’ve ever had. The fried rice and grilled meats were also excellent, and the variety of side dishes was just right. It was easily one of the best dining experiences I’ve had, and I didn’t regret a single penny. I’d definitely come back and highly recommend it.",
-            "languageCode": "en"
-          },
-          "authorAttribution": {
-            "displayName": "Mo El-Haj",
-            "uri": "https://www.google.com/maps/contrib/102859010142667679930/reviews",
-            "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjXO4Ws8RJXLE21XjVYQPrOQcimOMr2EtYuR4vOf53ocP27HvSkX=s128-c0x00000000-cc-rp-mo-ba5"
-          },
-          "publishTime": "2025-08-27T12:34:11.316679274Z",
-          "flagContentUri": "https://www.google.com/local/review/rap/report?postId=Ci9DQUlRQUNvZENodHljRjlvT25KVlNraHBXblpRTjJacFJqZzJhRXBpYjNobFJYYxAB&d=17924085&t=1",
-          "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT25KVlNraHBXblpRTjJacFJqZzJhRXBpYjNobFJYYxAB!2m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        },
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/reviews/Ci9DQUlRQUNvZENodHljRjlvT21wdUxXUndjR1ZMU2xGNllXSm9WSFZxZFhaSVUwRRAB",
-          "relativePublishTimeDescription": "2 weeks ago",
-          "rating": 5,
-          "text": {
-            "text": "This is the experience you want to have in Seoul. You may have to wait a while to get a table, actually got will wait to meet a table, but that is totally fine. You can go chill at a nearby cafe and relax before you eat. The reservation system is top notch, even as a foreigner you can use the app they say to use at the front door and see where you are at. You will want to order everything on the menu, hopefully you have the hunger for it. They take great care of the food and will take care of you with recommended ways to eat the pork.",
-            "languageCode": "en"
-          },
-          "originalText": {
-            "text": "This is the experience you want to have in Seoul. You may have to wait a while to get a table, actually got will wait to meet a table, but that is totally fine. You can go chill at a nearby cafe and relax before you eat. The reservation system is top notch, even as a foreigner you can use the app they say to use at the front door and see where you are at. You will want to order everything on the menu, hopefully you have the hunger for it. They take great care of the food and will take care of you with recommended ways to eat the pork.",
-            "languageCode": "en"
-          },
-          "authorAttribution": {
-            "displayName": "Adam Hertel",
-            "uri": "https://www.google.com/maps/contrib/110721827074702469699/reviews",
-            "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjV_le7yxdtAC4HQNOSL3KbbSpGReRU_kspSVxz3nDpD0f_m6daW=s128-c0x00000000-cc-rp-mo-ba4"
-          },
-          "publishTime": "2025-11-02T12:36:01.681828466Z",
-          "flagContentUri": "https://www.google.com/local/review/rap/report?postId=Ci9DQUlRQUNvZENodHljRjlvT21wdUxXUndjR1ZMU2xGNllXSm9WSFZxZFhaSVUwRRAB&d=17924085&t=1",
-          "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT21wdUxXUndjR1ZMU2xGNllXSm9WSFZxZFhaSVUwRRAB!2m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        },
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/reviews/Ci9DQUlRQUNvZENodHljRjlvT2t3MVVVUlNUbmhpZEZGWGVsOXdZVXhwTVhkNE9FRRAB",
-          "relativePublishTimeDescription": "a month ago",
-          "rating": 5,
-          "text": {
-            "text": "Seoul's best black pork grill spot, imo! The vibes are just right and the charcoal-grilled pork is divine. Green onion and anchovy sauce combo is a winner! Boonza Korean wine pairs perfectly! 🐖 🍷",
-            "languageCode": "en"
-          },
-          "originalText": {
-            "text": "Seoul's best black pork grill spot, imo! The vibes are just right and the charcoal-grilled pork is divine. Green onion and anchovy sauce combo is a winner! Boonza Korean wine pairs perfectly! 🐖 🍷",
-            "languageCode": "en"
-          },
-          "authorAttribution": {
-            "displayName": "Ken Wong",
-            "uri": "https://www.google.com/maps/contrib/102059715410282193389/reviews",
-            "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjVPCZWO04kPZER8rZIhMRWw023ndD39Plnnrl3uWCPGsOoo86wn=s128-c0x00000000-cc-rp-mo-ba6"
-          },
-          "publishTime": "2025-09-21T12:55:09.814459527Z",
-          "flagContentUri": "https://www.google.com/local/review/rap/report?postId=Ci9DQUlRQUNvZENodHljRjlvT2t3MVVVUlNUbmhpZEZGWGVsOXdZVXhwTVhkNE9FRRAB&d=17924085&t=1",
-          "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT2t3MVVVUlNUbmhpZEZGWGVsOXdZVXhwTVhkNE9FRRAB!2m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        },
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/reviews/Ci9DQUlRQUNvZENodHljRjlvT2xwcFNFSjBWRkF0Y1RGbmJFUmpSbTlHVFd0M2JFRRAB",
-          "relativePublishTimeDescription": "a month ago",
-          "rating": 5,
-          "text": {
-            "text": "Tucked in one of the alleys, you’d never know walking on the Main Street where it is.  The black pork is great as everyone raves about. The server was helpful in cooking it for us the first time to show us how to properly grill it and then gave some helpful tips on how to eat it. It seems like a local place as the majority of people were Korean speaking there. Reservations are a must as the restaurant was packed the entire time we were there.  They also have a self-serve ice cream at the end which was a nice little way to end the dinner.",
-            "languageCode": "en"
-          },
-          "originalText": {
-            "text": "Tucked in one of the alleys, you’d never know walking on the Main Street where it is.  The black pork is great as everyone raves about. The server was helpful in cooking it for us the first time to show us how to properly grill it and then gave some helpful tips on how to eat it. It seems like a local place as the majority of people were Korean speaking there. Reservations are a must as the restaurant was packed the entire time we were there.  They also have a self-serve ice cream at the end which was a nice little way to end the dinner.",
-            "languageCode": "en"
-          },
-          "authorAttribution": {
-            "displayName": "Sharon Campbell",
-            "uri": "https://www.google.com/maps/contrib/105973373533460519190/reviews",
-            "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjX5pIUAI3ynawI4fdJnn0f6EI9RVBQnWz0Mhfc2dM697ymvRxoY=s128-c0x00000000-cc-rp-mo-ba4"
-          },
-          "publishTime": "2025-10-13T10:24:40.007093083Z",
-          "flagContentUri": "https://www.google.com/local/review/rap/report?postId=Ci9DQUlRQUNvZENodHljRjlvT2xwcFNFSjBWRkF0Y1RGbmJFUmpSbTlHVFd0M2JFRRAB&d=17924085&t=1",
-          "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT2xwcFNFSjBWRkF0Y1RGbmJFUmpSbTlHVFd0M2JFRRAB!2m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        },
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/reviews/Ci9DQUlRQUNvZENodHljRjlvT2twQ1NVbFFNVFF0T1RZMVZqTTFORFV4VkZsamIwRRAB",
-          "relativePublishTimeDescription": "2 months ago",
-          "rating": 5,
-          "text": {
-            "text": "Sancheong Charcoal Garden in Euljiro is widely celebrated for its exceptional meat quality and outstanding service. This restaurant specializes in grilled Jirisan black pork, which is a definite highlight for any meat lover.\n​The quality of the meat here is truly top-notch. The thickly sliced pork, especially the traditional salt-grilled option, is incredibly juicy and tender, practically melting in your mouth. The rich flavor of the pork, grilled over charcoal, is simply superb. They also offer a delicious gochujang-marinated pork, which provides a delightful sweet and spicy kick.\n​The dining experience is further enhanced by a variety of side dishes and sauces, including Sancheong mulberry salt, pollack roe ssamjang, and wasabi. Grilling the meat with green onions or dipping it in their special soybean paste with whelks adds another layer of flavor.\n​What truly sets Sancheong Charcoal Garden apart is the remarkable friendliness and attentiveness of the staff. Despite often being busy, the employees are proactive in meeting your needs and ensure a comfortable and enjoyable dining experience. While there might be a wait, the superb food and service make it well worth it. Many patrons agree that this spot is a must-visit for anyone seeking a high-quality Korean BBQ experience in Euljiro.",
-            "languageCode": "en"
-          },
-          "originalText": {
-            "text": "Sancheong Charcoal Garden in Euljiro is widely celebrated for its exceptional meat quality and outstanding service. This restaurant specializes in grilled Jirisan black pork, which is a definite highlight for any meat lover.\n​The quality of the meat here is truly top-notch. The thickly sliced pork, especially the traditional salt-grilled option, is incredibly juicy and tender, practically melting in your mouth. The rich flavor of the pork, grilled over charcoal, is simply superb. They also offer a delicious gochujang-marinated pork, which provides a delightful sweet and spicy kick.\n​The dining experience is further enhanced by a variety of side dishes and sauces, including Sancheong mulberry salt, pollack roe ssamjang, and wasabi. Grilling the meat with green onions or dipping it in their special soybean paste with whelks adds another layer of flavor.\n​What truly sets Sancheong Charcoal Garden apart is the remarkable friendliness and attentiveness of the staff. Despite often being busy, the employees are proactive in meeting your needs and ensure a comfortable and enjoyable dining experience. While there might be a wait, the superb food and service make it well worth it. Many patrons agree that this spot is a must-visit for anyone seeking a high-quality Korean BBQ experience in Euljiro.",
-            "languageCode": "en"
-          },
-          "authorAttribution": {
-            "displayName": "Micheal Yun",
-            "uri": "https://www.google.com/maps/contrib/109471260121980972091/reviews",
-            "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjXhF4omdsp_sYdi5mO4ULKHauC7CDwffCoTn2fRKbE6XgS2mnoe=s128-c0x00000000-cc-rp-mo-ba3"
-          },
-          "publishTime": "2025-08-22T03:18:26.531109561Z",
-          "flagContentUri": "https://www.google.com/local/review/rap/report?postId=Ci9DQUlRQUNvZENodHljRjlvT2twQ1NVbFFNVFF0T1RZMVZqTTFORFV4VkZsamIwRRAB&d=17924085&t=1",
-          "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT2twQ1NVbFFNVFF0T1RZMVZqTTFORFV4VkZsamIwRRAB!2m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        }
-      ],
-      "photos": [
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU4VloGYDzfJuYPhWaoOSKuQA3AMVJqC-0E8aOGcewdRn_nVY2NuPSyjYbKquJCJsnenD9QiqyrAyoDcZRPzQDZ2rawksSjplJORvgmIclGuagSEKFWdz2lsAqOa0zXp48MpWZno0-7jLMkZutnqaRMVRHgGEbF0N03dGO0hP1HVBfRrIzQGndcJrLz93i8VVuZAiGOHEFXytGskjkQsBKq4ampx_oG7d7N3EfqdZf1OEStqhnWrX15C7_Ddse7ygtNvIedZHVuU-mz_rNQeW1qZQUloh3_Fpgfow8dpZV9Sa3mgngzutZrWScTya9PviZE9OKTlyZnw4NwkdhR8ZsBLOI5FCYe63HFYu_56JLRuHw4NtJIqF85sNxHvtnYiEg6YeXVm7d1XMfskCO8gim5ViTd6nc8lMyFYmXZC9AfUeq1nbkl-GoRrlHDH4g",
-          "widthPx": 4032,
-          "heightPx": 3024,
-          "authorAttributions": [
-            {
-              "displayName": "Savan",
-              "uri": "https://maps.google.com/maps/contrib/115757903290306503916",
-              "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocJBIz-4c2XZjJX7hPIC82KRuy0utCCkjpyG6AGK8qp2vfQ__g=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIABIhASXs3K9V9H7Yp4V7OSmeNS&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhASXs3K9V9H7Yp4V7OSmeNS!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        },
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU5-BDPm9U4nMTBII4q8MciydOoDvvY1FKCUhVxZCCBRhTuwj9AXbJnKa8Dcvml17OzIh9pPXRON_CRarQPhL4ZpUcoROb8g-3regR6thE5UM2nUpt1Eagnq-uVmR1aCyzKpP_klMmo_1zEap9L15gk1wbGydcUsR75O7OHe_Zm5J_lW_x2k8pAo3BvuR2g9SVBkj2Ek92bbd0qt6VGWmPsh6AJN4iK8LM-DuwoHaE28hA77jlPUXw9CLcEUZR1z3luD7sEjgbOZim9fzpzs8QvZFk58Zv0RCZbxSkd-TV0_qA",
-          "widthPx": 1114,
-          "heightPx": 745,
-          "authorAttributions": [
-            {
-              "displayName": "산청숯불가든 을지로",
-              "uri": "https://maps.google.com/maps/contrib/100358009416129264896",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjW446PnqqAgOyVkfkjwkrmwWsPaC-LcbI0W_g52DIHXrkoiZXw=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sAF1QipO4Kzr17mgzt1GNCZ79i3R_qo2tLtPqNotS1wrB&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipO4Kzr17mgzt1GNCZ79i3R_qo2tLtPqNotS1wrB!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        },
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU5fkgyAYE1wsk7ppwEMgJR381dLkijn7qWbiV9mNcTCmUYT-v8OHZ4o9klChS5Cadxd-yZpLeYkozkFLQBV2ktX0g0t7FiQGNZe7LkZGFQlrQ4RK1Iu1y5WGc7wEtk2MfaQNpznXrkbMVeKwZc55KVdte-kv3B2yw6vFO4u0oYOEZhKXjEJAzE9FkXsETEE8yvCUl_OT7dqQv0fL5InwD012wbuE9u_4BeTTghD5o2-X2dLoGmO8Mdt66FvZKHSK8uxG1Jqp3BLYEXTWOSw2ggS13qEvtSAkcqO1qzXR30cdo8XH5wJCMxXZ-y9dGft-b0fzbnQMbxYTj8y5FxU_llBZnQCTm1fdVNNZZLjCbr9VL6npJBf6tcr8Ltcpe-om08wYMn8jXypSKh1oEcev4Dp5wg8grVx2eibxoSS0gVhRQtL44z0W754oSoBeqJl",
-          "widthPx": 1108,
-          "heightPx": 1477,
-          "authorAttributions": [
-            {
-              "displayName": "A-NO",
-              "uri": "https://maps.google.com/maps/contrib/101749609034395100394",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjVYwWLsdXgLBsBZ5a2jtICMpkD4WuepWBctDiW4RGcqDFl5JYmm=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIABIhDUFLh1WCiwEq9-tec4UlZB&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhDUFLh1WCiwEq9-tec4UlZB!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        },
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU62-MhU1kigYMg7fDCJvpTefIuFJx_bFH6jyWZr-C6JArkGkMv8dED57PZ-lgES-tNAsyPC9r4KGQxoILz87Mgq36iXSI9huoRBz77LO7RSAgG_0Coy1Tm2FTiMJI5h-OHXByS-CyhJWnte0iT0KccqTZGMwhhdxgSgtFy8_KgkZDJiu9XO3NdmUo1XnoAfjFoSVpZ6Q52AKfm5m8weL4seOo86ICeabOF7qeWT2yID9_PSfpV-3K6EMCY6LDjrjr407kIzso3jQ19nLORnhrd5YnCp-S5fgzL87hoO7x8pYjoTysR8IFvL80Yf0SQrmyhI1GHngfUtFmDaC1NSjhy2wWHHJLjLLb8eppntmxq6GcOqzdKcv2NtkUY4FznkFPKoxL2LgPBlCSefUdF8dHPjohQkrA6B7-fTz7HiTphBvQ",
-          "widthPx": 4800,
-          "heightPx": 3600,
-          "authorAttributions": [
-            {
-              "displayName": "윤서진",
-              "uri": "https://maps.google.com/maps/contrib/116506273538604834452",
-              "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocKMcjWFAD5aF3vzXCDFVfEWBjOuOrf-7S7Bq0diQVLOrzh8sQ=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIHM0ogKEICAgMDIop6BVw&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgMDIop6BVw!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        },
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU7_o2OBlfck85Jx_ATL1SZWYIdcv2tmSIm-bn0-vZvwa9J1Ppom_Im5yS-xhzqZ2mi_qcAjoKsk3ZlhEwdUWLlNdFsLErmO8rjmDycZCEXr8VAw8t-ybnT4cKdw38f8ZEwf7fl6ILRAPfWZidbhkG6kGdtPy7GLtcBeJpUpkU25pK3IvEn0jDDWq659A97KimwA767hA-JHeyCPrcLFZQIgObXfdM7Y3mvhNhtD7bvGtWrjSDcPCK_v-bTGdauGR8uP5OYo_PH0vVOM9puRneReKXOnfuA5ZhbTm-vpZ--jAX_TDJvtrX-JMxOV1KzSfCbE9DwudqDz2AIL7RCTw8Xi99oxTlvsSP-FCUh3PospJ6qPNknbED6sOxp_Hqq74D8KSR4WSjiR3X_q07gY5Fgy2HNJH00cDgw0lE4pTIv4jWOfAV4z32HjbziHZcr6",
-          "widthPx": 3000,
-          "heightPx": 4000,
-          "authorAttributions": [
-            {
-              "displayName": "김짱가",
-              "uri": "https://maps.google.com/maps/contrib/111993020010390614059",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjX6ensjCqswxZFCDL07SGzeyvtNY8z3XQpc-kZe6NcVqXhpVU7R=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIABIhC1cJg9WoxSMxszhZpRn9D9&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhC1cJg9WoxSMxszhZpRn9D9!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        },
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU7fQAh6wnI3yafvbSK5ToiFg63xZT-X9AY1Nl2kUr9uuxD--iBmlcB4WUj5N9lQx_4JXYLiOIToL6mtZPrLj9BAsibpmUObtfWWpDRD1ZIezJ3VackhTYCFFS1sHSVQlLvvspgdmbOGT0NeroaKhTrXsty_8pda_9xI-hCSQMI8FggeC62607bWZ5K3zuPhL_oOciQm_5CspW4Y4tyMiAuO3DNjzN6MnRPrUvS_erSmamGamMEe7tSBD-O6mAlC92U68L2soXMJExPHZrz-8cja82HYdL9O5nQk8rA0CjS5hyVeyNLx4rUMFlsfOmyPf3_9WUd3uFs1EDqs9y-8fOjhtdqlotEEkE71k0lU7iEYfQGhVSodhBoC1OI5tJxv9UWpvGPScaL1CF8NnPEjvUgAgkvRhJwjPFIXOnGXWJPzbcU3VyPWU3UMR4rwUQ",
-          "widthPx": 4000,
-          "heightPx": 3000,
-          "authorAttributions": [
-            {
-              "displayName": "大田智也",
-              "uri": "https://maps.google.com/maps/contrib/106990922070095931454",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjV7S0vxY3kYG7E_t6y-zoesH4Oro53ZvOi73NpmK1G5Pj27YDfk=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIABIhBkHfg_VNYPYicfxT2IlUi4&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhBkHfg_VNYPYicfxT2IlUi4!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        },
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU5r6xak_GPhzoCKoD45lVVoNKErNSZM3dhxLdoaP-d_ziqVCE7wXdLfRPdCv3rqXzuobCwvMlEHzyB-_gd7t1vaT4e6UZuArQ9MhsaDIlnj5kFdAelox3nXIwugxW5FAyK4Pef64lN6GtQ6Ei1WC1EyJeGzFmeLGdTjQmBPmgL-NfhhbOVH-CtFghy8iYtRdzqwayPyJCMTYFx_hfZ7jCh-DwY9-RWtXJFxc02vSg58w4eKSCaSlpYK5XbJ6aX1a5ru3r4Xd898m_Mej304HIq0nn6_aV9N8VRhq0eZZ1t3m4M0IC6sAgHXp5cw93p9bG63NPm9hlTSjlZynVZsZC4r3GufyPl2QQipZBhpZ2QkkCEzXpWyt5t1Z2S4M1-YT-nAOPR-0wG4KDF2fecKzYfbsMChtNyuPxHXbxAmH912nOk-GQqoR2UODZpaUQpo",
-          "widthPx": 3024,
-          "heightPx": 4032,
-          "authorAttributions": [
-            {
-              "displayName": "Bakabon Foodie",
-              "uri": "https://maps.google.com/maps/contrib/118108983178788543414",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjWcpDzYpruslTD9DGQSncsQF9KEALPjQGF-bMfuO3zm5x_w_Ag=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIABIhCqppdppLhBvOpipzVzKhR_&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhCqppdppLhBvOpipzVzKhR_!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        },
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU4oeeDTm-KNycKO3-lECUo5vZzUZsxCKndJzJ_ujAGsf9bGuVhUA_fVs3JzQDC1JhnuRcSOjzPPEpVX0BsEhWrLef68UT_LYVfm8Tev_Zr9DjGnmVhIBM-8oEQzBn5ck5Gu8NaPmtAbouw_nMW5q-cVwSjRRP1TtiJr9HBo7m33T0hBnDYR4CNHrQC6ka1XcrJU4Z9C8ZfuKerNFK-C1dQGiuPmngQ_-RwOh9oXtRYPK0sQUd7HQwIiCOJ31mu0GqiqhUWO7lx8K25p19k87P_aq6OcMvQjLIudpX_qi3XvsbrXy0fc5taQnib9cMGsO1oqbeFidgNTDvri_62BCxbVW-j8K-H0GNIxNfVknfE8vBIF6vmiYuGup8XUWMGwUwYAufceBGEUNRyu2XZHXbkowLobBA7WoLomlVDwffhq-rkkzZ30GCB_dHwSXVr9",
-          "widthPx": 4716,
-          "heightPx": 3540,
-          "authorAttributions": [
-            {
-              "displayName": "w np",
-              "uri": "https://maps.google.com/maps/contrib/115678072463381867771",
-              "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocIYB0TCyrVCl1xIhUrWhEme4is2UxsgetELBhCnhbL7Y5WPzw=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIABIhAcM1-TMb7oBgTJKOCw77KE&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhAcM1-TMb7oBgTJKOCw77KE!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        },
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU6_hOwFyGZMVeJ7ESRjF0IW77r-LFNig8FNm9Kjat5fttkL8gBR8i6PT8HbOkQHQ12iKCl37sQYgq-mt2euDZiB0eHgJJ8W0ohuo486or5UhfsHOUV4V1NeKYObVcU8FwkUucXuwwnhD33U0vEnMqsxjMjys3B6GErNiC1P5OF81p51m5AcTimIMTrGfwNRs0VGZM3QloU9lt5qxM0iWzVmaBmSSuSXhfZJriP4GNvDch7ppsZCYH5dyXKWOI9FQyHDCaVDCP9pn1LuYL9kppWoWM2SF3JVL2pICjFIutkjOkXl8-qlAjgn57jDeCxCVdttatw1M0yLqVobSjuttbdO-0eSdrqJz4jBPPWfDSMhW_rjRRxX7ZKNhycTrQGV49o_6K8c2JnHpxrexzhYErvyzM5sV2Owa-691xicLyQ-xQz4",
-          "widthPx": 4000,
-          "heightPx": 3000,
-          "authorAttributions": [
-            {
-              "displayName": "이유진",
-              "uri": "https://maps.google.com/maps/contrib/101611832638450019187",
-              "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocIBgN9TbSCEH9B1eFK5f5hQ1GbVx1v1ydQpPOARUkRq1L3W9g=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIHM0ogKEICAgICv0JuLoAE&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgICv0JuLoAE!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        },
-        {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU4zZ6qANq2mzmNAQAGJFH6YTnk4fWCvpGINaLfQqGZ8BB1tnHgT__HC7I2Tli2kQBlqnSmPJ_sRoNXSJi3jGnwd2g8U_5sqT2nlThhswlIO3-c0N3kFcdXaUOYzihBPMjWaiHQhGDMo32o_rFY9hbec_8JwD4AKulgMWPejMtzMzl9Z5UZjHCqU6a4jKTv5YUIN-Rl2YOSOn4wr7ipK_rYHyiFIqvVpfWnYaDeP48Rx7D2ueccaNxqy9GH8Rg93MYgMkZfXMTpEtyu_fZ9Cq_U7jx2ZOGcPBukFdY8S34_ZLtVeNajC5Yaisx9ZxjrO8XJEcm-noZ1XLg0qdcSXdrf5DFdYW3G7_iu-JUfnHtH-GH3mHy7LTqgPXcbFnVFmZ7aE9piGurrxf5OPM0Jp8pWC7goxjPW8QQIBlz5h7YXAQ1wK3N_WCHJFpYsZOQ",
-          "widthPx": 3716,
-          "heightPx": 2526,
-          "authorAttributions": [
-            {
-              "displayName": "jumyeong lee",
-              "uri": "https://maps.google.com/maps/contrib/100238027000321406950",
-              "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocKkj4XIO69G07Xano6YE2367coJ1OVj0_0l3qIAYxtdE3yPXg=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIABIhCsmCDhzFPtWiWi1YahdjtC&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhCsmCDhzFPtWiWi1YahdjtC!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
-        }
-      ],
       "outdoorSeating": true,
       "liveMusic": true,
       "menuForChildren": false,
@@ -94004,7 +77707,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-11-17T05:03:16.790Z",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Seoul",
     "vibe_tags": [
       "cozy",
@@ -94045,13 +77748,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          127.0416489,
-          37.509864799999995
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-11-17T05:02:54.118Z",
         "google_maps_url": "https://maps.google.com/?cid=16611126971547916537&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
@@ -94100,255 +77796,6 @@ export const restaurantData = [
       "servesWine": true,
       "primaryType": "korean_restaurant",
       "shortFormattedAddress": "Gangnam District, Nonhyeon-dong, 277-20 1층",
-      "reviews": [
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/reviews/ChdDSUhNMG9nS0VJQ0FnSURqaGFqMGlnRRAB",
-          "relativePublishTimeDescription": "a year ago",
-          "rating": 5,
-          "text": {
-            "text": "This is the best Korean Barbecue experience I have ever had. The 50 days dry aged Hanu beef is also the best beef I have had so far in my life. The black pork was nevertheless superior as well.\n\nThe food was grilled at the table by a grill master who moved it in the middle of the table to avoid people overcooking it.\n\nPrices are steep but in my opinion totally worth it. We ended up paying 307000 ₩  for 4 people and everyone had 150g of pork and 150g of beef.",
-            "languageCode": "en"
-          },
-          "originalText": {
-            "text": "This is the best Korean Barbecue experience I have ever had. The 50 days dry aged Hanu beef is also the best beef I have had so far in my life. The black pork was nevertheless superior as well.\n\nThe food was grilled at the table by a grill master who moved it in the middle of the table to avoid people overcooking it.\n\nPrices are steep but in my opinion totally worth it. We ended up paying 307000 ₩  for 4 people and everyone had 150g of pork and 150g of beef.",
-            "languageCode": "en"
-          },
-          "authorAttribution": {
-            "displayName": "Marcel Andre C.",
-            "uri": "https://www.google.com/maps/contrib/117283000770369507995/reviews",
-            "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocL1vIYkdbfBOdomRt4uqhdn-cGCIKLu9xpxoquk2liPEWeTOg=s128-c0x00000000-cc-rp-mo-ba5"
-          },
-          "publishTime": "2024-05-05T10:10:47.936773Z",
-          "flagContentUri": "https://www.google.com/local/review/rap/report?postId=ChdDSUhNMG9nS0VJQ0FnSURqaGFqMGlnRRAB&d=17924085&t=1",
-          "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sChdDSUhNMG9nS0VJQ0FnSURqaGFqMGlnRRAB!2m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        },
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/reviews/ChZDSUhNMG9nS0VJQ0FnSUNCZ2JHb0NREAE",
-          "relativePublishTimeDescription": "2 years ago",
-          "rating": 5,
-          "text": {
-            "text": "Delicious dry aged beef and pork by famous Korean chef. Great quality meat and the namul/panchan is great.",
-            "languageCode": "en"
-          },
-          "originalText": {
-            "text": "Delicious dry aged beef and pork by famous Korean chef. Great quality meat and the namul/panchan is great.",
-            "languageCode": "en"
-          },
-          "authorAttribution": {
-            "displayName": "Paul Troon",
-            "uri": "https://www.google.com/maps/contrib/103861449144341390168/reviews",
-            "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjWnV_EDahaj_qjAEq5qvokBFJKYnsc-RJLUw2R_UWmXZsZ3WewE=s128-c0x00000000-cc-rp-mo-ba4"
-          },
-          "publishTime": "2022-12-27T11:19:57.633842Z",
-          "flagContentUri": "https://www.google.com/local/review/rap/report?postId=ChZDSUhNMG9nS0VJQ0FnSUNCZ2JHb0NREAE&d=17924085&t=1",
-          "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sChZDSUhNMG9nS0VJQ0FnSUNCZ2JHb0NREAE!2m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        },
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/reviews/ChdDSUhNMG9nS0VJQ0FnSUN1Ny1pOV9nRRAB",
-          "relativePublishTimeDescription": "3 years ago",
-          "rating": 5,
-          "text": {
-            "text": "Tasty and kind staff!",
-            "languageCode": "en"
-          },
-          "originalText": {
-            "text": "Tasty and kind staff!",
-            "languageCode": "en"
-          },
-          "authorAttribution": {
-            "displayName": "JS Lee",
-            "uri": "https://www.google.com/maps/contrib/100965952174238015508/reviews",
-            "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocLBEnbTPjfk_rodzRus-Bmb-i__ZtETnyWyJ_gpa6ik3SfjqxI=s128-c0x00000000-cc-rp-mo-ba5"
-          },
-          "publishTime": "2022-08-09T13:52:14.653176Z",
-          "flagContentUri": "https://www.google.com/local/review/rap/report?postId=ChdDSUhNMG9nS0VJQ0FnSUN1Ny1pOV9nRRAB&d=17924085&t=1",
-          "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sChdDSUhNMG9nS0VJQ0FnSUN1Ny1pOV9nRRAB!2m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        },
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/reviews/ChdDSUhNMG9nS0VJQ0FnSURKdXFxVDh3RRAB",
-          "relativePublishTimeDescription": "2 years ago",
-          "rating": 5,
-          "text": {
-            "text": "juicy and umami aged meet!",
-            "languageCode": "en"
-          },
-          "originalText": {
-            "text": "juicy and umami aged meet!",
-            "languageCode": "en"
-          },
-          "authorAttribution": {
-            "displayName": "kk si",
-            "uri": "https://www.google.com/maps/contrib/107549944241833452875/reviews",
-            "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocKsEng8Q1YFhhXWpavOBF3mA5mg4lr1UggJxRSWPhlsjw6KKw=s128-c0x00000000-cc-rp-mo-ba3"
-          },
-          "publishTime": "2023-07-15T12:20:54.797946Z",
-          "flagContentUri": "https://www.google.com/local/review/rap/report?postId=ChdDSUhNMG9nS0VJQ0FnSURKdXFxVDh3RRAB&d=17924085&t=1",
-          "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sChdDSUhNMG9nS0VJQ0FnSURKdXFxVDh3RRAB!2m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        },
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/reviews/ChZDSUhNMG9nS0VJQ0FnSUNSX2V1VlB3EAE",
-          "relativePublishTimeDescription": "2 years ago",
-          "rating": 4,
-          "text": {
-            "text": "Good",
-            "languageCode": "en"
-          },
-          "originalText": {
-            "text": "Good",
-            "languageCode": "en"
-          },
-          "authorAttribution": {
-            "displayName": "신기환",
-            "uri": "https://www.google.com/maps/contrib/100441040619419939328/reviews",
-            "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocKSiytxVN2t6F_lokEg9kR_Xtb8YGDNKdTyGWNHTLz1afRZcQ=s128-c0x00000000-cc-rp-mo-ba5"
-          },
-          "publishTime": "2023-04-09T04:02:13.283239Z",
-          "flagContentUri": "https://www.google.com/local/review/rap/report?postId=ChZDSUhNMG9nS0VJQ0FnSUNSX2V1VlB3EAE&d=17924085&t=1",
-          "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sChZDSUhNMG9nS0VJQ0FnSUNSX2V1VlB3EAE!2m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        }
-      ],
-      "photos": [
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU7uQNPSieyGGdYkigKyzCBPsLATsWf3vZICrJ-DGYWobCMJGgI_wBFCBnCMLMNB_Ct29UAlXHlrceGPlkLDUjeCFOfMhOLwqlGPjbOSxS8xlNJh7CMDuwgm5D4gBWG1D6Qr6NxFxtOSFGpSxxapIVTh3PMIf7rndyh_V0j-41KIh-YVS0afTt7usZ06d594ZeYdUiJO4GhMGJhCX_vdgkvaG6N4D2Co1Amkmz4-eMeMeLIIVwy96ogkosUAPWo0R1xDYGcTwjE2RGrkepMV2QOHYSVLXO5GrtfNvTfMiqCyBw",
-          "widthPx": 4800,
-          "heightPx": 3200,
-          "authorAttributions": [
-            {
-              "displayName": "신사약방 (Sinsa Yakbang)",
-              "uri": "https://maps.google.com/maps/contrib/113758348928502768023",
-              "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocIbKA23vNu3ayebSluwGdfNlFhb5bu2J47yJ6U_uRxbOLjiNQ=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sAF1QipMreNyji2ZtZJH-W9VhiunEVIuC3X4CyxpQnEx0&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipMreNyji2ZtZJH-W9VhiunEVIuC3X4CyxpQnEx0!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        },
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU7jS58q4fJhu-hswMhXkzJZMUkZPT0jT-_otS-hOIkYBzX8qJTgiP5k9vmjk3n9ni54jXBvw0uSZt2n5eikuAWeu9R6ktht6mxbZJ9r1fLXuNy1S2QrQ7f9NdaAg_Z1eeJvJoHrInz4fonEC-TbEmLLNWGje2SBnhyhKGq-nUJzbl1GXhNJ66cBurwYo170qT82YWrB1_ScdANh45QEOfGUSAdEor6WqGrb00pmHectwJAAfmKk5ij8ZBbusNpPwKNDVhUMUQ_mYCDnxoUbjPc_0xLDd4uxlXDGxzziAWpvJQ",
-          "widthPx": 1280,
-          "heightPx": 853,
-          "authorAttributions": [
-            {
-              "displayName": "신사약방 (Sinsa Yakbang)",
-              "uri": "https://maps.google.com/maps/contrib/113758348928502768023",
-              "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocIbKA23vNu3ayebSluwGdfNlFhb5bu2J47yJ6U_uRxbOLjiNQ=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sAF1QipOUwXhMqxzx3JvNMOmlPSCRbgdsykQo3b3M9GPM&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipOUwXhMqxzx3JvNMOmlPSCRbgdsykQo3b3M9GPM!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        },
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU4XA9pu06WpA-iFagKUZfpjXHx1Y06EcqLOY8AE6_NtQKA4dTcsh-tO15q4grZMBXBjG1zZwwC5MGVkW0X_aGPbXWXb-fnuT5KGKoVEY0LQrdz63xoqx7FVCkJ11aqFceB1qYP0Hby729Q4kK-ZjcWK2jDXQaBw-JQ0UcmO51np8aAJ7tfhOJrmoVqAu3M3Mmt0zB654e0RpRAJGBDQglk7bgdHXmajCMS7A6jbMJpfz1JiOVua75-OPvRlQFzZ-ea5GD9zmxROApIpWKfrP65TSzcgvbZxui-f00TzmRPi8Q734Gn0_rI8SfaV08_H6_GK4qu56PKtBHuMkQZzCKN157wIfsfgSbOeGDRi7gBE39MVxCmM6079qdSPy-0KDJZ9l8n3ZbqTyllz2d1ytdqdLVDwZbz1Ju5pxNf-6UgEcMyuMbrwkzJhq38w8Q",
-          "widthPx": 3024,
-          "heightPx": 4032,
-          "authorAttributions": [
-            {
-              "displayName": "mina Lee",
-              "uri": "https://maps.google.com/maps/contrib/114829737030814481862",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjXFCa4fHCltXWSsv_tjH9hTrfhlHTJnSd-D6CZ-aieTZtHx6posXQ=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIABIhA50EQpb6dCaga8l5jdA-ug&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhA50EQpb6dCaga8l5jdA-ug!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        },
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU6E7dhhsBXGwi-Zw27IaHOd40NRKP9_v3BtfIPt-ePq-7zRPKleMsnNYkPnqgQIbBzO5bVG3o005OUOQekRHxbRxIasgXnXXqH7ihqX2TFIkWmoS5U_mQWoRHc8QN563D-4VcQ3FO-9i5wi2uiTpd2xOvI_UA_OhceW1rQ2zlgqYFne75lsEmzqos_8zM6rKJKcq9gpry855ZXSdGqnCvzDhGlB7DfhntcfGve-vSLKnbaoMKqx15zWKT8W6TevsUWIjJf6pAR3jL0X7yH2uKTq6AXKt6_iIrJu9KGa4e_lbru8Itn7XeAxUTyERBCmg-wn5yObyWJA8N5Vh1A3WiTvA3u8n5Xz_fNMmA1IExehPRb563ekREksOMWEg2gXpPdFrlq6vGRuw199H-QsVkhyPvhnItfoiXab7fJz62CYnR4",
-          "widthPx": 4032,
-          "heightPx": 3024,
-          "authorAttributions": [
-            {
-              "displayName": "아니자네",
-              "uri": "https://maps.google.com/maps/contrib/104809720481969427165",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjXAIF_04X8bMGQxB3JZ-pSeZ303hTMScJlWNRfmhGCFe1nKyKRT=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIHM0ogKEICAgID3sM6EtQE&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgID3sM6EtQE!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        },
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU4Bw9tj59o53qrGcvviGdo-Zj3FKn3Lv1MrZ_b4T02OtWXpuHSVnseQtf8hvFuBxL4sXzhqc0I-MM1Z8Z6HjQF1RPUGh1EgJmNMSAhHw4fiBe7EKA93HewdiFyRvSzYu_Gt1eCECMQa7SGQKvo4L6_yJneFLWZs8zPs7y6JhX3d44hp7fJbU2n0vOREnBF0nwM6mCLFMn816fBSRZgi1Hmm275v6PZG2Ltigtl7ZkIhyxoHBxr1wkYz2Spl7NiipfozqqdYNnAwNj_ApZ1XUwufumurtccjJlqodT7R7BpWjmldxRPynOVQ0N_nuX-nE9fTobKIJAN0bhbZKBG3dbwWaItgW3MEeCPZZLKJBqSZ-PQJ6V0bIg92akFhJc2Ravf4z18Yh0tG-FByy8KbzWEwiDQt3HMHcHJ8C4WR7W5yCyM",
-          "widthPx": 3000,
-          "heightPx": 4000,
-          "authorAttributions": [
-            {
-              "displayName": "카노",
-              "uri": "https://maps.google.com/maps/contrib/108609791125630507215",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjV2QX3P3fBkLMejXYk5bnKwkQBOEvwVNDjHf6tGXJ9JJIQzvuOxcA=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIHM0ogKEICAgICT9rDB5QE&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgICT9rDB5QE!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        },
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU7ltRMRcf0VT86eWHXrHq7jR4kMd1U4u25UkpQSa6Vd2lHHPMaBoLCFd1X2WB3LmMpphNh1dYpP_-csQi1ZKD3WxY00Vt3SgoyPnzUiKgijotlRRSLdsfnvtAMHaolWMebqYP4zcc2ZH03QQLoFfmIWz0-Mvs6nUOm_YVj9YY3xM5F560g1QHmGKFj5oxfINLyEPyREqkRBEgI0dTFzP_bMEBe2Dh2Ixfi8O0TAWXs7AuERZWGFQZ5b91yVaPR8nSKzpdsvL_6Q546SX3lLFMDDM-0VyGeif6ThIKdMlcUcNA",
-          "widthPx": 4800,
-          "heightPx": 3200,
-          "authorAttributions": [
-            {
-              "displayName": "신사약방 (Sinsa Yakbang)",
-              "uri": "https://maps.google.com/maps/contrib/113758348928502768023",
-              "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocIbKA23vNu3ayebSluwGdfNlFhb5bu2J47yJ6U_uRxbOLjiNQ=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sAF1QipPRXHzqXpW-Ct2Fo5bDuKKBP6aznfoaPlydah-3&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipPRXHzqXpW-Ct2Fo5bDuKKBP6aznfoaPlydah-3!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        },
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU5bO6NKN5mk7XOtarZ6o9Tdj5BtT7J-btf6-DqAxsEUm7LSILpWDVjVrHdz2faL0TOZUkCEG2KCyWlmhyAD-Jn2K7TBrxVF-mgjQpxLqxK8tmsll-L13Ip34el2ODQfj2YjZLy694ntD4rhTW3u0rWMREoqmFVmGEkhj0-qChpIuBRvI8_C-BYDr5v0dcsFvYrvDZME2XvUCIUfrBRrpnP3F_3kyub7uUwjPziIiEIJMJTQvaazyR9oHeZmv7VQQ8aY-QfMvOuL7Y9TlUH8MbPRYnEYpr-G_8MvzDL-VbvoVU3EdjK0BN4yOocp2WE8-PtebjD7ibmymLrzV1QSa3-Z6-SaaFook7hHSo9VInYQCrJqh5ycoTYQzQ8XgmiVNIBO-kaoRwFbjqc5EImd-v3M6M4ID-rUK-vK4quqS-zE0Q",
-          "widthPx": 3024,
-          "heightPx": 4032,
-          "authorAttributions": [
-            {
-              "displayName": "w-8-g (馬込のパパ)",
-              "uri": "https://maps.google.com/maps/contrib/116970800259332131411",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjX5HrJBB4Xb3MCcsa3xNC7EkRlCFoFqEoWabHWKt4lvhVz-JK-Kmw=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIHM0ogKEICAgIC1rP-DbQ&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgIC1rP-DbQ!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        },
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU7ZVRYdrwafYdvXRSpOXzU35BQO6y3dFAVScLvNcifqgOoBK6TynaZKq281Sqp2C9BWIyo0_trVFqp22xauilVFfCb43JafDr_baGs-3VN4e0EWyDWZTmirPTeWgruWDXwnvZzadwUq6EELrorXiDNsv2gWzpoFPD8rfGnwHxcizr0vtHoPP12ztGbhshIGpTP7U0tA-twT20FkTnS3kyYnY36eKHdn7ZVeyQx2VfOCyqJBnQocwd1fQMqJUD-LmFuUa_Cd_9w0QgJz4iyYJuCjR33keIG7sRLpfnVASl-gDfMOUMwSQbS2YsvEM49N_clO3Bvhch7N6Zry21U6SdmRgBpaT7Qk9TfGeWBY3kPT8NeySP4cJ2H8MKN5f-kWB-wm44VFRCNRXCGJiulpCExvU-LIL868wK_Dipa7daVjLync",
-          "widthPx": 1411,
-          "heightPx": 1058,
-          "authorAttributions": [
-            {
-              "displayName": "jji* *",
-              "uri": "https://maps.google.com/maps/contrib/105330380794364419647",
-              "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocILp3a_ThSCB8kXozcn-lj6erwXrbCLLat8stEQl5X18w-UFQ=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIHM0ogKEOv7m9iI4vfaswE&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEOv7m9iI4vfaswE!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        },
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU7433QGJtAx_r6fQC_IWwx_8ivHVQ1RJbbFhl0wDZ_y5OBeNROlU4wLcJUtJKhwx6vlSMZeo8zhWUwzPfZj0L8-j7QJtE2pzGb9vNz2_ziMEtoyTDWTQw60zx_JyW0FXT1aUTGZGZROEc2wyPEt36jwX2QQ0dqHNIvjkjVPAZxvPHBO8-ikFDN17fZLptoQtEY1Owtx9o83gk4DWdaKDW7vJ1HVezFNa4DHlwa3cetPdivDKa5WaNHEFmL1uusNhH0ri2mOBovQsqudMUTdw5-kb8yduVtzLOO8uS0DVIFGlQ",
-          "widthPx": 1280,
-          "heightPx": 853,
-          "authorAttributions": [
-            {
-              "displayName": "신사약방 (Sinsa Yakbang)",
-              "uri": "https://maps.google.com/maps/contrib/113758348928502768023",
-              "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocIbKA23vNu3ayebSluwGdfNlFhb5bu2J47yJ6U_uRxbOLjiNQ=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sAF1QipMJMoRakGgBgnQbj0kNkU_4Vf6jU4Y-wLFadffO&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipMJMoRakGgBgnQbj0kNkU_4Vf6jU4Y-wLFadffO!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        },
-        {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU73wU8KnU8NpfCeh8C8o_On_SKqLQqmv9n-Npj9MtXvpIqaqvokBBh3yrZJ0bZxPuLFg9VJTN1FIdE7F4FlUqO2MMCqAcYlyquERzD8aBguUVvKqBdaBi6jpXuCnR7EinmtXp0fmnyXpEkrwBLHgLkVzaTx92EqdZBAHhsYwo6PN-VP9pki2U1VilzfKTAqa1wFTt0-A4mqiWP37Heff7PhqFI8YF9AwSbUFsZm4tF46SjpsHEiEpnpVyrNuGd9lK0thkvrl99431fNBHTsfQT8dHsxWaFbwOshA7tAeDdu6G5JhfAatOy73gPe4fb63Herd3dKI3iZ5dogHN7D-er_HlgflslBkwhME7A1pcp_UqiRfZv1pLIVUy5josrOlaQSRWCyotOeHsWDbvfSFkeN-tBLgPTAs1WCtz9AsocOts7O",
-          "widthPx": 2992,
-          "heightPx": 2992,
-          "authorAttributions": [
-            {
-              "displayName": "김민겸",
-              "uri": "https://maps.google.com/maps/contrib/106271340518819018430",
-              "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocLCNXU4lTYls96qn40Xg-JoMfms3U73HdYmtH8r7-9Cal7VxA=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIHM0ogKEIfq5Z7YpcPL2wE&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEIfq5Z7YpcPL2wE!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
-        }
-      ],
       "restroom": true,
       "paymentOptions": {
         "acceptsCreditCards": true,
@@ -94495,7 +77942,7 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-11-17T05:02:54.118Z",
     "cynthias_pick": true,
-    "price_display": "$$",
+    "price_display": "$",
     "city": "Seoul",
     "vibe_tags": [
       "upscale",
@@ -94535,13 +77982,6 @@ export const restaurantData = [
   },
   {
     "original_place": {
-      "geometry": {
-        "coordinates": [
-          -73.99110990000001,
-          40.7522252
-        ],
-        "type": "Point"
-      },
       "properties": {
         "date": "2025-11-01T06:54:07.017Z",
         "google_maps_url": "https://maps.google.com/?cid=15256782802983419810&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
@@ -94763,148 +78203,6 @@ export const restaurantData = [
         "text": "Straightforward, neighborhood outpost for grab-&-go bagels, sandwiches & java drinks.",
         "languageCode": "en"
       },
-      "photos": [
-        {
-          "name": "places/ChIJex3pOaxZwokRon8dGyD7utM/photos/AWn5SU7nLK_J2fTBw_Zc8AMhWbegmfp6HHL-B9s45bxt7p1DSVc6Y02nxeGoTFKts63NXrru30TE1XlaC4wL8YbhmBiWfeXeja8q-_LLdkKQ03Pm22VYUzPS5F6YsfY9xbmY6WFS3fXhFFABfUMbf0mhmKjMvSSOX60hYZfcj-QtJpNUlZ7TH6PuZCDFAu6GB39ve1iw-D4XiLM5VC6f0kip4h0HkHKFjiV5oxQwbXT4A-U20YKaVyk11PSD27pZLfW8OC9Q5-plO8ZfnOODzM0lr6hKhiSg31qAfrvv45KyviVxOA",
-          "widthPx": 4800,
-          "heightPx": 3179,
-          "authorAttributions": [
-            {
-              "displayName": "Best Bagel & Coffee",
-              "uri": "https://maps.google.com/maps/contrib/113772597443365442754",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjUTls8kGE8mr-Bqzsd1EYEnBzUkOqCw1eN-R2jINLnJoFYyWfw=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sAF1QipMrb7WvDz5zpK-_kek8qJ7jbXBv2BgJTUwlZ2Cx&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipMrb7WvDz5zpK-_kek8qJ7jbXBv2BgJTUwlZ2Cx!2e10!4m2!3m1!1s0x89c259ac39e91d7b:0xd3bafb201b1d7fa2"
-        },
-        {
-          "name": "places/ChIJex3pOaxZwokRon8dGyD7utM/photos/AWn5SU7P4Af9fZNB1jTLY0SD5XmUn-UYWnzVSme1GQU_vV_DSvPV6VfOqmsLRIfdKtkG-TONcyh5yHDxtoXoyvfsHWp-Bl1ufYgAJ--VxBg_Yt59doPG2sxmpIp7nvj5ezyKjQOPDS50OtJU819ANx4YLnuM7FIq6rWYHZO3K63e1UnTvlTGqlcOiKi37nH-N-ObQOmBFdsbvpYEX_f7YOvx3GO1hXO9kDHDUPd0zZq2udzKFhU4zcstbCsTL0QX5RDIqknL3CM8sNve8WAwj_VCejxZMFDXEVh_S-kDJfJiKGl_Iw",
-          "widthPx": 4800,
-          "heightPx": 3179,
-          "authorAttributions": [
-            {
-              "displayName": "Best Bagel & Coffee",
-              "uri": "https://maps.google.com/maps/contrib/113772597443365442754",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjUTls8kGE8mr-Bqzsd1EYEnBzUkOqCw1eN-R2jINLnJoFYyWfw=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sAF1QipPJ9FdvHroR-lj7F7wpMiGU86dIsy5H5EMfxsy0&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipPJ9FdvHroR-lj7F7wpMiGU86dIsy5H5EMfxsy0!2e10!4m2!3m1!1s0x89c259ac39e91d7b:0xd3bafb201b1d7fa2"
-        },
-        {
-          "name": "places/ChIJex3pOaxZwokRon8dGyD7utM/photos/AWn5SU6SCDaUKs8NCBpyb3dlhA97bSFMAHYxlyM00enoCehgouhBGsiYPEmMDHreV0BC1K60uONUFl7xqIrEtV2ET7MlE_QKN3OpMY8J1TTYw4cheVxEv4KBo4MfClmR9LInI_QyICbOciW4CNv87fKp6rzZDXNmtT7ZSRVygN9Q6h8i6cz5DrB_UD1nnRuye9Wbp1qPKYjWD25TKHBj_QMsWtkv-3gz9qPCMPLYDwZeUgvEJRJmftbXoxLzI7C0ch7PffOIeazdEsguYj-9sUg5pafF009dj3uS_YyaAIZEZig__l3t6bO3ccKaQrZVPE3LZ8IsCJXh4QnYwHlewakI4RrMVYbxGaXY_peuFi8izxbuKnShXzKMQDkHg3v66gGHj2GxvDf1bUQImVFkFAmMJ9xR_NRmlCShDl5U_AC7ZWDRL-5E",
-          "widthPx": 3276,
-          "heightPx": 3611,
-          "authorAttributions": [
-            {
-              "displayName": "DONGHWAN LEE",
-              "uri": "https://maps.google.com/maps/contrib/105366091030312949573",
-              "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocITdWxnQM57Mq9x6RL1F4fBGs4mb7dtGWDMyu5CGje3U8D0Hw=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIHM0ogKEICAgIDfxs_5vwE&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgIDfxs_5vwE!2e10!4m2!3m1!1s0x89c259ac39e91d7b:0xd3bafb201b1d7fa2"
-        },
-        {
-          "name": "places/ChIJex3pOaxZwokRon8dGyD7utM/photos/AWn5SU4HaNPHEkWW4JkEKUdR1B-o0Elpig0afEGsn26Q78HiOATT5RUWBALpP3YoCj9px5vab_QZuGFYDuazcfAdjNuH4BBqoiKU882ZCE9R665EelHfqjziHYUicD_dNuYbsefQ8VeIURnHeYPBuCrGyTUfAMyBpnzjuKjj0S-sDrFaXL7Q0zAPF9Ov5TLkK1lrC2JZbLDuvjkLLwssI_2VxLd94kojLxm3-JREG8zLrPqYowB5cNDcNdIOl-t3MoLWoDmd8nh-3uAVb3E5TwgZxPHrbavhWNRZSVMmIo8hZf0RroRwg-QMMlHpsusjY-5_ykO1-gO6RUJz-99T5ww4-kusnlFI7m4MCOTvBKdw6aBc8NKv61aFXC50erNB1p4Ay68ifU_WxTVjfZZM38N328ua0N49vm5pLsCjngajQuXTPtBGTxahsXmoDarXlkck",
-          "widthPx": 4032,
-          "heightPx": 2268,
-          "authorAttributions": [
-            {
-              "displayName": "Erik Cominolli",
-              "uri": "https://maps.google.com/maps/contrib/101055366925369161887",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjUJJNYkeS46bj1odfe9hBxCKX66MyHG8SLWzwvsjo1keNgsESHn=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIABIhD5rUuk3VNSyFBFqEmBaBTx&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhD5rUuk3VNSyFBFqEmBaBTx!2e10!4m2!3m1!1s0x89c259ac39e91d7b:0xd3bafb201b1d7fa2"
-        },
-        {
-          "name": "places/ChIJex3pOaxZwokRon8dGyD7utM/photos/AWn5SU4LfndAUGnqb_VAKAR4TIdk4zJYCa__ATGs0FuLDfUWALffPDN6UpUkFz_OEIMy9JtYw2UAKv8Cfa0fILA90t9YAnA4W2aF2C2ZWsdIN3TagjtItFr5hDJRPG_M6nV3KP4X4iTvk4vunwKMix8jFEwEPZ7S2ZslhoPJX_z4T9-E625-FZnl1Vc3kXyyMmkDmaEjzSKOEN_dnw6YETP5AbN1lNYEaUoS5lqf0gJtXTeCam7bVKBK92HQZDeYnZoRYsa-ublzlH3-EIYEZcR2gHwJzvdKTTvJdW0W0_ByBc_ld4CesdnSTXyZjRBNNT3iAqrjxNnjUJbDU4sl1Z5hYcdS8EIDA8nZufgl7BOj9Y37zncUOwJU8MJqq3jgPgthluQmGt5pYu_LvCjyt28itPW7xlXjaWdF9db1J2d5V4YdjxsBprRrLwpl0D0rGQau",
-          "widthPx": 3600,
-          "heightPx": 4800,
-          "authorAttributions": [
-            {
-              "displayName": "S PJ",
-              "uri": "https://maps.google.com/maps/contrib/112874787137044467907",
-              "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocJuX8GaPi6ADU-h8V-6t58bZ0mLMemkxzCii4o-UZI3dwhvUA=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIABIhCssY6sY5Y4zieUVV7WgVsy&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhCssY6sY5Y4zieUVV7WgVsy!2e10!4m2!3m1!1s0x89c259ac39e91d7b:0xd3bafb201b1d7fa2"
-        },
-        {
-          "name": "places/ChIJex3pOaxZwokRon8dGyD7utM/photos/AWn5SU7JW-mczYS09HYpo6OcJ3HUeUchav7-qAmBWHagBcHU3guxmhwZxN9fCkbedGe_eeF26XrrkJbgBZ7jz9qro-fPQXOomP1VeTtN_hJf1D-NETMPr9E3ty2LP2uA5p5TBdcmfaInwl0MwP0nXchvPmPILrIlqU9-vUnBsIM8ebPxX--GMZGMuxvd6q1alpiGBZN1Dzb7dJw36FmMe41gwteC9e4L2sRfRyhsIkZrokdz8dPzY0Ct2udfjipzammWSdPa3oMspeTqZxgojxXVaO_RKEPmNMiRu16eW4k0ic0XQaC_Ymoxya1Rc384gzXGXjHWS30cRKVOvvWkLx8E6Kwgfd8nZ6OXUwnC-mXMbkAYtsAZvGXAUIItcnku1pVHIMaeb7ZkgGJ5_2BwCRnjf04X92g2mzVtGblWm1-iB5AXUg8_",
-          "widthPx": 4032,
-          "heightPx": 3024,
-          "authorAttributions": [
-            {
-              "displayName": "Har Ch",
-              "uri": "https://maps.google.com/maps/contrib/102432404022357854272",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjUFk6ODKiXC1fyIYXjAJel-6v3othTVPKYgnfhw8dkBaNN9Q4M=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIHM0ogKEICAgMDI8f-kkAE&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgMDI8f-kkAE!2e10!4m2!3m1!1s0x89c259ac39e91d7b:0xd3bafb201b1d7fa2"
-        },
-        {
-          "name": "places/ChIJex3pOaxZwokRon8dGyD7utM/photos/AWn5SU5y1InFFWg6mnBFtlW1ZD4-9xlTXRPrcIG3XWMzKWRh__b2NNO6U0Ud12HAEV0oaocXEc5_2cVQE05aNr3wcozaY-rLRW0BCGBZaxSa8pj-o8ydq9mRtKF8vRYCC74qvTUvTnR3c9TyoRq8I_f8r-NWaDq-rhwBWtspl5VdTODVVUvqF3dKjAq8WYKabkXZWNGDMym6tEV4GLLqPx8vA4LC_OwQudmUq73u4ZUiDIVngtmYaZO8bVGjAImChBhabbZsgmff964DssENIDdjh9v6a4k9uU0xsNafk7yVBspkIJ0GIusXuCuVvA9kM7mULPU9WINzR6hLywRP8OO07NeNVN__ndeYmhaAyJGPpaeJm3kXOzUerlG4bntKeJS9TsPF6r4sZ72PLmapQN-qdDJSAg2DmRsnXKZDhOxJcsub_g",
-          "widthPx": 3571,
-          "heightPx": 2252,
-          "authorAttributions": [
-            {
-              "displayName": "2H Traveler",
-              "uri": "https://maps.google.com/maps/contrib/111369310749680036330",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjW8rNrV6YqjVy0MtRWWCWV3ogrWp_SZCJDf2DRvtzMnJV8V80WQ=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIHM0ogKEK6W0I7Zrp2VJw&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEK6W0I7Zrp2VJw!2e10!4m2!3m1!1s0x89c259ac39e91d7b:0xd3bafb201b1d7fa2"
-        },
-        {
-          "name": "places/ChIJex3pOaxZwokRon8dGyD7utM/photos/AWn5SU5ZuKkcmwnlJK_Xha2HG83ChpHksnCpP4ywIJxbWpGQsK77SdtVI_y1ZeDE2JdMmRRrGtcMTaDBMWxdXIm3Tj0zks7hBa8Mcp7GBW_7vxK9h5bbbCOLcPVjlYkGBi0CQZvfjgLGAibtgB4In-UQYVAnf2IvZyGvQs8o2-b5H2f3vYmKZ0Kv4guW3ENpx5zpf1v-NCFB46Lodc9zmBDx_U4EKABqC-qo7u5qV42btdrL1me1TIj6cOr8irRmuVH5DoD6gbjrWCLWAXWvU9jQxKbCGwz0In9AeQpdTvQ3FglC187FDXdmDctf4J9SZruX7KAcOREs9PbX9T6DVRK3iwOqPC5EYM9h--iX8aJCVPXV4DbfYPSTgtfjdDQCXicNgzpGRuNZhKpf_nJA2haC7_NaE5m18allr3eE-wrqQf3BmOrVNfVFhp53AHQDddmZ",
-          "widthPx": 4800,
-          "heightPx": 3600,
-          "authorAttributions": [
-            {
-              "displayName": "Ismail H",
-              "uri": "https://maps.google.com/maps/contrib/113786994941109544888",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjVkwlUHIVCYRPRN2H37WkCQOlQqqiqzDRXqAPzS21Fnn9Otf2ad=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIABIhBS0LBN4mzTsr7g45bwBACf&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhBS0LBN4mzTsr7g45bwBACf!2e10!4m2!3m1!1s0x89c259ac39e91d7b:0xd3bafb201b1d7fa2"
-        },
-        {
-          "name": "places/ChIJex3pOaxZwokRon8dGyD7utM/photos/AWn5SU41Ahtuhj3K3Haf2SmBda25ceB-cSJquKFvGrOL1lCqTif5TVI56whFdjA5WBfzlz4USY9rN7Bbm0ZYcBt_t9Rt9bfqZglTkn8EE1w-ZbGAvvoN05ZUr5k63Y0KItiGg7ZkfgfXxfsrMlRQp2tlzuHLUSE0yr0QeYQZbU_SBEYemVVh5fYAAGYYkLJfSt3XTC0324B5jVPGJCyJll6hQy5LTe-nUnFJVRA8Vjpf69TOa1aSkMMXpfowDqUujIo10ONSRAJBJpzWXOUJv7vln74dFxZBbaso2JIdf_4cF0wJNKbKj101hMpP----G3uhQako1VPcanhf4ytiplwnMKzI8DTHmFM0z1Bv8yOSvGby_aFOdgHvhqShU_XiNd3DMCv2kmeKZBdYOtSNZNFwtlkbiXxwr4SU64-du3Wjk4iibSDpqu6zlYGlgo6bfNCN",
-          "widthPx": 2992,
-          "heightPx": 2992,
-          "authorAttributions": [
-            {
-              "displayName": "Asad Jahangir (Lion)",
-              "uri": "https://maps.google.com/maps/contrib/103614174463309941542",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjVW2bLYC5-bl_WIdNgzAVQcpRP690TYuxQGPoJCsooCMb88tkLc=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIABIhAEYR2oQccaJWXNSojbZOVR&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhAEYR2oQccaJWXNSojbZOVR!2e10!4m2!3m1!1s0x89c259ac39e91d7b:0xd3bafb201b1d7fa2"
-        },
-        {
-          "name": "places/ChIJex3pOaxZwokRon8dGyD7utM/photos/AWn5SU4aFYWxkrkk55-TQwXFnnByRbvxZoVgszyky8sdylfQWydDynboaC_qRO-VW9cIALW1KAug3dlNTV_TQeEtBJtWP5lptO2ZXJgXNO1AjI_1goAF0ONpb7zaBviITG3gQNVRyRI5Jq1folcC_Pxvw0YAtJVk5rSV66528H3sSN3BxWzLLtJfKNkyWiWIWOji_lj1DZ_0Hat1ULdUVy5jGHj_h5ItghhBs3Yo6lIlqljwrGXgd9z6NGizNlQWB3Am__StEC04MJGbe1PdLhnHOGOcGT2ZBSxJ-d4CQsvsBHVlD6Njop66sNVTFaWzlE_AmxfwmQ78l24KrfnV-n_nrlg-rKg6g8KfLjFJnoJuwUVSW12kUOUp3crWoaw7BoLpklIqS_R655-9T3VH62BpM83sr6kYtJD8TjR-JO7rySnkB2w",
-          "widthPx": 2661,
-          "heightPx": 1816,
-          "authorAttributions": [
-            {
-              "displayName": "Alexandra C",
-              "uri": "https://maps.google.com/maps/contrib/111384781097936701195",
-              "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjXDr7Iqtqdo22E6r6-b6YWw3HADfTxwPgxUa0zPDt3hIlanCPxS=s100-p-k-no-mo"
-            }
-          ],
-          "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIHM0ogKEICAgICluY-fxgE&hl=en-US",
-          "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgICluY-fxgE!2e10!4m2!3m1!1s0x89c259ac39e91d7b:0xd3bafb201b1d7fa2"
-        }
-      ],
       "servesCoffee": true,
       "restroom": true,
       "paymentOptions": {
