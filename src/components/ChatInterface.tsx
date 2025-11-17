@@ -48,8 +48,11 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const handleSendMessage = async (message: string, city?: City) => {
     console.log('handleSendMessage called with:', { message, city });
     
+    // Use city from parameter, or fall back to city from queryContext (for follow-up queries)
+    const cityToUse = city || (queryContext?.city as City | undefined);
+    
     // Validate city is provided
-    if (!city) {
+    if (!cityToUse) {
       console.error('City is required but not provided');
       setBotResponse('Please select a city first.');
       return;
@@ -91,7 +94,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           query: fullQuery,
-          city: city, // Send selected city (required)
+          city: cityToUse, // Send selected city (required)
           userId: 'web-user', // Add userId for Statsig Dynamic Config
           context: queryContext || undefined, // Pass query context for follow-up queries
         }),
@@ -134,7 +137,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
         });
 
              setRestaurants(restaurants);
-             setBotResponse(data.summary + ' ⚡');
+             setBotResponse(data.summary);
              setUsedClaude(data.usedClaude || false);
              setIsInConversation(true); // Mark that we're in a conversation
              // Update query context from API response (for follow-up queries)
@@ -185,7 +188,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     }
   };
 
-  const shouldShowResults = restaurants.length > 0 || isLoading;
+  // Show ResponseScreen if we have restaurants, are loading, or have a bot response (including errors)
+  const shouldShowResults = restaurants.length > 0 || isLoading || (botResponse && botResponse.trim().length > 0);
   
   if (shouldShowResults) {
     let userPrompt = 'Recommend me some restaurants';
@@ -225,12 +229,6 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
         onSendMessage={handleSendMessage}
         isLoading={isLoading}
       />
-
-      {restaurants.length === 0 && !isLoading && lastQuery && (
-        <div className="no-results-message">
-          No spots found for "{lastQuery}". Try a different search!
-        </div>
-      )}
     </div>
   );
 };

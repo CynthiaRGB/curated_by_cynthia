@@ -282,8 +282,10 @@ export async function parseQueryWithClaude(
     const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
     
     if (!anthropicApiKey) {
-      console.error('[Parse Query] ANTHROPIC_API_KEY not set - Claude API is required');
-      throw new Error("I don't quite get your question, try something else");
+      console.error('[Parse Query] ERROR: ANTHROPIC_API_KEY not set - Claude API is required');
+      console.error('[Parse Query] ERROR_TYPE: MISSING_API_KEY');
+      console.error('[Parse Query] ERROR_DETAILS: Environment variable ANTHROPIC_API_KEY is missing');
+      throw new Error("PARSE_ERROR_SERVICE_ISSUE: Missing API key configuration");
     }
 
     // Build the prompt
@@ -311,8 +313,14 @@ export async function parseQueryWithClaude(
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('[Parse Query] Claude API error:', response.status, errorText);
-      throw new Error(`Claude API error: ${response.status} ${response.statusText}`);
+      console.error('[Parse Query] ERROR: Claude API call failed');
+      console.error('[Parse Query] ERROR_TYPE: CLAUDE_API_ERROR');
+      console.error('[Parse Query] ERROR_DETAILS:', {
+        status: response.status,
+        statusText: response.statusText,
+        errorText: errorText
+      });
+      throw new Error(`PARSE_ERROR_SERVICE_ISSUE: Claude API returned ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
@@ -331,14 +339,20 @@ export async function parseQueryWithClaude(
     try {
       parsedKeywords = JSON.parse(cleanedResponse);
     } catch (parseError) {
-      console.error('[Parse Query] Failed to parse Claude response:', cleanedResponse);
-      throw new Error('Claude returned invalid JSON for query parsing');
+      console.error('[Parse Query] ERROR: Failed to parse Claude response as JSON');
+      console.error('[Parse Query] ERROR_TYPE: INVALID_JSON_RESPONSE');
+      console.error('[Parse Query] ERROR_DETAILS:', {
+        parseError: parseError instanceof Error ? parseError.message : String(parseError),
+        cleanedResponse: cleanedResponse.substring(0, 500), // Log first 500 chars to avoid huge logs
+        responseLength: cleanedResponse.length
+      });
+      throw new Error('PARSE_ERROR_INVALID_QUERY: Claude returned invalid JSON');
     }
 
     // Check if Claude detected an irrelevant query
     if (parsedKeywords.error === 'NOT_RESTAURANT_QUERY') {
       console.log('[Parse Query] Claude detected non-restaurant query');
-      throw new Error("I'm designed to only answer questions related to restaurants. Please ask about restaurants, dining, or food.");
+      throw new Error("I'm designed to answer restaurant-related questions only, try a different search!");
     }
 
     // Ensure all required fields are present with proper defaults
@@ -374,8 +388,22 @@ export async function parseQueryWithClaude(
     return keywords;
 
   } catch (error) {
-    console.error('[Parse Query] Error calling Claude API:', error);
-    // Claude API is required - throw error for recommend.ts to handle
+    // If error already has a specific type (PARSE_ERROR_*), re-throw it as-is
+    if (error instanceof Error && (
+      error.message.includes('PARSE_ERROR_SERVICE_ISSUE') ||
+      error.message.includes('PARSE_ERROR_INVALID_QUERY') ||
+      error.message.includes("I'm designed to answer restaurant-related questions only")
+    )) {
+      throw error; // Re-throw specific errors as-is
+    }
+    
+    // For unexpected errors, log and throw generic error
+    console.error('[Parse Query] ERROR: Unexpected error in parseQueryWithClaude');
+    console.error('[Parse Query] ERROR_TYPE: UNEXPECTED_ERROR');
+    console.error('[Parse Query] ERROR_DETAILS:', {
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    });
     throw new Error("I don't quite get your question, try something else");
   }
 }

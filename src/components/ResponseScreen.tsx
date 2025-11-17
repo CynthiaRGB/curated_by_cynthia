@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Restaurant, City } from '../types/restaurant';
 import { TypewriterText } from './TypewriterText';
 import { AnimatedRestaurantCards } from './AnimatedRestaurantCards';
+import { ThinkingDots } from './ThinkingDots';
 
 // Helper function to extract city from a query string
 const extractCityFromQuery = (query: string): City | null => {
@@ -63,10 +64,10 @@ const BotResponse: React.FC<{
     <div className="response-content">
       <div className="response-text">
         {isLoading ? (
-          // Show loading state like Google Gemini with AI icon
+          // Show loading state with thinking dots animation
           <div className="flex items-center gap-2">
-            <div className="ai-icon">✨</div>
             <span className="loading-text">{text}</span>
+            <ThinkingDots />
           </div>
         ) : (
           <TypewriterText 

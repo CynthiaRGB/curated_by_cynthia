@@ -26,6 +26,25 @@ function isCynthiasFavoritesQuery(query: string, keywords?: ExtractedKeywords): 
   return false;
 }
 
+/**
+ * Remove emojis and special characters from text
+ */
+function cleanSummaryText(text: string): string {
+  // Remove emojis and other special Unicode characters
+  // This regex matches emojis and other symbols
+  return text
+    .replace(/⚡/g, '') // Lightning bolt (flash icon)
+    .replace(/[\u{1F300}-\u{1F9FF}]/gu, '') // Emoticons & Symbols
+    .replace(/[\u{1F600}-\u{1F64F}]/gu, '') // Emoticons
+    .replace(/[\u{1F680}-\u{1F6FF}]/gu, '') // Transport & Map
+    .replace(/[\u{2600}-\u{26FF}]/gu, '')   // Misc symbols (includes ⚡)
+    .replace(/[\u{2700}-\u{27BF}]/gu, '')   // Dingbats
+    .replace(/[\u{FE00}-\u{FE0F}]/gu, '')   // Variation Selectors
+    .replace(/[\u{1F900}-\u{1F9FF}]/gu, '') // Supplemental Symbols and Pictographs
+    .replace(/[\u{1FA00}-\u{1FAFF}]/gu, '') // Chess Symbols
+    .trim();
+}
+
 // Initialize Statsig server-side client
 let statsigInitialized = false;
 
@@ -266,7 +285,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (routeDecision.route === 'irrelevant') {
       return res.status(200).json({
         recommendations: [],
-        summary: "I'm designed to only answer questions related to restaurants. Please ask about restaurants, dining, or food.",
+        summary: "I'm designed to answer restaurant-related questions only, try a different search!",
         usedClaude: false,
         usedClaudeRanking: false,
         route: 'irrelevant',
@@ -301,18 +320,36 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.log('[API] Successfully parsed query with Claude');
     } catch (parseError: any) {
       // Check if Claude detected irrelevant query (fallback - in case pattern matching missed it)
-      if (parseError.message && parseError.message.includes("NOT_RESTAURANT_QUERY")) {
+      // parseQuery throws this specific error message when NOT_RESTAURANT_QUERY is detected
+      if (parseError.message && parseError.message.includes("I'm designed to answer restaurant-related questions only")) {
         return res.status(200).json({
           recommendations: [],
-          summary: "I'm designed to only answer questions related to restaurants. Please ask about restaurants, dining, or food.",
+          summary: "I'm designed to answer restaurant-related questions only, try a different search!",
           usedClaude: false,
           usedClaudeRanking: false,
           route: 'irrelevant',
           context: undefined
         });
       }
-      // Check if it's the "I don't quite get your question" error
-      if (parseError.message && parseError.message.includes("I don't quite get your question")) {
+      
+      // Check for service issues (missing API key, Claude API errors)
+      if (parseError.message && parseError.message.includes("PARSE_ERROR_SERVICE_ISSUE")) {
+        console.error('[API] Service error in parseQuery - user will see generic error message');
+        console.error('[API] Parse error details:', parseError.message);
+        return res.status(200).json({
+          recommendations: [],
+          summary: "Oops, something went wrong with the service. Please try again.",
+          usedClaude: false,
+          usedClaudeRanking: false,
+          route: routeDecision.route,
+          context: undefined
+        });
+      }
+      
+      // Check for invalid JSON response (Claude returned malformed JSON)
+      if (parseError.message && parseError.message.includes("PARSE_ERROR_INVALID_QUERY")) {
+        console.error('[API] Invalid JSON from Claude - user will see "try something else" message');
+        console.error('[API] Parse error details:', parseError.message);
         return res.status(200).json({
           recommendations: [],
           summary: "I don't quite get your question, try something else",
@@ -322,8 +359,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           context: undefined
         });
       }
-      console.error('[API] Error parsing query with Claude:', parseError);
-      // Claude API is required - return error
+      
+      // Fallback for any other parse errors
+      console.error('[API] Unexpected error parsing query with Claude:', parseError);
+      console.error('[API] Error message:', parseError.message);
+      console.error('[API] Error stack:', parseError.stack);
       return res.status(200).json({
         recommendations: [],
         summary: "I don't quite get your question, try something else",
@@ -465,7 +505,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               filteredRestaurants
             );
             
-            summary = claudeResponse.summary || `Curated ${finalRestaurants.length} spots just for you`;
+            summary = cleanSummaryText(claudeResponse.summary || `Curated ${finalRestaurants.length} spots just for you`);
           } catch (claudeError: any) {
             console.error('[API] Claude API error, falling back to filterService:', claudeError);
             // Fallback to filterService on error
@@ -485,7 +525,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           claudeResponse.recommendations,
           filteredRestaurants
         );
-        summary = claudeResponse.summary || `Curated ${finalRestaurants.length} spots just for you`;
+        summary = cleanSummaryText(claudeResponse.summary || `Curated ${finalRestaurants.length} spots just for you`);
       }
     } else {
       // Use filterService only (no Claude ranking)
