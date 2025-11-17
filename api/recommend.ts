@@ -352,6 +352,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (parsedKeywords.borough) cleanedKeywords.borough = parsedKeywords.borough;
       if (parsedKeywords.city) cleanedKeywords.city = parsedKeywords.city;
       if (parsedKeywords.neighborhood) cleanedKeywords.neighborhood = parsedKeywords.neighborhood;
+      if (parsedKeywords.landmark) cleanedKeywords.landmark = parsedKeywords.landmark;
       if (parsedKeywords.cuisineType) cleanedKeywords.cuisineType = parsedKeywords.cuisineType;
       if (parsedKeywords.cuisineSpecialty) cleanedKeywords.cuisineSpecialty = parsedKeywords.cuisineSpecialty;
       if (parsedKeywords.mealType) cleanedKeywords.mealType = parsedKeywords.mealType;
@@ -365,6 +366,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (parsedKeywords.requiresCynthiasPick) cleanedKeywords.requiresCynthiasPick = parsedKeywords.requiresCynthiasPick;
       if (parsedKeywords.requiresCoffeeFocus) cleanedKeywords.requiresCoffeeFocus = parsedKeywords.requiresCoffeeFocus;
       if (parsedKeywords.requiresDessertFocus) cleanedKeywords.requiresDessertFocus = parsedKeywords.requiresDessertFocus;
+      if (parsedKeywords.specialFeatures && parsedKeywords.specialFeatures.length > 0) cleanedKeywords.specialFeatures = parsedKeywords.specialFeatures;
       
       parsedKeywords = cleanedKeywords;
     }

@@ -18,7 +18,7 @@ The prompt in `api/services/parseQuery.ts` has a dynamic part (`USER QUERY: "${q
 6. Add your test cases as rows:
 
 | query | city | expected_output |
-|-------|------|-----------------|
+|-------|------|-----------------|  
 | street food in Seoul | Seoul | `{"cuisineType": "korean", "priceLevel": "budget", "vibeKeywords": ["casual"], "cuisineSpecialty": null, "city": "seoul"}` |
 | pizza in Manhattan | NYC | `{"cuisineType": "italian", "cuisineSpecialty": "pizza", "city": "nyc"}` |
 | omakase in Tokyo | Tokyo | `{"cuisineType": "japanese", "cuisineSpecialty": "sushi", "priceLevel": "luxury", "city": "tokyo"}` |
