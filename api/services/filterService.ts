@@ -14,7 +14,7 @@ async function getRestaurantsAsync(): Promise<Restaurant[]> {
   if (restaurantsCache === null) {
     const startTime = Date.now();
     // Import at runtime to avoid loading on module initialization
-    const { restaurantData } = await import('../data/latest_277.js');
+    const { restaurantData } = await import('../data/final_data.js');
     restaurantsCache = (restaurantData as any).places || (restaurantData as any) || [];
     const loadTime = Date.now() - startTime;
     console.log(`[Performance] Loaded ${restaurantsCache.length} restaurants in ${loadTime}ms`);
@@ -406,10 +406,9 @@ function matchesLandmark(restaurant: Restaurant, keywords: ExtractedKeywords): b
   const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
   const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
   const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
-  const formattedAddress = restaurant.google_data.formattedAddress?.toLowerCase() || '';
   
   // Combine all text fields for searching
-  const allText = `${summary} ${reviewSummary} ${editorialSummary} ${address} ${formattedAddress}`;
+  const allText = `${summary} ${reviewSummary} ${editorialSummary} ${address}`;
 
   // Check if any landmark keyword matches in any source
   for (const landmarkKeyword of landmarkKeywords) {

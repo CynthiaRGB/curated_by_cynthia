@@ -87,7 +87,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
       </div>
       
       <div className="text-base text-[#1A1818] break-words">
-        {restaurant.google_data.formattedAddress}
+        {restaurant.google_data.shortFormattedAddress || restaurant.original_place?.properties?.location?.address}
       </div>
     </div>
   );

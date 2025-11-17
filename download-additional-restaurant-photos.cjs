@@ -21,7 +21,7 @@ if (fs.existsSync(envPath)) {
 
 // Configuration
 const GOOGLE_API_KEY = process.env.GOOGLE_PLACES_API_KEY || process.env.VITE_GOOGLE_PLACES_API_KEY || '';
-const DATA_FILE = './api/data/latest_277.ts';
+const DATA_FILE = './api/data/final_data.ts';
 const OUTPUT_DIR = './public/restaurant-photos';
 
 // Specific restaurants to download photos for (by name or place_id)

@@ -71,7 +71,7 @@ if (args[0] === '--place-ids' && args[1]) {
 }
 
 // File paths
-const RESTAURANT_DATA_FILE = './api/data/latest_277.ts';
+const RESTAURANT_DATA_FILE = './api/data/final_data.ts';
 const OUTPUT_DIR = './public/restaurant-photos';
 const MAPPING_FILE = path.join(OUTPUT_DIR, 'photo-mapping.json');
 const TEMP_OUTPUT_DIR = './api/data/temp';
@@ -214,7 +214,6 @@ async function getPlaceDetails(placeId) {
     const fieldMask = [
       'id',
       'displayName',
-      'formattedAddress',
       'addressComponents',
       'location',
       'types',
@@ -264,7 +263,6 @@ async function getPlaceDetails(placeId) {
       'googleMapsLinks',
       'reviewSummary',
       'timeZone',
-      'postalAddress',
       'photos',
       'reviews'
     ].join(',');
@@ -297,7 +295,7 @@ async function getPlaceDetails(placeId) {
 }
 
 /**
- * Step 3: Save fetched data to a new file (CRITICAL: never write directly to latest_277.ts!)
+ * Step 3: Save fetched data to a new file (CRITICAL: never write directly to final_data.ts!)
  */
 function saveFetchedDataToNewFile(placeData, placeId) {
   console.log(`💾 Step 3: Saving fetched data to new file...\n`);
@@ -1001,7 +999,7 @@ async function main() {
   console.log('='.repeat(60));
   console.log('🍽️  Restaurant Addition Script (Consolidated)');
   console.log('='.repeat(60));
-  console.log('⚠️  This script saves to NEW files - never modifies latest_277.ts directly!\n');
+  console.log('⚠️  This script saves to NEW files - never modifies final_data.ts directly!\n');
   
   try {
     let placeIds = [];
@@ -1088,7 +1086,7 @@ async function main() {
     }
     console.log(`   Processed: ${finalFilePath}`);
     console.log(`📸 Photos: ${OUTPUT_DIR}`);
-    console.log(`\n💡 Review the processed file and manually add to latest_277.ts when ready!`);
+    console.log(`\n💡 Review the processed file and manually add to final_data.ts when ready!`);
     console.log('='.repeat(60) + '\n');
     
   } catch (error) {
