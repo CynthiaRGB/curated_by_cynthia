@@ -1,0 +1,200 @@
+[
+  {
+    "input": {
+      "query": "Korean BBQ in Manhattan",
+      "city": "NYC"
+    },
+    "expected": {
+      "cuisineType": "korean",
+      "cuisineSpecialty": "bbq",
+      "borough": "manhattan",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "specific_dish",
+      "difficulty": "medium",
+      "description": "Korean cuisine specialty + borough"
+    }
+  },
+  {
+    "input": {
+      "query": "luxury fine dining in NYC",
+      "city": "NYC"
+    },
+    "expected": {
+      "priceLevel": 4,
+      "vibeKeywords": ["upscale", "sophisticated"],
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "price_level",
+      "difficulty": "medium",
+      "description": "Luxury price level ($$$$) in NYC"
+    }
+  },
+  {
+    "input": {
+      "query": "pizza in Manhattan or Brooklyn",
+      "city": "NYC"
+    },
+    "expected": {
+      "cuisineType": "italian",
+      "cuisineSpecialty": "pizza",
+      "borough": ["manhattan", "brooklyn"],
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "specific_dish",
+      "difficulty": "medium",
+      "description": "Pizza specialty + multiple boroughs"
+    }
+  },
+  {
+    "input": {
+      "query": "omakase in Tokyo",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "cuisineSpecialty": "sushi",
+      "priceLevel": 4,
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "specific_dish",
+      "difficulty": "hard",
+      "description": "Omakase implies high-end sushi"
+    }
+  },
+  {
+    "input": {
+      "query": "hidden gems in Tokyo",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "specialFeatures": ["hidden_gem"],
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "special_features",
+      "difficulty": "medium",
+      "description": "Hidden gem special feature"
+    }
+  },
+  {
+    "input": {
+      "query": "traditional izakaya for dinner",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "cuisineSpecialty": null,
+      "mealType": "dinner",
+      "vibeKeywords": ["authentic", "casual"],
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "multi_criteria",
+      "difficulty": "medium",
+      "description": "Japanese cuisine + meal type + vibe (izakaya is restaurant type, not a dish)"
+    }
+  },
+  {
+    "input": {
+      "query": "romantic bistro for anniversary",
+      "city": "Paris"
+    },
+    "expected": {
+      "cuisineType": "french",
+      "occasionType": "anniversary",
+      "vibeKeywords": ["romantic", "intimate"],
+      "city": "paris"
+    },
+    "metadata": {
+      "category": "multi_criteria",
+      "difficulty": "medium",
+      "description": "Cuisine + occasion + vibe in Paris"
+    }
+  },
+  {
+    "input": {
+      "query": "Michelin star restaurant",
+      "city": "Paris"
+    },
+    "expected": {
+      "requiresMichelin": true,
+      "priceLevel": 4,
+      "city": "paris"
+    },
+    "metadata": {
+      "category": "special_requirements",
+      "difficulty": "easy",
+      "description": "Michelin requirement in Paris"
+    }
+  },
+  {
+    "input": {
+      "query": "street food in Seoul",
+      "city": "Seoul"
+    },
+    "expected": {
+      "cuisineType": "korean",
+      "priceLevel": 1,
+      "vibeKeywords": ["casual"],
+      "city": "seoul"
+    },
+    "metadata": {
+      "category": "specific_dish",
+      "difficulty": "medium",
+      "description": "Street food in Seoul"
+    }
+  },
+  {
+    "input": {
+      "query": "upscale Korean fine dining",
+      "city": "Seoul"
+    },
+    "expected": {
+      "cuisineType": "korean",
+      "priceLevel": 3,
+      "vibeKeywords": ["upscale", "sophisticated"],
+      "city": "seoul"
+    },
+    "metadata": {
+      "category": "multi_criteria",
+      "difficulty": "medium",
+      "description": "Upscale Korean cuisine in Seoul"
+    }
+  },
+  {
+    "input": {
+      "query": "BBQ in Seoul",
+      "city": "Seoul"
+    },
+    "expected": {
+      "cuisineType": "korean",
+      "cuisineSpecialty": "bbq",
+      "city": "seoul"
+    },
+    "metadata": {
+      "category": "specific_dish",
+      "difficulty": "easy",
+      "description": "Korean BBQ in Seoul"
+    }
+  },
+  {
+    "input": {
+      "query": "What's the weather today?",
+      "city": "NYC"
+    },
+    "expected": {
+      "error": "NOT_RESTAURANT_QUERY"
+    },
+    "metadata": {
+      "category": "irrelevant_query",
+      "difficulty": "easy",
+      "description": "Completely irrelevant query - should be rejected"
+    }
+  }
+]
+

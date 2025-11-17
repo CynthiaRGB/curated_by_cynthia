@@ -262,11 +262,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const routeDecision = decideRoute(query, routingContext);
     console.log('[Routing] Decision:', routeDecision.route, '-', routeDecision.reason);
 
-    // Step 4: Handle irrelevant queries
+    // Step 4: Handle irrelevant queries (fast pre-check - returns immediately, no Claude API call)
     if (routeDecision.route === 'irrelevant') {
       return res.status(200).json({
         recommendations: [],
-        summary: "Sorry, I'm designed to only answer questions related to restaurants. Try another question.",
+        summary: "I'm designed to only answer questions related to restaurants. Please ask about restaurants, dining, or food.",
         usedClaude: false,
         usedClaudeRanking: false,
         route: 'irrelevant',
@@ -300,6 +300,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.log(`[Performance] Claude query parsing took ${claudeParseTime}ms`);
       console.log('[API] Successfully parsed query with Claude');
     } catch (parseError: any) {
+      // Check if Claude detected irrelevant query (fallback - in case pattern matching missed it)
+      if (parseError.message && parseError.message.includes("NOT_RESTAURANT_QUERY")) {
+        return res.status(200).json({
+          recommendations: [],
+          summary: "I'm designed to only answer questions related to restaurants. Please ask about restaurants, dining, or food.",
+          usedClaude: false,
+          usedClaudeRanking: false,
+          route: 'irrelevant',
+          context: undefined
+        });
+      }
       // Check if it's the "I don't quite get your question" error
       if (parseError.message && parseError.message.includes("I don't quite get your question")) {
         return res.status(200).json({

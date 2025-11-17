@@ -1,0 +1,148 @@
+[
+  {
+    "input": {
+      "query": "cheap but nice Italian place for a first date in Manhattan",
+      "city": "NYC"
+    },
+    "expected": {
+      "cuisineType": "italian",
+      "priceLevel": "budget",
+      "occasionType": "first_date",
+      "vibeKeywords": ["casual", "romantic", "intimate"],
+      "borough": "manhattan",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "conflicting_signals",
+      "difficulty": "hard",
+      "description": "Conflicting price signals (cheap vs nice) + occasion + location"
+    }
+  },
+  {
+    "input": {
+      "query": "somewhere I can take my client for lunch that's not too loud",
+      "city": "NYC"
+    },
+    "expected": {
+      "mealType": "lunch",
+      "occasionType": "business_lunch",
+      "noisePreference": "quiet",
+      "priceLevel": "upscale",
+      "vibeKeywords": ["upscale", "sophisticated"],
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "implicit_requirements",
+      "difficulty": "hard",
+      "description": "Implicit business context + noise preference + inferred price level"
+    }
+  },
+  {
+    "input": {
+      "query": "authentic hole-in-the-wall ramen spot in Tokyo that locals love",
+      "city": "Tokyo"
+    },
+    "expected": {
+      "cuisineType": "japanese",
+      "cuisineSpecialty": "ramen",
+      "specialFeatures": ["hidden_gem"],
+      "vibeKeywords": ["authentic", "casual"],
+      "priceLevel": "budget",
+      "city": "tokyo"
+    },
+    "metadata": {
+      "category": "cultural_context",
+      "difficulty": "hard",
+      "description": "Multiple descriptors (authentic, hole-in-the-wall, locals love) + specialty + inferred price"
+    }
+  },
+  {
+    "input": {
+      "query": "romantic rooftop restaurant with a view for our anniversary",
+      "city": "NYC"
+    },
+    "expected": {
+      "occasionType": "anniversary",
+      "vibeKeywords": ["romantic", "intimate"],
+      "specialFeatures": ["scenic_views"],
+      "priceLevel": "upscale",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "multi_criteria",
+      "difficulty": "hard",
+      "description": "Occasion + vibe + special feature (rooftop/view) + inferred price"
+    }
+  },
+  {
+    "input": {
+      "query": "quick bite near Times Square that won't break the bank",
+      "city": "NYC"
+    },
+    "expected": {
+      "occasionType": "quick_meal",
+      "priceLevel": "budget",
+      "neighborhood": "times square",
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "landmark_reference",
+      "difficulty": "hard",
+      "description": "Landmark as neighborhood reference + quick meal + budget constraint"
+    }
+  },
+  {
+    "input": {
+      "query": "where can I get late night food after the bars close",
+      "city": "NYC"
+    },
+    "expected": {
+      "occasionType": "late_night",
+      "mealType": null,
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "late_night_edge_case",
+      "difficulty": "hard",
+      "description": "Late night should be occasionType, NOT mealType (tests prompt rule)"
+    }
+  },
+  {
+    "input": {
+      "query": "fancy Korean BBQ but make it vegetarian-friendly",
+      "city": "Seoul"
+    },
+    "expected": {
+      "cuisineType": "korean",
+      "cuisineSpecialty": "bbq",
+      "priceLevel": "upscale",
+      "vibeKeywords": ["upscale", "sophisticated"],
+      "city": "seoul"
+    },
+    "metadata": {
+      "category": "conflicting_cuisine",
+      "difficulty": "hard",
+      "description": "BBQ (meat-focused) + vegetarian requirement - note: vegetarian-friendly is not extractable as a field, but should still extract BBQ specialty"
+    }
+  },
+  {
+    "input": {
+      "query": "something trendy and instagrammable for brunch on Sunday",
+      "city": "NYC"
+    },
+    "expected": {
+      "mealType": "brunch",
+      "occasionType": "weekend_brunch",
+      "specialFeatures": ["instagrammable"],
+      "requiresInstagrammable": true,
+      "vibeKeywords": ["trendy", "lively"],
+      "city": "nyc"
+    },
+    "metadata": {
+      "category": "multiple_special_requirements",
+      "difficulty": "hard",
+      "description": "Meal type + occasion (Sunday = weekend) + instagrammable + vibe keywords"
+    }
+  }
+]
+

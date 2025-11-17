@@ -280,7 +280,7 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
       });
     } else {
       // Single neighborhood - works for all cities
-      // Examples: "Shibuya" (Tokyo), "Gangnam District" (Seoul), "7th arrondissement" (Paris)
+      // Examples: "Shibuya" (Tokyo), "Gangnam District" (Seoul), "7th arrondissement" (Paris), "West Village" (NYC)
       const neighborhoodKeyword = keywords.neighborhood.toLowerCase();
       hasNeighborhoodMatch = restaurantNeighborhood.includes(neighborhoodKeyword) || 
                              neighborhoodKeyword.includes(restaurantNeighborhood);
@@ -296,11 +296,20 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
   // Check borough match - simplified: only Brooklyn and Manhattan
   // Borough takes precedence over city - if borough is specified, ignore city
   if (keywords.borough) {
-    const boroughKeyword = keywords.borough.toLowerCase();
     const restaurantBorough = restaurant.borough?.toLowerCase();
     
-    // Simple direct match - borough data is now in the restaurant object
-    hasBoroughMatch = restaurantBorough === boroughKeyword;
+    // Handle both single borough and array of boroughs
+    if (Array.isArray(keywords.borough)) {
+      // Multiple boroughs: match if restaurant is in ANY of them (union)
+      hasBoroughMatch = keywords.borough.some(boroughKeyword => {
+        const keyword = boroughKeyword.toLowerCase();
+        return restaurantBorough === keyword;
+      });
+    } else {
+      // Single borough
+      const boroughKeyword = keywords.borough.toLowerCase();
+      hasBoroughMatch = restaurantBorough === boroughKeyword;
+    }
     
     // If borough is specified, use borough match (ignore city)
     return hasBoroughMatch;
@@ -372,6 +381,56 @@ function matchesLocation(restaurant: Restaurant, keywords: ExtractedKeywords): b
   
   // At this point, only city matching is left (neighborhood and borough already returned if specified)
   return hasCityMatch;
+}
+
+/**
+ * Check if restaurant matches landmark criteria
+ * Uses flexible matching - checks landmarks field, summaries, and address
+ */
+function matchesLandmark(restaurant: Restaurant, keywords: ExtractedKeywords): boolean {
+  if (!keywords.landmark) {
+    return true; // No landmark filter
+  }
+
+  // If neighborhood or borough is specified, landmark is ignored (neighborhood/borough takes precedence)
+  if (keywords.neighborhood || keywords.borough) {
+    return true; // Skip landmark matching when neighborhood/borough is present
+  }
+
+  const landmarkKeywords = Array.isArray(keywords.landmark) 
+    ? keywords.landmark.map(l => l.toLowerCase())
+    : [keywords.landmark.toLowerCase()];
+
+  // Get all text fields to search
+  const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
+  const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
+  const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
+  const address = restaurant.original_place?.properties?.location?.address?.toLowerCase() || '';
+  const formattedAddress = restaurant.google_data.formattedAddress?.toLowerCase() || '';
+  
+  // Combine all text fields for searching
+  const allText = `${summary} ${reviewSummary} ${editorialSummary} ${address} ${formattedAddress}`;
+
+  // Check if any landmark keyword matches in any source
+  for (const landmarkKeyword of landmarkKeywords) {
+    // Check landmarks field (if present)
+    const landmarks = restaurant.google_data.landmarks || [];
+    const matchesInLandmarksField = landmarks.some(landmark => {
+      const landmarkName = landmark.displayName?.text?.toLowerCase() || '';
+      return landmarkName.includes(landmarkKeyword) || landmarkKeyword.includes(landmarkName);
+    });
+
+    // Check summaries and address (flexible matching)
+    const matchesInText = allText.includes(landmarkKeyword);
+
+    // If either matches, this landmark keyword is satisfied
+    if (matchesInLandmarksField || matchesInText) {
+      return true; // At least one landmark matches
+    }
+  }
+
+  // None of the landmark keywords matched
+  return false;
 }
 
 /**
@@ -995,29 +1054,32 @@ export async function preFilterRestaurants(query: string, keywords: ExtractedKey
         // 1. Location (already filtered by city, but check neighborhood/borough)
         if (!matchesLocation(restaurant, extractedKeywords)) return false;
         
-        // 2. Cynthia's pick (very selective boolean)
+        // 2. Landmark (only used if neighborhood/borough not present - matchesLandmark handles this)
+        if (!matchesLandmark(restaurant, extractedKeywords)) return false;
+        
+        // 3. Cynthia's pick (very selective boolean)
         if (!matchesCynthiasPick(restaurant, extractedKeywords)) return false;
         
-        // 3. Cuisine (selective, reduces dataset significantly)
+        // 4. Cuisine (selective, reduces dataset significantly)
         if (!matchesCuisine(restaurant, extractedKeywords)) return false;
         
-        // 4. Meal type (moderately selective)
+        // 5. Meal type (moderately selective)
         if (!matchesMealType(restaurant, extractedKeywords)) return false;
         
-        // 5. Price (moderately selective)
+        // 6. Price (moderately selective)
         if (!matchesPrice(restaurant, extractedKeywords)) return false;
         
-        // 6. Special requirements (selective booleans)
+        // 7. Special requirements (selective booleans)
         if (!matchesInstagrammable(restaurant, extractedKeywords)) return false;
         if (!matchesMichelin(restaurant, extractedKeywords)) return false;
         
-        // 7. Special features (selective, array checks)
+        // 8. Special features (selective, array checks)
         if (!matchesSpecialFeatures(restaurant, extractedKeywords)) return false;
         
-        // 8. Amenities (less selective)
+        // 9. Amenities (less selective)
         if (!matchesAmenities(restaurant, extractedKeywords)) return false;
         
-        // 9. Vibe/Occasion/Noise (less selective, array checks)
+        // 10. Vibe/Occasion/Noise (less selective, array checks)
         if (!matchesVibe(restaurant, extractedKeywords)) return false;
         if (!matchesOccasion(restaurant, extractedKeywords)) return false;
         if (!matchesNoiseLevel(restaurant, extractedKeywords)) return false;

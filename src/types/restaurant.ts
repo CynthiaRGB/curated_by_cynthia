@@ -87,6 +87,18 @@ export interface Restaurant {
         photoUri?: string;
       }>;
     }>;
+    landmarks?: Array<{
+      name?: string;
+      placeId?: string;
+      displayName?: {
+        text: string;
+        languageCode?: string;
+      };
+      types?: string[];
+      spatialRelationship?: string;
+      straightLineDistanceMeters?: number;
+      travelDistanceMeters?: number;
+    }>;
   };
 
   // Extracted metadata
@@ -115,8 +127,9 @@ export interface Restaurant {
 export interface ExtractedKeywords {
   // Location
   neighborhood?: string | string[]; // Support single neighborhood or array for multiple
-  borough?: string;
+  borough?: string | string[]; // Support single borough or array for multiple (NYC only: "manhattan", "brooklyn")
   city?: string;
+  landmark?: string | string[]; // Support single landmark or array for multiple (e.g., "Louvre", "Times Square")
   
   // Cuisine/Type
   cuisineType?: string;

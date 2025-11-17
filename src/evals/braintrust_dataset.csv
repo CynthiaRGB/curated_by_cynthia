@@ -1,0 +1,14 @@
+query,city,expected_output
+street food in Seoul,Seoul,"{""cuisineType"": ""korean"", ""priceLevel"": ""budget"", ""vibeKeywords"": [""casual""], ""cuisineSpecialty"": null, ""city"": ""seoul""}"
+pizza in Manhattan,NYC,"{""cuisineType"": ""italian"", ""cuisineSpecialty"": ""pizza"", ""city"": ""nyc""}"
+omakase in Tokyo,Tokyo,"{""cuisineType"": ""japanese"", ""cuisineSpecialty"": ""sushi"", ""priceLevel"": ""luxury"", ""city"": ""tokyo""}"
+luxury fine dining in NYC,NYC,"{""priceLevel"": ""luxury"", ""vibeKeywords"": [""upscale"", ""sophisticated""], ""city"": ""nyc""}"
+pizza in Manhattan or Brooklyn,NYC,"{""cuisineType"": ""italian"", ""cuisineSpecialty"": ""pizza"", ""borough"": [""manhattan"", ""brooklyn""], ""city"": ""nyc""}"
+hidden gems in Tokyo,Tokyo,"{""specialFeatures"": [""hidden_gem""], ""city"": ""tokyo""}"
+traditional izakaya for dinner,Tokyo,"{""cuisineType"": ""japanese"", ""cuisineSpecialty"": ""izakaya"", ""mealType"": ""dinner"", ""vibeKeywords"": [""authentic"", ""casual""], ""city"": ""tokyo""}"
+romantic bistro for anniversary,Paris,"{""cuisineType"": ""french"", ""occasionType"": ""anniversary"", ""vibeKeywords"": [""romantic"", ""intimate""], ""city"": ""paris""}"
+Michelin star restaurant,Paris,"{""requiresMichelin"": true, ""priceLevel"": ""luxury"", ""city"": ""paris""}"
+upscale Korean fine dining,Seoul,"{""cuisineType"": ""korean"", ""priceLevel"": ""upscale"", ""vibeKeywords"": [""upscale"", ""sophisticated""], ""city"": ""seoul""}"
+BBQ in Seoul,Seoul,"{""cuisineType"": ""korean"", ""cuisineSpecialty"": ""bbq"", ""city"": ""seoul""}"
+What's the weather today?,NYC,"{""error"": ""NOT_RESTAURANT_QUERY""}"
+

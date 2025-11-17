@@ -158,7 +158,7 @@ function isFollowUpQuery(query: string, context?: RoutingContext): boolean {
 /**
  * Check if query is completely irrelevant to restaurant search
  */
-function isIrrelevantQuery(query: string): boolean {
+export function isIrrelevantQuery(query: string): boolean {
   const trimmed = query.trim();
   const lowerQuery = trimmed.toLowerCase();
   
