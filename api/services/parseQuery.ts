@@ -98,472 +98,129 @@ function setCachedParsedQuery(
  */
 const RESTAURANT_QUERY_PARSER_PROMPT_TEMPLATE = `You are parsing a restaurant search query into structured data. Extract all relevant information from the user's query.
 
-**CRITICAL:** If the query is NOT related to restaurant search (e.g., weather, time, general questions, jokes), return an error: {"error": "NOT_RESTAURANT_QUERY"}
+Parse restaurant query to JSON. Return {"error":"NOT_RESTAURANT_QUERY"} if not restaurant-related.
 
 **USER QUERY:** "{{query}}"
 
----
+## VALID VALUES. Finite - use ONLY what's listed
 
-## QUICK REFERENCE: VALID VALUES
+Boroughs (NYC): manhattan, brooklyn
 
-### Boroughs (NYC ONLY)
-"manhattan", "brooklyn"
+Cities: nyc, tokyo, seoul, paris
 
-### Neighborhoods (Finite List - Only Extract These)
-**NYC:** Crown Heights, Dumbo, East Village, Gramercy, Greenpoint, Greenwich Village, Lower East Side, Manhattan, Midtown, Midtown East, Midtown West, Murray Hill, Park Slope, SoHo, Southside, Tribeca, Upper East Side, Upper West Side, West Village, Williamsburg
-
-**Tokyo:** Adachi City, Chiyoda City, Chuo City, Ginza, Koto City, Machida, Meguro City, Minato City, Musashino, Nihonbashiningyōchō, Setagaya City, Shibuya, Shinjuku City, Sumida City, Taito City, Toranomon, Toshima City
+Neighborhoods (extract ONLY if mentioned):
+NYC: Crown Heights, Dumbo, East Village, Gramercy, Greenpoint, Greenwich Village, LES, Manhattan, Midtown, Midtown E/W, Murray Hill, Park Slope, SoHo, Southside, Tribeca, UES, UWS, West Village, Williamsburg
+Tokyo: Adachi, Chiyoda, Chuo, Ginza, Koto, Machida, Meguro, Minato, Musashino, Nihonbashiningyōchō, Setagaya, Shibuya, Shinjuku, Sumida, Taito, Toranomon, Toshima
+Seoul: Gangnam, Gwanak-gu, Gwangjin, Jongno, Mapo-gu, Seodaemun-gu, Seongdong-gu, Songpa, Yongsan
+Paris: 1st-12th, 15th, 18th arrondissement
 
-**Seoul:** Gangnam District, Gwanak-gu, Gwangjin District, Jongno, Jongno District, Mapo-gu, Seodaemun-gu, Seongdong-gu, Songpa District, Yongsan District
+mealType: breakfast, brunch, lunch, dinner
 
-**Paris:** 1st-12th, 15th, 18th arrondissement
+priceLevel: budget, moderate, upscale, luxury, any
 
-### Cities
-"nyc", "tokyo", "seoul", "paris"
+occasionType: anniversary, business_dinner, business_lunch, casual_meetup, celebration, coffee_break, date_night, family_friendly, group_dining, late_lunch, late_night, quick_meal, solo_dining, special_occasion, tourist_friendly, weekend_brunch
 
-### Meal Types
-"breakfast", "brunch", "lunch", "dinner"
+noiseLevel: loud, moderate_noise, quiet_ambiance
 
-### Price Levels
-"budget", "moderate", "upscale", "luxury", "any"
+vibeKeywords: aesthetic, artistic, authentic, bright, bustling, busy, calm, casual, charming, chic, chill, classic, clean, comfortable, contemporary, cozy, cute, down_to_earth, easygoing, elegant, friendly, grand, hip, historic, homey, intimate, inviting, laid_back, lively, low_key, luxurious, minimalist, modern, moody, no_frills, peaceful, polished, quiet, quirky, refined, relaxed, relaxing, retro, romantic, rustic, serene, small, sophisticated, spacious, stylish, traditional, tranquil, trendy, unique, upscale, vibrant, warm, welcoming
 
-### Occasion Types
-"anniversary", "business_dinner", "business_lunch", "casual_meetup", "celebration", "coffee_break", "date_night", "family_friendly", "group_dining", "late_lunch", "late_night", "quick_meal", "solo_dining", "special_occasion", "tourist_friendly", "weekend_brunch"
+specialFeature: cash_only, chef_driven, compact_seating, counter_seating, counter_service, craft_driven, hard_to_get_into, hidden_gem, historic_venue, iconic_venue, instagrammable, outdoor_seating, scenic_views, speakeasy_vibe, unique_concept
 
-**Note:** Do NOT use "first_date" or "second_date" as literal occasion values. See section 6 for date handling.
+cuisineType: american_restaurant, animal_cafe, asian_restaurant, bagel_shop, bakery, bar, bar_and_grill, barbecue_restaurant, breakfast_restaurant, brunch_restaurant, cafe, cafeteria, catering_service, chinese_restaurant, coffee_shop, confectionery, cultural_center, deli, dessert_restaurant, dessert_shop, donut_shop, establishment, event_venue, fast_food_restaurant, fine_dining_restaurant, food, food_delivery, food_store, french_restaurant, greek_restaurant, grocery_store, hamburger_restaurant, ice_cream_shop, italian_restaurant, japanese_restaurant, korean_restaurant, liquor_store, meal_delivery, meal_takeaway, mediterranean_restaurant, mexican_restaurant, night_club, pizza_restaurant, point_of_interest, pub, ramen_restaurant, restaurant, sandwich_shop, seafood_restaurant, spanish_restaurant, steak_house, store, sushi_restaurant, tea_house, thai_restaurant, vegan_restaurant, vegetarian_restaurant, vietnamese_restaurant, wedding_venue, wholesaler, wine_bar
 
-### Special Features
-"cash_only", "chef_driven", "compact_seating", "counter_seating", "counter_service", "craft_driven", "hard_to_get_into", "hidden_gem", "historic_venue", "iconic_venue", "instagrammable", "outdoor_seating", "scenic_views", "speakeasy_vibe", "unique_concept"
+## RULES
+1. Location: Extract borough (NYC only), neighborhood (from list), landmark (if "near X"), city
+   - Landmarks ≠ neighborhoods. "near Louvre" → landmark:"louvre", neighborhood:null
+   - Support arrays: ["manhattan","brooklyn"] or "manhattan"
 
-### Noise Preferences
-"quiet", "any"
+2. Cuisine: 
+cuisineType: Use ONLY values from list above. If query mentions unlisted cuisine (ethiopian, peruvian, etc.) → set cuisineType:null
+cuisineSpecialty: Extract specific dish name if mentioned. FilterService uses flexible matching against restaurant metadata, names, descriptions. Examples of dish name: pizza, sushi, dim sum, yakitori, etc. 
 
----
+Restaurant types (izakaya, bistro, trattoria) → NOT cuisineType; map to cuisine (japanese, french, italian)
 
-## EXTRACTION RULES
+Cuisine Mapping Rules:
+Wine/cocktail/drinks/alcohol → "bar"
+BBQ/bbq/barbecue/barbeque → "barbecue_restaurant"
+Coffee/cafe/coffee shop → "coffee_shop"
+Pastry/bakery/dessert → "bakery"
 
-### 1. Location Extraction
+3. Price: "luxury"=expensive/fine dining/omakase/premium; "upscale"=upscale/fancy; "moderate"=mid-range; "budget"=cheap
+If both upscale + luxury → use "upscale"
 
-**Borough (NYC ONLY):**
-- Extract ONLY from valid borough list: ["manhattan", "brooklyn"]
-- Can be single string OR array: "manhattan" or ["manhattan", "brooklyn"]
-- Do NOT extract borough for non-NYC cities
+4. Vibes: Use ONLY values from list above
+   - Dual extraction: "upscale French" → priceLevel:"upscale" + vibeKeywords:["upscale"]
 
-**Neighborhood:**
-- Extract ONLY from valid neighborhood list (see Quick Reference)
-- Can be single string OR array: "shibuya" or ["shibuya", "ginza"]
-- **CRITICAL:** Do NOT extract landmarks as neighborhoods
-  - ❌ "near the Louvre" → neighborhood: null (Louvre is a landmark, not neighborhood)
-  - ✅ "in the 1st arrondissement" → neighborhood: "1st arrondissement"
+5. Occasions: Use ONLY values from list above
+   - "first/second/third date" → occasionType:"date_night" (NOT "first_date")
+   - "romantic dinner" → occasionType:"date_night"
+   - "anniversary" → occasionType:"anniversary"
+   - "late night" → occasionType:"late_night" (NOT mealType)
 
-**Landmark:**
-- Extract when query mentions "near [landmark]" or "close to [landmark]"
-- Can be single string OR array: "louvre" or ["louvre", "eiffel tower"]
-- Examples: "Louvre", "Times Square", "Eiffel Tower", "Central Park", "Shibuya Crossing"
-- If both neighborhood AND landmark mentioned, extract both (filterService prioritizes neighborhood)
+6. Special Features: 
+   - Instagram/photos → ["instagrammable"] + requiresInstagrammable:true
 
-**City:**
-- Always extract from query OR use provided city parameter
-- Lowercase: "nyc", "tokyo", "seoul", "paris"
+7. Booleans: null = remove filter, false = explicit false, true = explicit true
+   - "not Michelin" / "remove Michelin" → requiresMichelin:null
 
-**Examples:**
-"pizza in Manhattan" → borough: "manhattan", neighborhood: null, landmark: null, city: "nyc"
-"ramen in Shibuya or Ginza" → neighborhood: ["shibuya", "ginza"], city: "tokyo"
-"restaurants near Times Square" → neighborhood: null, landmark: "times square", city: "nyc"
-"Italian in West Village near Central Park" → neighborhood: "west village", landmark: "central park", city: "nyc"
+8. Subjective terms:
 
----
+Ignore descriptive words that imply quality/popularity:
+- Superlatives: "the best", "top", "top-rated", "highest rated", "must-try", "must-visit"
+- Recommendations: "recommended", "should try", "worth going"
+- Quality indicators: "good", "great", "excellent", "amazing", "outstanding"
+- Popularity: Apply pattern below
 
-### 2. Cuisine Extraction
+Pattern-based extraction:
+- "famous for ramen" → cuisineSpecialty:"ramen"
+- "famous pizza place" → ignore "famous", extract cuisineSpecialty:"pizza" if present
+- "popular" / "trending" / "hot spot" → vibeKeywords:["trendy"]
+- "authentic" / "real" / "genuine" / "local favorite" / "loved by locals" → vibeKeywords:["authentic"], specialFeatures:["hidden_gem"]
+- "traditional" / "classic" / "old-school" → vibeKeywords:["traditional","classic"]
+- "modern" / "contemporary" / "new" → vibeKeywords:["modern","contemporary"]
+- "vibes" / "good vibes"/ "atmosphere" / "cool spot" → vibeKeywords:["cozy","lively","trendy"]
+- "street food" / "street eats" → priceLevel:"budget"
 
-**Cuisine Type (Broad Category):**
-- Extract general cuisine category: "japanese", "italian", "chinese", "french", "korean", "bar", "barbecue", "seafood"
-- Lowercase only
-- **Wine-related queries → extract "bar":**
-  - "wine and cheese" → cuisineType: "bar"
-  - "wine bar" → cuisineType: "bar"
-  - "cocktail bar" → cuisineType: "bar"
-- **BBQ/Barbecue queries → extract "barbecue":**
-  - "BBQ" / "bbq" / "barbecue" / "barbeque" → cuisineType: "barbecue"
-  - "Korean BBQ" → cuisineType: "korean" (Korean cuisine, not necessarily BBQ-style)
-  - "BBQ restaurant" → cuisineType: "barbecue"
-  - This matches against "barbecue_restaurant" in restaurant types array
+**General rule for unlisted subjective terms:**
+- If term describes ATMOSPHERE/VIBE → add to vibeKeywords
+- If term describes QUALITY without actionable meaning → ignore (e.g., "delicious", "tasty", "flavorful")
+- If term describes PRICE → map to priceLevel
+- If term describes POPULARITY → add to vibeKeywords:["trendy"]
+- When uncertain → ignore rather than guess
 
-**Cuisine Specialty (Specific Dish):**
-- Extract SPECIFIC DISH if mentioned (open-ended field)
-- FilterService uses flexible matching against restaurant metadata, names, descriptions
-- **Do NOT extract restaurant types/styles** (e.g., "izakaya", "bistro", "trattoria")
-  - ❌ "traditional izakaya" → cuisineSpecialty: null
-  - ✅ "yakitori restaurant" → cuisineSpecialty: "yakitori"
+9. Conflicts: Prioritize specific over vague
+   - "cheap Michelin" → priceLevel:"luxury"
+   - "quick romantic dinner" → occasionType:"date_night"
+   - "casual fine dining" → priceLevel:"luxury"
 
-**Common Dish Examples:**
-- Japanese: ramen, yakitori, sushi, sashimi, unagi, tonkatsu, tempura, udon, soba, curry, onigiri
-- Italian: pizza, pasta, risotto
-- French: galettes, crepes, duck confit, croissant
-- Chinese: dim sum, hot pot, szechuan, peking duck
-- Other: pho, pad thai, tacos, burritos
-
-**Examples:**
-"pizza in Manhattan" → cuisineType: "italian", cuisineSpecialty: "pizza"
-"dim sum in Chinatown" → cuisineType: "chinese", cuisineSpecialty: "dim sum"
-"traditional izakaya" → cuisineType: "japanese", cuisineSpecialty: null
-"Italian restaurants" → cuisineType: "italian", cuisineSpecialty: null
-"BBQ in Manhattan" → cuisineType: "barbecue", cuisineSpecialty: null
-"barbecue restaurant" → cuisineType: "barbecue", cuisineSpecialty: null
-"seafood in Brooklyn" → cuisineType: "seafood", cuisineSpecialty: null
-
----
-
-### 3. Price Level Extraction
-
-**CRITICAL - Price Level Mapping:**
-- **"luxury"** ($$$$) = "expensive", "luxury", "high-end", "premium", "fine dining", "splurge", "omakase"
-- **"upscale"** ($$$, $$$$) = "upscale", "fancy"
-- **"moderate"** ($$) = "moderate", "mid-range"
-- **"budget"** ($) = "budget", "cheap", "affordable", "inexpensive"
-
-**Priority Rule:** If both upscale AND luxury indicators present, use "upscale" (more inclusive)
-
-**Examples:**
-"expensive restaurant" → priceLevel: "luxury"
-"fine dining French" → priceLevel: "luxury"
-"upscale Korean fine dining" → priceLevel: "upscale" (upscale wins - shows $$$ AND $$$$)
-"fancy restaurant" → priceLevel: "upscale"
-"cheap eats" → priceLevel: "budget"
-
----
-
-### 4. Vibe Keywords
-
-Extract as array of strings. Common vibes:
-- Atmosphere: "cozy", "lively", "romantic", "intimate", "casual", "trendy"
-- Style: "upscale", "sophisticated", "elegant", "rustic", "modern", "traditional", "authentic"
-
-**Dual Extraction Rule:** Words describing BOTH price AND atmosphere extract to BOTH fields:
-"upscale French" → priceLevel: "upscale", vibeKeywords: ["upscale"]
-"fancy restaurant" → priceLevel: "upscale", vibeKeywords: ["upscale", "sophisticated", "elegant"]
-"casual Italian" → vibeKeywords: ["casual"]
-
----
-
-### 5. Special Features
-
-Extract as array when explicitly mentioned or strongly implied. See Quick Reference for full list.
-
-**Key Mapping Rules:**
-- Instagram/photos → "instagrammable" + set requiresInstagrammable: true
-- Hidden/local favorites → "hidden_gem"
-- Cash payment → "cash_only"
-- Chef-focused → "chef_driven"
-- Outdoor space → "outdoor_seating"
-- Rooftop/views → "scenic_views"
-- Craft drinks → "craft_driven"
-- Secret/hidden bars → "speakeasy_vibe"
-
-**IMPORTANT - "Famous" vs "Iconic":**
-- ❌ "famous bakeries" → Do NOT extract "iconic_venue" (general descriptor)
-- ✅ "iconic restaurant" → Extract "iconic_venue" (special feature requirement)
-- ✅ "legendary spot" → Extract "iconic_venue"
-- ✅ "must-visit place" → Extract "iconic_venue"
-
-**Examples:**
-"hidden gems locals love" → specialFeatures: ["hidden_gem"]
-"instagram-worthy with outdoor seating" → specialFeatures: ["instagrammable", "outdoor_seating"], requiresInstagrammable: true
-"famous pizza place" → specialFeatures: [] (famous is general descriptor)
-
----
-
-### 6. Occasion Type
-
-Extract from query using exact occasion type values (see Quick Reference).
-
-**CRITICAL - Date Handling:**
-- **"first date"** → occasionType: "date_night" (NOT "first_date")
-- **"second date"** → occasionType: "date_night" (NOT "second_date")
-- **"third date"** / "fourth date" / etc. → occasionType: "date_night"
-- **"date night"** / "date" / "romantic dinner" → occasionType: "date_night"
-- **"anniversary"** / "anniversary dinner" → occasionType: "anniversary"
-
-**Reasoning:** The occasion_tags field contains predefined values. "first date", "second date", etc. are variations of dates and should all map to the canonical "date_night" value. The only exception is "anniversary" which has its own specific tag.
-
-**Other Occasion Mappings:**
-- "business lunch/dinner" → "business_lunch" / "business_dinner"
-- "late night" / "late-night" → "late_night" (NOT mealType)
-- "family" / "with kids" → "family_friendly"
-- "group" / "large party" → "group_dining"
-- "solo" / "alone" → "solo_dining"
-- "weekend brunch" → "weekend_brunch"
-
-**Examples:**
-"first date restaurant" → occasionType: "date_night"
-"second date ideas" → occasionType: "date_night"
-"romantic dinner" → occasionType: "date_night"
-"anniversary dinner" → occasionType: "anniversary"
-"business lunch" → occasionType: "business_lunch"
-"late night food" → occasionType: "late_night"
-"family dinner" → occasionType: "family_friendly"
-
----
-
-### 7. Meal Type
-
-Extract: "breakfast", "brunch", "lunch", "dinner", or null
-
-**IMPORTANT:** Do NOT extract "late night" as mealType (use occasionType instead)
-
----
-
-### 8. Boolean Flags
-
-Set to true when explicitly mentioned, null otherwise:
-- requiresInstagrammable: Instagram/photogenic mentions
-- requiresMichelin: Michelin-starred requests
-- requiresCynthiasPick: "Cynthia's favorites/pick"
-- requiresCoffeeFocus: Coffee-focused establishment
-- requiresDessertFocus: Dessert-focused establishment
-- needsTakeout: Takeout availability required
-- needsCoffee: Coffee availability required
-
-**Field Removal Rule:** If user says "not X" or "remove X" (e.g., "actually, not Michelin"), set that field to null to REMOVE the filter entirely.
-
----
-
-## HANDLING SUBJECTIVE/VAGUE TERMS
-
-### Subjective Term Mapping Table
-
-| Term | Extraction |
-|------|------------|
-| **"first date"** | occasionType: "date_night" (NOT "first_date") |
-| **"second date"** | occasionType: "date_night" (NOT "second_date") |
-| **"third/fourth/fifth date"** | occasionType: "date_night" |
-| **"date night"** | occasionType: "date_night" |
-| **"anniversary"** | occasionType: "anniversary" |
-| **"street food"** | cuisineSpecialty: "street food", priceLevel: "budget", vibeKeywords: ["casual", "authentic"] |
-| **"famous"** | Ignore (unless paired with specific feature: "famous for ramen" → cuisineSpecialty: "ramen") |
-| **"the best"** | Ignore (subjective opinion, not filterable) |
-| **"popular"** | vibeKeywords: ["popular", "trendy"] (do NOT extract as special feature) |
-| **"must-try"** | Ignore (unless paired with dish: "must-try ramen" → cuisineSpecialty: "ramen") |
-| **"recommended"** | Ignore (too vague) |
-| **"top-rated"** | Ignore (rating-based, not a feature) |
-| **"authentic"** | vibeKeywords: ["authentic"] |
-| **"traditional"** | vibeKeywords: ["traditional", "authentic"] |
-| **"modern"** | vibeKeywords: ["modern", "contemporary"] |
-| **"classic"** | vibeKeywords: ["classic", "traditional"] |
-| **"good vibes"** | vibeKeywords: ["cozy", "lively", "trendy", "casual"] |
-| **"something nice"** | priceLevel: "moderate", vibeKeywords: ["upscale", "sophisticated"] |
-| **"nice pictures"** | specialFeatures: ["instagrammable"], requiresInstagrammable: true |
-| **"hidden gems"** | specialFeatures: ["hidden_gem"] |
-| **"locals love"** | specialFeatures: ["hidden_gem"] |
-| **"BBQ" / "bbq" / "barbecue" / "barbeque"** | cuisineType: "barbecue" |
-| **"seafood"** | cuisineType: "seafood" |
-
-### Extremely Vague Queries
-
-For queries with no clear criteria (e.g., "where should I eat?"):
-- Return minimal extraction: only city if provided
-- Empty arrays for all array fields
-- null for all optional fields
-
----
-
-## CONFLICT RESOLUTION RULES
-
-When query contains contradictory criteria, apply these priority rules:
-
-### 1. Price Conflicts
-"cheap Michelin restaurant" → priceLevel: "luxury" (Michelin overrides "cheap")
-"casual fine dining" → priceLevel: "upscale", vibeKeywords: ["upscale"] (fine dining wins, ignore casual)
-
-### 2. Occasion Conflicts
-"quick romantic dinner" → occasionType: "date_night" (romantic overrides quick)
-"business date" → occasionType: "business_dinner" (business context wins)
-
-### 3. Location Conflicts
-"upscale Italian near Times Square" → neighborhood: null, landmark: "times square"
-(Times Square is landmark, not neighborhood - filterService uses landmark)
-
-### 4. Feature Conflicts
-"quiet lively bar" → noiseLevel: null, vibeKeywords: [] (contradictory - ignore both)
-"intimate group dining" → occasionType: "group_dining" (group wins - can't be intimate for large group)
-
-**General Rule:** When in doubt, prioritize the more specific/concrete criterion over vague/general ones.
-
----
-
-## RESPONSE FORMAT
-
-Return ONLY valid JSON (no markdown, no backticks, no extra text):
-
-**Non-restaurant query:**
+## OUTPUT
+Return raw JSON (no markdown):
 {
-  "error": "NOT_RESTAURANT_QUERY"
+"neighborhood": null|string|string[],
+"borough": null|string|string[],
+"landmark": null|string|string[],
+"city": null|"nyc"|"tokyo"|"seoul"|"paris",
+"cuisineType": null|string,
+"cuisineSpecialty": null|string,
+"mealType": null|"breakfast"|"brunch"|"lunch"|"dinner",
+"priceLevel": null|"budget"|"moderate"|"upscale"|"luxury"|"any",
+"needsCoffee": boolean,
+"vibeKeywords": string[],
+"occasionType": null|string,
+"noisePreference": null|string,
+"requiresInstagrammable": boolean|null,
+"requiresMichelin": boolean|null,
+"requiresCynthiasPick": boolean|null,
+"requiresCoffeeFocus": boolean|null,
+"requiresDessertFocus": boolean|null,
+"specialFeatures": string[]
 }
 
-**Restaurant query:**
-{
-  "neighborhood": null | string | string[],
-  "borough": null | string | string[],
-  "landmark": null | string | string[],
-  "city": null | "nyc" | "tokyo" | "seoul" | "paris",
-  "cuisineType": null | string,
-  "cuisineSpecialty": null | string,
-  "mealType": null | "breakfast" | "brunch" | "lunch" | "dinner",
-  "priceLevel": null | "budget" | "moderate" | "upscale" | "luxury" | "any",
-  "needsTakeout": boolean,
-  "needsCoffee": boolean,
-  "vibeKeywords": string[],
-  "occasionType": null | string,
-  "noiseLevel": null | "loud" | "moderate_noise" | "quiet_ambiance",
-  "requiresInstagrammable": boolean | null,
-  "requiresMichelin": boolean | null,
-  "requiresCynthiasPick": boolean | null,
-  "requiresCoffeeFocus": boolean | null,
-  "requiresDessertFocus": boolean | null,
-  "specialFeatures": string[]
-}
-
----
-
-## IMPORTANT NOTES
-
-1. **Precision:** Only extract explicitly mentioned or strongly implied information
-2. **Arrays:** Support single values OR arrays for: borough, neighborhood, landmark
-3. **Flexible Matching:** FilterService handles normalization for cuisineSpecialty, vibeKeywords, neighborhoods
-4. **Null vs Empty:** Use null for all unmentioned optional fields, [] for empty arrays
-5. **Never Hallucinate:** If uncertain, omit the field rather than guess
-6. **City Parameter:** Always include city from query OR provided parameter
-7. **Landmarks ≠ Neighborhoods:** Landmarks (Louvre, Times Square, Central Park) cannot be neighborhoods
-
----
-
-## EXAMPLES
-
-### Example 1: Basic Query
-**Query:** "pizza in Manhattan"
-{
-  "neighborhood": null,
-  "borough": "manhattan",
-  "landmark": null,
-  "city": "nyc",
-  "cuisineType": "italian",
-  "cuisineSpecialty": "pizza",
-  "mealType": null,
-  "priceLevel": null,
-  "needsTakeout": false,
-  "needsCoffee": false,
-  "vibeKeywords": [],
-  "occasionType": null,
-  "noiseLevel": null,
-  "requiresInstagrammable": null,
-  "requiresMichelin": null,
-  "requiresCynthiasPick": null,
-  "requiresCoffeeFocus": null,
-  "requiresDessertFocus": null,
-  "specialFeatures": []
-}
-
-### Example 2: Complex Query
-**Query:** "upscale Japanese omakase in Shibuya or Ginza with scenic views for anniversary dinner"
-{
-  "neighborhood": ["shibuya", "ginza"],
-  "borough": null,
-  "landmark": null,
-  "city": "tokyo",
-  "cuisineType": "japanese",
-  "cuisineSpecialty": null,
-  "mealType": "dinner",
-  "priceLevel": "upscale",
-  "needsTakeout": false,
-  "needsCoffee": false,
-  "vibeKeywords": ["upscale"],
-  "occasionType": "anniversary",
-  "noiseLevel": null,
-  "requiresInstagrammable": null,
-  "requiresMichelin": null,
-  "requiresCynthiasPick": null,
-  "requiresCoffeeFocus": null,
-  "requiresDessertFocus": null,
-  "specialFeatures": ["scenic_views"]
-}
-
-### Example 3: Vague Query
-**Query:** "something nice for dinner"
-{
-  "neighborhood": null,
-  "borough": null,
-  "landmark": null,
-  "city": null,
-  "cuisineType": null,
-  "cuisineSpecialty": null,
-  "mealType": "dinner",
-  "priceLevel": "moderate",
-  "needsTakeout": false,
-  "needsCoffee": false,
-  "vibeKeywords": ["upscale", "sophisticated"],
-  "occasionType": null,
-  "noiseLevel": null,
-  "requiresInstagrammable": null,
-  "requiresMichelin": null,
-  "requiresCynthiasPick": null,
-  "requiresCoffeeFocus": null,
-  "requiresDessertFocus": null,
-  "specialFeatures": []
-}
-
-### Example 4: Subjective Terms
-**Query:** "famous street food locals love near Times Square"
-{
-  "neighborhood": null,
-  "borough": null,
-  "landmark": "times square",
-  "city": "nyc",
-  "cuisineType": null,
-  "cuisineSpecialty": "street food",
-  "mealType": null,
-  "priceLevel": "budget",
-  "needsTakeout": false,
-  "needsCoffee": false,
-  "vibeKeywords": ["casual", "authentic"],
-  "occasionType": null,
-  "noiseLevel": null,
-  "requiresInstagrammable": null,
-  "requiresMichelin": null,
-  "requiresCynthiasPick": null,
-  "requiresCoffeeFocus": null,
-  "requiresDessertFocus": null,
-  "specialFeatures": ["hidden_gem"]
-}
-
-### Example 5: Date Handling
-**Query:** "romantic spot for a first date in West Village"
-{
-  "neighborhood": "west village",
-  "borough": null,
-  "landmark": null,
-  "city": "nyc",
-  "cuisineType": null,
-  "cuisineSpecialty": null,
-  "mealType": null,
-  "priceLevel": null,
-  "needsTakeout": false,
-  "needsCoffee": false,
-  "vibeKeywords": ["romantic", "intimate", "cozy"],
-  "occasionType": "date_night",
-  "noiseLevel": null,
-  "requiresInstagrammable": null,
-  "requiresMichelin": null,
-  "requiresCynthiasPick": null,
-  "requiresCoffeeFocus": null,
-  "requiresDessertFocus": null,
-  "specialFeatures": []
-}
-
-### Example 6: Non-Restaurant Query
-**Query:** "What's the weather today?"
-{
-  "error": "NOT_RESTAURANT_QUERY"
-}`;
+Examples:
+"pizza in Manhattan" → {"borough":"manhattan","city":"nyc","cuisineType":"italian_restaurant","cuisineSpecialty":"pizza"}
+"upscale Japanese in Shibuya for anniversary" → {"neighborhood":"shibuya","city":"tokyo","cuisineType":"japanese_restaurant","priceLevel":"upscale","occasionType":"anniversary","vibeKeywords":["upscale"]}
+"first date in West Village" → {"neighborhood":"west village","city":"nyc","occasionType":"date_night","vibeKeywords":["romantic","intimate","cozy"]}
+"famous street food locals love near Times Square" → {"landmark":"times square","city":"nyc","priceLevel":"budget"}`;
 
 /**
  * Build prompt for Claude API query parsing
