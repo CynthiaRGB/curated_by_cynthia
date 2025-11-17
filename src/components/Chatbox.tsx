@@ -31,7 +31,7 @@ const CITY_PROMPTS: Record<City, string[]> = {
   ],
   'Seoul': [
     "Cynthia's favorites 👑",
-    'Traditional Korean food',
+    'Korean restaurant',
     'Coffee shops'
   ]
 };

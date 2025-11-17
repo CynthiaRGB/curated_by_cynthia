@@ -1012,7 +1012,7 @@ export function isCityPromptItem(query: string): boolean {
     "best thai restaurants",
     "traditional french fare",
     "galettes and crepes",
-    "traditional korean food"
+    "korean restaurant"
   ];
   
   // Check if query matches any prompt pattern (allowing for city suffix)

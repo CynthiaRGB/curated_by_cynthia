@@ -82278,6 +82278,9 @@ export const restaurantData = [
       "id": "ChIJGy3O2dqkfDURXBQP_5OVtqM",
       "types": [
         "restaurant",
+        "korean_restaurant",
+        "barbecue_restaurant",
+        "seafood_restaurant",
         "food",
         "point_of_interest",
         "establishment"
@@ -96565,8 +96568,8 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-11-17T05:03:16.790Z",
     "cynthias_pick": true,
-    "price_display": "N/A",
-    "city": null,
+    "price_display": "$$$",
+    "city": "Seoul",
     "vibe_tags": [
       "cozy",
       "traditional",
@@ -97068,8 +97071,8 @@ export const restaurantData = [
     "enrichment_status": "success",
     "enrichment_date": "2025-11-17T05:02:54.118Z",
     "cynthias_pick": true,
-    "price_display": "N/A",
-    "city": null,
+    "price_display": "$$$",
+    "city": "Seoul",
     "vibe_tags": [
       "upscale",
       "sophisticated",
@@ -97679,7 +97682,7 @@ export const restaurantData = [
     "enrichment_date": "2025-11-01T06:54:07.017Z",
     "cynthias_pick": false,
     "price_display": "$",
-    "city": "New York",
+    "city": "New York City",
     "vibe_tags": [
       "casual",
       "traditional",
