@@ -11,7 +11,8 @@
  * 5. Remove unwanted metadata fields
  * 6. Download first 3 photos at highest resolution
  * 7. Update vercel photo mapping
- * 8. Enrich empty metadata tags using Claude API (includes GENERATIVE SUMMARY in prompt)
+ * 8. Enrich empty metadata tags using Claude API
+ * 9. Generate generativeSummary using Claude API (if missing from Google Places)
  * 
  * Requires:
  * - GOOGLE_PLACES_API_KEY environment variable
@@ -21,6 +22,8 @@
  *   node add-restaurant-consolidated.cjs "https://www.google.com/maps/place/..."
  *   OR
  *   node add-restaurant-consolidated.cjs --place-id "ChIJ..." [--name "Restaurant Name"]
+ *   OR (multiple restaurants):
+ *   node add-restaurant-consolidated.cjs --place-ids "ChIJ1,ChIJ2,ChIJ3"
  */
 
 const fs = require('fs');
@@ -53,9 +56,14 @@ const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || '';
 const args = process.argv.slice(2);
 let RESTAURANT_URL = null;
 let PLACE_ID = null;
+let PLACE_IDS = null; // Array for multiple place IDs
 let RESTAURANT_NAME = null;
 
-if (args[0] === '--place-id' && args[1]) {
+if (args[0] === '--place-ids' && args[1]) {
+  // Multiple place IDs (comma-separated)
+  PLACE_IDS = args[1].split(',').map(id => id.trim()).filter(id => id);
+} else if (args[0] === '--place-id' && args[1]) {
+  // Single place ID
   PLACE_ID = args[1];
   RESTAURANT_NAME = args[3] === '--name' ? args[4] : null;
 } else if (args[0] && !args[0].startsWith('--')) {
@@ -96,10 +104,11 @@ if (!ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
-if (!RESTAURANT_URL && !PLACE_ID) {
-  console.error('❌ ERROR: Please provide either a Google Maps URL or Place ID');
+if (!RESTAURANT_URL && !PLACE_ID && !PLACE_IDS) {
+  console.error('❌ ERROR: Please provide either a Google Maps URL, Place ID, or Place IDs');
   console.error('   Usage (URL): node add-restaurant-consolidated.cjs "https://www.google.com/maps/place/..."');
   console.error('   Usage (Place ID): node add-restaurant-consolidated.cjs --place-id "ChIJ..." [--name "Restaurant Name"]');
+  console.error('   Usage (Multiple): node add-restaurant-consolidated.cjs --place-ids "ChIJ1,ChIJ2,ChIJ3"');
   process.exit(1);
 }
 
@@ -754,13 +763,235 @@ async function enrichRestaurantWithTags(restaurant, retries = 3) {
 }
 
 /**
- * Save final processed restaurant to a new file
+ * Helper: Extract restaurant data for summary generation
+ */
+function extractRestaurantDataForSummary(restaurant) {
+  const gd = restaurant.google_data || {};
+  
+  // Extract review texts (limit to top 6 reviews, sorted by rating)
+  let reviewTexts = '';
+  if (gd.reviews && gd.reviews.length > 0) {
+    const sortedReviews = [...gd.reviews]
+      .filter(r => r.text && r.text.text)
+      .sort((a, b) => (b.rating || 0) - (a.rating || 0))
+      .slice(0, 6);
+    
+    const topReviews = sortedReviews
+      .map(r => `  - ${r.text.text}`)
+      .join('\n');
+    reviewTexts = topReviews || 'No reviews available';
+  } else {
+    reviewTexts = 'No reviews available';
+  }
+  
+  // Extract review summary
+  const reviewSummary = gd.reviewSummary?.text?.text || '';
+  
+  // Extract editorial summary
+  const editorialSummary = gd.editorialSummary?.text || '';
+  
+  // Extract tags (already enriched from Step 8)
+  const tags = {
+    vibe: restaurant.vibe_tags || [],
+    food_quality: restaurant.food_quality_tags || [],
+    special_features: restaurant.special_features || [],
+    value: restaurant.value_tag || ''
+  };
+  
+  return {
+    name: gd.displayName?.text || restaurant.original_place?.properties?.location?.name || 'Unknown',
+    primaryType: gd.primaryType || gd.types?.[0] || 'restaurant',
+    specificType: restaurant.specific_type || '',
+    address: gd.shortFormattedAddress || gd.formattedAddress || restaurant.original_place?.properties?.location?.address || '',
+    neighborhood: restaurant.neighborhood_extracted || '',
+    rating: gd.rating || null,
+    reviewCount: gd.userRatingCount || 0,
+    priceDisplay: restaurant.price_display || 'N/A',
+    cynthiasPick: restaurant.cynthias_pick || false,
+    reviewSummary,
+    editorialSummary,
+    reviewTexts,
+    tags
+  };
+}
+
+/**
+ * Helper: Create prompt for generating summary
+ */
+function createSummaryPrompt(restaurantData) {
+  // Build tags summary
+  const tagsSummary = [];
+  if (restaurantData.tags.vibe.length > 0) {
+    tagsSummary.push(`Vibe: ${restaurantData.tags.vibe.join(', ')}`);
+  }
+  if (restaurantData.tags.food_quality.length > 0) {
+    tagsSummary.push(`Food: ${restaurantData.tags.food_quality.join(', ')}`);
+  }
+  if (restaurantData.tags.special_features.length > 0) {
+    tagsSummary.push(`Features: ${restaurantData.tags.special_features.join(', ')}`);
+  }
+  if (restaurantData.tags.value) {
+    tagsSummary.push(`Value: ${restaurantData.tags.value}`);
+  }
+  
+  return `Generate a one-sentence, punchy summary for this restaurant. Be specific, engaging, and capture what makes it special.
+
+Restaurant: ${restaurantData.name}
+Type: ${restaurantData.primaryType}${restaurantData.specificType ? ` (${restaurantData.specificType})` : ''}
+Location: ${restaurantData.address}${restaurantData.neighborhood ? ` (${restaurantData.neighborhood})` : ''}
+Rating: ${restaurantData.rating ? `${restaurantData.rating}★` : 'N/A'}${restaurantData.reviewCount ? ` (${restaurantData.reviewCount} reviews)` : ''}
+Price: ${restaurantData.priceDisplay}
+${restaurantData.cynthiasPick ? '✨ Cynthia\'s Pick' : ''}
+
+${tagsSummary.length > 0 ? `TAGS:\n${tagsSummary.join('\n')}\n` : ''}
+${restaurantData.editorialSummary ? `EDITORIAL SUMMARY:\n${restaurantData.editorialSummary}\n` : ''}
+${restaurantData.reviewSummary ? `REVIEW SUMMARY:\n${restaurantData.reviewSummary}\n` : ''}
+REVIEWS:
+${restaurantData.reviewTexts}
+
+---
+Write ONE engaging sentence that captures the essence of this restaurant. Be specific about what makes it special - mention unique dishes, atmosphere, chef, concept, or standout features. Write in a style that's punchy and makes someone want to visit.
+
+Examples:
+- "Portugal-inspired bakery featuring traditional custard tarts, along with coffee and matcha."
+- "Intimate omakase counter serving exceptional sushi in a minimalist setting."
+- "Trendy Korean fusion spot known for its creative cocktails and Instagram-worthy dishes."
+
+Return ONLY the summary sentence, no quotes, no markdown, just the text.`;
+}
+
+/**
+ * Step 9: Generate generativeSummary using Claude API (if missing)
+ */
+async function generateRestaurantSummary(restaurant, retries = 3) {
+  // Check if generativeSummary already exists
+  if (restaurant.google_data?.generativeSummary?.overview?.text) {
+    console.log(`   ℹ️  generativeSummary already exists, skipping generation\n`);
+    return;
+  }
+  
+  const restaurantData = extractRestaurantDataForSummary(restaurant);
+  const prompt = createSummaryPrompt(restaurantData);
+
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const message = await anthropic.messages.create({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 150,
+        messages: [
+          { role: 'user', content: prompt }
+        ]
+      });
+
+      // Extract summary text
+      let summaryText = message.content[0].text.trim();
+      
+      // Clean up if there are quotes or markdown
+      summaryText = summaryText.replace(/^["']|["']$/g, '').trim();
+      summaryText = summaryText.replace(/^`+|`+$/g, '').trim();
+      
+      // Set generativeSummary in google_data
+      if (!restaurant.google_data) {
+        restaurant.google_data = {};
+      }
+      
+      restaurant.google_data.generativeSummary = {
+        overview: {
+          text: summaryText,
+          languageCode: "en-US"
+        },
+        disclosureText: {
+          text: "Summarized with Claude",
+          languageCode: "en-US"
+        }
+      };
+      
+      console.log(`   ✓ Generated summary: "${summaryText.substring(0, 80)}${summaryText.length > 80 ? '...' : ''}"`);
+      console.log(`   Input tokens: ${message.usage.input_tokens}, Output tokens: ${message.usage.output_tokens}\n`);
+      
+      return;
+    } catch (error) {
+      const isRetryable = error.message.includes('529') || 
+                         error.message.includes('overloaded') ||
+                         error.message.includes('rate_limit') ||
+                         error.status === 529 ||
+                         error.status === 429;
+      
+      if (isRetryable && attempt < retries) {
+        const backoffMs = Math.pow(2, attempt) * 1000; // Exponential backoff: 2s, 4s, 8s
+        console.log(`   ⚠️  API error (attempt ${attempt}/${retries}), retrying in ${backoffMs/1000}s...`);
+        await new Promise(resolve => setTimeout(resolve, backoffMs));
+        continue;
+      }
+      
+      // Final attempt failed or non-retryable error
+      console.error(`   ❌ Summary generation failed: ${error.message}\n`);
+      throw new Error(`Failed to generate summary: ${error.message}`);
+    }
+  }
+}
+
+/**
+ * Save final processed restaurant(s) to a new file
  */
 function saveFinalRestaurantToFile(restaurant, tempFilePath) {
   const finalFilename = tempFilePath.replace('.json', '_processed.json');
   fs.writeFileSync(finalFilename, JSON.stringify(restaurant, null, 2), 'utf8');
   console.log(`💾 Final processed restaurant saved to: ${finalFilename}\n`);
   return finalFilename;
+}
+
+/**
+ * Save multiple processed restaurants to a single file
+ */
+function saveMultipleRestaurantsToFile(restaurants, baseFilename) {
+  // Generate filename with timestamp
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const filename = `restaurants_${restaurants.length}_${timestamp}_processed.json`;
+  const filepath = path.join(TEMP_OUTPUT_DIR, filename);
+  
+  fs.writeFileSync(filepath, JSON.stringify(restaurants, null, 2), 'utf8');
+  console.log(`💾 All ${restaurants.length} processed restaurants saved to: ${filepath}\n`);
+  return filepath;
+}
+
+/**
+ * Process a single restaurant through all steps
+ */
+async function processSingleRestaurant(placeId, restaurantUrl = null) {
+  // Step 2: Get details
+  const placeData = await getPlaceDetails(placeId);
+  
+  // Step 3: Save fetched data to new file
+  const tempFilePath = saveFetchedDataToNewFile(placeData, placeId);
+  
+  // Step 4: Format
+  console.log(`📝 Step 4: Formatting restaurant data...\n`);
+  const restaurant = formatRestaurantData(placeData, placeId, restaurantUrl);
+  console.log(`✓ Formatted: ${restaurant.google_data.displayName?.text}\n`);
+  
+  // Step 5: Remove unwanted fields
+  console.log(`🧹 Step 5: Removing unwanted metadata fields...\n`);
+  removeUnwantedFields(restaurant);
+  console.log(`✓ Metadata cleaned\n`);
+  
+  // Step 6: Download photos
+  console.log(`📸 Step 6: Downloading photos...\n`);
+  const localPhotoPaths = await downloadPhotos(restaurant);
+  
+  // Step 7: Update photo mapping
+  console.log(`🗺️  Step 7: Updating photo mapping...\n`);
+  updatePhotoMapping(placeId, localPhotoPaths);
+  
+  // Step 8: Enrich with tags
+  console.log(`🤖 Step 8: Enriching with metadata tags...\n`);
+  await enrichRestaurantWithTags(restaurant);
+  
+  // Step 9: Generate generativeSummary (if missing)
+  console.log(`📝 Step 9: Generating restaurant summary...\n`);
+  await generateRestaurantSummary(restaurant);
+  
+  return { restaurant, tempFilePath };
 }
 
 /**
@@ -773,57 +1004,88 @@ async function main() {
   console.log('⚠️  This script saves to NEW files - never modifies latest_277.ts directly!\n');
   
   try {
-    let placeId;
+    let placeIds = [];
     
-    // Step 1: Get Place ID (either from search or direct input)
-    if (PLACE_ID) {
-      placeId = PLACE_ID;
+    // Step 1: Get Place ID(s) (either from search or direct input)
+    if (PLACE_IDS) {
+      // Multiple place IDs provided
+      placeIds = PLACE_IDS;
+      console.log(`📋 Processing ${placeIds.length} restaurants...\n`);
+    } else if (PLACE_ID) {
+      // Single place ID provided
+      placeIds = [PLACE_ID];
     } else {
-      placeId = await searchRestaurant(RESTAURANT_URL);
+      // URL provided - need to search
+      const placeId = await searchRestaurant(RESTAURANT_URL);
+      placeIds = [placeId];
     }
     
-    // Step 2: Get details
-    const placeData = await getPlaceDetails(placeId);
+    const processedRestaurants = [];
+    const tempFilePaths = [];
     
-    // Step 3: Save fetched data to new file
-    const tempFilePath = saveFetchedDataToNewFile(placeData, placeId);
+    // Process each restaurant
+    for (let i = 0; i < placeIds.length; i++) {
+      const placeId = placeIds[i];
+      
+      console.log(`\n${'='.repeat(60)}`);
+      console.log(`[${i + 1}/${placeIds.length}] Processing restaurant ${i + 1} of ${placeIds.length}`);
+      console.log(`Place ID: ${placeId}`);
+      console.log('='.repeat(60) + '\n');
+      
+      try {
+        const result = await processSingleRestaurant(placeId, RESTAURANT_URL);
+        processedRestaurants.push(result.restaurant);
+        tempFilePaths.push(result.tempFilePath);
+        
+        console.log(`✅ Restaurant ${i + 1} processed successfully`);
+        console.log(`   Name: ${result.restaurant.google_data.displayName?.text}`);
+        console.log(`   Place ID: ${result.restaurant.google_place_id}`);
+        console.log(`   Address: ${result.restaurant.original_place.properties.location.address}`);
+        console.log(`   City: ${result.restaurant.city || 'Auto-detected'}`);
+        console.log(`   Price: ${result.restaurant.price_display}`);
+        console.log(`   Rating: ${result.restaurant.google_data.rating || 'N/A'}\n`);
+        
+        // Rate limiting between restaurants (except for the last one)
+        if (i < placeIds.length - 1) {
+          console.log('⏳ Waiting 2 seconds before processing next restaurant...\n');
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        }
+      } catch (error) {
+        console.error(`\n❌ Failed to process restaurant ${i + 1} (${placeId}): ${error.message}`);
+        if (placeIds.length === 1) {
+          // If single restaurant, throw error
+          throw error;
+        } else {
+          // If multiple, continue with others
+          console.error(`   Continuing with remaining restaurants...\n`);
+        }
+      }
+    }
     
-    // Step 4: Format
-    console.log(`📝 Step 4: Formatting restaurant data...\n`);
-    const restaurant = formatRestaurantData(placeData, placeId, RESTAURANT_URL);
-    console.log(`✓ Formatted: ${restaurant.google_data.displayName?.text}\n`);
+    // Save all processed restaurants
+    let finalFilePath;
+    if (processedRestaurants.length === 1) {
+      // Single restaurant - save as before
+      finalFilePath = saveFinalRestaurantToFile(processedRestaurants[0], tempFilePaths[0]);
+    } else {
+      // Multiple restaurants - save to single file
+      finalFilePath = saveMultipleRestaurantsToFile(processedRestaurants, tempFilePaths[0]);
+    }
     
-    // Step 5: Remove unwanted fields
-    console.log(`🧹 Step 5: Removing unwanted metadata fields...\n`);
-    removeUnwantedFields(restaurant);
-    console.log(`✓ Metadata cleaned\n`);
-    
-    // Step 6: Download photos
-    console.log(`📸 Step 6: Downloading photos...\n`);
-    const localPhotoPaths = await downloadPhotos(restaurant);
-    
-    // Step 7: Update photo mapping
-    console.log(`🗺️  Step 7: Updating photo mapping...\n`);
-    updatePhotoMapping(placeId, localPhotoPaths);
-    
-    // Step 8: Enrich with tags
-    console.log(`🤖 Step 8: Enriching with metadata tags...\n`);
-    await enrichRestaurantWithTags(restaurant);
-    
-    // Save final processed restaurant
-    const finalFilePath = saveFinalRestaurantToFile(restaurant, tempFilePath);
-    
+    // Final summary
     console.log('='.repeat(60));
-    console.log('✅ SUCCESS! Restaurant processed successfully');
+    console.log(`✅ SUCCESS! ${processedRestaurants.length} restaurant(s) processed successfully`);
     console.log('='.repeat(60));
-    console.log(`\n📍 Restaurant: ${restaurant.google_data.displayName?.text}`);
-    console.log(`   Place ID: ${restaurant.google_place_id}`);
-    console.log(`   Address: ${restaurant.original_place.properties.location.address}`);
-    console.log(`   City: ${restaurant.city || 'Auto-detected'}`);
-    console.log(`   Price: ${restaurant.price_display}`);
-    console.log(`   Rating: ${restaurant.google_data.rating || 'N/A'}`);
+    console.log(`\n📋 Processed restaurants:`);
+    processedRestaurants.forEach((r, idx) => {
+      console.log(`   ${idx + 1}. ${r.google_data.displayName?.text} (${r.google_place_id})`);
+    });
     console.log(`\n📁 Files created:`);
-    console.log(`   Raw data: ${tempFilePath}`);
+    if (tempFilePaths.length === 1) {
+      console.log(`   Raw data: ${tempFilePaths[0]}`);
+    } else {
+      console.log(`   Raw data files: ${tempFilePaths.length} files in ${TEMP_OUTPUT_DIR}`);
+    }
     console.log(`   Processed: ${finalFilePath}`);
     console.log(`📸 Photos: ${OUTPUT_DIR}`);
     console.log(`\n💡 Review the processed file and manually add to latest_277.ts when ready!`);
