@@ -3,8 +3,9 @@ import Statsig from "statsig-node";
 import { preFilterRestaurants } from './services/filterService.js';
 import { decideRoute, getMoreRestaurants, isShowMeMoreQuery, type RoutingContext } from './services/routingService.js';
 import { rankRestaurantsWithClaude, enrichRecommendations } from '../src/claudeService.js';
-import { getCachedResponse, setCachedResponse, generateCacheKey } from './services/claudeCache.js';
+import { getCachedResponse, setCachedResponse, generateCacheKey, getCityPromptTTL } from './services/claudeCache.js';
 import { parseQueryWithClaude } from './services/parseQuery.js';
+import { isCityPromptItem } from './services/filterService.js';
 import { Restaurant, ExtractedKeywords, City, QueryContext } from '../src/types/restaurant.js';
 
 /**
@@ -496,8 +497,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               anthropicApiKey
             );
             
-            // Cache the response
-            setCachedResponse(query, claudeResponse, restaurantIds);
+            // Cache the response with longer TTL for city prompt items
+            const isPromptItem = isCityPromptItem(query);
+            const cacheTTL = isPromptItem ? getCityPromptTTL() : undefined; // Use default TTL for non-prompts
+            setCachedResponse(query, claudeResponse, restaurantIds, cacheTTL);
             
             // Map Claude recommendations back to full Restaurant objects
             finalRestaurants = enrichRecommendations(

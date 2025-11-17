@@ -55,26 +55,34 @@ const BotResponse: React.FC<{
   isLoading = false
 }) => {
   const [showRestaurantCards, setShowRestaurantCards] = useState(false);
+  const [showThinkingDots, setShowThinkingDots] = useState(false);
+
+  // Reset states when text or loading state changes
+  useEffect(() => {
+    setShowRestaurantCards(false);
+    setShowThinkingDots(false);
+  }, [text, isLoading]);
 
   const handleTypewriterComplete = () => {
-    setShowRestaurantCards(true);
+    if (isLoading) {
+      // For loading state, show thinking dots after typewriter completes
+      setShowThinkingDots(true);
+    } else {
+      // For regular responses, show restaurant cards after typewriter completes
+      setShowRestaurantCards(true);
+    }
   };
 
   return (
     <div className="response-content">
       <div className="response-text">
-        {isLoading ? (
-          // Show loading state with thinking dots animation
-          <div className="flex items-center gap-2">
-            <span className="loading-text">{text}</span>
-            <ThinkingDots />
-          </div>
-        ) : (
+        <div className="flex items-center gap-2">
           <TypewriterText 
             text={text} 
             onComplete={handleTypewriterComplete}
           />
-        )}
+          {isLoading && showThinkingDots && <ThinkingDots />}
+        </div>
       </div>
       
       {/* Show animated restaurant cards only after typewriter completes */}
@@ -329,7 +337,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
                     handleSubmit();
                   }
                 }}
-                placeholder="Ask for more recommendations..."
+                placeholder={originalCity ? `Ask for more recommendations in ${originalCity}` : "Ask for more recommendations"}
                 className="text-input"
                 disabled={isLocalLoading}
                 rows={1}

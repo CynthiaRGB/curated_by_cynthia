@@ -6,6 +6,7 @@ import { ClaudeResponse } from '../../src/claudeService.js';
 interface CacheEntry {
   response: ClaudeResponse;
   timestamp: number;
+  ttl: number; // TTL in milliseconds for this specific entry
   query: string; // Store original query for debugging
 }
 
@@ -15,6 +16,10 @@ const cache = new Map<string, CacheEntry>();
 // Default TTL: 24 hours (86,400,000 ms)
 // Claude responses are deterministic for same query, so caching is safe
 const DEFAULT_TTL_MS = 24 * 60 * 60 * 1000;
+
+// Extended TTL for city prompt items: 30 days (2,592,000,000 ms)
+// City prompts are highly deterministic and frequently used, so longer cache saves costs
+const CITY_PROMPT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
 // Maximum cache size to prevent memory issues (100 entries)
 const MAX_CACHE_SIZE = 100;
@@ -53,25 +58,32 @@ export function getCachedResponse(
     return null;
   }
   
-  // Check if expired
+  // Check if expired (use entry-specific TTL)
   const age = Date.now() - entry.timestamp;
-  if (age > DEFAULT_TTL_MS) {
-    console.log(`[Claude Cache] Expired (age: ${Math.round(age / 1000 / 60)}min): ${cacheKey.substring(0, 50)}...`);
+  if (age > entry.ttl) {
+    const ageDays = Math.round(age / 1000 / 60 / 60 / 24 * 10) / 10;
+    console.log(`[Claude Cache] Expired (age: ${ageDays} days, TTL: ${Math.round(entry.ttl / 1000 / 60 / 60 / 24)} days): ${cacheKey.substring(0, 50)}...`);
     cache.delete(cacheKey);
     return null;
   }
   
-  console.log(`[Claude Cache] Hit (age: ${Math.round(age / 1000 / 60)}min): ${cacheKey.substring(0, 50)}...`);
+  const ageDays = Math.round(age / 1000 / 60 / 60 / 24 * 10) / 10;
+  console.log(`[Claude Cache] Hit (age: ${ageDays} days, TTL: ${Math.round(entry.ttl / 1000 / 60 / 60 / 24)} days): ${cacheKey.substring(0, 50)}...`);
   return entry.response;
 }
 
 /**
  * Store Claude response in cache
+ * @param query - The query string
+ * @param response - The Claude response to cache
+ * @param filteredRestaurantIds - Optional restaurant IDs for cache key
+ * @param ttlMs - Optional TTL in milliseconds (defaults to DEFAULT_TTL_MS)
  */
 export function setCachedResponse(
   query: string,
   response: ClaudeResponse,
-  filteredRestaurantIds?: string[]
+  filteredRestaurantIds?: string[],
+  ttlMs?: number
 ): void {
   // Evict oldest entries if cache is full
   if (cache.size >= MAX_CACHE_SIZE) {
@@ -82,13 +94,23 @@ export function setCachedResponse(
   }
   
   const cacheKey = generateCacheKey(query, filteredRestaurantIds);
+  const ttl = ttlMs || DEFAULT_TTL_MS;
   cache.set(cacheKey, {
     response,
     timestamp: Date.now(),
+    ttl,
     query,
   });
   
-  console.log(`[Claude Cache] Stored: ${cacheKey.substring(0, 50)}... (cache size: ${cache.size})`);
+  const ttlDays = Math.round(ttl / 1000 / 60 / 60 / 24 * 10) / 10;
+  console.log(`[Claude Cache] Stored: ${cacheKey.substring(0, 50)}... (TTL: ${ttlDays} days, cache size: ${cache.size})`);
+}
+
+/**
+ * Get TTL for city prompt items (longer cache for frequently used prompts)
+ */
+export function getCityPromptTTL(): number {
+  return CITY_PROMPT_TTL_MS;
 }
 
 /**
