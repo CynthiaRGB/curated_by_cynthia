@@ -151,8 +151,8 @@ export interface ExtractedKeywords {
   // NEW: Occasion filtering
   occasionType?: string | null;
 
-  // NEW: Noise preference
-  noisePreference?: 'quiet' | 'any' | null;
+  // NEW: Noise level
+  noiseLevel?: 'loud' | 'moderate_noise' | 'quiet_ambiance' | null;
 
   // NEW: Special requirements
   requiresInstagrammable?: boolean;

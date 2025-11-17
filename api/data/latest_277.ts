@@ -1775,7 +1775,7 @@ export const restaurantData = [
     "vibe_tags": [
       "casual",
       "trendy",
-      "laid-back",
+      "laid_back",
       "modern",
       "hip"
     ],
@@ -4833,7 +4833,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJiduS1U-JGGARr0XI-XOSodw",
-    "google_data": {"name": "places/ChIJiduS1U-JGGARr0XI-XOSodw",
+    "google_data": {
+      "name": "places/ChIJiduS1U-JGGARr0XI-XOSodw",
       "id": "ChIJiduS1U-JGGARr0XI-XOSodw",
       "types": [
         "japanese_restaurant",
@@ -5432,7 +5433,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJK3LOBfuPGGAR_vFK7kg6QxU",
-    "google_data": {"name": "places/ChIJK3LOBfuPGGAR_vFK7kg6QxU",
+    "google_data": {
+      "name": "places/ChIJK3LOBfuPGGAR_vFK7kg6QxU",
       "id": "ChIJK3LOBfuPGGAR_vFK7kg6QxU",
       "types": [
         "cafe",
@@ -5729,7 +5731,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJAQBM40SJGGARE_FACL6szA0",
-    "google_data": {"name": "places/ChIJAQBM40SJGGARE_FACL6szA0",
+    "google_data": {
+      "name": "places/ChIJAQBM40SJGGARE_FACL6szA0",
       "id": "ChIJAQBM40SJGGARE_FACL6szA0",
       "types": [
         "sushi_restaurant",
@@ -6026,7 +6029,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJyTFxpuKNGGARxdaK4WpltA8",
-    "google_data": {"name": "places/ChIJyTFxpuKNGGARxdaK4WpltA8",
+    "google_data": {
+      "name": "places/ChIJyTFxpuKNGGARxdaK4WpltA8",
       "id": "ChIJyTFxpuKNGGARxdaK4WpltA8",
       "types": [
         "sushi_restaurant",
@@ -7839,7 +7843,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJh32iCt9v5kcRv8zeQH_P9hI",
-    "google_data": {"name": "places/ChIJh32iCt9v5kcRv8zeQH_P9hI",
+    "google_data": {
+      "name": "places/ChIJh32iCt9v5kcRv8zeQH_P9hI",
       "id": "ChIJh32iCt9v5kcRv8zeQH_P9hI",
       "types": [
         "french_restaurant",
@@ -8425,7 +8430,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ9_NpNqZv5kcRDrE-riLHFkM",
-    "google_data": {"name": "places/ChIJ9_NpNqZv5kcRDrE-riLHFkM",
+    "google_data": {
+      "name": "places/ChIJ9_NpNqZv5kcRDrE-riLHFkM",
       "id": "ChIJ9_NpNqZv5kcRDrE-riLHFkM",
       "types": [
         "bakery",
@@ -8686,7 +8692,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJvVXZoXVv5kcRANOk97UA374",
-    "google_data": {"name": "places/ChIJvVXZoXVv5kcRANOk97UA374",
+    "google_data": {
+      "name": "places/ChIJvVXZoXVv5kcRANOk97UA374",
       "id": "ChIJvVXZoXVv5kcRANOk97UA374",
       "types": [
         "brunch_restaurant",
@@ -14672,7 +14679,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJb63ZBEGLGGARXCvQK_1cYSo",
-    "google_data": {"name": "places/ChIJb63ZBEGLGGARXCvQK_1cYSo",
+    "google_data": {
+      "name": "places/ChIJb63ZBEGLGGARXCvQK_1cYSo",
       "id": "ChIJb63ZBEGLGGARXCvQK_1cYSo",
       "types": [
         "japanese_restaurant",
@@ -14968,7 +14976,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJL7n6t5-LGGARF9-2SZ-im4U",
-    "google_data": {"name": "places/ChIJL7n6t5-LGGARF9-2SZ-im4U",
+    "google_data": {
+      "name": "places/ChIJL7n6t5-LGGARF9-2SZ-im4U",
       "id": "ChIJL7n6t5-LGGARF9-2SZ-im4U",
       "types": [
         "japanese_restaurant",
@@ -15266,7 +15275,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJWYp8Q7yLGGARD7e3dmFtIqA",
-    "google_data": {"name": "places/ChIJWYp8Q7yLGGARD7e3dmFtIqA",
+    "google_data": {
+      "name": "places/ChIJWYp8Q7yLGGARD7e3dmFtIqA",
       "id": "ChIJWYp8Q7yLGGARD7e3dmFtIqA",
       "types": [
         "restaurant",
@@ -15867,7 +15877,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJN5PpNL-JGGAR8zdTPVKkC2A",
-    "google_data": {"name": "places/ChIJN5PpNL-JGGAR8zdTPVKkC2A",
+    "google_data": {
+      "name": "places/ChIJN5PpNL-JGGAR8zdTPVKkC2A",
       "id": "ChIJN5PpNL-JGGAR8zdTPVKkC2A",
       "types": [
         "wine_bar",
@@ -16629,7 +16640,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJze_R0XqLGGARSianuabwAGA",
-    "google_data": {"name": "places/ChIJze_R0XqLGGARSianuabwAGA",
+    "google_data": {
+      "name": "places/ChIJze_R0XqLGGARSianuabwAGA",
       "id": "ChIJze_R0XqLGGARSianuabwAGA",
       "types": [
         "bar",
@@ -16917,7 +16929,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJAQBQjEjzGGARFB3hENX5-LY",
-    "google_data": {"name": "places/ChIJAQBQjEjzGGARFB3hENX5-LY",
+    "google_data": {
+      "name": "places/ChIJAQBQjEjzGGARFB3hENX5-LY",
       "id": "ChIJAQBQjEjzGGARFB3hENX5-LY",
       "types": [
         "italian_restaurant",
@@ -17212,7 +17225,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJBVYcsoDzGGARy-HgFskboyI",
-    "google_data": {"name": "places/ChIJBVYcsoDzGGARy-HgFskboyI",
+    "google_data": {
+      "name": "places/ChIJBVYcsoDzGGARy-HgFskboyI",
       "id": "ChIJBVYcsoDzGGARy-HgFskboyI",
       "types": [
         "cafe",
@@ -17664,7 +17678,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ172xy5SNGGARqEfXBDHCfRU",
-    "google_data": {"name": "places/ChIJ172xy5SNGGARqEfXBDHCfRU",
+    "google_data": {
+      "name": "places/ChIJ172xy5SNGGARqEfXBDHCfRU",
       "id": "ChIJ172xy5SNGGARqEfXBDHCfRU",
       "types": [
         "italian_restaurant",
@@ -17972,7 +17987,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ2SbS7YuLGGAR5cWQy8HeHk4",
-    "google_data": {"name": "places/ChIJ2SbS7YuLGGAR5cWQy8HeHk4",
+    "google_data": {
+      "name": "places/ChIJ2SbS7YuLGGAR5cWQy8HeHk4",
       "id": "ChIJ2SbS7YuLGGAR5cWQy8HeHk4",
       "types": [
         "restaurant",
@@ -18021,7 +18037,7 @@ export const restaurantData = [
         "wheelchairAccessibleParking": false,
         "wheelchairAccessibleEntrance": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden beneath Tsukiji in a sophisticated basement setting, this chef-driven gem delivers exceptional Italian cuisine with an innovative wine-focused approach that transforms dining into an intimate culinary journey.",
           "languageCode": "en-US"
@@ -18247,7 +18263,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJu2lq8q6NGGARSTI6d_uFQWo",
-    "google_data": {"name": "places/ChIJu2lq8q6NGGARSTI6d_uFQWo",
+    "google_data": {
+      "name": "places/ChIJu2lq8q6NGGARSTI6d_uFQWo",
       "id": "ChIJu2lq8q6NGGARSTI6d_uFQWo",
       "types": [
         "italian_restaurant",
@@ -18324,7 +18341,7 @@ export const restaurantData = [
           "id": "ChIJv-GUvJ6MGGAR5g8ZGkUxgNg"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Sophisticated 20th-floor Italian restaurant serving live lobster salad and wagyu steak with breathtaking Tokyo Tower views from an intimate open kitchen setting.",
           "languageCode": "en-US"
@@ -18862,7 +18879,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJDXX7JG6NGGARwENQK5p69iU",
-    "google_data": {"name": "places/ChIJDXX7JG6NGGARwENQK5p69iU",
+    "google_data": {
+      "name": "places/ChIJDXX7JG6NGGARwENQK5p69iU",
       "id": "ChIJDXX7JG6NGGARwENQK5p69iU",
       "types": [
         "japanese_restaurant",
@@ -18922,7 +18940,7 @@ export const restaurantData = [
         "wheelchairAccessibleRestroom": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden in Shinjuku's nostalgic Omoide Yokocho alleyway, this cozy traditional gem serves exceptional comfort food in an intimate, rustic setting that captures old Tokyo's authentic spirit.",
           "languageCode": "en-US"
@@ -19155,7 +19173,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJCaW9Ty31GGARd3cEq5taDM0",
-    "google_data": {"name": "places/ChIJCaW9Ty31GGARd3cEq5taDM0",
+    "google_data": {
+      "name": "places/ChIJCaW9Ty31GGARd3cEq5taDM0",
       "id": "ChIJCaW9Ty31GGARd3cEq5taDM0",
       "types": [
         "coffee_shop",
@@ -19216,7 +19235,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem coffee shop in Meguro City where exceptional beans meet cozy, rustic vibes in an intimate setting that feels like discovering Tokyo's best-kept caffeinated secret.",
           "languageCode": "en-US"
@@ -19456,7 +19475,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJQT2bC3eLGGARHkYNeoHxwL0",
-    "google_data": {"name": "places/ChIJQT2bC3eLGGARHkYNeoHxwL0",
+    "google_data": {
+      "name": "places/ChIJQT2bC3eLGGARHkYNeoHxwL0",
       "id": "ChIJQT2bC3eLGGARHkYNeoHxwL0",
       "types": [
         "japanese_restaurant",
@@ -19522,7 +19542,7 @@ export const restaurantData = [
           "id": "ChIJs61DnXeLGGARwNtsSjebL2M"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem tonkatsu joint in Roppongi Hills basement serving exceptionally juicy pork cutlets with feather-light breading, unlimited rice and cabbage, and unbeatable lunch sets that locals can't stop raving about.",
           "languageCode": "en-US"
@@ -20346,7 +20366,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJZa5iyhTzGGAR7ff4mKFIIms",
-    "google_data": {"name": "places/ChIJZa5iyhTzGGAR7ff4mKFIIms",
+    "google_data": {
+      "name": "places/ChIJZa5iyhTzGGAR7ff4mKFIIms",
       "id": "ChIJZa5iyhTzGGAR7ff4mKFIIms",
       "types": [
         "japanese_restaurant",
@@ -20699,7 +20720,7 @@ export const restaurantData = [
         "wheelchairAccessibleRestroom": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem in Shimokitazawa serving customizable Japanese soup curry with generous portions of fresh vegetables, fried chicken, and cheese in a cozy, intimate setting.",
           "languageCode": "en-US"
@@ -20946,7 +20967,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJvXUZEEmLGGARlC39ZdeJ06Q",
-    "google_data": {"name": "places/ChIJvXUZEEmLGGARlC39ZdeJ06Q",
+    "google_data": {
+      "name": "places/ChIJvXUZEEmLGGARlC39ZdeJ06Q",
       "id": "ChIJvXUZEEmLGGARlC39ZdeJ06Q",
       "types": [
         "coffee_shop",
@@ -21010,7 +21032,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This cozy Meguro coffee shop serves exceptional hand-drip coffee and lattes alongside homemade banana bread, with a charming terrace where you can watch trains pass by while sipping expertly crafted brews.",
           "languageCode": "en-US"
@@ -21255,7 +21277,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ3cFPK-aLGGARNaz58SuwM7M",
-    "google_data": {"name": "places/ChIJ3cFPK-aLGGARNaz58SuwM7M",
+    "google_data": {
+      "name": "places/ChIJ3cFPK-aLGGARNaz58SuwM7M",
       "id": "ChIJ3cFPK-aLGGARNaz58SuwM7M",
       "types": [
         "japanese_restaurant",
@@ -21314,7 +21337,7 @@ export const restaurantData = [
           "id": "ChIJqZ_h6UOLGGARGAz_GDKY1PM"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Chef-driven tempura counter in Ebisu where traditional Japanese technique meets creative artistry in an intimate, sophisticated setting that's worth every yen of the splurge.",
           "languageCode": "en-US"
@@ -22141,7 +22164,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJXUBcsmaNGGARMqB-h0oxXAg",
-    "google_data": {"name": "places/ChIJXUBcsmaNGGARMqB-h0oxXAg",
+    "google_data": {
+      "name": "places/ChIJXUBcsmaNGGARMqB-h0oxXAg",
       "id": "ChIJXUBcsmaNGGARMqB-h0oxXAg",
       "types": [
         "coffee_shop",
@@ -22528,7 +22552,7 @@ export const restaurantData = [
         "wheelchairAccessibleParking": false,
         "wheelchairAccessibleEntrance": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hip Shibuya coffee stand serving exceptional hojicha and matcha lattes with a laid-back vibe, great music, and outdoor seating perfect for people-watching in the heart of Tokyo's trendiest district.",
           "languageCode": "en-US"
@@ -22770,7 +22794,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJs73IqKGPGGAR8vR56OnCUD4",
-    "google_data": {"name": "places/ChIJs73IqKGPGGAR8vR56OnCUD4",
+    "google_data": {
+      "name": "places/ChIJs73IqKGPGGAR8vR56OnCUD4",
       "id": "ChIJs73IqKGPGGAR8vR56OnCUD4",
       "types": [
         "coffee_shop",
@@ -22812,7 +22837,7 @@ export const restaurantData = [
       "accessibilityOptions": {
         "wheelchairAccessibleParking": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "A sophisticated coffee roastery in Tokyo's Sumida district where craft-driven brewing meets Instagram-worthy presentation in an intimate, modern setting that seamlessly blends traditional Japanese aesthetics with trendy coffee culture.",
           "languageCode": "en-US"
@@ -23038,7 +23063,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJE0xjRfqLGGARkLg8IUjcu2o",
-    "google_data": {"name": "places/ChIJE0xjRfqLGGARkLg8IUjcu2o",
+    "google_data": {
+      "name": "places/ChIJE0xjRfqLGGARkLg8IUjcu2o",
       "id": "ChIJE0xjRfqLGGARkLg8IUjcu2o",
       "types": [
         "coffee_shop",
@@ -23110,7 +23136,7 @@ export const restaurantData = [
           "id": "ChIJN8T6mAOLGGARs3smLH0ppNU"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Sophisticated Ginza coffee destination showcasing rare single-origin beans like Geisha with artful preparation and expert curation in a trendy, Instagram-worthy setting.",
           "languageCode": "en-US"
@@ -24542,7 +24568,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJj6lP03qLGGARIGiXq2yaCzM",
-    "google_data": {"name": "places/ChIJj6lP03qLGGARIGiXq2yaCzM",
+    "google_data": {
+      "name": "places/ChIJj6lP03qLGGARIGiXq2yaCzM",
       "id": "ChIJj6lP03qLGGARIGiXq2yaCzM",
       "types": [
         "french_restaurant",
@@ -24608,7 +24635,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": true,
         "wheelchairAccessibleSeating": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Chef-driven French gem in upscale Nishiazabu where meticulously crafted seasonal dishes meet exceptional wine pairings in an intimate, sophisticated setting that perfectly balances elegance with cozy romance.",
           "languageCode": "en-US"
@@ -24846,7 +24873,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJoVC4i-iLGGAR9mJULMWzaxM",
-    "google_data": {"name": "places/ChIJoVC4i-iLGGAR9mJULMWzaxM",
+    "google_data": {
+      "name": "places/ChIJoVC4i-iLGGAR9mJULMWzaxM",
       "id": "ChIJoVC4i-iLGGAR9mJULMWzaxM",
       "types": [
         "japanese_restaurant",
@@ -25058,7 +25086,7 @@ export const restaurantData = [
         "wheelchairAccessibleRestroom": true,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Elegant Ginza institution serving Instagram-worthy parfaits and refined Japanese-Western fusion dishes in a sophisticated, classic setting that's perfect for special occasions.",
           "languageCode": "en-US"
@@ -25297,7 +25325,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJu8gHW7GLGGAR_48neC0uQdg",
-    "google_data": {"name": "places/ChIJu8gHW7GLGGAR_48neC0uQdg",
+    "google_data": {
+      "name": "places/ChIJu8gHW7GLGGAR_48neC0uQdg",
       "id": "ChIJu8gHW7GLGGAR_48neC0uQdg",
       "types": [
         "coffee_shop",
@@ -25360,7 +25389,7 @@ export const restaurantData = [
           "id": "ChIJoVC4i-iLGGAR9mJULMWzaxM"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Upscale Ginza coffee salon from cosmetics giant Shiseido serving exquisite seasonal parfaits and desserts in an elegant, traditional Japanese setting perfect for a sophisticated splurge.",
           "languageCode": "en-US"
@@ -25603,7 +25632,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ39SK5fqNGGARTwXVGqFR-rM",
-    "google_data": {"name": "places/ChIJ39SK5fqNGGARTwXVGqFR-rM",
+    "google_data": {
+      "name": "places/ChIJ39SK5fqNGGARTwXVGqFR-rM",
       "id": "ChIJ39SK5fqNGGARTwXVGqFR-rM",
       "types": [
         "restaurant",
@@ -25667,7 +25697,7 @@ export const restaurantData = [
           "id": "ChIJ34MW1hyMGGARsJ1e3aP3xS4"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Chic comfort food destination housed in a historic renovated train station, serving exceptional curry, fried chicken, and must-try cheesecake with scenic views at unbeatable value.",
           "languageCode": "en-US"
@@ -25913,7 +25943,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJzUe1uZmNGGARuObQRpkmASU",
-    "google_data": {"name": "places/ChIJzUe1uZmNGGARuObQRpkmASU",
+    "google_data": {
+      "name": "places/ChIJzUe1uZmNGGARuObQRpkmASU",
       "id": "ChIJzUe1uZmNGGARuObQRpkmASU",
       "types": [
         "japanese_restaurant",
@@ -25965,7 +25996,7 @@ export const restaurantData = [
       "accessibilityOptions": {
         "wheelchairAccessibleParking": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "CENSU TOKYO delivers an innovative omakase experience in Shibuya's trendy Jingūmae district, where creative dishes like zucchini flower tempura meet Instagram-worthy presentation and an extensive sake collection in a vibrant, chef-driven atmosphere.",
           "languageCode": "en-US"
@@ -26209,7 +26240,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ1X1k7qaMGGARGOc-4AZclSg",
-    "google_data": {"name": "places/ChIJ1X1k7qaMGGARGOc-4AZclSg",
+    "google_data": {
+      "name": "places/ChIJ1X1k7qaMGGARGOc-4AZclSg",
       "id": "ChIJ1X1k7qaMGGARGOc-4AZclSg",
       "types": [
         "restaurant",
@@ -26271,7 +26303,7 @@ export const restaurantData = [
         "wheelchairAccessibleRestroom": true,
         "wheelchairAccessibleSeating": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden in Shibuya, this intimate soba shop serves exceptional coarse-ground buckwheat noodles with an intoxicating aroma that's worth the inevitable wait.",
           "languageCode": "en-US"
@@ -27368,7 +27400,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJfVjP4oCLGGARW5XZ2K68NuU",
-    "google_data": {"name": "places/ChIJfVjP4oCLGGARW5XZ2K68NuU",
+    "google_data": {
+      "name": "places/ChIJfVjP4oCLGGARW5XZ2K68NuU",
       "id": "ChIJfVjP4oCLGGARW5XZ2K68NuU",
       "types": [
         "japanese_restaurant",
@@ -27427,7 +27460,7 @@ export const restaurantData = [
         "wheelchairAccessibleParking": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem serving exceptional Japanese comfort food in an intimate, traditional setting that's worth the splurge for a quiet, upscale dining experience in Akasaka.",
           "languageCode": "en-US"
@@ -27648,7 +27681,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ4wvlzthx5kcRBTEbOLD_POc",
-    "google_data": {"name": "places/ChIJ4wvlzthx5kcRBTEbOLD_POc",
+    "google_data": {
+      "name": "places/ChIJ4wvlzthx5kcRBTEbOLD_POc",
       "id": "ChIJ4wvlzthx5kcRBTEbOLD_POc",
       "types": [
         "ramen_restaurant",
@@ -27713,7 +27747,7 @@ export const restaurantData = [
         "wheelchairAccessibleRestroom": false,
         "wheelchairAccessibleSeating": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden in Paris's 6th arrondissement, this authentic Japanese ramen shop transports diners to a traditional Tokyo yokochō (alleyway) with exceptional comfort bowls served in an intimate, cozy setting that feels worlds away from the bustling Parisian streets.",
           "languageCode": "en-US"
@@ -30643,7 +30677,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJq6peCN-LGGAR12CmcGYH2cU",
-    "google_data": {"name": "places/ChIJq6peCN-LGGAR12CmcGYH2cU",
+    "google_data": {
+      "name": "places/ChIJq6peCN-LGGAR12CmcGYH2cU",
       "id": "ChIJq6peCN-LGGAR12CmcGYH2cU",
       "types": [
         "sushi_restaurant",
@@ -30701,7 +30736,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This hidden gem near Tsukiji serves exceptional fresh sushi and seasonal seafood bowls at surprisingly reasonable prices in a cozy, traditional setting that locals love.",
           "languageCode": "en-US"
@@ -31211,7 +31246,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ47Qxor6LGGARnD7UhjEqbWc",
-    "google_data": {"name": "places/ChIJ47Qxor6LGGARnD7UhjEqbWc",
+    "google_data": {
+      "name": "places/ChIJ47Qxor6LGGARnD7UhjEqbWc",
       "id": "ChIJ47Qxor6LGGARnD7UhjEqbWc",
       "types": [
         "coffee_shop",
@@ -31263,7 +31299,7 @@ export const restaurantData = [
       "accessibilityOptions": {
         "wheelchairAccessibleParking": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem coffee shop in Meguro serving Instagram-worthy crepes and crispy cutlet sandwiches alongside expertly crafted matcha lattes in a cozy, stylish space.",
           "languageCode": "en-US"
@@ -31822,7 +31858,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ9f0aP7iJGGAR3BB7LqfZdhE",
-    "google_data": {"name": "places/ChIJ9f0aP7iJGGAR3BB7LqfZdhE",
+    "google_data": {
+      "name": "places/ChIJ9f0aP7iJGGAR3BB7LqfZdhE",
       "id": "ChIJ9f0aP7iJGGAR3BB7LqfZdhE",
       "types": [
         "coffee_shop",
@@ -31868,7 +31905,7 @@ export const restaurantData = [
         "wheelchairAccessibleParking": false,
         "wheelchairAccessibleEntrance": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Sophisticated coffee shop in Koto City offering curated coffee tasting experiences with expertly crafted cocktails, food pairings, and personalized brewing guidance from knowledgeable baristas.",
           "languageCode": "en-US"
@@ -32101,7 +32138,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJEWLK02vzGGARSObu2Wuq6lY",
-    "google_data": {"name": "places/ChIJEWLK02vzGGARSObu2Wuq6lY",
+    "google_data": {
+      "name": "places/ChIJEWLK02vzGGARSObu2Wuq6lY",
       "id": "ChIJEWLK02vzGGARSObu2Wuq6lY",
       "types": [
         "japanese_restaurant",
@@ -32155,7 +32193,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden on the second floor of a Shimokitazawa building, this cozy traditional Japanese gem serves exceptional comfort food in a lively yet intimate setting that feels like discovering your favorite local neighborhood spot.",
           "languageCode": "en-US"
@@ -32672,7 +32710,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJl6x5e0KNGGAR8iOM8TtiQxk",
-    "google_data": {"name": "places/ChIJl6x5e0KNGGAR8iOM8TtiQxk",
+    "google_data": {
+      "name": "places/ChIJl6x5e0KNGGAR8iOM8TtiQxk",
       "id": "ChIJl6x5e0KNGGAR8iOM8TtiQxk",
       "types": [
         "cafe",
@@ -32748,7 +32787,7 @@ export const restaurantData = [
           "id": "ChIJMyzrfZqNGGARdjtWJnmcVt0"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Traditional Japanese tea house serving exceptional matcha lattes and chocolate terrine in a serene tatami-mat setting with garden views.",
           "languageCode": "en-US"
@@ -32987,7 +33026,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJI33V1jfzGGAReADciP7Xhuo",
-    "google_data": {"name": "places/ChIJI33V1jfzGGAReADciP7Xhuo",
+    "google_data": {
+      "name": "places/ChIJI33V1jfzGGAReADciP7Xhuo",
       "id": "ChIJI33V1jfzGGAReADciP7Xhuo",
       "types": [
         "bar",
@@ -33032,7 +33072,7 @@ export const restaurantData = [
         "wheelchairAccessibleParking": false,
         "wheelchairAccessibleEntrance": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden upscale cocktail bar in Shibuya's Nishihara district serving sophisticated craft cocktails in an intimate, Instagram-worthy setting that locals want to keep secret.",
           "languageCode": "en-US"
@@ -33247,7 +33287,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJo7zTdGCLGGAR76nsZYf-cjk",
-    "google_data": {"name": "places/ChIJo7zTdGCLGGAR76nsZYf-cjk",
+    "google_data": {
+      "name": "places/ChIJo7zTdGCLGGAR76nsZYf-cjk",
       "id": "ChIJo7zTdGCLGGAR76nsZYf-cjk",
       "types": [
         "coffee_shop",
@@ -33303,7 +33344,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden second-floor coffee shop in Minamiaoyama serving exceptional drinks and desserts in a cozy, intimate atmosphere where smoking is still permitted—a rare find in modern Tokyo.",
           "languageCode": "en-US"
@@ -33548,7 +33589,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ572wkteMGGARi4qiFHHbiAc",
-    "google_data": {"name": "places/ChIJ572wkteMGGARi4qiFHHbiAc",
+    "google_data": {
+      "name": "places/ChIJ572wkteMGGARi4qiFHHbiAc",
       "id": "ChIJ572wkteMGGARi4qiFHHbiAc",
       "types": [
         "ramen_restaurant",
@@ -33785,7 +33827,7 @@ export const restaurantData = [
         "wheelchairAccessibleRestroom": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Traditional Shinjuku ramen shop famous for its unique grilled mackerel salt ramen and bonito stock served as a pre-meal appetizer, with the cozy ritual of finishing your bowl as ochazuke with rice and wasabi.",
           "languageCode": "en-US"
@@ -34027,7 +34069,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJK5ZqQWLzGGARtoBsFQyfx-U",
-    "google_data": {"name": "places/ChIJK5ZqQWLzGGARtoBsFQyfx-U",
+    "google_data": {
+      "name": "places/ChIJK5ZqQWLzGGARtoBsFQyfx-U",
       "id": "ChIJK5ZqQWLzGGARtoBsFQyfx-U",
       "types": [
         "cafe",
@@ -34082,7 +34125,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden second-floor gem in Setagaya serving Instagram-worthy fruit sandwiches with perfectly balanced cream and ultra-fresh strawberries in a quirky, sophisticated cafe setting.",
           "languageCode": "en-US"
@@ -34623,7 +34666,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJl5wvbGnzGGARuX7WKY9Xjj8",
-    "google_data": {"name": "places/ChIJl5wvbGnzGGARuX7WKY9Xjj8",
+    "google_data": {
+      "name": "places/ChIJl5wvbGnzGGARuX7WKY9Xjj8",
       "id": "ChIJl5wvbGnzGGARuX7WKY9Xjj8",
       "types": [
         "coffee_shop",
@@ -34683,7 +34727,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden second-floor coffee sanctuary in Setagaya serving exceptional rare and baked cheesecakes alongside expertly brewed coffee in a cozy, retro atmosphere that feels like discovering your own secret café.",
           "languageCode": "en-US"
@@ -34923,7 +34967,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJJ_6cvAGNGGAR8SvSYZfpyes",
-    "google_data": {"name": "places/ChIJJ_6cvAGNGGAR8SvSYZfpyes",
+    "google_data": {
+      "name": "places/ChIJJ_6cvAGNGGAR8SvSYZfpyes",
       "id": "ChIJJ_6cvAGNGGAR8SvSYZfpyes",
       "types": [
         "coffee_shop",
@@ -35159,7 +35204,7 @@ export const restaurantData = [
         "wheelchairAccessibleParking": false,
         "wheelchairAccessibleEntrance": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hip Tokyo coffee shop where skilled baristas create Instagram-worthy latte art masterpieces while you watch, serving everything from rich black lattes to delicate hojicha and matcha creations in an intimate, artistic setting.",
           "languageCode": "en-US"
@@ -35404,7 +35449,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ72C8MR-lfDURPmCAB1Taw9U",
-    "google_data": {"name": "places/ChIJ72C8MR-lfDURPmCAB1Taw9U",
+    "google_data": {
+      "name": "places/ChIJ72C8MR-lfDURPmCAB1Taw9U",
       "id": "ChIJ72C8MR-lfDURPmCAB1Taw9U",
       "types": [
         "italian_restaurant",
@@ -35457,7 +35503,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Quirky Italian comfort food haven in Songpa District where cozy vibes meet Instagram-worthy dishes that locals rave about despite the premium pricing.",
           "languageCode": "en-US"
@@ -35668,7 +35714,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJY5XZZLClfDURwCRpL27D-ac",
-    "google_data": {"name": "places/ChIJY5XZZLClfDURwCRpL27D-ac",
+    "google_data": {
+      "name": "places/ChIJY5XZZLClfDURwCRpL27D-ac",
       "id": "ChIJY5XZZLClfDURwCRpL27D-ac",
       "types": [
         "restaurant",
@@ -35720,7 +35767,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This cozy Seongdong-gu gem serves up Instagram-worthy Korean comfort food in an intimate, modern setting that's as photogenic as it is delicious.",
           "languageCode": "en-US"
@@ -35938,7 +35985,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ352l6q2lfDUR_GWOmWrUgkk",
-    "google_data": {"name": "places/ChIJ352l6q2lfDUR_GWOmWrUgkk",
+    "google_data": {
+      "name": "places/ChIJ352l6q2lfDUR_GWOmWrUgkk",
       "id": "ChIJ352l6q2lfDUR_GWOmWrUgkk",
       "types": [
         "wine_bar",
@@ -35985,7 +36033,7 @@ export const restaurantData = [
       "accessibilityOptions": {
         "wheelchairAccessibleParking": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This hidden gem wine bar in trendy Seongsu offers an intimate, upscale setting perfect for romantic evenings with exceptional wine pairings and Instagram-worthy dishes that make it worth the splurge.",
           "languageCode": "en-US"
@@ -36216,7 +36264,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJD502OU6lfDURetD_VMLkRnA",
-    "google_data": {"name": "places/ChIJD502OU6lfDURetD_VMLkRnA",
+    "google_data": {
+      "name": "places/ChIJD502OU6lfDURetD_VMLkRnA",
       "id": "ChIJD502OU6lfDURetD_VMLkRnA",
       "types": [
         "italian_restaurant",
@@ -36285,7 +36334,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "A trendy Italian restaurant in Seoul's hip Seongsu district serving Instagram-worthy creative dishes in an upscale, aesthetic setting that's perfect for romantic dinners and special occasions.",
           "languageCode": "en-US"
@@ -36508,7 +36557,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJjXuM24mjfDURSwmouRnxNlM",
-    "google_data": {"name": "places/ChIJjXuM24mjfDURSwmouRnxNlM",
+    "google_data": {
+      "name": "places/ChIJjXuM24mjfDURSwmouRnxNlM",
       "id": "ChIJjXuM24mjfDURSwmouRnxNlM",
       "types": [
         "korean_restaurant",
@@ -36566,7 +36616,7 @@ export const restaurantData = [
       "parkingOptions": {
         "valetParking": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Sophisticated Korean fine dining restaurant in Gangnam where Chef Mingoo Kang elevates traditional flavors with modern techniques in an intimate, wine-focused setting perfect for special occasions.",
           "languageCode": "en-US"
@@ -36794,7 +36844,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ8Yklte6YfDURxHoRwBV5veQ",
-    "google_data": {"name": "places/ChIJ8Yklte6YfDURxHoRwBV5veQ",
+    "google_data": {
+      "name": "places/ChIJ8Yklte6YfDURxHoRwBV5veQ",
       "id": "ChIJ8Yklte6YfDURxHoRwBV5veQ",
       "types": [
         "brunch_restaurant",
@@ -37022,7 +37073,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Trendy Seoul brunch haven serving Instagram-worthy healthy dishes in a cozy, modern space that perfectly blends Korean flavors with contemporary café culture.",
           "languageCode": "en-US"
@@ -37246,7 +37297,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJW5A06BiZfDURCsTkMQ_f1I0",
-    "google_data": {"name": "places/ChIJW5A06BiZfDURCsTkMQ_f1I0",
+    "google_data": {
+      "name": "places/ChIJW5A06BiZfDURCsTkMQ_f1I0",
       "id": "ChIJW5A06BiZfDURCsTkMQ_f1I0",
       "types": [
         "cafe",
@@ -37297,7 +37349,7 @@ export const restaurantData = [
       "accessibilityOptions": {
         "wheelchairAccessibleParking": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This cozy Mapo-gu cafe serves Instagram-worthy seasonal specialties that change with the four seasons, creating a modern yet intimate atmosphere perfect for both casual dining and social media moments.",
           "languageCode": "en-US"
@@ -37521,7 +37573,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJS9VoLl-jfDURJ_fU7tz7RcI",
-    "google_data": {"name": "places/ChIJS9VoLl-jfDURJ_fU7tz7RcI",
+    "google_data": {
+      "name": "places/ChIJS9VoLl-jfDURJ_fU7tz7RcI",
       "id": "ChIJS9VoLl-jfDURJ_fU7tz7RcI",
       "types": [
         "bar",
@@ -37565,7 +37618,7 @@ export const restaurantData = [
       "accessibilityOptions": {
         "wheelchairAccessibleParking": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This intimate Yongsan District bar combines exceptional comfort food with scenic views and a cozy-romantic atmosphere that delivers outstanding value in a uniquely modern setting.",
           "languageCode": "en-US"
@@ -37771,7 +37824,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJg0V3MpmjfDURwSP_uQOyG1I",
-    "google_data": {"name": "places/ChIJg0V3MpmjfDURwSP_uQOyG1I",
+    "google_data": {
+      "name": "places/ChIJg0V3MpmjfDURwSP_uQOyG1I",
       "id": "ChIJg0V3MpmjfDURwSP_uQOyG1I",
       "types": [
         "wine_bar",
@@ -37818,7 +37872,7 @@ export const restaurantData = [
         "wheelchairAccessibleParking": true,
         "wheelchairAccessibleEntrance": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Sophisticated wine bar tucked away on the second floor of Hannam-dong, where a chef-driven creative menu pairs with an exceptional wine selection in an intimate, upscale setting.",
           "languageCode": "en-US"
@@ -38038,7 +38092,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJr-JV_4ijfDURuLq3C9Nh8l4",
-    "google_data": {"name": "places/ChIJr-JV_4ijfDURuLq3C9Nh8l4",
+    "google_data": {
+      "name": "places/ChIJr-JV_4ijfDURuLq3C9Nh8l4",
       "id": "ChIJr-JV_4ijfDURuLq3C9Nh8l4",
       "types": [
         "korean_restaurant",
@@ -38099,7 +38154,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Chef-driven Korean restaurant in upscale Gangnam serving elevated comfort food classics with a sophisticated modern twist in a casually refined atmosphere.",
           "languageCode": "en-US"
@@ -38318,7 +38373,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ5VQL98OifDURwTQzGPQsht4",
-    "google_data": {"name": "places/ChIJ5VQL98OifDURwTQzGPQsht4",
+    "google_data": {
+      "name": "places/ChIJ5VQL98OifDURwTQzGPQsht4",
       "id": "ChIJ5VQL98OifDURwTQzGPQsht4",
       "types": [
         "italian_restaurant",
@@ -38379,7 +38435,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This hidden gem in Jongno serves exceptional Italian cuisine with creative twists in an intimate, rustic setting that feels like discovering a secret trattoria tucked away in Seoul's historic district.",
           "languageCode": "en-US"
@@ -38596,7 +38652,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJk5DRDD2jfDURUA4aAk0Frx0",
-    "google_data": {"name": "places/ChIJk5DRDD2jfDURUA4aAk0Frx0",
+    "google_data": {
+      "name": "places/ChIJk5DRDD2jfDURUA4aAk0Frx0",
       "id": "ChIJk5DRDD2jfDURUA4aAk0Frx0",
       "types": [
         "korean_restaurant",
@@ -38652,7 +38709,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": true,
         "wheelchairAccessibleSeating": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Chef-driven Korean fine dining restaurant in Jongno District that elevates traditional cuisine with modern sophistication in an intimate, upscale setting with scenic views.",
           "languageCode": "en-US"
@@ -38871,7 +38928,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJu-553-2jfDURheum3d_mODo",
-    "google_data": {"name": "places/ChIJu-553-2jfDURheum3d_mODo",
+    "google_data": {
+      "name": "places/ChIJu-553-2jfDURheum3d_mODo",
       "id": "ChIJu-553-2jfDURheum3d_mODo",
       "types": [
         "italian_restaurant",
@@ -38936,7 +38994,7 @@ export const restaurantData = [
           "id": "ChIJG7AjW7-8fDURlhZ0UNqQkZ0"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Upscale Italian comfort food meets Korean innovation at this spacious, trendy Yongsan hotspot where creative menu twists and lively atmosphere make every meal an experience.",
           "languageCode": "en-US"
@@ -39149,7 +39207,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJd7ccRpmlfDUR0P98ZR37dLg",
-    "google_data": {"name": "places/ChIJd7ccRpmlfDUR0P98ZR37dLg",
+    "google_data": {
+      "name": "places/ChIJd7ccRpmlfDUR0P98ZR37dLg",
       "id": "ChIJd7ccRpmlfDUR0P98ZR37dLg",
       "types": [
         "dessert_shop",
@@ -39191,7 +39250,7 @@ export const restaurantData = [
       "accessibilityOptions": {
         "wheelchairAccessibleParking": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Sophisticated Korean dessert boutique in Songpa District where traditional meets trendy, serving Instagram-worthy sweets in an intimate, cozy setting with outdoor seating.",
           "languageCode": "en-US"
@@ -39410,7 +39469,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJcUmWL6ulfDURH0V5IHuH1tE",
-    "google_data": {"name": "places/ChIJcUmWL6ulfDURH0V5IHuH1tE",
+    "google_data": {
+      "name": "places/ChIJcUmWL6ulfDURH0V5IHuH1tE",
       "id": "ChIJcUmWL6ulfDURH0V5IHuH1tE",
       "types": [
         "bakery",
@@ -39448,7 +39508,7 @@ export const restaurantData = [
       "accessibilityOptions": {
         "wheelchairAccessibleParking": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This cozy Seoul bakery serves up Instagram-worthy pastries and creative treats in a quirky, rustic setting that's become a trendy neighborhood gem for affordable artisanal baked goods.",
           "languageCode": "en-US"
@@ -39957,7 +40017,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJCzplpp-LGGARsszLPxhnHn4",
-    "google_data": {"name": "places/ChIJCzplpp-LGGARsszLPxhnHn4",
+    "google_data": {
+      "name": "places/ChIJCzplpp-LGGARsszLPxhnHn4",
       "id": "ChIJCzplpp-LGGARsszLPxhnHn4",
       "types": [
         "bar",
@@ -40010,7 +40071,7 @@ export const restaurantData = [
         "wheelchairAccessibleParking": false,
         "wheelchairAccessibleEntrance": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Intimate craft cocktail bar in Azabujūban where a skilled bartender creates sophisticated, seasonally-driven drinks in an upscale, quiet setting perfect for discerning cocktail enthusiasts.",
           "languageCode": "en-US"
@@ -40232,7 +40293,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJg5dFuqGLGGAR3GhOVSXuTmA",
-    "google_data": {"name": "places/ChIJg5dFuqGLGGAR3GhOVSXuTmA",
+    "google_data": {
+      "name": "places/ChIJg5dFuqGLGGAR3GhOVSXuTmA",
       "id": "ChIJg5dFuqGLGGAR3GhOVSXuTmA",
       "types": [
         "pizza_restaurant",
@@ -40291,7 +40353,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem in Azabu-Juban serving exceptional Margherita, Marinara, and creative tuna pizzas with fresh ingredients and perfectly crafted dough in an intimate, sophisticated setting.",
           "languageCode": "en-US"
@@ -40528,7 +40590,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJxU96_-SLGGAReViUYig7jp4",
-    "google_data": {"name": "places/ChIJxU96_-SLGGAReViUYig7jp4",
+    "google_data": {
+      "name": "places/ChIJxU96_-SLGGAReViUYig7jp4",
       "id": "ChIJxU96_-SLGGAReViUYig7jp4",
       "types": [
         "japanese_restaurant",
@@ -41901,7 +41964,7 @@ export const restaurantData = [
           "id": "ChIJO7sD_-SLGGARnSO6n25_AFs"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Sophisticated Ginza unagi specialist perfecting the art of hitsumabushi with expertly grilled eel and exceptional value in a cozy upscale setting.",
           "languageCode": "en-US"
@@ -42132,7 +42195,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJd3k3CTeNGGARmUPOr0Ck8ss",
-    "google_data": {"name": "places/ChIJd3k3CTeNGGARmUPOr0Ck8ss",
+    "google_data": {
+      "name": "places/ChIJd3k3CTeNGGARmUPOr0Ck8ss",
       "id": "ChIJd3k3CTeNGGARmUPOr0Ck8ss",
       "types": [
         "japanese_restaurant",
@@ -42203,7 +42267,7 @@ export const restaurantData = [
           "id": "ChIJkbhW_piMGGARJQpGEvsKbys"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This hidden gem in Shibuya serves exceptional tonkatsu with impossibly light and crispy batter, offering generous portions of perfectly executed pork and chicken cutlets alongside premium rice and multiple dipping options in an intimate, traditional setting.",
           "languageCode": "en-US"
@@ -42757,7 +42821,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJsxYsMeKLGGARH9DU1gFlvUc",
-    "google_data": {"name": "places/ChIJsxYsMeKLGGARH9DU1gFlvUc",
+    "google_data": {
+      "name": "places/ChIJsxYsMeKLGGARH9DU1gFlvUc",
       "id": "ChIJsxYsMeKLGGARH9DU1gFlvUc",
       "types": [
         "japanese_restaurant",
@@ -42820,7 +42885,7 @@ export const restaurantData = [
         "wheelchairAccessibleRestroom": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden basement gem in Kyōboshi serving exceptional Japanese comfort curry with generous portions of grilled cheese beef and seafood varieties in a cozy, retro atmosphere.",
           "languageCode": "en-US"
@@ -43063,7 +43128,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJXxPFm_OLGGAREL8p4Zd_UQE",
-    "google_data": {"name": "places/ChIJXxPFm_OLGGAREL8p4Zd_UQE",
+    "google_data": {
+      "name": "places/ChIJXxPFm_OLGGAREL8p4Zd_UQE",
       "id": "ChIJXxPFm_OLGGAREL8p4Zd_UQE",
       "types": [
         "italian_restaurant",
@@ -43124,7 +43190,7 @@ export const restaurantData = [
         "wheelchairAccessibleParking": false,
         "wheelchairAccessibleEntrance": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem Italian restaurant in Nakameguro serving exceptional creative cuisine with intimate ambiance and memorable birthday cake presentations that make every occasion special.",
           "languageCode": "en-US"
@@ -43661,7 +43727,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJaRfyoEzzGGARawR4CE1H1gE",
-    "google_data": {"name": "places/ChIJaRfyoEzzGGARawR4CE1H1gE",
+    "google_data": {
+      "name": "places/ChIJaRfyoEzzGGARawR4CE1H1gE",
       "id": "ChIJaRfyoEzzGGARawR4CE1H1gE",
       "types": [
         "cafe",
@@ -43868,7 +43935,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem cafe in Shibuya's quiet Tomigaya neighborhood serving exceptional comfort food including their famously hard-to-reserve Napoleon pie alongside fluffy pancakes and pasta in a cozy, rustic setting.",
           "languageCode": "en-US"
@@ -44114,7 +44181,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJb5ry80r5GGARE1nx4OKN5kc",
-    "google_data": {"name": "places/ChIJb5ry80r5GGARE1nx4OKN5kc",
+    "google_data": {
+      "name": "places/ChIJb5ry80r5GGARE1nx4OKN5kc",
       "id": "ChIJb5ry80r5GGARE1nx4OKN5kc",
       "types": [
         "italian_restaurant",
@@ -44182,7 +44250,7 @@ export const restaurantData = [
           "id": "ChIJ5cgt5Er5GGARjoBn8WU9Lbw"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Chef-driven Italian hideaway tucked away on the second floor of Machida, where exceptional wine-focused cuisine and intimate romantic atmosphere make it a sophisticated splurge-worthy escape.",
           "languageCode": "en-US"
@@ -44708,7 +44776,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ72OI0nqLGGARy5_3z1EihGk",
-    "google_data": {"name": "places/ChIJ72OI0nqLGGARy5_3z1EihGk",
+    "google_data": {
+      "name": "places/ChIJ72OI0nqLGGARy5_3z1EihGk",
       "id": "ChIJ72OI0nqLGGARy5_3z1EihGk",
       "types": [
         "japanese_restaurant",
@@ -45341,7 +45410,7 @@ export const restaurantData = [
         "wheelchairAccessibleRestroom": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This cozy, traditional tonkatsu hidden gem in Nishiazabu serves exceptionally juicy pork cutlets with impossibly light, crispy coating, featuring premium cuts from different Japanese prefectures alongside their famous delicious tomatoes.",
           "languageCode": "en-US"
@@ -45573,7 +45642,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJnWSw_piMGGARGeWXT7gDpvQ",
-    "google_data": {"name": "places/ChIJnWSw_piMGGARGeWXT7gDpvQ",
+    "google_data": {
+      "name": "places/ChIJnWSw_piMGGARGeWXT7gDpvQ",
       "id": "ChIJnWSw_piMGGARGeWXT7gDpvQ",
       "types": [
         "japanese_restaurant",
@@ -45642,7 +45712,7 @@ export const restaurantData = [
           "id": "ChIJkbhW_piMGGARJQpGEvsKbys"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Chef-driven yakitori counter in Shibuya's upscale Jingūmae district where exceptional grilled skewers meet sophisticated wine pairings in an intimate, contemporary setting.",
           "languageCode": "en-US"
@@ -45871,7 +45941,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJkdPHpPyLGGARSrdppLJwIPU",
-    "google_data": {"name": "places/ChIJkdPHpPyLGGARSrdppLJwIPU",
+    "google_data": {
+      "name": "places/ChIJkdPHpPyLGGARSrdppLJwIPU",
       "id": "ChIJkdPHpPyLGGARSrdppLJwIPU",
       "types": [
         "japanese_restaurant",
@@ -45933,7 +46004,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Upscale Ginza tonkatsu temple where diners embark on a multi-course journey through expertly fried premium pork cuts in an intimate, chef-driven setting.",
           "languageCode": "en-US"
@@ -46411,7 +46482,7 @@ export const restaurantData = [
       "casual",
       "traditional",
       "rustic",
-      "no-frills"
+      "no_frills"
     ],
     "occasion_tags": [
       "casual_meetup",
@@ -46464,7 +46535,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJzXI8cA7zGGAR5YTQJ-CR42M",
-    "google_data": {"name": "places/ChIJzXI8cA7zGGAR5YTQJ-CR42M",
+    "google_data": {
+      "name": "places/ChIJzXI8cA7zGGAR5YTQJ-CR42M",
       "id": "ChIJzXI8cA7zGGAR5YTQJ-CR42M",
       "types": [
         "cafe",
@@ -46516,7 +46588,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Cozy dog-friendly cafe in Meguro serving Instagram-worthy fluffy pancakes and comfort pasta in a stylish, quiet atmosphere perfect for leisurely afternoons.",
           "languageCode": "en-US"
@@ -47365,7 +47437,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ6cRhCY6kfDURCAvdo70E1Xs",
-    "google_data": {"name": "places/ChIJ6cRhCY6kfDURCAvdo70E1Xs",
+    "google_data": {
+      "name": "places/ChIJ6cRhCY6kfDURCAvdo70E1Xs",
       "id": "ChIJ6cRhCY6kfDURCAvdo70E1Xs",
       "types": [
         "cafe",
@@ -47423,7 +47496,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This hidden gem in trendy Seongsu serves exceptional coffee and craft cocktails in a rustic-meets-hip setting that's as Instagram-worthy as it is cozy.",
           "languageCode": "en-US"
@@ -47647,7 +47720,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJqSBfhoyjfDURuSA6M-Piq4k",
-    "google_data": {"name": "places/ChIJqSBfhoyjfDURuSA6M-Piq4k",
+    "google_data": {
+      "name": "places/ChIJqSBfhoyjfDURuSA6M-Piq4k",
       "id": "ChIJqSBfhoyjfDURuSA6M-Piq4k",
       "types": [
         "cafe",
@@ -47703,7 +47777,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "A quirky retro cafe in trendy Gangnam serving exceptional coffee and craft cocktails in a cozy, hidden gem atmosphere that perfectly balances hip vibes with quiet charm.",
           "languageCode": "en-US"
@@ -52908,7 +52982,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJE1F2oPGGHWAR_3n1CDYg3Hs",
-    "google_data": {"name": "places/ChIJE1F2oPGGHWAR_3n1CDYg3Hs",
+    "google_data": {
+      "name": "places/ChIJE1F2oPGGHWAR_3n1CDYg3Hs",
       "id": "ChIJE1F2oPGGHWAR_3n1CDYg3Hs",
       "types": [
         "japanese_restaurant",
@@ -52971,7 +53046,7 @@ export const restaurantData = [
         "wheelchairAccessibleRestroom": true,
         "wheelchairAccessibleSeating": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Upscale tofu kaiseki restaurant set in a serene Japanese garden with Tokyo Tower views, elevating humble tofu into an artful fine dining experience in tranquil private rooms.",
           "languageCode": "en-US"
@@ -53502,7 +53577,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJQ66dYuSLGGARRSAZrBC1c6I",
-    "google_data": {"name": "places/ChIJQ66dYuSLGGARRSAZrBC1c6I",
+    "google_data": {
+      "name": "places/ChIJQ66dYuSLGGARRSAZrBC1c6I",
       "id": "ChIJQ66dYuSLGGARRSAZrBC1c6I",
       "types": [
         "sushi_restaurant",
@@ -53563,7 +53639,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Chef-driven sushi temple in Ginza's heart where traditional omakase meets creative artistry in an intimate, sophisticated setting that justifies every yen.",
           "languageCode": "en-US"
@@ -55150,7 +55226,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJPRnk_6SlfDUR7TDWsjVYpxs",
-    "google_data": {"name": "places/ChIJPRnk_6SlfDUR7TDWsjVYpxs",
+    "google_data": {
+      "name": "places/ChIJPRnk_6SlfDUR7TDWsjVYpxs",
       "id": "ChIJPRnk_6SlfDUR7TDWsjVYpxs",
       "types": [
         "cafe",
@@ -55196,7 +55273,7 @@ export const restaurantData = [
         "acceptsCashOnly": false,
         "acceptsNfc": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem cafe in Gangnam's trendy backstreets serving exceptional coffee and craft cocktails in a cozy, sophisticated setting that's worth the splurge.",
           "languageCode": "en-US"
@@ -55417,7 +55494,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ0XE9lXGLGGARRjXJnbOmok8",
-    "google_data": {"name": "places/ChIJ0XE9lXGLGGARRjXJnbOmok8",
+    "google_data": {
+      "name": "places/ChIJ0XE9lXGLGGARRjXJnbOmok8",
       "id": "ChIJ0XE9lXGLGGARRjXJnbOmok8",
       "types": [
         "cafe",
@@ -56805,7 +56883,7 @@ export const restaurantData = [
           "id": "ChIJkUY9lXGLGGARYMY-e-TvB7k"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem in Nishiazabu serving exceptional comfort food like their famous crab cream croquettes and indulgent \"Dream Plate\" featuring hamburger, fried shrimp, and omelette rice all smothered in rich demi-glace sauce.",
           "languageCode": "en-US"
@@ -57048,7 +57126,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJMR2UjG-LGGARanVMekIO_qo",
-    "google_data": {"name": "places/ChIJMR2UjG-LGGARanVMekIO_qo",
+    "google_data": {
+      "name": "places/ChIJMR2UjG-LGGARanVMekIO_qo",
       "id": "ChIJMR2UjG-LGGARanVMekIO_qo",
       "types": [
         "japanese_restaurant",
@@ -57103,7 +57182,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden basement gem in Nishiazabu serving nostalgic Japanese comfort food like perfectly crafted omelette rice and minced pork cutlet in a cozy retro atmosphere that feels like stepping into old Tokyo.",
           "languageCode": "en-US"
@@ -57342,7 +57421,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ3SRJq3GLGGARmGHC8gGDBbk",
-    "google_data": {"name": "places/ChIJ3SRJq3GLGGARmGHC8gGDBbk",
+    "google_data": {
+      "name": "places/ChIJ3SRJq3GLGGARmGHC8gGDBbk",
       "id": "ChIJ3SRJq3GLGGARmGHC8gGDBbk",
       "types": [
         "coffee_shop",
@@ -57410,7 +57490,7 @@ export const restaurantData = [
           "id": "ChIJxz9pDYKLGGARAQ6ZOGFSZjk"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Sophisticated coffee sanctuary in upscale Nishi-Azabu serving exceptional specialty coffee alongside savory French galettes and quiches in a spacious, modern setting.",
           "languageCode": "en-US"
@@ -57655,7 +57735,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJgzFvS2mLGGAREQ6IpGsjCoM",
-    "google_data": {"name": "places/ChIJgzFvS2mLGGAREQ6IpGsjCoM",
+    "google_data": {
+      "name": "places/ChIJgzFvS2mLGGAREQ6IpGsjCoM",
       "id": "ChIJgzFvS2mLGGAREQ6IpGsjCoM",
       "types": [
         "coffee_shop",
@@ -57714,7 +57795,7 @@ export const restaurantData = [
           "id": "ChIJJ9xMHZuLGGAR2h2TGTKRuJE"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Modern coffee shop in Shibuya's bustling Scramble Square serving exceptional specialty coffee with a unique concept that draws trendy crowds despite premium pricing.",
           "languageCode": "en-US"
@@ -57927,7 +58008,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJRaBmLUCLGGARbU1gw-zbId0",
-    "google_data": {"name": "places/ChIJRaBmLUCLGGARbU1gw-zbId0",
+    "google_data": {
+      "name": "places/ChIJRaBmLUCLGGARbU1gw-zbId0",
       "id": "ChIJRaBmLUCLGGARbU1gw-zbId0",
       "types": [
         "coffee_shop",
@@ -58166,7 +58248,7 @@ export const restaurantData = [
           "id": "ChIJAQB8LUCLGGARun2izsB2HpY"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem coffee shop in Ebisu serving exceptional matcha, hojicha, and honey lattes with velvety foam in an intimate, cozy setting where friendly baristas offer generous samples of their aromatic specialty brews.",
           "languageCode": "en-US"
@@ -58719,7 +58801,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJAQDAAoGMGGARH1SpymoV2Jo",
-    "google_data": {"name": "places/ChIJAQDAAoGMGGARH1SpymoV2Jo",
+    "google_data": {
+      "name": "places/ChIJAQDAAoGMGGARH1SpymoV2Jo",
       "id": "ChIJAQDAAoGMGGARH1SpymoV2Jo",
       "types": [
         "coffee_shop",
@@ -58913,7 +58996,7 @@ export const restaurantData = [
           "id": "ChIJJX8jHYGMGGARu_X_2Fveldc"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "A sophisticated yet cozy coffee shop perched on the second floor of Akasaka offering Instagram-worthy scenic views and comfort food that perfectly complements Tokyo's upscale district vibe.",
           "languageCode": "en-US"
@@ -59443,7 +59526,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJjVDsU3yLGGARW83FhjoknXU",
-    "google_data": {"name": "places/ChIJjVDsU3yLGGARW83FhjoknXU",
+    "google_data": {
+      "name": "places/ChIJjVDsU3yLGGARW83FhjoknXU",
       "id": "ChIJjVDsU3yLGGARW83FhjoknXU",
       "types": [
         "cafe",
@@ -59507,7 +59591,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": true,
         "wheelchairAccessibleSeating": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "A sophisticated Aoyama cafe renowned for its fluffy soufflé hotcakes and classic cream puffs, served in an intimate, traditional setting with unlimited drink refills.",
           "languageCode": "en-US"
@@ -59753,7 +59837,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJvaN4mliLGGAR6t4CkHY0hCw",
-    "google_data": {"name": "places/ChIJvaN4mliLGGAR6t4CkHY0hCw",
+    "google_data": {
+      "name": "places/ChIJvaN4mliLGGAR6t4CkHY0hCw",
       "id": "ChIJvaN4mliLGGAR6t4CkHY0hCw",
       "types": [
         "dessert_restaurant",
@@ -59823,7 +59908,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem dessert restaurant in Daikanyama specializing in rich vanilla cream puffs and perfectly crispy financiers served in a charming, intimate setting.",
           "languageCode": "en-US"
@@ -60066,7 +60151,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJIUflsoxZwokRjZOVMKRhjWc",
-    "google_data": {"name": "places/ChIJIUflsoxZwokRjZOVMKRhjWc",
+    "google_data": {
+      "name": "places/ChIJIUflsoxZwokRjZOVMKRhjWc",
       "id": "ChIJIUflsoxZwokRjZOVMKRhjWc",
       "types": [
         "dessert_shop",
@@ -60124,7 +60210,7 @@ export const restaurantData = [
         "wheelchairAccessibleRestroom": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Cozy East Village dessert haven specializing in unique Basque cheesecake and creative Japanese-inspired treats like black sesame lava cream crepe rolls.",
           "languageCode": "en-US"
@@ -60652,7 +60738,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJZ4kfYPtt5kcRfswf6914goM",
-    "google_data": {"name": "places/ChIJZ4kfYPtt5kcRfswf6914goM",
+    "google_data": {
+      "name": "places/ChIJZ4kfYPtt5kcRfswf6914goM",
       "id": "ChIJZ4kfYPtt5kcRfswf6914goM",
       "types": [
         "bakery",
@@ -60705,7 +60792,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": true,
         "wheelchairAccessibleRestroom": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Modern Parisian boulangerie in the trendy 11th arrondissement serving exceptional artisanal breads and healthy baked goods with cozy indoor seating and charming outdoor tables.",
           "languageCode": "en-US"
@@ -62973,7 +63060,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJD7OFbPJx5kcRvSE6GXkPbM4",
-    "google_data": {"name": "places/ChIJD7OFbPJx5kcRvSE6GXkPbM4",
+    "google_data": {
+      "name": "places/ChIJD7OFbPJx5kcRvSE6GXkPbM4",
       "id": "ChIJD7OFbPJx5kcRvSE6GXkPbM4",
       "types": [
         "restaurant",
@@ -63032,7 +63120,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": true,
         "wheelchairAccessibleSeating": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "A charming hidden gem in the 15th arrondissement serving exceptional comfort food with craft cocktails on a scenic terrace that's both cozy and Instagram-worthy.",
           "languageCode": "en-US"
@@ -64426,7 +64514,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJF2r0D-hx5kcReqneTycZGEE",
-    "google_data": {"name": "places/ChIJF2r0D-hx5kcReqneTycZGEE",
+    "google_data": {
+      "name": "places/ChIJF2r0D-hx5kcReqneTycZGEE",
       "id": "ChIJF2r0D-hx5kcReqneTycZGEE",
       "types": [
         "italian_restaurant",
@@ -64481,7 +64570,7 @@ export const restaurantData = [
       "accessibilityOptions": {
         "wheelchairAccessibleEntrance": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Trendy yet cozy Italian comfort food haven in the heart of the Latin Quarter, serving up Instagram-worthy dishes that deliver exceptional flavors without breaking the bank.",
           "languageCode": "en-US"
@@ -67354,7 +67443,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJUUTr285x5kcR-hIAm6NjUHY",
-    "google_data": {"name": "places/ChIJUUTr285x5kcR-hIAm6NjUHY",
+    "google_data": {
+      "name": "places/ChIJUUTr285x5kcR-hIAm6NjUHY",
       "id": "ChIJUUTr285x5kcR-hIAm6NjUHY",
       "types": [
         "restaurant",
@@ -67420,7 +67510,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": true,
         "wheelchairAccessibleSeating": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Historic Montparnasse brasserie where Parisian sophistication meets exceptional wine-focused cuisine in an intimate setting that's worth every euro of its splurge-worthy price tag.",
           "languageCode": "en-US"
@@ -68760,7 +68850,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJQ5QB9j5u5kcRy89n_OvFtJ4",
-    "google_data": {"name": "places/ChIJQ5QB9j5u5kcRy89n_OvFtJ4",
+    "google_data": {
+      "name": "places/ChIJQ5QB9j5u5kcRy89n_OvFtJ4",
       "id": "ChIJQ5QB9j5u5kcRy89n_OvFtJ4",
       "types": [
         "restaurant",
@@ -68823,7 +68914,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": true,
         "wheelchairAccessibleSeating": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem in the 9th arrondissement serving elevated French comfort food and craft cocktails in an intimate, cozy setting that feels like a well-kept Parisian secret.",
           "languageCode": "en-US"
@@ -70222,7 +70313,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ926DHCJu5kcR5LTgZLnzNnM",
-    "google_data": {"name": "places/ChIJ926DHCJu5kcR5LTgZLnzNnM",
+    "google_data": {
+      "name": "places/ChIJ926DHCJu5kcR5LTgZLnzNnM",
       "id": "ChIJ926DHCJu5kcR5LTgZLnzNnM",
       "types": [
         "french_restaurant",
@@ -70285,7 +70377,7 @@ export const restaurantData = [
         "wheelchairAccessibleParking": false,
         "wheelchairAccessibleSeating": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This cozy historic gem in the heart of Paris serves exceptional French comfort food in a rustic, intimate setting that feels like stepping into a traditional Parisian bistro from another era.",
           "languageCode": "en-US"
@@ -70513,7 +70605,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJHQXzdhhu5kcR44cVFMAi95c",
-    "google_data": {"name": "places/ChIJHQXzdhhu5kcR44cVFMAi95c",
+    "google_data": {
+      "name": "places/ChIJHQXzdhhu5kcR44cVFMAi95c",
       "id": "ChIJHQXzdhhu5kcR44cVFMAi95c",
       "types": [
         "restaurant",
@@ -70975,7 +71068,7 @@ export const restaurantData = [
         "wheelchairAccessibleParking": false,
         "wheelchairAccessibleEntrance": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Traditional French gastronomy meets intimate Parisian charm at this chef-driven gem in Montmartre, where sophisticated comfort food and cozy upscale ambiance deliver exceptional value in the heart of the 1st arrondissement.",
           "languageCode": "en-US"
@@ -71786,7 +71879,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJn2wJz9lv5kcRlZLbCAIOPRg",
-    "google_data": {"name": "places/ChIJn2wJz9lv5kcRlZLbCAIOPRg",
+    "google_data": {
+      "name": "places/ChIJn2wJz9lv5kcRlZLbCAIOPRg",
       "id": "ChIJn2wJz9lv5kcRlZLbCAIOPRg",
       "types": [
         "cafe",
@@ -71849,7 +71943,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": true,
         "wheelchairAccessibleSeating": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Trendy Parisian bistro near the Eiffel Tower serving elevated comfort food and craft cocktails with scenic outdoor seating perfect for Instagram moments.",
           "languageCode": "en-US"
@@ -72081,7 +72175,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ6ZOtmylu5kcRzJA4aL1ZYLI",
-    "google_data": {"name": "places/ChIJ6ZOtmylu5kcRzJA4aL1ZYLI",
+    "google_data": {
+      "name": "places/ChIJ6ZOtmylu5kcRzJA4aL1ZYLI",
       "id": "ChIJ6ZOtmylu5kcRzJA4aL1ZYLI",
       "types": [
         "french_restaurant",
@@ -72150,7 +72245,7 @@ export const restaurantData = [
           "id": "ChIJOZUxSyhu5kcRpcQsoY4zXmI"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This chef-driven gem in the 7th arrondissement serves exceptional comfort food in an intimate, sophisticated setting that feels like dining in a cozy Parisian antique shop.",
           "languageCode": "en-US"
@@ -72379,7 +72474,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJyRKwrF1u5kcRifa6mtPANiY",
-    "google_data": {"name": "places/ChIJyRKwrF1u5kcRifa6mtPANiY",
+    "google_data": {
+      "name": "places/ChIJyRKwrF1u5kcRifa6mtPANiY",
       "id": "ChIJyRKwrF1u5kcRifa6mtPANiY",
       "types": [
         "restaurant",
@@ -72445,7 +72541,7 @@ export const restaurantData = [
         "wheelchairAccessibleRestroom": false,
         "wheelchairAccessibleSeating": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "A cozy traditional French bistro nestled in Montmartre's charming streets, serving exceptional comfort food with intimate indoor seating and a delightful outdoor terrace perfect for soaking up Parisian neighborhood charm.",
           "languageCode": "en-US"
@@ -73225,7 +73321,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ1ROhrt5x5kcRTCgY8BeuTeQ",
-    "google_data": {"name": "places/ChIJ1ROhrt5x5kcRTCgY8BeuTeQ",
+    "google_data": {
+      "name": "places/ChIJ1ROhrt5x5kcRTCgY8BeuTeQ",
       "id": "ChIJ1ROhrt5x5kcRTCgY8BeuTeQ",
       "types": [
         "french_restaurant",
@@ -73298,7 +73395,7 @@ export const restaurantData = [
         "wheelchairAccessibleRestroom": true,
         "wheelchairAccessibleSeating": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Trendy Parisian crêperie in the heart of Saint-Germain serving Instagram-worthy sweet and savory Breton galettes with a modern twist in a cozy, casual setting.",
           "languageCode": "en-US"
@@ -73523,7 +73620,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJly1xVgFu5kcRoruGNAxdAyY",
-    "google_data": {"name": "places/ChIJly1xVgFu5kcRoruGNAxdAyY",
+    "google_data": {
+      "name": "places/ChIJly1xVgFu5kcRoruGNAxdAyY",
       "id": "ChIJly1xVgFu5kcRoruGNAxdAyY",
       "types": [
         "cafe",
@@ -73590,7 +73688,7 @@ export const restaurantData = [
         "wheelchairAccessibleParking": false,
         "wheelchairAccessibleEntrance": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This cozy Marais crêperie elevates traditional Breton galettes and sweet crêpes with exceptional ingredients and warm, authentic French charm that's worth every euro.",
           "languageCode": "en-US"
@@ -77266,7 +77364,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJZzjByq6jfDURXyNnbkH2JZA",
-    "google_data": {"name": "places/ChIJZzjByq6jfDURXyNnbkH2JZA",
+    "google_data": {
+      "name": "places/ChIJZzjByq6jfDURXyNnbkH2JZA",
       "id": "ChIJZzjByq6jfDURXyNnbkH2JZA",
       "types": [
         "japanese_restaurant",
@@ -77324,7 +77423,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": true,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Chef-driven Japanese katsu specialist in trendy Gangnam serving elevated comfort food classics in a lively, modern atmosphere that's earned Cynthia's Pick recognition.",
           "languageCode": "en-US"
@@ -77544,7 +77643,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJFSe90eejfDURnI3qwtRtTF8",
-    "google_data": {"name": "places/ChIJFSe90eejfDURnI3qwtRtTF8",
+    "google_data": {
+      "name": "places/ChIJFSe90eejfDURnI3qwtRtTF8",
       "id": "ChIJFSe90eejfDURnI3qwtRtTF8",
       "types": [
         "cafe",
@@ -77600,7 +77700,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "A sophisticated Korean bakery housed in a historic venue that blends traditional charm with trendy Instagram-worthy pastries and exceptional coffee in cozy Jongno District.",
           "languageCode": "en-US"
@@ -78670,7 +78770,7 @@ export const restaurantData = [
       "casual",
       "traditional",
       "intimate",
-      "down-to-earth"
+      "down_to_earth"
     ],
     "occasion_tags": [
       "casual_meetup",
@@ -82007,7 +82107,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJZxenh3ekfDURAUw8S-zrEVw",
-    "google_data": {"name": "places/ChIJZxenh3ekfDURAUw8S-zrEVw",
+    "google_data": {
+      "name": "places/ChIJZxenh3ekfDURAUw8S-zrEVw",
       "id": "ChIJZxenh3ekfDURAUw8S-zrEVw",
       "types": [
         "italian_restaurant",
@@ -82061,7 +82162,7 @@ export const restaurantData = [
       "accessibilityOptions": {
         "wheelchairAccessibleParking": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Trendy Italian terrace restaurant in Gangnam's upscale Cheongdam district offering creative wine-focused cuisine with scenic outdoor seating and modern ambiance.",
           "languageCode": "en-US"
@@ -82274,7 +82375,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJGy3O2dqkfDURXBQP_5OVtqM",
-    "google_data": {"name": "places/ChIJGy3O2dqkfDURXBQP_5OVtqM",
+    "google_data": {
+      "name": "places/ChIJGy3O2dqkfDURXBQP_5OVtqM",
       "id": "ChIJGy3O2dqkfDURXBQP_5OVtqM",
       "types": [
         "restaurant",
@@ -82332,7 +82434,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Trendy Korean restaurant in Gwangjin District serving exceptional food with a unique concept that draws crowds despite premium pricing.",
           "languageCode": "en-US"
@@ -82546,7 +82648,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJrRhDycujfDURGQzRahFxTdM",
-    "google_data": {"name": "places/ChIJrRhDycujfDURGQzRahFxTdM",
+    "google_data": {
+      "name": "places/ChIJrRhDycujfDURGQzRahFxTdM",
       "id": "ChIJrRhDycujfDURGQzRahFxTdM",
       "types": [
         "cafe",
@@ -82608,7 +82711,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem cafe tucked away in Seoul's historic Jongno District, serving Instagram-worthy comfort food in an intimate, modern setting that perfectly blends cozy vibes with trendy aesthetics.",
           "languageCode": "en-US"
@@ -82837,7 +82940,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJs-nHsd2ifDURZy4MwV8CmR8",
-    "google_data": {"name": "places/ChIJs-nHsd2ifDURZy4MwV8CmR8",
+    "google_data": {
+      "name": "places/ChIJs-nHsd2ifDURZy4MwV8CmR8",
       "id": "ChIJs-nHsd2ifDURZy4MwV8CmR8",
       "types": [
         "coffee_shop",
@@ -82899,7 +83003,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Korean bakery specializing in Instagram-worthy soufflé pancakes served in a cozy, quirky setting that blends traditional charm with trendy Seoul vibes.",
           "languageCode": "en-US"
@@ -83123,7 +83227,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJO_3Kk3WjfDURTtBJcuOoIrE",
-    "google_data": {"name": "places/ChIJO_3Kk3WjfDURTtBJcuOoIrE",
+    "google_data": {
+      "name": "places/ChIJO_3Kk3WjfDURTtBJcuOoIrE",
       "id": "ChIJO_3Kk3WjfDURTtBJcuOoIrE",
       "types": [
         "japanese_restaurant",
@@ -83181,7 +83286,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Chef-driven Japanese sanctuary tucked in Seoul's historic Jongno District, where traditional techniques meet sophisticated comfort food in an intimate, upscale setting perfect for special occasions.",
           "languageCode": "en-US"
@@ -83407,7 +83512,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJ8fZR412hfDURKAhQa5LJmFM",
-    "google_data": {"name": "places/ChIJ8fZR412hfDURKAhQa5LJmFM",
+    "google_data": {
+      "name": "places/ChIJ8fZR412hfDURKAhQa5LJmFM",
       "id": "ChIJ8fZR412hfDURKAhQa5LJmFM",
       "types": [
         "cafe",
@@ -83460,7 +83566,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This quirky Gwanak-gu cafe charms visitors with its intimate, Instagram-worthy atmosphere and creative menu that perfectly balances cozy comfort with playful, affordable surprises.",
           "languageCode": "en-US"
@@ -83680,7 +83786,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJCR_54WOLGGARFQOIO7lA9I0",
-    "google_data": {"name": "places/ChIJCR_54WOLGGARFQOIO7lA9I0",
+    "google_data": {
+      "name": "places/ChIJCR_54WOLGGARFQOIO7lA9I0",
       "id": "ChIJCR_54WOLGGARFQOIO7lA9I0",
       "types": [
         "japanese_restaurant",
@@ -83739,7 +83846,7 @@ export const restaurantData = [
           "id": "ChIJAQCwWGGLGGAR8zxe5l-CFeQ"
         }
       ],
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem in Minato City serving exceptional tempura bowls with generous portions of light, crispy vegetables and seafood in a cozy, traditional Japanese atmosphere.",
           "languageCode": "en-US"
@@ -84431,7 +84538,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJB3JL_3ikfDURPqq9FrFswhg",
-    "google_data": {"name": "places/ChIJB3JL_3ikfDURPqq9FrFswhg",
+    "google_data": {
+      "name": "places/ChIJB3JL_3ikfDURPqq9FrFswhg",
       "id": "ChIJB3JL_3ikfDURPqq9FrFswhg",
       "types": [
         "cafe",
@@ -84482,7 +84590,7 @@ export const restaurantData = [
         "acceptsCashOnly": false,
         "acceptsNfc": true
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Milan's iconic fashion-meets-dining concept lands in Gangnam with an upscale café serving Instagram-worthy dishes in a sophisticated, gallery-like setting where high fashion and exceptional food collide.",
           "languageCode": "en-US"
@@ -85001,7 +85109,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJwQi99lyZfDURcIaIcPpEq_Y",
-    "google_data": {"name": "places/ChIJwQi99lyZfDURcIaIcPpEq_Y",
+    "google_data": {
+      "name": "places/ChIJwQi99lyZfDURcIaIcPpEq_Y",
       "id": "ChIJwQi99lyZfDURcIaIcPpEq_Y",
       "types": [
         "cafe",
@@ -85057,7 +85166,7 @@ export const restaurantData = [
         "wheelchairAccessibleEntrance": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Trendy Mapo-gu cafe with a unique nap concept where you can sip expertly crafted coffee in a quirky, Instagram-worthy space that perfectly balances modern vibes with cozy relaxation.",
           "languageCode": "en-US"
@@ -85283,7 +85392,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJqaIXTSSZfDURHLlNYONNyEI",
-    "google_data": {"name": "places/ChIJqaIXTSSZfDURHLlNYONNyEI",
+    "google_data": {
+      "name": "places/ChIJqaIXTSSZfDURHLlNYONNyEI",
       "id": "ChIJqaIXTSSZfDURHLlNYONNyEI",
       "types": [
         "cafe",
@@ -85311,7 +85421,7 @@ export const restaurantData = [
       "primaryType": "cafe",
       "shortFormattedAddress": "45-10 World cup-ro 29-gil, Mapo-gu",
       "servesCoffee": true,
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "This quirky modern cafe in Mapo-gu transforms the concept of vacant space into an intimate, Instagram-worthy spot serving comfort food in a trendy yet quiet atmosphere.",
           "languageCode": "en-US"
@@ -88504,7 +88614,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJtYqpn6ajfDURFredGCGqe9g",
-    "google_data": {"name": "places/ChIJtYqpn6ajfDURFredGCGqe9g",
+    "google_data": {
+      "name": "places/ChIJtYqpn6ajfDURFredGCGqe9g",
       "id": "ChIJtYqpn6ajfDURFredGCGqe9g",
       "types": [
         "seafood_restaurant",
@@ -88557,7 +88668,7 @@ export const restaurantData = [
         "wheelchairAccessibleParking": false,
         "wheelchairAccessibleSeating": false
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Hidden gem seafood restaurant where traditional Korean haenyeo (female divers) cuisine meets cozy homestyle cooking, specializing in fresh grilled shellfish and comfort seafood dishes in an intimate, authentic setting.",
           "languageCode": "en-US"
@@ -94771,7 +94882,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJLXL2BvijfDURmTrYFPQIGUc",
-    "google_data": {"name": "places/ChIJLXL2BvijfDURmTrYFPQIGUc",
+    "google_data": {
+      "name": "places/ChIJLXL2BvijfDURmTrYFPQIGUc",
       "id": "ChIJLXL2BvijfDURmTrYFPQIGUc",
       "types": [
         "cafe",
@@ -94939,7 +95051,7 @@ export const restaurantData = [
           }
         ]
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Trendy Seoul cafe housed in a beautifully restored traditional Korean building, serving Instagram-worthy pastries and artisanal coffee in a cozy, rustic setting that perfectly blends old and new.",
           "languageCode": "en-US"
@@ -95044,7 +95156,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJB6TgGcSifDURzk0WJaCjK6I",
-    "google_data": {"name": "places/ChIJB6TgGcSifDURzk0WJaCjK6I",
+    "google_data": {
+      "name": "places/ChIJB6TgGcSifDURzk0WJaCjK6I",
       "id": "ChIJB6TgGcSifDURzk0WJaCjK6I",
       "types": [
         "korean_restaurant",
@@ -95222,7 +95335,7 @@ export const restaurantData = [
           }
         ]
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Upscale Korean restaurant in historic Bukchon serving exceptional chef-driven cuisine in a sophisticated traditional setting that's worthy of a splurge.",
           "languageCode": "en-US"
@@ -95330,7 +95443,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJjRtEAgCLGGARzMsbWVOiGKI",
-    "google_data": {"name": "places/ChIJjRtEAgCLGGARzMsbWVOiGKI",
+    "google_data": {
+      "name": "places/ChIJjRtEAgCLGGARzMsbWVOiGKI",
       "id": "ChIJjRtEAgCLGGARzMsbWVOiGKI",
       "types": [
         "japanese_restaurant",
@@ -95697,7 +95811,7 @@ export const restaurantData = [
           }
         ]
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "Upscale yakitori omakase featuring rare cuts like Kyoto duck paired with premium wines and sake in a chic, intimate setting perfect for special occasions.",
           "languageCode": "en-US"
@@ -95811,7 +95925,8 @@ export const restaurantData = [
       "type": "Feature"
     },
     "google_place_id": "ChIJLy_B0U-JGGARz9GeTk7MajA",
-    "google_data": {"name": "places/ChIJLy_B0U-JGGARz9GeTk7MajA",
+    "google_data": {
+      "name": "places/ChIJLy_B0U-JGGARz9GeTk7MajA",
       "id": "ChIJLy_B0U-JGGARz9GeTk7MajA",
       "types": [
         "japanese_restaurant",
@@ -95990,7 +96105,7 @@ export const restaurantData = [
           }
         ]
       },
-"generativeSummary":       {
+      "generativeSummary": {
         "overview": {
           "text": "A sophisticated Tokyo institution serving exceptional shabu shabu and sukiyaki in elegant private rooms, featuring premium sirloin and seasonal vegetables that showcase the delicate art of Japanese hot pot dining.",
           "languageCode": "en-US"

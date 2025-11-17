@@ -326,7 +326,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (parsedKeywords.mealType) cleanedKeywords.mealType = parsedKeywords.mealType;
       if (parsedKeywords.priceLevel) cleanedKeywords.priceLevel = parsedKeywords.priceLevel;
       if (parsedKeywords.occasionType) cleanedKeywords.occasionType = parsedKeywords.occasionType;
-      if (parsedKeywords.noisePreference) cleanedKeywords.noisePreference = parsedKeywords.noisePreference;
+      if (parsedKeywords.noiseLevel) cleanedKeywords.noiseLevel = parsedKeywords.noiseLevel;
       if (parsedKeywords.needsTakeout) cleanedKeywords.needsTakeout = parsedKeywords.needsTakeout;
       if (parsedKeywords.needsCoffee) cleanedKeywords.needsCoffee = parsedKeywords.needsCoffee;
       if (parsedKeywords.requiresInstagrammable) cleanedKeywords.requiresInstagrammable = parsedKeywords.requiresInstagrammable;

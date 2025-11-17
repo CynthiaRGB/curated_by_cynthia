@@ -384,7 +384,7 @@ When query contains contradictory criteria, apply these priority rules:
 (Times Square is landmark, not neighborhood - filterService uses landmark)
 
 ### 4. Feature Conflicts
-"quiet lively bar" → noisePreference: null, vibeKeywords: [] (contradictory - ignore both)
+"quiet lively bar" → noiseLevel: null, vibeKeywords: [] (contradictory - ignore both)
 "intimate group dining" → occasionType: "group_dining" (group wins - can't be intimate for large group)
 
 **General Rule:** When in doubt, prioritize the more specific/concrete criterion over vague/general ones.
@@ -414,7 +414,7 @@ Return ONLY valid JSON (no markdown, no backticks, no extra text):
   "needsCoffee": boolean,
   "vibeKeywords": string[],
   "occasionType": null | string,
-  "noisePreference": null | "quiet" | "any",
+  "noiseLevel": null | "loud" | "moderate_noise" | "quiet_ambiance",
   "requiresInstagrammable": boolean | null,
   "requiresMichelin": boolean | null,
   "requiresCynthiasPick": boolean | null,
@@ -454,7 +454,7 @@ Return ONLY valid JSON (no markdown, no backticks, no extra text):
   "needsCoffee": false,
   "vibeKeywords": [],
   "occasionType": null,
-  "noisePreference": null,
+  "noiseLevel": null,
   "requiresInstagrammable": null,
   "requiresMichelin": null,
   "requiresCynthiasPick": null,
@@ -478,7 +478,7 @@ Return ONLY valid JSON (no markdown, no backticks, no extra text):
   "needsCoffee": false,
   "vibeKeywords": ["upscale"],
   "occasionType": "anniversary",
-  "noisePreference": null,
+  "noiseLevel": null,
   "requiresInstagrammable": null,
   "requiresMichelin": null,
   "requiresCynthiasPick": null,
@@ -502,7 +502,7 @@ Return ONLY valid JSON (no markdown, no backticks, no extra text):
   "needsCoffee": false,
   "vibeKeywords": ["upscale", "sophisticated"],
   "occasionType": null,
-  "noisePreference": null,
+  "noiseLevel": null,
   "requiresInstagrammable": null,
   "requiresMichelin": null,
   "requiresCynthiasPick": null,
@@ -526,7 +526,7 @@ Return ONLY valid JSON (no markdown, no backticks, no extra text):
   "needsCoffee": false,
   "vibeKeywords": ["casual", "authentic"],
   "occasionType": null,
-  "noisePreference": null,
+  "noiseLevel": null,
   "requiresInstagrammable": null,
   "requiresMichelin": null,
   "requiresCynthiasPick": null,
@@ -550,7 +550,7 @@ Return ONLY valid JSON (no markdown, no backticks, no extra text):
   "needsCoffee": false,
   "vibeKeywords": ["romantic", "intimate", "cozy"],
   "occasionType": "date_night",
-  "noisePreference": null,
+  "noiseLevel": null,
   "requiresInstagrammable": null,
   "requiresMichelin": null,
   "requiresCynthiasPick": null,
@@ -799,7 +799,7 @@ export async function parseQueryWithClaude(
     const keywords: ExtractedKeywords = {
       vibeKeywords: parsedKeywords.vibeKeywords || [],
       occasionType: parsedKeywords.occasionType || null,
-      noisePreference: parsedKeywords.noisePreference || null,
+      noiseLevel: parsedKeywords.noiseLevel || null,
       // Handle null as field removal (undefined), preserve false/true, default to false if not present
       requiresInstagrammable: parsedKeywords.requiresInstagrammable === null ? undefined : (parsedKeywords.requiresInstagrammable ?? false),
       requiresMichelin: parsedKeywords.requiresMichelin === null ? undefined : (parsedKeywords.requiresMichelin ?? false),

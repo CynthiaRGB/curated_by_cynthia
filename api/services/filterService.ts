@@ -436,7 +436,7 @@ function matchesLandmark(restaurant: Restaurant, keywords: ExtractedKeywords): b
 /**
  * Check if restaurant matches cuisine criteria
  */
-function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): boolean {
+function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords, query?: string): boolean {
   if (!keywords.cuisineType && !keywords.cuisineSpecialty) {
     return true; // No cuisine filter
   }
@@ -451,7 +451,7 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
 
     // Check if restaurant matches ANY of the cuisine types (OR logic)
     const matchesBroadCuisine = cuisineTypesToMatch.some(cuisineType => {
-      return matchesSingleCuisineType(restaurant, cuisineType);
+      return matchesSingleCuisineType(restaurant, cuisineType, query);
     });
     
     if (!matchesBroadCuisine) {
@@ -549,8 +549,9 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords): bo
 
 /**
  * Check if restaurant matches a single cuisine type
+ * @param query - Optional query string to check if "restaurant" is explicitly mentioned
  */
-function matchesSingleCuisineType(restaurant: Restaurant, cuisineType: string): boolean {
+function matchesSingleCuisineType(restaurant: Restaurant, cuisineType: string, query?: string): boolean {
   const cuisineKeyword = cuisineType.toLowerCase();
   const primaryType = restaurant.google_data.primaryType?.toLowerCase() || '';
   const specificType = restaurant.specific_type?.toLowerCase() || '';
@@ -561,6 +562,15 @@ function matchesSingleCuisineType(restaurant: Restaurant, cuisineType: string): 
   const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
   const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
   const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
+  
+  // Check if query explicitly says "restaurant" (to exclude cafes/bakeries)
+  const queryExplicitlySaysRestaurant = query ? query.toLowerCase().includes('restaurant') : false;
+  
+  // Check if this establishment is a cafe/bakery/coffee shop
+  const isCafeOrBakery = primaryType === 'cafe' || 
+                         primaryType === 'coffee_shop' || 
+                         primaryType === 'bakery' ||
+                         types.some(t => t === 'cafe' || t === 'coffee_shop' || t === 'bakery');
   
   // Normalize accents and handle plural/singular variations for matching
   // e.g., "crepes" should match "crepe", "crêpe", "crêperie"
@@ -721,14 +731,17 @@ function matchesSingleCuisineType(restaurant: Restaurant, cuisineType: string): 
   
   // Check restaurant summary/description for mentions (helps with dish-specific searches)
   // Summaries already defined at top of function - reuse them
-  
-  if (summary.includes(cuisineKeyword) || 
-      reviewSummary.includes(cuisineKeyword) || 
-      editorialSummary.includes(cuisineKeyword) ||
-      normalizeForMatching(summary).includes(normalizedCuisineKeyword) ||
-      normalizeForMatching(reviewSummary).includes(normalizedCuisineKeyword) ||
-      normalizeForMatching(editorialSummary).includes(normalizedCuisineKeyword)) {
-    return true;
+  // BUT: If query explicitly says "restaurant" and this is a cafe/bakery, skip summary matching
+  // (only match based on metadata to avoid false positives like "Korean bakery" matching "Korean restaurant")
+  if (!(queryExplicitlySaysRestaurant && isCafeOrBakery)) {
+    if (summary.includes(cuisineKeyword) || 
+        reviewSummary.includes(cuisineKeyword) || 
+        editorialSummary.includes(cuisineKeyword) ||
+        normalizeForMatching(summary).includes(normalizedCuisineKeyword) ||
+        normalizeForMatching(reviewSummary).includes(normalizedCuisineKeyword) ||
+        normalizeForMatching(editorialSummary).includes(normalizedCuisineKeyword)) {
+      return true;
+    }
   }
   
   // Standard type matching (also check normalized versions)
@@ -867,8 +880,9 @@ function matchesMealType(restaurant: Restaurant, keywords: ExtractedKeywords): b
 
 /**
  * NEW: Check if restaurant matches vibe criteria using enriched tags
+ * Internal function - use matchesVibe() for public API
  */
-function matchesVibe(restaurant: Restaurant, keywords: ExtractedKeywords): boolean {
+function matchesVibeInternal(restaurant: Restaurant, keywords: ExtractedKeywords): boolean {
   if (!keywords.vibeKeywords || keywords.vibeKeywords.length === 0) {
     return true;
   }
@@ -886,6 +900,13 @@ function matchesVibe(restaurant: Restaurant, keywords: ExtractedKeywords): boole
   return keywords.vibeKeywords.some(vibe => 
     restaurantVibes.includes(vibe)
   );
+}
+
+/**
+ * Public API: Check if restaurant matches vibe criteria
+ */
+function matchesVibe(restaurant: Restaurant, keywords: ExtractedKeywords): boolean {
+  return matchesVibeInternal(restaurant, keywords);
 }
 
 /**
@@ -929,18 +950,14 @@ function matchesOccasion(restaurant: Restaurant, keywords: ExtractedKeywords): b
  * NEW: Check if restaurant matches noise preference using enriched tags
  */
 function matchesNoiseLevel(restaurant: Restaurant, keywords: ExtractedKeywords): boolean {
-  if (!keywords.noisePreference) {
+  if (!keywords.noiseLevel) {
     return true;
   }
 
-  const noiseLevel = restaurant.noise_level;
+  const restaurantNoiseLevel = restaurant.noise_level;
   
-  if (keywords.noisePreference === 'quiet') {
-    return noiseLevel === 'quiet_ambiance' || noiseLevel === 'moderate_noise';
-  }
-  
-  // 'any' noise preference matches all
-  return true;
+  // Direct match - noiseLevel from keywords should match restaurant's noise_level
+  return restaurantNoiseLevel === keywords.noiseLevel;
 }
 
 /**
@@ -1074,7 +1091,7 @@ export async function preFilterRestaurants(query: string, keywords: ExtractedKey
         if (!matchesCynthiasPick(restaurant, extractedKeywords)) return false;
         
         // 4. Cuisine (selective, reduces dataset significantly)
-        if (!matchesCuisine(restaurant, extractedKeywords)) return false;
+        if (!matchesCuisine(restaurant, extractedKeywords, query)) return false;
         
         // 5. Meal type (moderately selective)
         if (!matchesMealType(restaurant, extractedKeywords)) return false;
@@ -1086,14 +1103,26 @@ export async function preFilterRestaurants(query: string, keywords: ExtractedKey
         if (!matchesInstagrammable(restaurant, extractedKeywords)) return false;
         if (!matchesMichelin(restaurant, extractedKeywords)) return false;
         
-        // 8. Special features (selective, array checks)
-        if (!matchesSpecialFeatures(restaurant, extractedKeywords)) return false;
+        // 8. Vibe OR Special Features (OR relationship between these two filters)
+        // If both vibeKeywords and specialFeatures are specified, restaurant must match at least one
+        const hasVibeKeywords = extractedKeywords.vibeKeywords && extractedKeywords.vibeKeywords.length > 0;
+        const hasSpecialFeatures = extractedKeywords.specialFeatures && extractedKeywords.specialFeatures.length > 0;
+        
+        if (hasVibeKeywords && hasSpecialFeatures) {
+          // Both specified: use OR logic (match if either vibe OR special feature matches)
+          const matchesVibe = matchesVibeInternal(restaurant, extractedKeywords);
+          const matchesFeatures = matchesSpecialFeatures(restaurant, extractedKeywords);
+          if (!matchesVibe && !matchesFeatures) return false;
+        } else {
+          // Only one specified: use normal AND logic
+          if (hasVibeKeywords && !matchesVibeInternal(restaurant, extractedKeywords)) return false;
+          if (hasSpecialFeatures && !matchesSpecialFeatures(restaurant, extractedKeywords)) return false;
+        }
         
         // 9. Amenities (less selective)
         if (!matchesAmenities(restaurant, extractedKeywords)) return false;
         
-        // 10. Vibe/Occasion/Noise (less selective, array checks)
-        if (!matchesVibe(restaurant, extractedKeywords)) return false;
+        // 10. Occasion/Noise (less selective, array checks)
         if (!matchesOccasion(restaurant, extractedKeywords)) return false;
         if (!matchesNoiseLevel(restaurant, extractedKeywords)) return false;
         
