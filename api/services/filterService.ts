@@ -580,6 +580,19 @@ function matchesSingleCuisineType(restaurant: Restaurant, cuisineType: string): 
            specificType === 'bar';
   }
   
+  // For "barbecue"/"BBQ" queries, check metadata fields (types array)
+  // This ensures "barbecue" matches "barbecue_restaurant" in types array
+  if (cuisineKeyword === 'barbecue' || cuisineKeyword === 'bbq') {
+    const hasBarbecuePrimaryType = primaryType === 'barbecue_restaurant';
+    const hasBarbecueInTypes = types.some(t => 
+      t === 'barbecue_restaurant' || 
+      t.toLowerCase() === 'barbecue_restaurant' ||
+      t.includes('barbecue')
+    );
+    
+    return hasBarbecuePrimaryType || hasBarbecueInTypes;
+  }
+  
   // For "coffee shop"/"coffee"/"cafe" queries, only check metadata fields
   // MUST check this BEFORE restaurant name matching to avoid false positives
   // (e.g., "Café Fleur" has "cafe" in name but isn't actually a cafe)

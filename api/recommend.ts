@@ -2,10 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Statsig from "statsig-node";
 import { preFilterRestaurants } from './services/filterService.js';
 import { decideRoute, getMoreRestaurants, isShowMeMoreQuery, type RoutingContext } from './services/routingService.js';
-import { rankRestaurantsWithClaude, enrichRecommendations } from '../src/claudeService.js';
-import { getCachedResponse, setCachedResponse, generateCacheKey, getCityPromptTTL } from './services/claudeCache.js';
 import { parseQueryWithClaude } from './services/parseQuery.js';
-import { isCityPromptItem } from './services/filterService.js';
 import { Restaurant, ExtractedKeywords, City, QueryContext } from '../src/types/restaurant.js';
 
 /**
@@ -27,24 +24,6 @@ function isCynthiasFavoritesQuery(query: string, keywords?: ExtractedKeywords): 
   return false;
 }
 
-/**
- * Remove emojis and special characters from text
- */
-function cleanSummaryText(text: string): string {
-  // Remove emojis and other special Unicode characters
-  // This regex matches emojis and other symbols
-  return text
-    .replace(/⚡/g, '') // Lightning bolt (flash icon)
-    .replace(/[\u{1F300}-\u{1F9FF}]/gu, '') // Emoticons & Symbols
-    .replace(/[\u{1F600}-\u{1F64F}]/gu, '') // Emoticons
-    .replace(/[\u{1F680}-\u{1F6FF}]/gu, '') // Transport & Map
-    .replace(/[\u{2600}-\u{26FF}]/gu, '')   // Misc symbols (includes ⚡)
-    .replace(/[\u{2700}-\u{27BF}]/gu, '')   // Dingbats
-    .replace(/[\u{FE00}-\u{FE0F}]/gu, '')   // Variation Selectors
-    .replace(/[\u{1F900}-\u{1F9FF}]/gu, '') // Supplemental Symbols and Pictographs
-    .replace(/[\u{1FA00}-\u{1FAFF}]/gu, '') // Chess Symbols
-    .trim();
-}
 
 // Initialize Statsig server-side client
 let statsigInitialized = false;
@@ -126,16 +105,6 @@ function detectUnsupportedCityInQuery(query: string): string | null {
   return null;
 }
 
-/**
- * Check if query needs Claude ranking (nuanced queries)
- */
-function needsClaudeRanking(query: string): boolean {
-  const nuancedPatterns = [
-    /hidden gem/i, /locals love/i, /celebrity/i,
-    /underrated/i, /best kept secret/i, /off the beaten path/i
-  ];
-  return nuancedPatterns.some(p => p.test(query));
-}
 
 // Helper function to extract cuisine type from search query
 const getCuisineTypeFromQuery = (query: string): string => {
@@ -225,50 +194,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    // Create Statsig user object
-    const statsigUser = {
-      userID: userId
-    };
-
-    // Dynamic Config is currently disabled - using default values
-    const ENABLE_STATSIG_DYNAMIC_CONFIG = false;
-    
-    // Try to fetch Dynamic Config from Statsig
-    let cynthiaBoost = 1.2; // Default fallback
-    let maxResults = 10; // Default fallback
-    let statsigConfigFetched = false;
-    let statsigError = 'No error';
-    
-    if (ENABLE_STATSIG_DYNAMIC_CONFIG) {
-      try {
-        console.log('[Statsig Config] Attempting to fetch Dynamic Config...');
-        const rankingConfig = Statsig.getConfig(statsigUser, 'results_ranking');
-        
-        console.log('[Statsig Config] Config object:', rankingConfig);
-        console.log('[Statsig Config] Config type:', typeof rankingConfig);
-        
-        if (rankingConfig) {
-          cynthiaBoost = rankingConfig.get('cynthias_pick_multiplier', 1.2);
-          maxResults = rankingConfig.get('max_results', 10);
-          statsigConfigFetched = true;
-          console.log('[Statsig Config] Successfully fetched config values');
-        } else {
-          statsigError = 'Config object is null or undefined';
-          console.log('[Statsig Config] Config object is null/undefined');
-        }
-      } catch (error) {
-        statsigError = error instanceof Error ? error.message : 'Unknown error';
-        console.error('[Statsig Config] Error fetching config:', error);
-      }
-    } else {
-      console.log('[Statsig Config] Dynamic Config is disabled - using default values');
-      statsigError = 'Dynamic Config disabled';
-    }
-    
-    console.log('[Statsig Config] Final values - Cynthia boost:', cynthiaBoost);
-    console.log('[Statsig Config] Final values - Max results:', maxResults);
-    console.log('[Statsig Config] Config fetched:', statsigConfigFetched);
-    console.log('[Statsig Config] Error:', statsigError);
+    // Default configuration values
+    const maxResults = 10;
 
     const apiStartTime = Date.now();
 
@@ -459,90 +386,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    // Step 9: Conditional Claude ranking (for nuanced queries only)
+    // Step 9: Use filterService ranking (restaurants are already sorted by filterService)
     let finalRestaurants: Restaurant[] = [];
     let summary = '';
-    let usedClaudeRanking = false;
-    const shouldUseClaudeRanking = needsClaudeRanking(query) && filteredRestaurants.length > 5;
-
-    if (shouldUseClaudeRanking && !isShowMeMoreQuery(query)) {
-      // Use Claude API for nuanced queries
-      console.log('[API] Using Claude API for nuanced query ranking');
-      usedClaudeRanking = true;
-
-      // Check cache first
-      const restaurantIds = filteredRestaurants.map(r => r.google_place_id);
-      const cacheKey = generateCacheKey(query, restaurantIds);
-      let claudeResponse = getCachedResponse(query, restaurantIds);
-
-      if (!claudeResponse) {
-        // Cache miss - call Claude API
-        const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
-        
-        if (!anthropicApiKey) {
-          console.warn('[API] ANTHROPIC_API_KEY not set, falling back to filterService');
-          // Fallback to filterService
-          if (isCynthiasFavorites) {
-            finalRestaurants = filteredRestaurants; // Return all, no slice
-          } else {
-            finalRestaurants = filteredRestaurants.slice(0, maxResults);
-          }
-          summary = `Curated ${finalRestaurants.length} spots just for you`;
-          usedClaudeRanking = false;
-        } else {
-          try {
-            claudeResponse = await rankRestaurantsWithClaude(
-              query,
-              filteredRestaurants.slice(0, 20), // Limit to top 20 for Claude ranking
-              anthropicApiKey
-            );
-            
-            // Cache the response with longer TTL for city prompt items
-            const isPromptItem = isCityPromptItem(query);
-            const cacheTTL = isPromptItem ? getCityPromptTTL() : undefined; // Use default TTL for non-prompts
-            setCachedResponse(query, claudeResponse, restaurantIds, cacheTTL);
-            
-            // Map Claude recommendations back to full Restaurant objects
-            finalRestaurants = enrichRecommendations(
-              claudeResponse.recommendations,
-              filteredRestaurants
-            );
-            
-            summary = cleanSummaryText(claudeResponse.summary || `Curated ${finalRestaurants.length} spots just for you`);
-          } catch (claudeError: any) {
-            console.error('[API] Claude API error, falling back to filterService:', claudeError);
-            // Fallback to filterService on error
-            if (isCynthiasFavorites) {
-              finalRestaurants = filteredRestaurants; // Return all, no slice
-            } else {
-              finalRestaurants = filteredRestaurants.slice(0, maxResults);
-            }
-            summary = `Curated ${finalRestaurants.length} spots just for you`;
-            usedClaudeRanking = false;
-          }
-        }
-      } else {
-        // Cache hit - use cached response
-        console.log('[API] Using cached Claude ranking response');
-        finalRestaurants = enrichRecommendations(
-          claudeResponse.recommendations,
-          filteredRestaurants
-        );
-        summary = cleanSummaryText(claudeResponse.summary || `Curated ${finalRestaurants.length} spots just for you`);
-      }
+    const usedClaudeRanking = false; // Always false now - using filterService ranking only
+    
+    // Special case: Cynthia's favorites queries should return ALL results, not limited by maxResults
+    if (isCynthiasFavorites) {
+      console.log(`[API] Returning ALL ${filteredRestaurants.length} Cynthia's favorites (no limit applied)`);
+      finalRestaurants = filteredRestaurants; // Return all, no slice
+      summary = `Curated ${finalRestaurants.length} spots just for you`;
     } else {
-      // Use filterService only (no Claude ranking)
-      console.log('[API] Using filterService only (no Claude ranking)');
-      
-      // Special case: Cynthia's favorites queries should return ALL results, not limited by maxResults
-      if (isCynthiasFavorites) {
-        console.log(`[API] Returning ALL ${filteredRestaurants.length} Cynthia's favorites (no limit applied)`);
-        finalRestaurants = filteredRestaurants; // Return all, no slice
-        summary = `Curated ${finalRestaurants.length} spots just for you`;
-      } else {
-        finalRestaurants = filteredRestaurants.slice(0, maxResults);
-        summary = `Curated ${finalRestaurants.length} spots just for you`;
-      }
+      finalRestaurants = filteredRestaurants.slice(0, maxResults);
+      summary = `Curated ${finalRestaurants.length} spots just for you`;
     }
 
     // Step 10: Build context for next query (for follow-ups)
@@ -560,7 +416,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Log restaurant search event using the correct Statsig format
     try {
       Statsig.logEvent(
-        statsigUser,
+        { userID: userId },
         'restaurant_search_completed',
         finalRestaurants.length,
         {
@@ -587,11 +443,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       route: routeDecision.route,
       context: nextContext, // Return context for follow-up queries
       debug: {
-        cynthiaBoost,
         maxResults,
-        statsigConfigFetched,
-        statsigClientInitialized: statsigInitialized,
-        errorMessage: statsigError,
         routingReason: routeDecision.reason,
         parsedKeywords: parsedKeywords
       }

@@ -96090,7 +96090,7 @@ export const restaurantData = [
         "type": "Point"
       },
       "properties": {
-        "date": "2025-11-17T04:00:31.265Z",
+        "date": "2025-11-17T05:03:16.790Z",
         "google_maps_url": "https://maps.google.com/?cid=1875235036061397283&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
         "location": {
           "address": "114-6 Eulji-ro, Jung District, Seoul, South Korea",
@@ -96105,176 +96105,20 @@ export const restaurantData = [
       "name": "places/ChIJNyduCUCjfDURI3HOclQsBho",
       "id": "ChIJNyduCUCjfDURI3HOclQsBho",
       "types": [
+        "barbecue_restaurant",
+        "korean_restaurant",
         "restaurant",
         "food",
         "point_of_interest",
         "establishment"
       ],
       "formattedAddress": "114-6 Eulji-ro, Jung District, Seoul, South Korea",
-      "addressComponents": [
-        {
-          "longText": "114-6",
-          "shortText": "114-6",
-          "types": [
-            "premise"
-          ],
-          "languageCode": "en-US"
-        },
-        {
-          "longText": "Eulji-ro",
-          "shortText": "Eulji-ro",
-          "types": [
-            "sublocality_level_4",
-            "sublocality",
-            "political"
-          ],
-          "languageCode": "en"
-        },
-        {
-          "longText": "Jung District",
-          "shortText": "Jung District",
-          "types": [
-            "sublocality_level_1",
-            "sublocality",
-            "political"
-          ],
-          "languageCode": "en"
-        },
-        {
-          "longText": "Seoul",
-          "shortText": "Seoul",
-          "types": [
-            "administrative_area_level_1",
-            "political"
-          ],
-          "languageCode": "en"
-        },
-        {
-          "longText": "South Korea",
-          "shortText": "KR",
-          "types": [
-            "country",
-            "political"
-          ],
-          "languageCode": "en"
-        },
-        {
-          "longText": "04550",
-          "shortText": "04550",
-          "types": [
-            "postal_code"
-          ],
-          "languageCode": "en-US"
-        }
-      ],
       "location": {
         "latitude": 37.565819999999995,
         "longitude": 126.9906213
       },
       "rating": 4.6,
       "googleMapsUri": "https://maps.google.com/?cid=1875235036061397283&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
-      "websiteUri": "https://www.instagram.com/sancheongin/",
-      "regularOpeningHours": {
-        "openNow": true,
-        "periods": [
-          {
-            "open": {
-              "day": 0,
-              "hour": 11,
-              "minute": 30
-            },
-            "close": {
-              "day": 0,
-              "hour": 23,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 1,
-              "hour": 11,
-              "minute": 30
-            },
-            "close": {
-              "day": 1,
-              "hour": 23,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 2,
-              "hour": 11,
-              "minute": 30
-            },
-            "close": {
-              "day": 2,
-              "hour": 23,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 3,
-              "hour": 11,
-              "minute": 30
-            },
-            "close": {
-              "day": 3,
-              "hour": 23,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 4,
-              "hour": 11,
-              "minute": 30
-            },
-            "close": {
-              "day": 4,
-              "hour": 23,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 5,
-              "hour": 11,
-              "minute": 30
-            },
-            "close": {
-              "day": 5,
-              "hour": 23,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 6,
-              "hour": 11,
-              "minute": 30
-            },
-            "close": {
-              "day": 6,
-              "hour": 23,
-              "minute": 0
-            }
-          }
-        ],
-        "weekdayDescriptions": [
-          "Monday: 11:30 AM – 11:00 PM",
-          "Tuesday: 11:30 AM – 11:00 PM",
-          "Wednesday: 11:30 AM – 11:00 PM",
-          "Thursday: 11:30 AM – 11:00 PM",
-          "Friday: 11:30 AM – 11:00 PM",
-          "Saturday: 11:30 AM – 11:00 PM",
-          "Sunday: 11:30 AM – 11:00 PM"
-        ],
-        "nextCloseTime": "2025-11-17T14:00:00Z"
-      },
-      "utcOffsetMinutes": 540,
-      "adrFormatAddress": "<span class=\"street-address\">114-6 Eulji-ro</span>, <span class=\"locality\">Jung District</span>, <span class=\"region\">Seoul</span> <span class=\"postal-code\">04550</span>, <span class=\"country-name\">South Korea</span>",
       "businessStatus": "OPERATIONAL",
       "userRatingCount": 346,
       "displayName": {
@@ -96297,175 +96141,6 @@ export const restaurantData = [
       "servesWine": true,
       "servesBrunch": true,
       "servesVegetarianFood": false,
-      "currentOpeningHours": {
-        "openNow": true,
-        "periods": [
-          {
-            "open": {
-              "day": 0,
-              "hour": 11,
-              "minute": 30,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 23
-              }
-            },
-            "close": {
-              "day": 0,
-              "hour": 23,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 23
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 1,
-              "hour": 11,
-              "minute": 30,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 17
-              }
-            },
-            "close": {
-              "day": 1,
-              "hour": 23,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 17
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 2,
-              "hour": 11,
-              "minute": 30,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 18
-              }
-            },
-            "close": {
-              "day": 2,
-              "hour": 23,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 18
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 3,
-              "hour": 11,
-              "minute": 30,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 19
-              }
-            },
-            "close": {
-              "day": 3,
-              "hour": 23,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 19
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 4,
-              "hour": 11,
-              "minute": 30,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 20
-              }
-            },
-            "close": {
-              "day": 4,
-              "hour": 23,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 20
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 5,
-              "hour": 11,
-              "minute": 30,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 21
-              }
-            },
-            "close": {
-              "day": 5,
-              "hour": 23,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 21
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 6,
-              "hour": 11,
-              "minute": 30,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 22
-              }
-            },
-            "close": {
-              "day": 6,
-              "hour": 23,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 22
-              }
-            }
-          }
-        ],
-        "weekdayDescriptions": [
-          "Monday: 11:30 AM – 11:00 PM",
-          "Tuesday: 11:30 AM – 11:00 PM",
-          "Wednesday: 11:30 AM – 11:00 PM",
-          "Thursday: 11:30 AM – 11:00 PM",
-          "Friday: 11:30 AM – 11:00 PM",
-          "Saturday: 11:30 AM – 11:00 PM",
-          "Sunday: 11:30 AM – 11:00 PM"
-        ],
-        "nextCloseTime": "2025-11-17T14:00:00Z"
-      },
       "primaryType": "restaurant",
       "shortFormattedAddress": "114-6 Eulji-ro, Jung District",
       "reviews": [
@@ -96577,7 +96252,7 @@ export const restaurantData = [
       ],
       "photos": [
         {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU7U9plYvbpqbRnsJ2ZmuiMo7M9LgwQVLpa_gK3wCNq2TPXNyUMWdMmJ3N2Nettv-AEONwyYTRcSae_AbJzNSjq1Pja2e0YF227oEVubkPUOV7jvSM8ERG8d7IAGh133xqojlxNLBI7X-QG13vItG4uLW2aPOWOJ2Y083lFu6v4CN8Ahf3fkV_SEoeAq2HRQn7G1mhye2ZVEqq-7cnTAzmGwCbyt5XITgopF4--DpGvhAbrDBIFFgpQcncYuqHZV-aBXIA-ozz2SWLWm1GhQ-yfb1OFsqP9JSdk4hNuVVR_2uUx00RzPx7LHo9ztJIJYAuBmTtrzrQkVQjpK0wistV8vegvr-sFNjTCAg55KJxF-yvQkRvb7GH0QP7_PQrLZy76jOZuVjU7rPeC5yB76uTnnPQtj_S029SIoUYC5Ks-nDH47m7Fd7JubwNmkkw",
+          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU4VloGYDzfJuYPhWaoOSKuQA3AMVJqC-0E8aOGcewdRn_nVY2NuPSyjYbKquJCJsnenD9QiqyrAyoDcZRPzQDZ2rawksSjplJORvgmIclGuagSEKFWdz2lsAqOa0zXp48MpWZno0-7jLMkZutnqaRMVRHgGEbF0N03dGO0hP1HVBfRrIzQGndcJrLz93i8VVuZAiGOHEFXytGskjkQsBKq4ampx_oG7d7N3EfqdZf1OEStqhnWrX15C7_Ddse7ygtNvIedZHVuU-mz_rNQeW1qZQUloh3_Fpgfow8dpZV9Sa3mgngzutZrWScTya9PviZE9OKTlyZnw4NwkdhR8ZsBLOI5FCYe63HFYu_56JLRuHw4NtJIqF85sNxHvtnYiEg6YeXVm7d1XMfskCO8gim5ViTd6nc8lMyFYmXZC9AfUeq1nbkl-GoRrlHDH4g",
           "widthPx": 4032,
           "heightPx": 3024,
           "authorAttributions": [
@@ -96591,7 +96266,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhASXs3K9V9H7Yp4V7OSmeNS!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
         },
         {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU7IUC-tk9fyuIGbAKULpn0ttV8JZV0KPcTD86zRBQuJa2zjjsfOaPgLjyOWJ0uzIA5mGZkizKl-FroOOpO9KpuyS_vsg9jg84I_-IUcYceG5xeA6TQeerJVdy5CKo7lI2dZ3b9dbtIvJ6QcgZrXAow2rIEwED5Tm0F_3YY3qPCIl9z-j8GBF3tYm5JDCwhJZM2EtXznjdiO4qe0oryMhqxc-PsW3rT06ptDrW-j02iT5APbVrGa6AoZuAVwswqjofwXmGAoX4JZX3AEqW4rOVqKZwa-TZPl4p2rPc5YaQy4Cg",
+          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU5-BDPm9U4nMTBII4q8MciydOoDvvY1FKCUhVxZCCBRhTuwj9AXbJnKa8Dcvml17OzIh9pPXRON_CRarQPhL4ZpUcoROb8g-3regR6thE5UM2nUpt1Eagnq-uVmR1aCyzKpP_klMmo_1zEap9L15gk1wbGydcUsR75O7OHe_Zm5J_lW_x2k8pAo3BvuR2g9SVBkj2Ek92bbd0qt6VGWmPsh6AJN4iK8LM-DuwoHaE28hA77jlPUXw9CLcEUZR1z3luD7sEjgbOZim9fzpzs8QvZFk58Zv0RCZbxSkd-TV0_qA",
           "widthPx": 1114,
           "heightPx": 745,
           "authorAttributions": [
@@ -96605,7 +96280,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipO4Kzr17mgzt1GNCZ79i3R_qo2tLtPqNotS1wrB!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
         },
         {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU6vZglajpxPR-bspzfAvqaiRWKlORdXEMY_PWkY-T-BPFzj62KTdqLUXopj4CwQ66dp2khLK_pKqj5eBuTcgUHFazHl5uETiqdWt6487HHeTDUUrWMlJKuxJcFBR9p4yVzhhBRPEbaMyU9wf8zfZGeAAfIFvSi6SGducmyUlYieCGgRLuo68Cs5Rdw3lFxU02KiYGL-1mPz42Xh-6j5QvlpaOUfPZD4ybS6VNDJkMPqzWDmOFv_ztOxcEwz2QnIYfM2Ap9u4FFmNGtua1sN1vV0LRY5-MdRF3SB2XfdIeFsOEFeYd_sELAa1dh2Gudr-VbyNewIkCYzCu6kGqdMf-oUA1TJtfGlqG7qz4A0OiUGb-_2oyonCmqJxwBuSLpPzu80BiUmoe844MIiRLSiqGbsiKQFxiQAOpp26pcmFUxoZ6A89Kd7C4dJX9Ht2Od7",
+          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU5fkgyAYE1wsk7ppwEMgJR381dLkijn7qWbiV9mNcTCmUYT-v8OHZ4o9klChS5Cadxd-yZpLeYkozkFLQBV2ktX0g0t7FiQGNZe7LkZGFQlrQ4RK1Iu1y5WGc7wEtk2MfaQNpznXrkbMVeKwZc55KVdte-kv3B2yw6vFO4u0oYOEZhKXjEJAzE9FkXsETEE8yvCUl_OT7dqQv0fL5InwD012wbuE9u_4BeTTghD5o2-X2dLoGmO8Mdt66FvZKHSK8uxG1Jqp3BLYEXTWOSw2ggS13qEvtSAkcqO1qzXR30cdo8XH5wJCMxXZ-y9dGft-b0fzbnQMbxYTj8y5FxU_llBZnQCTm1fdVNNZZLjCbr9VL6npJBf6tcr8Ltcpe-om08wYMn8jXypSKh1oEcev4Dp5wg8grVx2eibxoSS0gVhRQtL44z0W754oSoBeqJl",
           "widthPx": 1108,
           "heightPx": 1477,
           "authorAttributions": [
@@ -96619,7 +96294,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhDUFLh1WCiwEq9-tec4UlZB!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
         },
         {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU6pnZMZ7G5oK-dzqF-dZvWFv4euwVjUdqbSiNm3MGwMwIt286zt9BeFXT6s_z0TC-qtWAtV29i5JOO87-4Y3stsejo_IRCSJ7AN19MmWuvXqbwSG1mKPHVQKx0e6YVk3mAgdBqwV0X6yelcbNz6WE_jBhjbGn7Qqj809ZyStThn3jQjj7_G4rIn9m0OAMSkKckNkDrY5o7qUbaEv9DSepoez9sMKEXfSZTBHnTcA9Y38ndgauoEcU8wpvy_SPR-BfiRJvZd75rZh8OZvgPoYcq-Lq_6Arg16wNEir3nDFYIqc4l03xGGpJJDAlxIIgqJfeXCAdZsazC_i_Et9tEOXXrxXuXx6n-qflNJuGxBYBRqDcGXpepW6m7gljwd59nWRpL2-R2l9A5FXh5yqGR8aV1X9OAHreKj-0vO-GzyXVuBA",
+          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU62-MhU1kigYMg7fDCJvpTefIuFJx_bFH6jyWZr-C6JArkGkMv8dED57PZ-lgES-tNAsyPC9r4KGQxoILz87Mgq36iXSI9huoRBz77LO7RSAgG_0Coy1Tm2FTiMJI5h-OHXByS-CyhJWnte0iT0KccqTZGMwhhdxgSgtFy8_KgkZDJiu9XO3NdmUo1XnoAfjFoSVpZ6Q52AKfm5m8weL4seOo86ICeabOF7qeWT2yID9_PSfpV-3K6EMCY6LDjrjr407kIzso3jQ19nLORnhrd5YnCp-S5fgzL87hoO7x8pYjoTysR8IFvL80Yf0SQrmyhI1GHngfUtFmDaC1NSjhy2wWHHJLjLLb8eppntmxq6GcOqzdKcv2NtkUY4FznkFPKoxL2LgPBlCSefUdF8dHPjohQkrA6B7-fTz7HiTphBvQ",
           "widthPx": 4800,
           "heightPx": 3600,
           "authorAttributions": [
@@ -96633,7 +96308,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgMDIop6BVw!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
         },
         {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU4OG-UcbTcJRoLeRvvvQ_-XC_PZnmea5MrbA46G15hUNdpb286GWqynB-qID7vgGxc2yvU3etIUJAdF90XbgtCdqxowcrnH-VVDEfkkYOoaITLzg31Dx5xd4d02sT7CIT2qtYXDuoc12f7Esky60tPdzJYKIi552AdoS2o-pJO417f_eX-z70UeCeQHBU0U_x-BXMLXLSGgq5QJ-yYdn4Oeo6kIX7XRTJx3bhimzc5_0IxqAlgleZyFbklRNlozcmW3aWwdMAYJZHPvAO5p2dKuxIQvtlA369Ut1PDTcH9QkBeujnbyT5GWxJsonVQc9-VHi2yhXBod8zeDe4zXmpLnMJ6YbqR1Rn1MsmtHUCpowiMtU-2IoKeJ-ZyjlWNAl1vahf0fwEVrPaPJK6sZkTkIQK-ATEdF0B9ewsDQBnOKyI3jEk-kOUSNWTmqxlKE",
+          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU7_o2OBlfck85Jx_ATL1SZWYIdcv2tmSIm-bn0-vZvwa9J1Ppom_Im5yS-xhzqZ2mi_qcAjoKsk3ZlhEwdUWLlNdFsLErmO8rjmDycZCEXr8VAw8t-ybnT4cKdw38f8ZEwf7fl6ILRAPfWZidbhkG6kGdtPy7GLtcBeJpUpkU25pK3IvEn0jDDWq659A97KimwA767hA-JHeyCPrcLFZQIgObXfdM7Y3mvhNhtD7bvGtWrjSDcPCK_v-bTGdauGR8uP5OYo_PH0vVOM9puRneReKXOnfuA5ZhbTm-vpZ--jAX_TDJvtrX-JMxOV1KzSfCbE9DwudqDz2AIL7RCTw8Xi99oxTlvsSP-FCUh3PospJ6qPNknbED6sOxp_Hqq74D8KSR4WSjiR3X_q07gY5Fgy2HNJH00cDgw0lE4pTIv4jWOfAV4z32HjbziHZcr6",
           "widthPx": 3000,
           "heightPx": 4000,
           "authorAttributions": [
@@ -96647,7 +96322,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhC1cJg9WoxSMxszhZpRn9D9!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
         },
         {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU5-wAn5ZXRC2ch_macs93BAlAeFA1oWdchtDIwOL_zwtP1hcLsS5mHILAx4a23pFFsCXYTFB0cfwjvMG2MAesOmQPAlNEe1yARa2Cy9OS3C2DptAkHmDAKNk5QNG0g_JCOFV2uckH6dfwx107pIiVweqTAaliLO0Cns8F61MPmUw_98LfAaqhnNOaz7TNncWAVOswyYt-L7i-BaQrLbnSUW06RbnVIIdKfIgRYNtOcD_4i-U_2t9h6cZIYhoFZMG9E31AZmC9l8sRC6pqMWRQb_jMXLG7C5qCoOAyxl5gg2ZxFv7HUyb6NQyj8k_z7kpjsYs2PsOAY4n6zPJ0VzJX8lfJWJNQk7mKBZ7UiwjelzIBpVw_T-Qoa35P5Ra7NjwHWiSXPrx3rzrZehh0wxlCOeo7LQYlrl3mufvgXuSSVHY1HBKqXJmgOcvAz0mw",
+          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU7fQAh6wnI3yafvbSK5ToiFg63xZT-X9AY1Nl2kUr9uuxD--iBmlcB4WUj5N9lQx_4JXYLiOIToL6mtZPrLj9BAsibpmUObtfWWpDRD1ZIezJ3VackhTYCFFS1sHSVQlLvvspgdmbOGT0NeroaKhTrXsty_8pda_9xI-hCSQMI8FggeC62607bWZ5K3zuPhL_oOciQm_5CspW4Y4tyMiAuO3DNjzN6MnRPrUvS_erSmamGamMEe7tSBD-O6mAlC92U68L2soXMJExPHZrz-8cja82HYdL9O5nQk8rA0CjS5hyVeyNLx4rUMFlsfOmyPf3_9WUd3uFs1EDqs9y-8fOjhtdqlotEEkE71k0lU7iEYfQGhVSodhBoC1OI5tJxv9UWpvGPScaL1CF8NnPEjvUgAgkvRhJwjPFIXOnGXWJPzbcU3VyPWU3UMR4rwUQ",
           "widthPx": 4000,
           "heightPx": 3000,
           "authorAttributions": [
@@ -96661,7 +96336,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhBkHfg_VNYPYicfxT2IlUi4!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
         },
         {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU76E2MaMln47CsNryW0UklEbfoMQBaKx0HUnTiydPcZs-IpVWOQOYklPMESeWP-GolLPncxYAJLGgn3eIkF0-hoGQPTcqt3V090Wyco-DsrboyY38s12QWd6g4a6crJ0dnhrdZFhvZmdSuYErIdoQOspM12QYYfZuny6hs16kie4xvU19JoEenjuHEbmbf8DqDFqg8wJHaI0yI0UScSEKWX0sVt-WL0FoUzzdPe4IfwjBnogg1w-YdkzqksSewG45YQpZCQ_X-ftzyLcRJXNmO_SbIFWLaSLvKPPi0XakCud7D3yQjwkgS1fxUduBanyohHc4kGP291Z89a6f3uueJ6EbI1dgFIE6LyMmuerBXbrp5JN62CVDMm6V4tSyvsX6Imb14N4MnVWSqgvc3d_hVzgpUZbFLG5fhXdOBLt4fZkrZaxWzhsXTHroGoTTjj",
+          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU5r6xak_GPhzoCKoD45lVVoNKErNSZM3dhxLdoaP-d_ziqVCE7wXdLfRPdCv3rqXzuobCwvMlEHzyB-_gd7t1vaT4e6UZuArQ9MhsaDIlnj5kFdAelox3nXIwugxW5FAyK4Pef64lN6GtQ6Ei1WC1EyJeGzFmeLGdTjQmBPmgL-NfhhbOVH-CtFghy8iYtRdzqwayPyJCMTYFx_hfZ7jCh-DwY9-RWtXJFxc02vSg58w4eKSCaSlpYK5XbJ6aX1a5ru3r4Xd898m_Mej304HIq0nn6_aV9N8VRhq0eZZ1t3m4M0IC6sAgHXp5cw93p9bG63NPm9hlTSjlZynVZsZC4r3GufyPl2QQipZBhpZ2QkkCEzXpWyt5t1Z2S4M1-YT-nAOPR-0wG4KDF2fecKzYfbsMChtNyuPxHXbxAmH912nOk-GQqoR2UODZpaUQpo",
           "widthPx": 3024,
           "heightPx": 4032,
           "authorAttributions": [
@@ -96675,7 +96350,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhCqppdppLhBvOpipzVzKhR_!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
         },
         {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU7GssxkRnJTRpJxeAaqX3kUiIFHms9TAhwQUBzGXlKJLuWGx8w-rJeEFknl5iQe72NEBq73TC2KCXTeo-el-YzTBx87Cd83ObbncF438o_NB3bu5ktgphzzFCDA6COWI-b297YEBS6BU3J4lBwR4dm2fVfdjCgCZztehTn8BUgyl8KlHCO91J0_Fd-4lF4bpGRHCLMYBSxCAV6vy5WEe7iQLuexYUSIevjnkmpnQ8eFFFUATBYMnLN1zJC0a4MZ1zftGH7Ie3oWrY9rVcIOw323j_Oc_c7Zu5SBTRY2zJnqtMwk3RmhH-aj2WXqx2-n05B-x3cbnFoKf0aMP9EUH0jX6W53lWdBrQ4bN9TVFtSGgVUHilXfxdFxJG1ZH3FzAUA2OJluSCP8jA98N53LXYZ5ZepcixrhkPVR0KFufinJclDRmQIF4NTm4N6I7WvW",
+          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU4oeeDTm-KNycKO3-lECUo5vZzUZsxCKndJzJ_ujAGsf9bGuVhUA_fVs3JzQDC1JhnuRcSOjzPPEpVX0BsEhWrLef68UT_LYVfm8Tev_Zr9DjGnmVhIBM-8oEQzBn5ck5Gu8NaPmtAbouw_nMW5q-cVwSjRRP1TtiJr9HBo7m33T0hBnDYR4CNHrQC6ka1XcrJU4Z9C8ZfuKerNFK-C1dQGiuPmngQ_-RwOh9oXtRYPK0sQUd7HQwIiCOJ31mu0GqiqhUWO7lx8K25p19k87P_aq6OcMvQjLIudpX_qi3XvsbrXy0fc5taQnib9cMGsO1oqbeFidgNTDvri_62BCxbVW-j8K-H0GNIxNfVknfE8vBIF6vmiYuGup8XUWMGwUwYAufceBGEUNRyu2XZHXbkowLobBA7WoLomlVDwffhq-rkkzZ30GCB_dHwSXVr9",
           "widthPx": 4716,
           "heightPx": 3540,
           "authorAttributions": [
@@ -96689,7 +96364,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhAcM1-TMb7oBgTJKOCw77KE!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
         },
         {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU7hSP5goWO20RTlifM2gp1DM1p16Z3WbywnRXjEv8pzbgqGd_EzV_JO-coPfAcelO0Pvgwxqyb5-YuqO3KDqqV-4FBSMSIXpOkg9kyJuZ_fyzb2jUraepx4b8dK8sldfOWfs3bRAQ5VPet_M9ICmTGUjzAV3B5swsPuP8kofcb_omW80yE8GwGVIWwCvGy0OQHC2TLDdWlQwA309wgxFNMN7SQlM_qm65vtaDinxcJolcWWccIjFAAsoDxpnvAwIkJe2yA6RZdbdBLIXqbgcJ6C7gqvuXVzxX5I8inGLoJJ2ZFZRQA6G2feOOMtaeEW67_SwQhsjaFOe46BdNaqDy0yetaKsmTwk8ODp5gcwq_2-cFOnA29xDLAFoaEPHDjBU5lhTB_FJI513_oLQbSdWslEaNThOlXGqN2PoThrOl6IwOd",
+          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU6_hOwFyGZMVeJ7ESRjF0IW77r-LFNig8FNm9Kjat5fttkL8gBR8i6PT8HbOkQHQ12iKCl37sQYgq-mt2euDZiB0eHgJJ8W0ohuo486or5UhfsHOUV4V1NeKYObVcU8FwkUucXuwwnhD33U0vEnMqsxjMjys3B6GErNiC1P5OF81p51m5AcTimIMTrGfwNRs0VGZM3QloU9lt5qxM0iWzVmaBmSSuSXhfZJriP4GNvDch7ppsZCYH5dyXKWOI9FQyHDCaVDCP9pn1LuYL9kppWoWM2SF3JVL2pICjFIutkjOkXl8-qlAjgn57jDeCxCVdttatw1M0yLqVobSjuttbdO-0eSdrqJz4jBPPWfDSMhW_rjRRxX7ZKNhycTrQGV49o_6K8c2JnHpxrexzhYErvyzM5sV2Owa-691xicLyQ-xQz4",
           "widthPx": 4000,
           "heightPx": 3000,
           "authorAttributions": [
@@ -96703,7 +96378,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgICv0JuLoAE!2e10!4m2!3m1!1s0x357ca340096e2737:0x1a062c5472ce7123"
         },
         {
-          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU7Up9nOiAJ9miZPUz3EzzGpBPoWV3sk7netaNMnMQcN-JVyCm7XrKVlOUDdkkY9jEizOBZs1FEYeW7pMY-kLiYTmSbcQ9hOPB7iYX25OdulvwZYJe4XoMgbFzzbIq6-ZDyAGXQlbQ30afadMLb3NyNhpcyGUq7w6nm44NGFPgXXIw_OlRNKE1gDQgWxKsXvYLBpNlqQFeJHh_1L3Df5vqVuDXFWRfmrUXeO0IgZ4rbu9uzE95xDJX0arsb9S-HWGlLOZJiX5MI5GEfGEc7ucirMnXzCdFr7FajoXk-SHCkjQ1zWBHeMxxRb6Kd5eQxODNJxGabYuTthIur9riMD4licjJZZqMVsi4kEG0ZjrUXZpeeEQleME7dErSb4d9o_3nVW7APvI8IxBFN-f2fu-DkkWzKe10XJky_lXD1ZeHNdZJKHnlyjVfF_qFlWzA",
+          "name": "places/ChIJNyduCUCjfDURI3HOclQsBho/photos/AWn5SU4zZ6qANq2mzmNAQAGJFH6YTnk4fWCvpGINaLfQqGZ8BB1tnHgT__HC7I2Tli2kQBlqnSmPJ_sRoNXSJi3jGnwd2g8U_5sqT2nlThhswlIO3-c0N3kFcdXaUOYzihBPMjWaiHQhGDMo32o_rFY9hbec_8JwD4AKulgMWPejMtzMzl9Z5UZjHCqU6a4jKTv5YUIN-Rl2YOSOn4wr7ipK_rYHyiFIqvVpfWnYaDeP48Rx7D2ueccaNxqy9GH8Rg93MYgMkZfXMTpEtyu_fZ9Cq_U7jx2ZOGcPBukFdY8S34_ZLtVeNajC5Yaisx9ZxjrO8XJEcm-noZ1XLg0qdcSXdrf5DFdYW3G7_iu-JUfnHtH-GH3mHy7LTqgPXcbFnVFmZ7aE9piGurrxf5OPM0Jp8pWC7goxjPW8QQIBlz5h7YXAQ1wK3N_WCHJFpYsZOQ",
           "widthPx": 3716,
           "heightPx": 2526,
           "authorAttributions": [
@@ -96747,7 +96422,6 @@ export const restaurantData = [
         "wheelchairAccessibleRestroom": false,
         "wheelchairAccessibleSeating": false
       },
-      "pureServiceAreaBusiness": false,
       "addressDescriptor": {
         "landmarks": [
           {
@@ -96879,19 +96553,44 @@ export const restaurantData = [
     "specific_type": "restaurant",
     "neighborhood_extracted": null,
     "enrichment_status": "success",
-    "enrichment_date": "2025-11-17T04:00:31.265Z",
+    "enrichment_date": "2025-11-17T05:03:16.790Z",
     "cynthias_pick": true,
     "price_display": "N/A",
-    "city": "Seoul",
-    "vibe_tags": [],
-    "occasion_tags": [],
-    "crowd_tags": [],
-    "service_tags": [],
-    "noise_level": null,
-    "food_quality_tags": [],
-    "value_tag": null,
-    "special_features": [],
-    "booking_tags": [],
+    "city": null,
+    "vibe_tags": [
+      "cozy",
+      "traditional",
+      "authentic",
+      "casual",
+      "rustic"
+    ],
+    "occasion_tags": [
+      "group_dining",
+      "casual_meetup",
+      "celebration"
+    ],
+    "crowd_tags": [
+      "locals_spot",
+      "tourist_friendly"
+    ],
+    "service_tags": [
+      "attentive_service",
+      "knowledgeable_staff"
+    ],
+    "noise_level": "moderate_noise",
+    "food_quality_tags": [
+      "exceptional_food",
+      "comfort_food"
+    ],
+    "value_tag": "splurge_worthy",
+    "special_features": [
+      "hidden_gem",
+      "unique_concept"
+    ],
+    "booking_tags": [
+      "reservations_required",
+      "long_wait_times"
+    ],
     "negative_tags": [],
     "accolades_tags": []
   },
@@ -96905,7 +96604,7 @@ export const restaurantData = [
         "type": "Point"
       },
       "properties": {
-        "date": "2025-11-17T04:00:31.964Z",
+        "date": "2025-11-17T05:02:54.118Z",
         "google_maps_url": "https://maps.google.com/?cid=16611126971547916537&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
         "location": {
           "address": "South Korea, Seoul, Gangnam District, Nonhyeon-dong, 277-20 1층",
@@ -96928,238 +96627,12 @@ export const restaurantData = [
         "establishment"
       ],
       "formattedAddress": "South Korea, Seoul, Gangnam District, Nonhyeon-dong, 277-20 1층",
-      "addressComponents": [
-        {
-          "longText": "1층",
-          "shortText": "1층",
-          "types": [
-            "subpremise"
-          ],
-          "languageCode": "ko"
-        },
-        {
-          "longText": "277-20",
-          "shortText": "277-20",
-          "types": [
-            "premise"
-          ],
-          "languageCode": "en-US"
-        },
-        {
-          "longText": "Nonhyeon-dong",
-          "shortText": "Nonhyeon-dong",
-          "types": [
-            "sublocality_level_2",
-            "sublocality",
-            "political"
-          ],
-          "languageCode": "en"
-        },
-        {
-          "longText": "Gangnam District",
-          "shortText": "Gangnam District",
-          "types": [
-            "sublocality_level_1",
-            "sublocality",
-            "political"
-          ],
-          "languageCode": "en"
-        },
-        {
-          "longText": "Seoul",
-          "shortText": "Seoul",
-          "types": [
-            "administrative_area_level_1",
-            "political"
-          ],
-          "languageCode": "en"
-        },
-        {
-          "longText": "South Korea",
-          "shortText": "KR",
-          "types": [
-            "country",
-            "political"
-          ],
-          "languageCode": "en"
-        },
-        {
-          "longText": "06103",
-          "shortText": "06103",
-          "types": [
-            "postal_code"
-          ],
-          "languageCode": "en-US"
-        }
-      ],
       "location": {
         "latitude": 37.509864799999995,
         "longitude": 127.0416489
       },
       "rating": 4.5,
       "googleMapsUri": "https://maps.google.com/?cid=16611126971547916537&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
-      "websiteUri": "https://naver.me/GbDaCAbn",
-      "regularOpeningHours": {
-        "openNow": true,
-        "periods": [
-          {
-            "open": {
-              "day": 0,
-              "hour": 12,
-              "minute": 0
-            },
-            "close": {
-              "day": 0,
-              "hour": 22,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 1,
-              "hour": 11,
-              "minute": 0
-            },
-            "close": {
-              "day": 1,
-              "hour": 15,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 1,
-              "hour": 16,
-              "minute": 0
-            },
-            "close": {
-              "day": 1,
-              "hour": 22,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 2,
-              "hour": 11,
-              "minute": 0
-            },
-            "close": {
-              "day": 2,
-              "hour": 15,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 2,
-              "hour": 16,
-              "minute": 0
-            },
-            "close": {
-              "day": 2,
-              "hour": 22,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 3,
-              "hour": 11,
-              "minute": 0
-            },
-            "close": {
-              "day": 3,
-              "hour": 15,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 3,
-              "hour": 16,
-              "minute": 0
-            },
-            "close": {
-              "day": 3,
-              "hour": 22,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 4,
-              "hour": 11,
-              "minute": 0
-            },
-            "close": {
-              "day": 4,
-              "hour": 15,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 4,
-              "hour": 16,
-              "minute": 0
-            },
-            "close": {
-              "day": 4,
-              "hour": 22,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 5,
-              "hour": 11,
-              "minute": 0
-            },
-            "close": {
-              "day": 5,
-              "hour": 15,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 5,
-              "hour": 16,
-              "minute": 0
-            },
-            "close": {
-              "day": 5,
-              "hour": 22,
-              "minute": 0
-            }
-          },
-          {
-            "open": {
-              "day": 6,
-              "hour": 12,
-              "minute": 0
-            },
-            "close": {
-              "day": 6,
-              "hour": 22,
-              "minute": 0
-            }
-          }
-        ],
-        "weekdayDescriptions": [
-          "Monday: 11:00 AM – 3:00 PM, 4:00 – 10:00 PM",
-          "Tuesday: 11:00 AM – 3:00 PM, 4:00 – 10:00 PM",
-          "Wednesday: 11:00 AM – 3:00 PM, 4:00 – 10:00 PM",
-          "Thursday: 11:00 AM – 3:00 PM, 4:00 – 10:00 PM",
-          "Friday: 11:00 AM – 3:00 PM, 4:00 – 10:00 PM",
-          "Saturday: 12:00 – 10:00 PM",
-          "Sunday: 12:00 – 10:00 PM"
-        ],
-        "nextCloseTime": "2025-11-17T06:00:00Z"
-      },
-      "utcOffsetMinutes": 540,
-      "adrFormatAddress": "<span class=\"country-name\">South Korea</span>, <span class=\"region\">Seoul</span>, <span class=\"locality\">Gangnam District</span>, <span class=\"street-address\">Nonhyeon-dong, 277-20</span> 1층 <span class=\"postal-code\">06103</span>",
       "businessStatus": "OPERATIONAL",
       "userRatingCount": 127,
       "displayName": {
@@ -97177,285 +96650,6 @@ export const restaurantData = [
       "reservable": true,
       "servesLunch": true,
       "servesWine": true,
-      "currentOpeningHours": {
-        "openNow": true,
-        "periods": [
-          {
-            "open": {
-              "day": 0,
-              "hour": 12,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 23
-              }
-            },
-            "close": {
-              "day": 0,
-              "hour": 22,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 23
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 1,
-              "hour": 11,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 17
-              }
-            },
-            "close": {
-              "day": 1,
-              "hour": 15,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 17
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 1,
-              "hour": 16,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 17
-              }
-            },
-            "close": {
-              "day": 1,
-              "hour": 22,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 17
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 2,
-              "hour": 11,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 18
-              }
-            },
-            "close": {
-              "day": 2,
-              "hour": 15,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 18
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 2,
-              "hour": 16,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 18
-              }
-            },
-            "close": {
-              "day": 2,
-              "hour": 22,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 18
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 3,
-              "hour": 11,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 19
-              }
-            },
-            "close": {
-              "day": 3,
-              "hour": 15,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 19
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 3,
-              "hour": 16,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 19
-              }
-            },
-            "close": {
-              "day": 3,
-              "hour": 22,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 19
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 4,
-              "hour": 11,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 20
-              }
-            },
-            "close": {
-              "day": 4,
-              "hour": 15,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 20
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 4,
-              "hour": 16,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 20
-              }
-            },
-            "close": {
-              "day": 4,
-              "hour": 22,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 20
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 5,
-              "hour": 11,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 21
-              }
-            },
-            "close": {
-              "day": 5,
-              "hour": 15,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 21
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 5,
-              "hour": 16,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 21
-              }
-            },
-            "close": {
-              "day": 5,
-              "hour": 22,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 21
-              }
-            }
-          },
-          {
-            "open": {
-              "day": 6,
-              "hour": 12,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 22
-              }
-            },
-            "close": {
-              "day": 6,
-              "hour": 22,
-              "minute": 0,
-              "date": {
-                "year": 2025,
-                "month": 11,
-                "day": 22
-              }
-            }
-          }
-        ],
-        "weekdayDescriptions": [
-          "Monday: 11:00 AM – 3:00 PM, 4:00 – 10:00 PM",
-          "Tuesday: 11:00 AM – 3:00 PM, 4:00 – 10:00 PM",
-          "Wednesday: 11:00 AM – 3:00 PM, 4:00 – 10:00 PM",
-          "Thursday: 11:00 AM – 3:00 PM, 4:00 – 10:00 PM",
-          "Friday: 11:00 AM – 3:00 PM, 4:00 – 10:00 PM",
-          "Saturday: 12:00 – 10:00 PM",
-          "Sunday: 12:00 – 10:00 PM"
-        ],
-        "nextCloseTime": "2025-11-17T06:00:00Z"
-      },
       "primaryType": "korean_restaurant",
       "shortFormattedAddress": "Gangnam District, Nonhyeon-dong, 277-20 1층",
       "reviews": [
@@ -97567,7 +96761,7 @@ export const restaurantData = [
       ],
       "photos": [
         {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU7LzhUXbcAdItDZ_kZD-j0FKPQyxU7NlOrftR3T-LonnxSJnsa1QYvcCeR0J4JAoKh4lRjyLoMU3YumOygEoH2C6IAGrnKX6U12uL-oVzJ7p58JnsiGYtJ5M04J9oEcix-D3OT9bvMNcNsN3rp478aXxp9nJgnl1tdtzlqAMHmjK4FLOnA1UyY7ujQ4Z-PDMMXNL0TpDQyA-iePGCjumB_frYeCTsk8Wi7MTU0w22H4mrGxfDgYM40k0jFZy6Wlhnbz8ARRXItLXPt3B-8B7mI2GQjMmpGcJ6prOhzgXCSvCQ",
+          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU7uQNPSieyGGdYkigKyzCBPsLATsWf3vZICrJ-DGYWobCMJGgI_wBFCBnCMLMNB_Ct29UAlXHlrceGPlkLDUjeCFOfMhOLwqlGPjbOSxS8xlNJh7CMDuwgm5D4gBWG1D6Qr6NxFxtOSFGpSxxapIVTh3PMIf7rndyh_V0j-41KIh-YVS0afTt7usZ06d594ZeYdUiJO4GhMGJhCX_vdgkvaG6N4D2Co1Amkmz4-eMeMeLIIVwy96ogkosUAPWo0R1xDYGcTwjE2RGrkepMV2QOHYSVLXO5GrtfNvTfMiqCyBw",
           "widthPx": 4800,
           "heightPx": 3200,
           "authorAttributions": [
@@ -97581,7 +96775,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipMreNyji2ZtZJH-W9VhiunEVIuC3X4CyxpQnEx0!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
         },
         {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU6yrNXa2M1q9TFcRyqMJDrfJQdmIjK8jI17RCm6DUsLwePRLXJpvNu1Ed1ev2hKWtWZCayS_g9YpQzd7J2UAQA5b2g1N6DcOBE4cqE42Ibf6DHaqGb2DVMl908APaI-Sz6sJyKN18y3NnwRHMbTA1H_NZdSEpvlWAHzzsKaAgcBvKUpKOcaFsj2kFXdjsCuvf6BRLu7w_IzaK2boKSorAa0f4wXZIsGM9RrV5N8bZwB_HgaZH8Ee4imI8Diiic6QZKPvKLoD9WIiNtVxCMM-XMRvC9SQhqCACmMVrA1C9CZFA",
+          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU7jS58q4fJhu-hswMhXkzJZMUkZPT0jT-_otS-hOIkYBzX8qJTgiP5k9vmjk3n9ni54jXBvw0uSZt2n5eikuAWeu9R6ktht6mxbZJ9r1fLXuNy1S2QrQ7f9NdaAg_Z1eeJvJoHrInz4fonEC-TbEmLLNWGje2SBnhyhKGq-nUJzbl1GXhNJ66cBurwYo170qT82YWrB1_ScdANh45QEOfGUSAdEor6WqGrb00pmHectwJAAfmKk5ij8ZBbusNpPwKNDVhUMUQ_mYCDnxoUbjPc_0xLDd4uxlXDGxzziAWpvJQ",
           "widthPx": 1280,
           "heightPx": 853,
           "authorAttributions": [
@@ -97595,7 +96789,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipOUwXhMqxzx3JvNMOmlPSCRbgdsykQo3b3M9GPM!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
         },
         {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU4vyBVR--JLyEcJ7eQ2_jditgj-vyun9z0BeZLyEQ5PVtaFSLeAkb3wAIkYfArHRUF0XySOpZcA-JO2WsZsbLmMHx0aUqDtbLlnZcpLtWZUbqFf3yHjo6WaG-tM0oTjy9_vPkTUevMH85fGoqC0354Itx37bIfo7qeqnYch3QJa2hkEQMQTzb29NdrZKfuFAihSw_jNgm6v6xNEsSr6Jjx89KnboywbehULf77aHH5I2hxwDCgmpsKr8TZP0GAMhn2rnURhEuK5-eKLGHFetEjP_7FmEJWHy83UxPHXctdW91CMz0xiztZ-XRSXq9o_q9MuUDiN3dWeYeSG76cCkJE-F-k-UKOyzK_LOWPS1Z-pmuoWVcVCd5yDP7yKXCLfvzGRr-XGN-aOgoXp9mrglTudeSTM6YNSaHS7wWRxQFDNbxNZMKtWszvaK7tpIw",
+          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU4XA9pu06WpA-iFagKUZfpjXHx1Y06EcqLOY8AE6_NtQKA4dTcsh-tO15q4grZMBXBjG1zZwwC5MGVkW0X_aGPbXWXb-fnuT5KGKoVEY0LQrdz63xoqx7FVCkJ11aqFceB1qYP0Hby729Q4kK-ZjcWK2jDXQaBw-JQ0UcmO51np8aAJ7tfhOJrmoVqAu3M3Mmt0zB654e0RpRAJGBDQglk7bgdHXmajCMS7A6jbMJpfz1JiOVua75-OPvRlQFzZ-ea5GD9zmxROApIpWKfrP65TSzcgvbZxui-f00TzmRPi8Q734Gn0_rI8SfaV08_H6_GK4qu56PKtBHuMkQZzCKN157wIfsfgSbOeGDRi7gBE39MVxCmM6079qdSPy-0KDJZ9l8n3ZbqTyllz2d1ytdqdLVDwZbz1Ju5pxNf-6UgEcMyuMbrwkzJhq38w8Q",
           "widthPx": 3024,
           "heightPx": 4032,
           "authorAttributions": [
@@ -97609,7 +96803,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhA50EQpb6dCaga8l5jdA-ug!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
         },
         {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU41X9BC_yokxGzzHHtqxPqJjbzkINajWyv-TXZcfMmzWbt9H1W-y1LjWXYRvjVLA5X5thgkdpWHRUVc80tLqN8tdYvGEsDYDPTjJaPAcr8JnczWLcTW3jDUFbDag3d1FV1uWbef5YOpsKmOQ4THcB_6gKwxNjZ2vH0c42KwIPs0azcP4d_9I2RLeEKLYbv8rBf3S9CRZdAWlVxud1BTN5GH2HErKmn1YtuTE8FBpSwgY848e5siaz06MRrTU_5HGBBt_thSe7kRx6wOrwQPQITk2JtkvQxOalLXvS5z8X0TfAT3eRq6gDaI50ADfFrIrau4o3FR75ARzbWGTGTLOij1IVVUiBCBvCTP8VRa5vSIgXDWLsXhVn5yf1ePkKG2fhKc7d1HflkcwlHSiiLnVS4lx7oQqOnwlvSxqwhmqFEl82E",
+          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU6E7dhhsBXGwi-Zw27IaHOd40NRKP9_v3BtfIPt-ePq-7zRPKleMsnNYkPnqgQIbBzO5bVG3o005OUOQekRHxbRxIasgXnXXqH7ihqX2TFIkWmoS5U_mQWoRHc8QN563D-4VcQ3FO-9i5wi2uiTpd2xOvI_UA_OhceW1rQ2zlgqYFne75lsEmzqos_8zM6rKJKcq9gpry855ZXSdGqnCvzDhGlB7DfhntcfGve-vSLKnbaoMKqx15zWKT8W6TevsUWIjJf6pAR3jL0X7yH2uKTq6AXKt6_iIrJu9KGa4e_lbru8Itn7XeAxUTyERBCmg-wn5yObyWJA8N5Vh1A3WiTvA3u8n5Xz_fNMmA1IExehPRb563ekREksOMWEg2gXpPdFrlq6vGRuw199H-QsVkhyPvhnItfoiXab7fJz62CYnR4",
           "widthPx": 4032,
           "heightPx": 3024,
           "authorAttributions": [
@@ -97623,7 +96817,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgID3sM6EtQE!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
         },
         {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU5dieovdaC3_8JNia4gI5mVj2b7eSiHsNQlm7tsubs6eRNU83_t5bgnYd9Ns7colip3JdYFhfwBZiWlJXRlmFU2OM72ZCKKcbgZQPkeNtaH4niuSz6Dvv_fsFlrpPhNL5mR3ZpygbrUTXJakNE94D14sXzgH2dxDr9U8q_g7UlP9mtaquw8mFLuENtRMUbWZYp4Om5Zt-JpHmymh2Px1AbzYr4PH8zCTq2mcperWovmahskJIUbLNjzy-C713KHh0ycrY3QgZ0_Z1L7bB2tjmcDZ3NCOkjBFIhpt0YTW6Mf2lORGyqkKUxt5Xuo7uHM-pDQHIrtvzKxmf8M-ntjX9ZPiyFIU_qd0_LJvuDNZi8nQOGiuPc5DpIMIoVjhIdLTFYT6UtoTAC66CyGjGAllaRsCc0hBMPMtXDgzKy6ep1fsOM",
+          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU4Bw9tj59o53qrGcvviGdo-Zj3FKn3Lv1MrZ_b4T02OtWXpuHSVnseQtf8hvFuBxL4sXzhqc0I-MM1Z8Z6HjQF1RPUGh1EgJmNMSAhHw4fiBe7EKA93HewdiFyRvSzYu_Gt1eCECMQa7SGQKvo4L6_yJneFLWZs8zPs7y6JhX3d44hp7fJbU2n0vOREnBF0nwM6mCLFMn816fBSRZgi1Hmm275v6PZG2Ltigtl7ZkIhyxoHBxr1wkYz2Spl7NiipfozqqdYNnAwNj_ApZ1XUwufumurtccjJlqodT7R7BpWjmldxRPynOVQ0N_nuX-nE9fTobKIJAN0bhbZKBG3dbwWaItgW3MEeCPZZLKJBqSZ-PQJ6V0bIg92akFhJc2Ravf4z18Yh0tG-FByy8KbzWEwiDQt3HMHcHJ8C4WR7W5yCyM",
           "widthPx": 3000,
           "heightPx": 4000,
           "authorAttributions": [
@@ -97637,7 +96831,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgICT9rDB5QE!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
         },
         {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU42_bAokH8wm7NQtzJN5AL8JhUN8L7-vBoRUVYI2yzF2B_Z2K6B8Kc_dMR3dsXruwchsbdwvG9KZSOVOBAj6NPoF6sD5EXr7po3oJuiZwJgfXq9pEav0ll2dxNnqgllKV-UCMsvMlDhD2OtXOI4uD8F4paIKn9r_C81cbBl8eH7CVFJcO94j40UuqcgSYukj7m1fcmcxu5hGqQY-dxE5WG9DYK-J-7b5HcpmAH8r1w2T6hNPtEpPTptbyqLTEailUXS_obdpvcRs5HDNafRPyFLb1VnTzD_8InPJhAYZjIWzQ",
+          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU7ltRMRcf0VT86eWHXrHq7jR4kMd1U4u25UkpQSa6Vd2lHHPMaBoLCFd1X2WB3LmMpphNh1dYpP_-csQi1ZKD3WxY00Vt3SgoyPnzUiKgijotlRRSLdsfnvtAMHaolWMebqYP4zcc2ZH03QQLoFfmIWz0-Mvs6nUOm_YVj9YY3xM5F560g1QHmGKFj5oxfINLyEPyREqkRBEgI0dTFzP_bMEBe2Dh2Ixfi8O0TAWXs7AuERZWGFQZ5b91yVaPR8nSKzpdsvL_6Q546SX3lLFMDDM-0VyGeif6ThIKdMlcUcNA",
           "widthPx": 4800,
           "heightPx": 3200,
           "authorAttributions": [
@@ -97651,7 +96845,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipPRXHzqXpW-Ct2Fo5bDuKKBP6aznfoaPlydah-3!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
         },
         {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU5ftFNFZ7Q0caKfDffy5fZ1Ri9Dynra4VCulH-u_ODDvS_odut97_tqqfprWwtgElGw9ORw0vX4CqG0q7R8eY0LNCdR23-JSN7pb_0biFIuNxxMNSQqG8snXlvfMzZjmC5mrWoAeY3lpmRn6irzlyuKo9rqw4V8l7dj0SAMOxFjUCnQzqo8x5XAf_uCo3l807OerJAL_1to0vbX2qb-JOrL6FB5KdWFkv52M_kQ4iAmQoYIZFDs3JIhyyMLW2tRZUToRXF5YbO3aYNUpBek2aeBN9BLBaPwBx8qxENH14zxEH4MXRfEg7aR9T8l4FErVthRDqbghp9fKHp3HJ_aw346CQXdwwj0qihSmpTYg1nUr_b_hF212BrfbbGm4UmzK733Fb7k98uiaApW-JKOnCKIN8nxIg6Nl_1h279LhJDI0g",
+          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU5bO6NKN5mk7XOtarZ6o9Tdj5BtT7J-btf6-DqAxsEUm7LSILpWDVjVrHdz2faL0TOZUkCEG2KCyWlmhyAD-Jn2K7TBrxVF-mgjQpxLqxK8tmsll-L13Ip34el2ODQfj2YjZLy694ntD4rhTW3u0rWMREoqmFVmGEkhj0-qChpIuBRvI8_C-BYDr5v0dcsFvYrvDZME2XvUCIUfrBRrpnP3F_3kyub7uUwjPziIiEIJMJTQvaazyR9oHeZmv7VQQ8aY-QfMvOuL7Y9TlUH8MbPRYnEYpr-G_8MvzDL-VbvoVU3EdjK0BN4yOocp2WE8-PtebjD7ibmymLrzV1QSa3-Z6-SaaFook7hHSo9VInYQCrJqh5ycoTYQzQ8XgmiVNIBO-kaoRwFbjqc5EImd-v3M6M4ID-rUK-vK4quqS-zE0Q",
           "widthPx": 3024,
           "heightPx": 4032,
           "authorAttributions": [
@@ -97665,7 +96859,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgIC1rP-DbQ!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
         },
         {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU5J90J-eNNwf0-ncqKzgeUzHM1shmrQRaX0dsPHuNd7ovOSvFQIdMw4k2bCPuV595qgwjxL4A_Vj-QFRuYYsVMORTyJ9nsabQ2qzzhZwU8lvH-oYyIE5u3RkQM9vJaw7qR7geBp9v1Q9WwgIsJ946iPOHaEkt2hY4wL4sfkHnevs6gsDSrWoA-shparnNET1qWb2tL1--KL4TBuDEmwBdl6w1eX9XTWUQU84zIqNCF7xephqSgAtwjEvuaD7RYhDmHvy3SdDgfHjmdcyTWWRQzv1q2IURYMbq4dhOh7Qy3N4O35cGKIJs_pP1ezqLQH4nUMheuEx6ed6D2ZYiO8HXR0WDxZKByOVM1MreauvmmZTgHzp1xky0SWzsEM_XyK_x1z9j0SpiGQlmpsrfwD63hMu7yyXvpXp20VO6ptpuFHG2Vm",
+          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU7ZVRYdrwafYdvXRSpOXzU35BQO6y3dFAVScLvNcifqgOoBK6TynaZKq281Sqp2C9BWIyo0_trVFqp22xauilVFfCb43JafDr_baGs-3VN4e0EWyDWZTmirPTeWgruWDXwnvZzadwUq6EELrorXiDNsv2gWzpoFPD8rfGnwHxcizr0vtHoPP12ztGbhshIGpTP7U0tA-twT20FkTnS3kyYnY36eKHdn7ZVeyQx2VfOCyqJBnQocwd1fQMqJUD-LmFuUa_Cd_9w0QgJz4iyYJuCjR33keIG7sRLpfnVASl-gDfMOUMwSQbS2YsvEM49N_clO3Bvhch7N6Zry21U6SdmRgBpaT7Qk9TfGeWBY3kPT8NeySP4cJ2H8MKN5f-kWB-wm44VFRCNRXCGJiulpCExvU-LIL868wK_Dipa7daVjLync",
           "widthPx": 1411,
           "heightPx": 1058,
           "authorAttributions": [
@@ -97679,7 +96873,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEOv7m9iI4vfaswE!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
         },
         {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU7PneH6E6CrnkpxLALLqshhJlqDzDEl_0rjGFEe3TMlGFptPLUifYtBrAXusg-s4i7-8JUdPvmGHjIcjw-6ZrsBlM7EzR2bClHIf0VUTvyphs4MYErhfg3qBL9gFM1zZDepicsktF0O1xc2icFlqPgNzBsJtmN4-b79Ax1WsdOqH4suFyiHPVjvMAJPCjaF4BJXcGfMqQ70Omsp7s5qywszzLSVNcwzbt706V_KuE8dCA_neAiNyVDBJ8_MWCbcd8G8XgD-js-HHTonjOXbnRBKJPlBuRyejStUwPsBYXDjVg",
+          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU7433QGJtAx_r6fQC_IWwx_8ivHVQ1RJbbFhl0wDZ_y5OBeNROlU4wLcJUtJKhwx6vlSMZeo8zhWUwzPfZj0L8-j7QJtE2pzGb9vNz2_ziMEtoyTDWTQw60zx_JyW0FXT1aUTGZGZROEc2wyPEt36jwX2QQ0dqHNIvjkjVPAZxvPHBO8-ikFDN17fZLptoQtEY1Owtx9o83gk4DWdaKDW7vJ1HVezFNa4DHlwa3cetPdivDKa5WaNHEFmL1uusNhH0ri2mOBovQsqudMUTdw5-kb8yduVtzLOO8uS0DVIFGlQ",
           "widthPx": 1280,
           "heightPx": 853,
           "authorAttributions": [
@@ -97693,7 +96887,7 @@ export const restaurantData = [
           "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipMJMoRakGgBgnQbj0kNkU_4Vf6jU4Y-wLFadffO!2e10!4m2!3m1!1s0x357ca3b2061391ed:0xe68693f89a0618f9"
         },
         {
-          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU5LsEOov_INXMbpDunzDR_I0tcLRtovHYOjJg4TkXGzXbacZhfxaab4WpHwdzZPVXMEyLia8H1HAtLb6k164ZQdU5eFaySvnfCU0wO-8Fv1Z-Jg9znjo1z5v6m6R6mz8Z56SbjKOLOyABZH6Qk61muq-x94bNtNqanlLuf2adHKANbyv3IcN9EzafR9sZogC7w4lnPUCpE8t2KYWLFXSufS6hdEA17X-S8xWUpuRIkXoiQnjDhuEC93nTl6izo65gnXV_-3RLMGVnMe0RW7d12og0WpbOoDbL2CBbt_QNwUly4eD-O_fUbPDkd7BI8ekeO5jOQ9qGBKhrpZZDb-qihk42hGQ04wo_yyjTThiduePt6zjCU_42lRYCbU7D9U65IUoOf1AO8W7I-lEh492hKDScz7VVMAmFVF7S-nzC5fIyqO",
+          "name": "places/ChIJ7ZETBrKjfDUR-RgGmviThuY/photos/AWn5SU73wU8KnU8NpfCeh8C8o_On_SKqLQqmv9n-Npj9MtXvpIqaqvokBBh3yrZJ0bZxPuLFg9VJTN1FIdE7F4FlUqO2MMCqAcYlyquERzD8aBguUVvKqBdaBi6jpXuCnR7EinmtXp0fmnyXpEkrwBLHgLkVzaTx92EqdZBAHhsYwo6PN-VP9pki2U1VilzfKTAqa1wFTt0-A4mqiWP37Heff7PhqFI8YF9AwSbUFsZm4tF46SjpsHEiEpnpVyrNuGd9lK0thkvrl99431fNBHTsfQT8dHsxWaFbwOshA7tAeDdu6G5JhfAatOy73gPe4fb63Herd3dKI3iZ5dogHN7D-er_HlgflslBkwhME7A1pcp_UqiRfZv1pLIVUy5josrOlaQSRWCyotOeHsWDbvfSFkeN-tBLgPTAs1WCtz9AsocOts7O",
           "widthPx": 2992,
           "heightPx": 2992,
           "authorAttributions": [
@@ -97718,7 +96912,6 @@ export const restaurantData = [
         "valetParking": true,
         "paidGarageParking": true
       },
-      "pureServiceAreaBusiness": false,
       "addressDescriptor": {
         "landmarks": [
           {
@@ -97853,19 +97046,43 @@ export const restaurantData = [
     "specific_type": "korean_restaurant",
     "neighborhood_extracted": "Nonhyeon-dong",
     "enrichment_status": "success",
-    "enrichment_date": "2025-11-17T04:00:31.964Z",
+    "enrichment_date": "2025-11-17T05:02:54.118Z",
     "cynthias_pick": true,
     "price_display": "N/A",
-    "city": "Seoul",
-    "vibe_tags": [],
-    "occasion_tags": [],
-    "crowd_tags": [],
-    "service_tags": [],
-    "noise_level": null,
-    "food_quality_tags": [],
-    "value_tag": null,
-    "special_features": [],
-    "booking_tags": [],
+    "city": null,
+    "vibe_tags": [
+      "upscale",
+      "sophisticated",
+      "intimate",
+      "modern"
+    ],
+    "occasion_tags": [
+      "date_night",
+      "anniversary",
+      "celebration",
+      "group_dining"
+    ],
+    "crowd_tags": [
+      "mature_crowd",
+      "locals_spot"
+    ],
+    "service_tags": [
+      "attentive_service",
+      "knowledgeable_staff"
+    ],
+    "noise_level": "quiet_ambiance",
+    "food_quality_tags": [
+      "exceptional_food",
+      "craft_cocktails"
+    ],
+    "value_tag": "splurge_worthy",
+    "special_features": [
+      "chef_driven",
+      "unique_concept"
+    ],
+    "booking_tags": [
+      "reservations_required"
+    ],
     "negative_tags": [],
     "accolades_tags": []
   }

@@ -1,21 +1,26 @@
 #!/usr/bin/env node
 
 /**
- * Complete Restaurant Addition Script
+ * Complete Restaurant Addition Script (Consolidated)
  * 
  * This script automates the entire process of adding a new restaurant:
- * 1. Fetches restaurant data from Google Places API using Google Maps URL
- * 2. Formats data to match project structure
- * 3. Saves to latest_277.ts (main data file)
- * 4. Removes unwanted metadata fields
- * 5. Downloads first 3 photos at highest resolution
- * 6. Enriches with metadata tags using Claude API (required)
+ * 1. Search (if URL provided) or use Place ID directly
+ * 2. Fetch full place details from Google Places API
+ * 3. Save fetched data in a new file (critical: never write directly into latest data file!)
+ * 4. Format the fetched data to be consistent with the rest of data in latest data file
+ * 5. Remove unwanted metadata fields
+ * 6. Download first 3 photos at highest resolution
+ * 7. Update vercel photo mapping
+ * 8. Enrich empty metadata tags using Claude API (includes GENERATIVE SUMMARY in prompt)
  * 
  * Requires:
  * - GOOGLE_PLACES_API_KEY environment variable
  * - ANTHROPIC_API_KEY environment variable
  * 
- * Usage: node add_enrich_new_restaurant_loop.cjs "https://www.google.com/maps/place/..."
+ * Usage:
+ *   node add-restaurant-consolidated.cjs "https://www.google.com/maps/place/..."
+ *   OR
+ *   node add-restaurant-consolidated.cjs --place-id "ChIJ..." [--name "Restaurant Name"]
  */
 
 const fs = require('fs');
@@ -24,15 +29,44 @@ const https = require('https');
 const http = require('http');
 const Anthropic = require('@anthropic-ai/sdk');
 
+// Load .env file if it exists
+const envPath = path.join(__dirname, '.env');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  envContent.split('\n').forEach(line => {
+    const match = line.match(/^([^=:#]+)=(.*)$/);
+    if (match) {
+      const key = match[1].trim();
+      const value = match[2].trim().replace(/^["']|["']$/g, '');
+      if (!process.env[key]) {
+        process.env[key] = value;
+      }
+    }
+  });
+}
+
 // Configuration
-const GOOGLE_API_KEY = process.env.GOOGLE_PLACES_API_KEY || '';
+const GOOGLE_API_KEY = process.env.GOOGLE_PLACES_API_KEY || process.env.VITE_GOOGLE_PLACES_API_KEY || '';
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || '';
-const RESTAURANT_URL = process.argv[2];
+
+// Parse command line arguments
+const args = process.argv.slice(2);
+let RESTAURANT_URL = null;
+let PLACE_ID = null;
+let RESTAURANT_NAME = null;
+
+if (args[0] === '--place-id' && args[1]) {
+  PLACE_ID = args[1];
+  RESTAURANT_NAME = args[3] === '--name' ? args[4] : null;
+} else if (args[0] && !args[0].startsWith('--')) {
+  RESTAURANT_URL = args[0];
+}
 
 // File paths
 const RESTAURANT_DATA_FILE = './api/data/latest_277.ts';
 const OUTPUT_DIR = './public/restaurant-photos';
 const MAPPING_FILE = path.join(OUTPUT_DIR, 'photo-mapping.json');
+const TEMP_OUTPUT_DIR = './api/data/temp';
 
 // Initialize Anthropic client
 const anthropic = new Anthropic({
@@ -62,9 +96,10 @@ if (!ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
-if (!RESTAURANT_URL) {
-  console.error('❌ ERROR: Please provide a Google Maps URL');
-  console.error('   Usage: node add_enrich_new_restaurant_loop.cjs "https://www.google.com/maps/place/..."');
+if (!RESTAURANT_URL && !PLACE_ID) {
+  console.error('❌ ERROR: Please provide either a Google Maps URL or Place ID');
+  console.error('   Usage (URL): node add-restaurant-consolidated.cjs "https://www.google.com/maps/place/..."');
+  console.error('   Usage (Place ID): node add-restaurant-consolidated.cjs --place-id "ChIJ..." [--name "Restaurant Name"]');
   process.exit(1);
 }
 
@@ -90,7 +125,7 @@ function extractCoordinatesFromUrl(url) {
 }
 
 /**
- * Step 1: Search for restaurant using Google Places API
+ * Step 1: Search for restaurant using Google Places API (only if URL provided)
  */
 async function searchRestaurant(url) {
   const restaurantName = extractRestaurantNameFromUrl(url);
@@ -155,10 +190,14 @@ async function searchRestaurant(url) {
 }
 
 /**
- * Step 2: Get full place details
+ * Step 2: Get full place details by Place ID
  */
 async function getPlaceDetails(placeId) {
-  console.log(`📥 Step 2: Fetching full place details...\n`);
+  const stepNum = PLACE_ID ? '1' : '2';
+  console.log(`📥 Step ${stepNum}: Fetching full place details...\n`);
+  if (PLACE_ID) {
+    console.log(`   Place ID: ${placeId}\n`);
+  }
   
   try {
     const url = `https://places.googleapis.com/v1/places/${placeId}`;
@@ -217,7 +256,8 @@ async function getPlaceDetails(placeId) {
       'reviewSummary',
       'timeZone',
       'postalAddress',
-      'photos'
+      'photos',
+      'reviews'
     ].join(',');
     
     const response = await fetch(url, {
@@ -233,7 +273,12 @@ async function getPlaceDetails(placeId) {
     }
     
     const placeData = await response.json();
-    console.log(`✓ Successfully fetched place details\n`);
+    console.log(`✓ Successfully fetched place details`);
+    if (PLACE_ID) {
+      console.log(`   Name: ${placeData.displayName?.text || 'N/A'}`);
+      console.log(`   Address: ${placeData.formattedAddress || 'N/A'}`);
+    }
+    console.log(`\n`);
     
     return placeData;
   } catch (error) {
@@ -243,7 +288,32 @@ async function getPlaceDetails(placeId) {
 }
 
 /**
- * Step 3: Format restaurant data
+ * Step 3: Save fetched data to a new file (CRITICAL: never write directly to latest_277.ts!)
+ */
+function saveFetchedDataToNewFile(placeData, placeId) {
+  console.log(`💾 Step 3: Saving fetched data to new file...\n`);
+  
+  // Create temp directory if it doesn't exist
+  if (!fs.existsSync(TEMP_OUTPUT_DIR)) {
+    fs.mkdirSync(TEMP_OUTPUT_DIR, { recursive: true });
+  }
+  
+  // Generate filename with timestamp and place ID
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const sanitizedPlaceId = placeId.replace(/[^a-zA-Z0-9_-]/g, '_');
+  const filename = `restaurant_${sanitizedPlaceId}_${timestamp}.json`;
+  const filepath = path.join(TEMP_OUTPUT_DIR, filename);
+  
+  // Save raw fetched data
+  fs.writeFileSync(filepath, JSON.stringify(placeData, null, 2), 'utf8');
+  
+  console.log(`✓ Saved fetched data to: ${filepath}\n`);
+  
+  return filepath;
+}
+
+/**
+ * Step 4: Format restaurant data to match project structure
  */
 function formatRestaurantData(placeData, placeId, url) {
   const now = new Date();
@@ -251,7 +321,7 @@ function formatRestaurantData(placeData, placeId, url) {
   
   // Extract neighborhood from address components
   let neighborhood = null;
-  let city = 'New York City'; // Default, will be updated if found
+  let city = null; // Will be auto-detected
   
   if (placeData.addressComponents) {
     const neighborhoodComponent = placeData.addressComponents.find(comp => 
@@ -268,7 +338,7 @@ function formatRestaurantData(placeData, placeId, url) {
     if (cityComponent && cityComponent.longText) {
       city = cityComponent.longText;
     } else {
-      // Try administrative_area_level_1
+      // Try administrative_area_level_1 for NYC
       const stateComponent = placeData.addressComponents.find(comp => 
         comp.types?.includes('administrative_area_level_1')
       );
@@ -312,7 +382,7 @@ function formatRestaurantData(placeData, placeId, url) {
                           'Address not available';
   
   // Extract country code
-  let countryCode = 'US';
+  let countryCode = 'US'; // Default
   if (placeData.addressComponents) {
     const countryComponent = placeData.addressComponents.find(comp => 
       comp.types?.includes('country')
@@ -332,11 +402,11 @@ function formatRestaurantData(placeData, placeId, url) {
         date: now.toISOString(),
         google_maps_url: placeData.googleMapsUri || 
                         placeData.googleMapsLinks?.placeUri || 
-                        url,
+                        url || `https://maps.google.com/?cid=${placeId}`,
         location: {
           address: formattedAddress,
           country_code: countryCode,
-          name: placeData.displayName?.text || 'Unknown'
+          name: placeData.displayName?.text || RESTAURANT_NAME || 'Unknown'
         }
       },
       type: 'Feature'
@@ -367,6 +437,17 @@ function formatRestaurantData(placeData, placeId, url) {
     negative_tags: [],
     accolades_tags: []
   };
+}
+
+/**
+ * Step 5: Remove unwanted metadata fields
+ */
+function removeUnwantedFields(restaurant) {
+  FIELDS_TO_REMOVE.forEach(field => {
+    if (restaurant.google_data && restaurant.google_data[field] !== undefined) {
+      delete restaurant.google_data[field];
+    }
+  });
 }
 
 /**
@@ -426,6 +507,9 @@ ${restaurantData.editorialSummary || 'N/A'}
 REVIEW SUMMARY:
 ${restaurantData.reviewSummary || 'N/A'}
 
+GENERATIVE SUMMARY:
+${restaurantData.generativeSummary || 'N/A'}
+
 REVIEWS:
 ${restaurantData.reviewTexts || 'No reviews available'}
 
@@ -481,81 +565,6 @@ IMPORTANT INSTRUCTIONS:
 }
 
 /**
- * Step 4: Save to main restaurants file
- */
-function saveToRestaurantData(restaurant) {
-  console.log(`💾 Step 4: Saving to main restaurant data file...\n`);
-  
-  let restaurants = [];
-  let originalContent = '';
-  
-  // Read existing file
-  if (fs.existsSync(RESTAURANT_DATA_FILE)) {
-    originalContent = fs.readFileSync(RESTAURANT_DATA_FILE, 'utf8');
-    const match = originalContent.match(/export const restaurantData = (\[[\s\S]*?\]);/);
-    if (match) {
-      restaurants = JSON.parse(match[1]);
-    }
-  }
-  
-  // Check if restaurant already exists
-  const exists = restaurants.some(r => r.google_place_id === restaurant.google_place_id);
-  if (exists) {
-    console.log(`⚠️  Restaurant already exists in file, updating...\n`);
-    restaurants = restaurants.map(r => 
-      r.google_place_id === restaurant.google_place_id ? restaurant : r
-    );
-  } else {
-    restaurants.push(restaurant);
-  }
-  
-  // Write back to file
-  const headerMatch = originalContent.match(/(\/\/.*\n)*/);
-  const header = headerMatch ? headerMatch[0] : 
-                 '// Restaurant data\n' +
-                 `// Updated: ${new Date().toISOString()}\n\n`;
-  
-  const output = header + 'export const restaurantData = ' + 
-                 JSON.stringify(restaurants, null, 2) + ';\n';
-  
-  fs.writeFileSync(RESTAURANT_DATA_FILE, output, 'utf8');
-  console.log(`✓ Saved to ${RESTAURANT_DATA_FILE}\n`);
-}
-
-/**
- * Step 5: Remove unwanted metadata fields
- */
-function removeUnwantedFields(restaurant) {
-  console.log(`🧹 Step 5: Removing unwanted metadata fields...\n`);
-  
-  FIELDS_TO_REMOVE.forEach(field => {
-    if (restaurant.google_data && restaurant.google_data[field] !== undefined) {
-      delete restaurant.google_data[field];
-      console.log(`   ✓ Removed: ${field}`);
-    }
-  });
-  
-  // Save back to file
-  let restaurants = [];
-  const content = fs.readFileSync(RESTAURANT_DATA_FILE, 'utf8');
-  const match = content.match(/export const restaurantData = (\[[\s\S]*?\]);/);
-  if (match) {
-    restaurants = JSON.parse(match[1]);
-    restaurants = restaurants.map(r => 
-      r.google_place_id === restaurant.google_place_id ? restaurant : r
-    );
-    
-    const headerMatch = content.match(/(\/\/.*\n)*/);
-    const header = headerMatch ? headerMatch[0] : '';
-    const output = header + 'export const restaurantData = ' + 
-                   JSON.stringify(restaurants, null, 2) + ';\n';
-    fs.writeFileSync(RESTAURANT_DATA_FILE, output, 'utf8');
-  }
-  
-  console.log(`✓ Metadata cleaned\n`);
-}
-
-/**
  * Step 6: Download photos
  */
 function downloadImage(url, filepath) {
@@ -604,8 +613,6 @@ function getPhotoUrl(photoName) {
 }
 
 async function downloadPhotos(restaurant) {
-  console.log(`📸 Step 6: Downloading photos...\n`);
-  
   if (!fs.existsSync(OUTPUT_DIR)) {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   }
@@ -613,22 +620,12 @@ async function downloadPhotos(restaurant) {
   const photos = restaurant.google_data?.photos || [];
   if (!photos || photos.length === 0) {
     console.log(`⚠️  No photos available\n`);
-    return;
+    return [];
   }
   
   const placeId = restaurant.google_place_id;
   const photosToDownload = photos.slice(0, Math.min(3, photos.length));
   const localPhotoPaths = [];
-  
-  // Load existing mapping
-  let photoMapping = {};
-  if (fs.existsSync(MAPPING_FILE)) {
-    try {
-      photoMapping = JSON.parse(fs.readFileSync(MAPPING_FILE, 'utf-8'));
-    } catch (e) {
-      // Ignore
-    }
-  }
   
   console.log(`   Downloading ${photosToDownload.length} photo(s) at highest resolution...\n`);
   
@@ -677,7 +674,24 @@ async function downloadPhotos(restaurant) {
     }
   }
   
-  // Save mapping
+  return localPhotoPaths;
+}
+
+/**
+ * Step 7: Update photo mapping
+ */
+function updatePhotoMapping(placeId, localPhotoPaths) {
+  // Load existing mapping
+  let photoMapping = {};
+  if (fs.existsSync(MAPPING_FILE)) {
+    try {
+      photoMapping = JSON.parse(fs.readFileSync(MAPPING_FILE, 'utf-8'));
+    } catch (e) {
+      // Ignore
+    }
+  }
+  
+  // Update mapping
   if (localPhotoPaths.length > 0) {
     photoMapping[placeId] = localPhotoPaths;
     fs.writeFileSync(MAPPING_FILE, JSON.stringify(photoMapping, null, 2));
@@ -686,11 +700,9 @@ async function downloadPhotos(restaurant) {
 }
 
 /**
- * Step 7: Enrich with metadata tags using Claude API
+ * Step 8: Enrich with metadata tags using Claude API
  */
 async function enrichRestaurantWithTags(restaurant, retries = 3) {
-  console.log(`🤖 Step 7: Enriching with metadata tags...\n`);
-  
   const restaurantData = extractTextForAnalysis(restaurant);
   const prompt = createEnrichmentPrompt(restaurantData);
 
@@ -719,23 +731,6 @@ async function enrichRestaurantWithTags(restaurant, retries = 3) {
       console.log(`   ✓ Added ${tagCount} tags`);
       console.log(`   Input tokens: ${message.usage.input_tokens}, Output tokens: ${message.usage.output_tokens}\n`);
       
-      // Save back to file
-      let restaurants = [];
-      const content = fs.readFileSync(RESTAURANT_DATA_FILE, 'utf8');
-      const match = content.match(/export const restaurantData = (\[[\s\S]*?\]);/);
-      if (match) {
-        restaurants = JSON.parse(match[1]);
-        restaurants = restaurants.map(r => 
-          r.google_place_id === restaurant.google_place_id ? restaurant : r
-        );
-        
-        const headerMatch = content.match(/(\/\/.*\n)*/);
-        const header = headerMatch ? headerMatch[0] : '';
-        const output = header + 'export const restaurantData = ' + 
-                       JSON.stringify(restaurants, null, 2) + ';\n';
-        fs.writeFileSync(RESTAURANT_DATA_FILE, output, 'utf8');
-      }
-      
       return;
     } catch (error) {
       const isRetryable = error.message.includes('529') || 
@@ -759,49 +754,79 @@ async function enrichRestaurantWithTags(restaurant, retries = 3) {
 }
 
 /**
+ * Save final processed restaurant to a new file
+ */
+function saveFinalRestaurantToFile(restaurant, tempFilePath) {
+  const finalFilename = tempFilePath.replace('.json', '_processed.json');
+  fs.writeFileSync(finalFilename, JSON.stringify(restaurant, null, 2), 'utf8');
+  console.log(`💾 Final processed restaurant saved to: ${finalFilename}\n`);
+  return finalFilename;
+}
+
+/**
  * Main function
  */
 async function main() {
   console.log('='.repeat(60));
-  console.log('🍽️  Restaurant Addition Script');
+  console.log('🍽️  Restaurant Addition Script (Consolidated)');
   console.log('='.repeat(60));
+  console.log('⚠️  This script saves to NEW files - never modifies latest_277.ts directly!\n');
   
   try {
-    // Step 1: Search
-    const placeId = await searchRestaurant(RESTAURANT_URL);
+    let placeId;
+    
+    // Step 1: Get Place ID (either from search or direct input)
+    if (PLACE_ID) {
+      placeId = PLACE_ID;
+    } else {
+      placeId = await searchRestaurant(RESTAURANT_URL);
+    }
     
     // Step 2: Get details
     const placeData = await getPlaceDetails(placeId);
     
-    // Step 3: Format
-    console.log(`📝 Step 3: Formatting restaurant data...\n`);
+    // Step 3: Save fetched data to new file
+    const tempFilePath = saveFetchedDataToNewFile(placeData, placeId);
+    
+    // Step 4: Format
+    console.log(`📝 Step 4: Formatting restaurant data...\n`);
     const restaurant = formatRestaurantData(placeData, placeId, RESTAURANT_URL);
     console.log(`✓ Formatted: ${restaurant.google_data.displayName?.text}\n`);
     
-    // Step 4: Save
-    saveToRestaurantData(restaurant);
-    
     // Step 5: Remove unwanted fields
+    console.log(`🧹 Step 5: Removing unwanted metadata fields...\n`);
     removeUnwantedFields(restaurant);
+    console.log(`✓ Metadata cleaned\n`);
     
     // Step 6: Download photos
-    await downloadPhotos(restaurant);
+    console.log(`📸 Step 6: Downloading photos...\n`);
+    const localPhotoPaths = await downloadPhotos(restaurant);
     
-    // Step 7: Enrich with tags (required)
+    // Step 7: Update photo mapping
+    console.log(`🗺️  Step 7: Updating photo mapping...\n`);
+    updatePhotoMapping(placeId, localPhotoPaths);
+    
+    // Step 8: Enrich with tags
+    console.log(`🤖 Step 8: Enriching with metadata tags...\n`);
     await enrichRestaurantWithTags(restaurant);
     
+    // Save final processed restaurant
+    const finalFilePath = saveFinalRestaurantToFile(restaurant, tempFilePath);
+    
     console.log('='.repeat(60));
-    console.log('✅ SUCCESS! Restaurant added successfully');
+    console.log('✅ SUCCESS! Restaurant processed successfully');
     console.log('='.repeat(60));
     console.log(`\n📍 Restaurant: ${restaurant.google_data.displayName?.text}`);
     console.log(`   Place ID: ${restaurant.google_place_id}`);
     console.log(`   Address: ${restaurant.original_place.properties.location.address}`);
-    console.log(`   City: ${restaurant.city}`);
+    console.log(`   City: ${restaurant.city || 'Auto-detected'}`);
     console.log(`   Price: ${restaurant.price_display}`);
     console.log(`   Rating: ${restaurant.google_data.rating || 'N/A'}`);
-    console.log(`\n📁 Saved to: ${RESTAURANT_DATA_FILE}`);
+    console.log(`\n📁 Files created:`);
+    console.log(`   Raw data: ${tempFilePath}`);
+    console.log(`   Processed: ${finalFilePath}`);
     console.log(`📸 Photos: ${OUTPUT_DIR}`);
-    console.log(`\n💡 Restaurant successfully added with all enrichment tags!`);
+    console.log(`\n💡 Review the processed file and manually add to latest_277.ts when ready!`);
     console.log('='.repeat(60) + '\n');
     
   } catch (error) {
@@ -814,4 +839,3 @@ async function main() {
 
 // Run
 main();
-

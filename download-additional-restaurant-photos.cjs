@@ -26,8 +26,8 @@ const OUTPUT_DIR = './public/restaurant-photos';
 
 // Specific restaurants to download photos for (by name or place_id)
 const TARGET_RESTAURANTS = [
-  'ChIJLXL2BvijfDURmTrYFPQIGUc', // Cafe Onion Anguk
-  'ChIJB6TgGcSifDURzk0WJaCjK6I'  // Keunkiwajip
+  'ChIJ5-ZTbqhZwokROw_GJzQx1dw', // Take 31
+  'ChIJR_bK295bwokR8gM6QgEdmkY'  // Peter Luger Steak House
 ];
 
 // Create output directory if it doesn't exist
@@ -37,8 +37,8 @@ if (!fs.existsSync(OUTPUT_DIR)) {
 
 // Restaurant information (place IDs and names)
 const RESTAURANT_INFO = {
-  'ChIJLXL2BvijfDURmTrYFPQIGUc': 'Cafe Onion Anguk',
-  'ChIJB6TgGcSifDURzk0WJaCjK6I': 'Keunkiwajip'
+  'ChIJ5-ZTbqhZwokROw_GJzQx1dw': 'Take 31',
+  'ChIJR_bK295bwokR8gM6QgEdmkY': 'Peter Luger Steak House'
 };
 
 // Build target restaurants array from place IDs
