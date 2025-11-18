@@ -152,8 +152,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       query, 
       city, // Selected city pill (required)
       userId = 'api-user',
-      context, // Optional: { previousQuery, previousKeywords, previousResultIds, city }
-      previousResultIds: clientProvidedResultIds // Optional explicit list from client
+      context // Optional: { previousQuery, previousKeywords, previousResultIds, city }
     } = req.body;
 
     if (!query || typeof query !== 'string') {
@@ -168,9 +167,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         previousResultIdsCount: context.previousResultIds?.length || 0,
         previousCity: context.city
       });
-    }
-    if (Array.isArray(clientProvidedResultIds) && clientProvidedResultIds.length > 0) {
-      console.log('[API] Client provided previousResultIds count:', clientProvidedResultIds.length);
     }
 
     // Step 1: Validate city parameter
@@ -412,22 +408,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.log('[API] Query is for Cynthia\'s favorites - will return ALL matching restaurants (no limit)');
     }
 
-    const contextPreviousResultIds: string[] = Array.isArray(context?.previousResultIds)
-      ? context.previousResultIds.filter((id: any) => typeof id === 'string' && id.length > 0)
-      : [];
-    const fallbackPreviousResultIds: string[] = Array.isArray(clientProvidedResultIds)
-      ? clientProvidedResultIds.filter((id: any) => typeof id === 'string' && id.length > 0)
-      : [];
-    const effectivePreviousResultIds = contextPreviousResultIds.length > 0
-      ? contextPreviousResultIds
-      : fallbackPreviousResultIds;
-
     // Step 8: Handle "show me more" follow-ups - exclude previously shown results
-    if (isShowMeMoreQuery(query) && effectivePreviousResultIds.length > 0) {
+    if (isShowMeMoreQuery(query) && context?.previousResultIds && context.previousResultIds.length > 0) {
       const previousRestaurants = filteredRestaurants.filter(r => 
-        effectivePreviousResultIds.includes(r.google_place_id)
+        context.previousResultIds!.includes(r.google_place_id)
       );
-      console.log(`[API] Excluding ${previousRestaurants.length} previously shown restaurants using ${contextPreviousResultIds.length > 0 ? 'context' : 'client-provided'} IDs`);
+      console.log(`[API] Excluding ${previousRestaurants.length} previously shown restaurants`);
       filteredRestaurants = getMoreRestaurants(filteredRestaurants, previousRestaurants);
       console.log(`[API] After excluding previous results: ${filteredRestaurants.length} restaurants`);
     }
@@ -464,15 +450,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Step 10: Build context for next query (for follow-ups)
     // For "show me more" queries, preserve the original query from context, not "show me more"
     // Also accumulate previousResultIds (don't replace - we need all shown restaurants, not just the latest batch)
-    const newResultIds = finalRestaurants
-      .map(r => r.google_place_id)
-      .filter(id => typeof id === 'string' && id.length > 0);
-    const baseResultIdsForAccumulation = contextPreviousResultIds.length > 0
-      ? contextPreviousResultIds
-      : fallbackPreviousResultIds;
-    const accumulatedResultIds = isShowMeMoreQuery(query)
-      ? Array.from(new Set([...baseResultIdsForAccumulation, ...newResultIds])) // Accumulate seen IDs without duplicates
-      : newResultIds; // First/new query: just use the new IDs
+    const newResultIds = finalRestaurants.map(r => r.google_place_id);
+    const accumulatedResultIds = isShowMeMoreQuery(query) && context?.previousResultIds
+      ? [...context.previousResultIds, ...newResultIds] // Accumulate: add new IDs to existing ones
+      : newResultIds; // First query: just use the new IDs
     
     const nextContext: QueryContext = {
       previousQuery: isShowMeMoreQuery(query) && context?.previousQuery 
