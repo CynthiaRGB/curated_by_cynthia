@@ -75844,6 +75844,7 @@ export const restaurantData = [
     "accolades_tags": []
   },
   {
+    "google_place_id": "ChIJ5-ZTbqhZwokROw_GJzQx1dw",
     "google_data": {
       "name": "places/ChIJ5-ZTbqhZwokROw_GJzQx1dw",
       "id": "ChIJ5-ZTbqhZwokROw_GJzQx1dw",
@@ -76115,6 +76116,7 @@ export const restaurantData = [
     "accolades_tags": []
   },
   {
+    "google_place_id": "ChIJR_bK295bwokR8gM6QgEdmkY",
     "google_data": {
       "name": "places/ChIJR_bK295bwokR8gM6QgEdmkY",
       "id": "ChIJR_bK295bwokR8gM6QgEdmkY",

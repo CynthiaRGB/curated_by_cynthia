@@ -309,11 +309,14 @@ export function getHardcodedKeywordsForPrompt(
   query: string,
   city?: string
 ): ExtractedKeywords | null {
-  // Normalize query: remove " in [city]" suffix and trim
+  // Normalize query: remove " in [city]" suffix, strip emojis, and trim
+  // Emojis are UI decoration and shouldn't affect matching (e.g., "Cynthia's favorites 👑")
   const normalizedQuery = query
     .toLowerCase()
     .trim()
     .replace(/\s+in\s+(new\s+york\s+city|tokyo|paris|seoul|nyc)$/i, '')
+    // Remove emojis and other Unicode symbols (preserves letters, numbers, spaces, apostrophes, hyphens)
+    .replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '')
     .trim();
   
   // Map of normalized prompt text to ExtractedKeywords (without city)
