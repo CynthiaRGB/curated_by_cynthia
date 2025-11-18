@@ -248,6 +248,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       } else {
         console.warn('[API] "Show me more" query detected but context.previousKeywords is missing! This should not happen.');
         console.warn('[API] Context available:', !!context, 'PreviousKeywords:', context?.previousKeywords);
+        // Return error instead of calling Claude - "Show me more" requires context
+        return res.status(200).json({
+          recommendations: [],
+          summary: "I need a previous search to show more results. Please start with a new search!",
+          usedClaude: false,
+          usedClaudeRanking: false,
+          route: 'parseAndFilter',
+          context: undefined,
+          hasMoreResults: false,
+          debug: {
+            maxResults: 10,
+            routingReason: 'Show me more query without context',
+            parsedKeywords: undefined
+          }
+        });
       }
     }
     
@@ -265,7 +280,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
     
     // If no hardcoded keywords found and not a "show me more" query, use Claude API to parse the query
-    if (!parsedKeywords) {
+    // IMPORTANT: "Show me more" queries should NEVER call Claude (handled above)
+    if (!parsedKeywords && !isShowMeMoreQuery(query)) {
       console.log('[API] ⚠️ WARNING: parsedKeywords is undefined/null, calling Claude API');
       console.log('[API] Debug info - isShowMeMoreQuery:', isShowMeMoreQuery(query), 'hasContext:', !!context, 'hasPreviousKeywords:', !!context?.previousKeywords);
       const claudeParseStartTime = Date.now();
@@ -433,10 +449,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Step 10: Build context for next query (for follow-ups)
+    // For "show me more" queries, preserve the original query from context, not "show me more"
+    // Also accumulate previousResultIds (don't replace - we need all shown restaurants, not just the latest batch)
+    const newResultIds = finalRestaurants.map(r => r.google_place_id);
+    const accumulatedResultIds = isShowMeMoreQuery(query) && context?.previousResultIds
+      ? [...context.previousResultIds, ...newResultIds] // Accumulate: add new IDs to existing ones
+      : newResultIds; // First query: just use the new IDs
+    
     const nextContext: QueryContext = {
-      previousQuery: query,
+      previousQuery: isShowMeMoreQuery(query) && context?.previousQuery 
+        ? context.previousQuery 
+        : query,
       previousKeywords: parsedKeywords,
-      previousResultIds: finalRestaurants.map(r => r.google_place_id),
+      previousResultIds: accumulatedResultIds,
       city: normalizedCity
     };
 
