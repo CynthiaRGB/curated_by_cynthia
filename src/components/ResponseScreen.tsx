@@ -479,6 +479,11 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
     }
   }, [message]);
 
+  // Scroll to top when ResponseScreen mounts to ensure prompt-pill is visible
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="response-screen">
       <div className="conversation-container">

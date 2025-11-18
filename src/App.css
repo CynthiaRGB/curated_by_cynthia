@@ -551,6 +551,10 @@
 }
 
 @media (max-width: 600px) {
+  .content-container {
+    top: 10vh;
+  }
+
   .pills-container {
     flex-wrap: wrap;
     gap: 6px;
@@ -570,6 +574,16 @@
 
   .bottom-chatbox {
     padding: 24px 0;
+  }
+
+  /* Restaurant card layout: column on mobile (photo on top, text below) */
+  .restaurant-card-with-photo .restaurant-card-content {
+    flex-direction: column;
+  }
+
+  .restaurant-photo-container {
+    width: 100%;
+    height: 200px;
   }
 
 }
