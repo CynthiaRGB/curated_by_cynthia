@@ -48,9 +48,10 @@ export const Chatbox: React.FC<ChatboxProps> = ({
   const [hasClickedPromptInSession, setHasClickedPromptInSession] = useState(false);
   const [hoveredPrompt, setHoveredPrompt] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const MAX_CHARACTERS = 250;
 
   const handleSubmit = () => {
-    if (message.trim() && !isLoading) {
+    if (message.trim() && !isLoading && message.length <= MAX_CHARACTERS) {
       const fullMessage = `${message.trim()} in ${selectedCity}`;
       onSendMessage(fullMessage, selectedCity);
       setMessage('');
@@ -104,7 +105,8 @@ export const Chatbox: React.FC<ChatboxProps> = ({
   };
 
 
-  const isReadyToSubmit = message.trim().length > 0 && !isLoading;
+  const isReadyToSubmit = message.trim().length > 0 && !isLoading && message.length <= MAX_CHARACTERS;
+  const exceedsCharacterLimit = message.length > MAX_CHARACTERS;
 
   // Generate dynamic placeholder text
   const getPlaceholderText = () => {
@@ -163,6 +165,11 @@ export const Chatbox: React.FC<ChatboxProps> = ({
               autoFocus
               rows={1}
             />
+            {exceedsCharacterLimit && (
+              <div className="error-message">
+                Try a shorter inquiry less than 250 characters
+              </div>
+            )}
           </div>
           <div className="bottom-row">
             <div className="pills-container">

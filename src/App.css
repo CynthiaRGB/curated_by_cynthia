@@ -72,6 +72,17 @@
 /* Text input area */
 .text-input-area {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Error message styling */
+.error-message {
+  color: #d32f2f;
+  font-size: 12px;
+  margin-top: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
 }
 
 /* Text input styling - integrated into chatbox */

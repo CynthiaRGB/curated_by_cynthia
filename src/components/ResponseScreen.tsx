@@ -137,6 +137,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
 }) => {
   const [message, setMessage] = useState('');
   const [isLocalLoading, setIsLocalLoading] = useState(false);
+  const MAX_CHARACTERS = 250;
   // Track the original city from the first query
   const [originalCity, setOriginalCity] = useState<City | null>(() => {
     const city = extractCityFromQuery(searchQuery || userPrompt);
@@ -176,7 +177,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   const lastBotMessageIdRef = useRef<string>('bot-1');
 
   const handleSubmit = () => {
-    if (message.trim() && !isLocalLoading) {
+    if (message.trim() && !isLocalLoading && message.length <= MAX_CHARACTERS) {
       const originalMessage = message.trim();
       
       // For display in prompt-pill: use the original message without appending city
@@ -228,7 +229,8 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
     }
   };
 
-  const isReadyToSubmit = message.trim().length > 0 && !isLocalLoading;
+  const isReadyToSubmit = message.trim().length > 0 && !isLocalLoading && message.length <= MAX_CHARACTERS;
+  const exceedsCharacterLimit = message.length > MAX_CHARACTERS;
 
   // Update conversation when new results arrive (for follow-up queries or initial load)
   useEffect(() => {
@@ -342,6 +344,11 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
                 disabled={isLocalLoading}
                 rows={1}
               />
+              {exceedsCharacterLimit && (
+                <div className="error-message">
+                  Try a shorter inquiry less than 250 characters
+                </div>
+              )}
             </div>
             <div className="bottom-row">
               <button
