@@ -678,3 +678,97 @@
   color: #7F7F7F; /* Text/secondary color */
   line-height: normal;
 }
+
+/* Quick Actions styles - matching city-prompt-item */
+.quick-actions-container {
+  margin-top: 24px;
+  width: 100%;
+}
+
+.quick-actions-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 8px;
+}
+
+.quick-actions-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.quick-action-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 400;
+  color: #333333; /* Primary text color */
+  text-align: left;
+  padding: 12px 0 12px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Animation states for staggered reveal */
+.action-hidden {
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.action-visible {
+  opacity: 1;
+  pointer-events: auto;
+  height: auto;
+  padding: 12px 0 12px 20px;
+  margin: 0;
+  animation: promptFadeIn 0.4s ease-out;
+}
+
+.action-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-arrow {
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.2s ease;
+  color: #333333; /* Primary text color */
+}
+
+.quick-action-item:hover .action-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.quick-action-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #D4C4A8; /* Tertiary color */
+}
+
+/* Responsive adjustments for quick actions */
+@media (max-width: 600px) {
+  .quick-action-item {
+    font-size: 13px;
+    padding: 10px 0 10px 16px;
+  }
+  
+  .action-arrow {
+    width: 14px;
+    height: 14px;
+  }
+}

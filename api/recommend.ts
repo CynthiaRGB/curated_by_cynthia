@@ -404,13 +404,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const usedClaudeRanking = false; // Always false now - using filterService ranking only
     
     // Special case: Cynthia's favorites queries should return ALL results, not limited by maxResults
+    let hasMoreResults = false;
     if (isCynthiasFavorites) {
       console.log(`[API] Returning ALL ${filteredRestaurants.length} Cynthia's favorites (no limit applied)`);
       finalRestaurants = filteredRestaurants; // Return all, no slice
       summary = `Curated ${finalRestaurants.length} spots just for you`;
+      hasMoreResults = false; // Cynthia's favorites returns all, so no more results
     } else {
       finalRestaurants = filteredRestaurants.slice(0, maxResults);
       summary = `Curated ${finalRestaurants.length} spots just for you`;
+      hasMoreResults = filteredRestaurants.length > maxResults; // Check if there are more results available
     }
 
     // Step 10: Build context for next query (for follow-ups)
@@ -454,6 +457,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       usedClaudeRanking,
       route: routeDecision.route,
       context: nextContext, // Return context for follow-up queries
+      hasMoreResults, // Indicate if there are more results available (for "Show me more" quick action)
       debug: {
         maxResults,
         routingReason: routeDecision.reason,

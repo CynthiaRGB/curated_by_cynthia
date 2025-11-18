@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Restaurant, City } from '../types/restaurant';
+import { Restaurant, City, QueryContext } from '../types/restaurant';
 import { TypewriterText } from './TypewriterText';
 import { AnimatedRestaurantCards } from './AnimatedRestaurantCards';
 import { ThinkingDots } from './ThinkingDots';
+import { QuickActions } from './QuickActions';
 
 // Helper function to extract city from a query string
 const extractCityFromQuery = (query: string): City | null => {
@@ -45,6 +46,10 @@ const BotResponse: React.FC<{
   originalPromptText?: string | null;
   promptClickTimestamp?: number | null;
   isLoading?: boolean;
+  hasMoreResults?: boolean;
+  onShowMore?: () => void;
+  onSortByPrice?: () => void;
+  onSortByRating?: () => void;
 }> = ({ 
   text, 
   restaurants,
@@ -52,7 +57,11 @@ const BotResponse: React.FC<{
   searchResultsTimestamp,
   originalPromptText,
   promptClickTimestamp,
-  isLoading = false
+  isLoading = false,
+  hasMoreResults = false,
+  onShowMore,
+  onSortByPrice,
+  onSortByRating,
 }) => {
   const [showRestaurantCards, setShowRestaurantCards] = useState(false);
   const [showThinkingDots, setShowThinkingDots] = useState(false);
@@ -87,14 +96,23 @@ const BotResponse: React.FC<{
       
       {/* Show animated restaurant cards only after typewriter completes */}
       {restaurants && restaurants.length > 0 && showRestaurantCards && !isLoading && (
-        <AnimatedRestaurantCards 
-          restaurants={restaurants} 
-          delay={200}
-          searchQuery={searchQuery}
-          searchResultsTimestamp={searchResultsTimestamp}
-          originalPromptText={originalPromptText || undefined}
-          promptClickTimestamp={promptClickTimestamp || undefined}
-        />
+        <>
+          <AnimatedRestaurantCards 
+            restaurants={restaurants} 
+            delay={200}
+            searchQuery={searchQuery}
+            searchResultsTimestamp={searchResultsTimestamp}
+            originalPromptText={originalPromptText || undefined}
+            promptClickTimestamp={promptClickTimestamp || undefined}
+          />
+          {/* Quick Actions - shown after restaurant cards */}
+          <QuickActions
+            hasMoreResults={hasMoreResults}
+            onShowMore={onShowMore || (() => {})}
+            onSortByPrice={onSortByPrice || (() => {})}
+            onSortByRating={onSortByRating || (() => {})}
+          />
+        </>
       )}
     </div>
   );
@@ -121,12 +139,14 @@ interface ResponseScreenProps {
   originalPromptText?: string | null; // Original prompt text if search came from prompt
   promptClickTimestamp?: number | null; // When the prompt was clicked
   isLoading?: boolean; // Loading state for new searches
+  hasMoreResults?: boolean; // Whether there are more results available
+  queryContext?: QueryContext | null; // Query context for follow-up queries
 }
 
 export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   userPrompt,
   botResponse,
-  restaurants,
+  restaurants: initialRestaurants,
   onBackToSearch,
   onSendMessage,
   onNewResults,
@@ -134,15 +154,25 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   originalPromptText = null,
   promptClickTimestamp = null,
   isLoading: isExternalLoading = false,
+  hasMoreResults: initialHasMoreResults = false,
+  queryContext: initialQueryContext = null,
 }) => {
   const [message, setMessage] = useState('');
   const [isLocalLoading, setIsLocalLoading] = useState(false);
   const MAX_CHARACTERS = 250;
+  // Track sorted restaurants (start with initial restaurants)
+  const [sortedRestaurants, setSortedRestaurants] = useState<Restaurant[]>(initialRestaurants);
+  // Track if we're showing sorted view
+  const [isSorted, setIsSorted] = useState(false);
   // Track the original city from the first query
   const [originalCity, setOriginalCity] = useState<City | null>(() => {
     const city = extractCityFromQuery(searchQuery || userPrompt);
     return city;
   });
+  // Track hasMoreResults
+  const [hasMoreResults, setHasMoreResults] = useState(initialHasMoreResults);
+  // Track query context
+  const [queryContext, setQueryContext] = useState<QueryContext | null>(initialQueryContext);
   const [conversation, setConversation] = useState<Message[]>(() => {
     const messages: Message[] = [
       { id: 'user-1', text: userPrompt, isUser: true, timestamp: Date.now() }
@@ -164,7 +194,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
         text: botResponse,
         isUser: false,
         timestamp: Date.now() + 1,
-        restaurants: restaurants,
+        restaurants: sortedRestaurants,
         searchQuery: searchQuery || userPrompt
       });
     }
@@ -232,6 +262,73 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   const isReadyToSubmit = message.trim().length > 0 && !isLocalLoading && message.length <= MAX_CHARACTERS;
   const exceedsCharacterLimit = message.length > MAX_CHARACTERS;
 
+  // Sync sortedRestaurants with initialRestaurants when they change (from new API responses)
+  useEffect(() => {
+    setSortedRestaurants(initialRestaurants);
+    setIsSorted(false); // Reset sorted state when new results arrive
+  }, [initialRestaurants]);
+
+  // Sync hasMoreResults and queryContext when props change
+  useEffect(() => {
+    setHasMoreResults(initialHasMoreResults);
+  }, [initialHasMoreResults]);
+
+  useEffect(() => {
+    setQueryContext(initialQueryContext);
+  }, [initialQueryContext]);
+
+  // Helper function to convert price_display to numeric value for sorting
+  const getPriceValue = (priceDisplay: string | undefined): number => {
+    if (!priceDisplay || priceDisplay === 'N/A') return 999; // Put N/A at the end
+    return priceDisplay.length; // $ = 1, $$ = 2, $$$ = 3, $$$$ = 4
+  };
+
+  // Sort by price (ascending)
+  const handleSortByPrice = () => {
+    const sorted = [...sortedRestaurants].sort((a, b) => {
+      const priceA = getPriceValue(a.price_display);
+      const priceB = getPriceValue(b.price_display);
+      return priceA - priceB;
+    });
+    setSortedRestaurants(sorted);
+    setIsSorted(true);
+    
+    // Update the restaurants in the conversation message
+    setConversation(prev => prev.map(msg => {
+      if (msg.id === lastBotMessageIdRef.current && !msg.isLoading) {
+        return { ...msg, restaurants: sorted };
+      }
+      return msg;
+    }));
+  };
+
+  // Sort by rating (descending)
+  const handleSortByRating = () => {
+    const sorted = [...sortedRestaurants].sort((a, b) => {
+      const ratingA = a.google_data.rating || 0;
+      const ratingB = b.google_data.rating || 0;
+      return ratingB - ratingA; // Descending order
+    });
+    setSortedRestaurants(sorted);
+    setIsSorted(true);
+    
+    // Update the restaurants in the conversation message
+    setConversation(prev => prev.map(msg => {
+      if (msg.id === lastBotMessageIdRef.current && !msg.isLoading) {
+        return { ...msg, restaurants: sorted };
+      }
+      return msg;
+    }));
+  };
+
+  // Handle "Show me more" - triggers API call with "show me more" query
+  const handleShowMore = () => {
+    if (onSendMessage && queryContext) {
+      // Send "show me more" query which the API will handle using context
+      onSendMessage('show me more', originalCity || undefined);
+    }
+  };
+
   // Update conversation when new results arrive (for follow-up queries or initial load)
   useEffect(() => {
     // Handle follow-up queries: update loading message with results
@@ -247,7 +344,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
               text: botResponse,
               isUser: false,
               timestamp: Date.now(),
-              restaurants: restaurants,
+              restaurants: sortedRestaurants,
               isLoading: false,
               searchQuery: msg.searchQuery || searchQuery // Preserve the query from loading message
             };
@@ -260,7 +357,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
     }
     
     // Handle initial load: replace initial loading message when results arrive
-    if (isExternalLoading === false && botResponse && restaurants.length > 0) {
+    if (isExternalLoading === false && botResponse && initialRestaurants.length > 0) {
       setConversation(prev => {
         // Find the initial loading message (if it exists) and replace it
         const hasInitialLoading = prev.some(msg => msg.id === 'bot-loading' && msg.isLoading);
@@ -273,7 +370,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
                 text: botResponse,
                 isUser: false,
                 timestamp: Date.now(),
-                restaurants: restaurants,
+                restaurants: sortedRestaurants,
                 isLoading: false,
                 searchQuery: msg.searchQuery || searchQuery
               };
@@ -284,7 +381,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
         return prev;
       });
     }
-  }, [botResponse, restaurants, isExternalLoading, isLocalLoading, searchQuery]);
+  }, [botResponse, initialRestaurants, sortedRestaurants, isExternalLoading, isLocalLoading, searchQuery]);
 
   // Auto-resize textarea based on content
   useEffect(() => {
@@ -315,6 +412,10 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
                 originalPromptText={originalPromptText}
                 promptClickTimestamp={promptClickTimestamp}
                 isLoading={msg.isLoading}
+                hasMoreResults={msg.id === lastBotMessageIdRef.current ? hasMoreResults : false}
+                onShowMore={handleShowMore}
+                onSortByPrice={handleSortByPrice}
+                onSortByRating={handleSortByRating}
               />
             )}
           </div>

@@ -24,6 +24,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const [isInConversation, setIsInConversation] = useState(false); // Track if we're in a conversation
   // Track query context for follow-up queries (using QueryContext type)
   const [queryContext, setQueryContext] = useState<QueryContext | null>(null);
+  const [hasMoreResults, setHasMoreResults] = useState(false); // Track if there are more results available
 
   // Helper function to detect if a query came from a prompt
   const checkIfPromptQuery = (query: string): boolean => {
@@ -146,6 +147,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
              } else {
                setQueryContext(null); // Clear context if API doesn't return it
              }
+             // Update hasMoreResults flag
+             setHasMoreResults(data.hasMoreResults || false);
            } else {
              // Log search_no_results event when no results
              client.logEvent('search_no_results', fullQuery, {
@@ -163,6 +166,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
              } else {
                setQueryContext(null); // Clear context if API doesn't return it
              }
+             // Update hasMoreResults flag (no results means no more results)
+             setHasMoreResults(false);
            }
 
            // Only increment key for first query, not for follow-ups
@@ -207,6 +212,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
         originalPromptText={originalPromptText}
         promptClickTimestamp={promptClickTimestamp}
         isLoading={isLoading}
+        hasMoreResults={hasMoreResults}
+        queryContext={queryContext}
         onBackToSearch={() => {
           setRestaurants([]);
           setLastQuery('');
@@ -215,6 +222,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           setPromptClickTimestamp(null);
           setIsInConversation(false); // Reset conversation state
           setQueryContext(null); // Clear query context
+          setHasMoreResults(false); // Reset hasMoreResults
           setResponseScreenKey(prev => prev + 1); // Increment key to reset ResponseScreen
         }}
         onSendMessage={handleSendMessage}
