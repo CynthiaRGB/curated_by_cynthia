@@ -425,6 +425,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   useEffect(() => {
     // Handle follow-up queries: update loading message with results
     if (isLocalLoading && !isExternalLoading && botResponse) {
+      const latestRestaurants = initialRestaurants;
       setConversation(prev => {
         // Find and replace the loading message
         const updated = prev.map(msg => {
@@ -436,7 +437,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
               text: botResponse,
               isUser: false,
               timestamp: Date.now(),
-              restaurants: sortedRestaurants,
+              restaurants: latestRestaurants,
               isLoading: false,
               searchQuery: msg.searchQuery || searchQuery // Preserve the query from loading message
             };
@@ -451,6 +452,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
     // Handle initial load: replace initial loading message when results arrive
     // Only do this if we're not in a local loading state (to avoid interfering with follow-up queries)
     if (isExternalLoading === false && !isLocalLoading && botResponse && initialRestaurants.length > 0) {
+      const latestRestaurants = initialRestaurants;
       setConversation(prev => {
         // Find the initial loading message (if it exists) and replace it
         // Only replace if this is truly the initial load (conversation has only 2 messages: user + loading)
@@ -466,7 +468,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
                 text: botResponse,
                 isUser: false,
                 timestamp: Date.now(),
-                restaurants: sortedRestaurants,
+                restaurants: latestRestaurants,
                 isLoading: false,
                 searchQuery: msg.searchQuery || searchQuery
               };
