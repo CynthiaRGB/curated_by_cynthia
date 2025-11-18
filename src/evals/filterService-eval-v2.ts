@@ -157,11 +157,13 @@ function scoreLocationMatch({ input, output, expected }: any) {
     
     // Check borough match
     if (borough) {
-      const boroughKeyword = borough.toLowerCase();
+      const boroughKeywords = Array.isArray(borough) 
+        ? borough.map(b => b.toLowerCase())
+        : [borough.toLowerCase()];
       const restaurantBorough = restaurant.borough?.toLowerCase();
       
       // Simple direct match - borough data is now in the restaurant object
-      matches = restaurantBorough === boroughKeyword;
+      matches = boroughKeywords.some(bk => restaurantBorough === bk);
     }
     
     // Check city match
@@ -238,7 +240,14 @@ function scoreCuisineMatch({ input, output, expected }: any) {
     };
   }
   
-  const expectedCuisine = keywords.cuisineType?.toLowerCase() || '';
+  // Handle cuisineType as string or array
+  const expectedCuisineTypes = Array.isArray(keywords.cuisineType) 
+    ? keywords.cuisineType.map(ct => ct.toLowerCase())
+    : keywords.cuisineType ? [keywords.cuisineType.toLowerCase()] : [];
+  
+  if (expectedCuisineTypes.length === 0) {
+    return null; // No cuisine filter
+  }
   
   // Normalize accents and handle plural/singular variations
   const normalizeForMatching = (text: string): string => {
@@ -248,7 +257,7 @@ function scoreCuisineMatch({ input, output, expected }: any) {
       .replace(/s$/, '');
   };
   
-  const normalizedCuisineKeyword = normalizeForMatching(expectedCuisine);
+  const normalizedCuisineKeywords = expectedCuisineTypes.map(ct => normalizeForMatching(ct));
   
   // Asian cuisines that should match when user searches for "asian"
   const ASIAN_CUISINES = [
@@ -309,8 +318,8 @@ function scoreCuisineMatch({ input, output, expected }: any) {
       }
     }
     
-    // For Asian umbrella
-    if (expectedCuisine === 'asian') {
+    // For Asian umbrella - check if any expected cuisine type is 'asian'
+    if (expectedCuisineTypes.includes('asian')) {
       return ASIAN_CUISINES.some(cuisine => {
         const normalizedCuisine = normalizeForMatching(cuisine);
         return primaryType.includes(cuisine) ||
@@ -330,73 +339,64 @@ function scoreCuisineMatch({ input, output, expected }: any) {
       });
     }
     
-    // Special handling for "bar" - strict metadata-only matching
-    if (expectedCuisine === 'bar') {
-      return primaryType === 'bar' || 
-             primaryType === 'night_club' || 
-             specificType === 'bar';
-    }
-    
-    // Special handling for coffee/cafe - strict metadata-only matching
-    if (expectedCuisine === 'coffee shop' || expectedCuisine === 'coffee' || expectedCuisine === 'cafe') {
-      const hasCoffeePrimaryType = primaryType === 'coffee_shop' || primaryType === 'cafe';
-      const hasCoffeeInTypes = types.some((t: string) => 
-        t === 'coffee_shop' || 
-        t === 'cafe' || 
-        t.toLowerCase() === 'coffee_shop' || 
-        t.toLowerCase() === 'cafe'
-      );
-      return hasCoffeePrimaryType || hasCoffeeInTypes;
-    }
-    
-    // Special handling for dessert - strict metadata-only matching
-    if (['dessert', 'pastry', 'cake', 'pastries', 'bakery', 'bakeries', 'sweets'].includes(expectedCuisine)) {
-      const hasDessertPrimaryType = primaryType === 'bakery' || 
-                                     primaryType === 'dessert_shop' || 
-                                     primaryType === 'ice_cream_shop' ||
-                                     primaryType === 'pastry_shop' ||
-                                     primaryType === 'confectionery' ||
-                                     primaryType === 'dessert_restaurant';
-      const hasDessertInTypes = types.some((t: string) => 
-        t === 'bakery' || 
-        t === 'dessert_shop' || 
-        t === 'ice_cream_shop' ||
-        t === 'pastry_shop' ||
-        t === 'confectionery' ||
-        t === 'dessert_restaurant' ||
-        t.toLowerCase() === 'bakery' ||
-        t.toLowerCase() === 'dessert_shop' ||
-        t.toLowerCase() === 'ice_cream_shop' ||
-        t.toLowerCase() === 'pastry_shop' ||
-        t.toLowerCase() === 'confectionery' ||
-        t.toLowerCase() === 'dessert_restaurant'
-      );
-      return hasDessertPrimaryType || hasDessertInTypes;
-    }
-    
-    // Check restaurant name
-    if (restaurantName.includes(expectedCuisine) || 
-        normalizeForMatching(restaurantName).includes(normalizedCuisineKeyword)) {
-      return true;
-    }
-    
-    // Check summaries
-    if (summary.includes(expectedCuisine) || 
-        reviewSummary.includes(expectedCuisine) || 
-        editorialSummary.includes(expectedCuisine) ||
-        normalizeForMatching(summary).includes(normalizedCuisineKeyword) ||
-        normalizeForMatching(reviewSummary).includes(normalizedCuisineKeyword) ||
-        normalizeForMatching(editorialSummary).includes(normalizedCuisineKeyword)) {
-      return true;
-    }
-    
-    // Standard type matching
-    return specificType.includes(expectedCuisine) ||
-           primaryType.includes(expectedCuisine) ||
-           types.some((t: string) => t.includes(expectedCuisine)) ||
-           normalizeForMatching(specificType).includes(normalizedCuisineKeyword) ||
-           normalizeForMatching(primaryType).includes(normalizedCuisineKeyword) ||
-           types.some((t: string) => normalizeForMatching(t).includes(normalizedCuisineKeyword));
+    // Check if restaurant matches ANY of the expected cuisine types
+    return expectedCuisineTypes.some(expectedCuisine => {
+      const normalizedCuisineKeyword = normalizeForMatching(expectedCuisine);
+      
+      // Special handling for "bar" - strict metadata-only matching
+      if (expectedCuisine === 'bar') {
+        return primaryType === 'bar' || 
+               primaryType === 'night_club' || 
+               specificType === 'bar';
+      }
+      
+      // Special handling for coffee/cafe - strict metadata-only matching
+      const coffeeRelatedKeywords = ['coffee shop', 'coffee', 'cafe', 'coffee_shop', 'cafeteria', 'cafeteira', 'animal_cafe'];
+      if (coffeeRelatedKeywords.includes(expectedCuisine)) {
+        const coffeeTypes = ['coffee_shop', 'cafe', 'cafeteria', 'cafeteira', 'animal_cafe'];
+        const hasCoffeePrimaryType = coffeeTypes.some(ct => primaryType === ct);
+        const hasCoffeeInTypes = types.some((t: string) => 
+          coffeeTypes.some(ct => t === ct || t.toLowerCase() === ct)
+        );
+        return hasCoffeePrimaryType || hasCoffeeInTypes;
+      }
+      
+      // Special handling for dessert - strict metadata-only matching
+      const dessertRelatedKeywords = ['dessert', 'pastry', 'cake', 'pastries', 'bakery', 'bakeries', 'sweets', 
+                                      'dessert_shop', 'pastry_shop', 'confectionery'];
+      if (dessertRelatedKeywords.includes(expectedCuisine)) {
+        const dessertTypes = ['bakery', 'dessert_shop', 'ice_cream_shop', 'pastry_shop', 'confectionery', 'dessert_restaurant'];
+        const hasDessertPrimaryType = dessertTypes.some(dt => primaryType === dt);
+        const hasDessertInTypes = types.some((t: string) => 
+          dessertTypes.some(dt => t === dt || t.toLowerCase() === dt)
+        );
+        return hasDessertPrimaryType || hasDessertInTypes;
+      }
+      
+      // Check restaurant name
+      if (restaurantName.includes(expectedCuisine) || 
+          normalizeForMatching(restaurantName).includes(normalizedCuisineKeyword)) {
+        return true;
+      }
+      
+      // Check summaries
+      if (summary.includes(expectedCuisine) || 
+          reviewSummary.includes(expectedCuisine) || 
+          editorialSummary.includes(expectedCuisine) ||
+          normalizeForMatching(summary).includes(normalizedCuisineKeyword) ||
+          normalizeForMatching(reviewSummary).includes(normalizedCuisineKeyword) ||
+          normalizeForMatching(editorialSummary).includes(normalizedCuisineKeyword)) {
+        return true;
+      }
+      
+      // Standard type matching
+      return specificType.includes(expectedCuisine) ||
+             primaryType.includes(expectedCuisine) ||
+             types.some((t: string) => t.includes(expectedCuisine)) ||
+             normalizeForMatching(specificType).includes(normalizedCuisineKeyword) ||
+             normalizeForMatching(primaryType).includes(normalizedCuisineKeyword) ||
+             types.some((t: string) => normalizeForMatching(t).includes(normalizedCuisineKeyword));
+    });
   }).length;
   
   const cuisineRate = matchCount / output.length;
@@ -408,7 +408,7 @@ function scoreCuisineMatch({ input, output, expected }: any) {
       cuisineRate,
       matchCount,
       totalResults: output.length,
-      expectedCuisine,
+      expectedCuisineTypes,
       expectedSpecialty: expectedSpecialty || undefined,
       threshold: 0.85
     }
@@ -418,10 +418,20 @@ function scoreCuisineMatch({ input, output, expected }: any) {
 /**
  * Scorer 4: Coffee Focus
  * Checks if results are primarily cafes/coffee shops (95% threshold)
+ * Now checks cuisineType array instead of requiresCoffeeFocus
  */
 function scoreCoffeeFocus({ input, output, expected }: any) {
   const keywords = input.keywords as ExtractedKeywords;
-  if (!keywords.requiresCoffeeFocus) {
+  
+  // Check if cuisineType includes coffee-related types
+  const cuisineTypes = Array.isArray(keywords.cuisineType) 
+    ? keywords.cuisineType.map(ct => ct.toLowerCase())
+    : keywords.cuisineType ? [keywords.cuisineType.toLowerCase()] : [];
+  
+  const coffeeTypes = ['coffee_shop', 'cafe', 'cafeteria', 'cafeteira', 'animal_cafe'];
+  const hasCoffeeCuisineType = cuisineTypes.some(ct => coffeeTypes.includes(ct));
+  
+  if (!hasCoffeeCuisineType) {
     return null;
   }
   
@@ -437,12 +447,10 @@ function scoreCoffeeFocus({ input, output, expected }: any) {
     const primaryType = restaurant.google_data?.primaryType?.toLowerCase() || '';
     const types = restaurant.google_data?.types?.map((t: string) => t.toLowerCase()) || [];
     
-    const hasCoffeePrimaryType = primaryType === 'coffee_shop' || primaryType === 'cafe';
+    // Check if restaurant has any coffee-related type
+    const hasCoffeePrimaryType = coffeeTypes.some(ct => primaryType === ct);
     const hasCoffeeInTypes = types.some((t: string) => 
-      t === 'coffee_shop' || 
-      t === 'cafe' || 
-      t.toLowerCase() === 'coffee_shop' || 
-      t.toLowerCase() === 'cafe'
+      coffeeTypes.some(ct => t === ct || t.toLowerCase() === ct)
     );
     
     return hasCoffeePrimaryType || hasCoffeeInTypes;
@@ -465,10 +473,20 @@ function scoreCoffeeFocus({ input, output, expected }: any) {
 /**
  * Scorer 5: Dessert Focus
  * Checks if results serve dessert or are dessert-focused (95% threshold)
+ * Now checks cuisineType array instead of requiresDessertFocus
  */
 function scoreDessertFocus({ input, output, expected }: any) {
   const keywords = input.keywords as ExtractedKeywords;
-  if (!keywords.requiresDessertFocus) {
+  
+  // Check if cuisineType includes dessert-related types
+  const cuisineTypes = Array.isArray(keywords.cuisineType) 
+    ? keywords.cuisineType.map(ct => ct.toLowerCase())
+    : keywords.cuisineType ? [keywords.cuisineType.toLowerCase()] : [];
+  
+  const dessertTypes = ['bakery', 'dessert_shop', 'ice_cream_shop', 'pastry_shop', 'confectionery', 'dessert_restaurant'];
+  const hasDessertCuisineType = cuisineTypes.some(ct => dessertTypes.includes(ct));
+  
+  if (!hasDessertCuisineType) {
     return null;
   }
   
@@ -484,25 +502,10 @@ function scoreDessertFocus({ input, output, expected }: any) {
     const primaryType = restaurant.google_data?.primaryType?.toLowerCase() || '';
     const types = restaurant.google_data?.types?.map((t: string) => t.toLowerCase()) || [];
     
-    const hasDessertPrimaryType = primaryType === 'bakery' || 
-                                   primaryType === 'dessert_shop' || 
-                                   primaryType === 'ice_cream_shop' ||
-                                   primaryType === 'pastry_shop' ||
-                                   primaryType === 'confectionery' ||
-                                   primaryType === 'dessert_restaurant';
+    // Check if restaurant has any dessert-related type
+    const hasDessertPrimaryType = dessertTypes.some(dt => primaryType === dt);
     const hasDessertInTypes = types.some((t: string) => 
-      t === 'bakery' || 
-      t === 'dessert_shop' || 
-      t === 'ice_cream_shop' ||
-      t === 'pastry_shop' ||
-      t === 'confectionery' ||
-      t === 'dessert_restaurant' ||
-      t.toLowerCase() === 'bakery' ||
-      t.toLowerCase() === 'dessert_shop' ||
-      t.toLowerCase() === 'ice_cream_shop' ||
-      t.toLowerCase() === 'pastry_shop' ||
-      t.toLowerCase() === 'confectionery' ||
-      t.toLowerCase() === 'dessert_restaurant'
+      dessertTypes.some(dt => t === dt || t.toLowerCase() === dt)
     );
     
     return hasDessertPrimaryType || hasDessertInTypes;
@@ -936,8 +939,14 @@ function scoreFilteringAccuracy({ input, output, expected }: any) {
     }
   }
   
-  // 4. Coffee focus
-  if (keywords.requiresCoffeeFocus) {
+  // 4. Coffee focus - check if cuisineType includes coffee-related types
+  const cuisineTypes = Array.isArray(keywords.cuisineType) 
+    ? keywords.cuisineType.map(ct => ct.toLowerCase())
+    : keywords.cuisineType ? [keywords.cuisineType.toLowerCase()] : [];
+  const coffeeTypes = ['coffee_shop', 'cafe', 'cafeteria', 'cafeteira', 'animal_cafe'];
+  const hasCoffeeCuisineType = cuisineTypes.some(ct => coffeeTypes.includes(ct));
+  
+  if (hasCoffeeCuisineType) {
     const coffeeScore = scoreCoffeeFocus({ input, output, expected });
     if (coffeeScore) {
       scorerResults.push({ 
@@ -948,8 +957,11 @@ function scoreFilteringAccuracy({ input, output, expected }: any) {
     }
   }
   
-  // 5. Dessert focus
-  if (keywords.requiresDessertFocus) {
+  // 5. Dessert focus - check if cuisineType includes dessert-related types
+  const dessertTypes = ['bakery', 'dessert_shop', 'ice_cream_shop', 'pastry_shop', 'confectionery', 'dessert_restaurant'];
+  const hasDessertCuisineType = cuisineTypes.some(ct => dessertTypes.includes(ct));
+  
+  if (hasDessertCuisineType) {
     const dessertScore = scoreDessertFocus({ input, output, expected });
     if (dessertScore) {
       scorerResults.push({ 

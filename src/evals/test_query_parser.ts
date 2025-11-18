@@ -420,17 +420,33 @@ Eval("Query Parser - NEW Architecture (Rate Limited)", {
     function scoreRequiresCoffeeFocusAccuracy({ input, output, expected }: any) {
       const out = output as any;
       const exp = expected as any;
-      if (out?.error || exp?.requiresCoffeeFocus === undefined) {
+      
+      // Check if expected has coffee-related cuisineType (replaces requiresCoffeeFocus check)
+      const expectedCuisineTypes = Array.isArray(exp?.cuisineType) 
+        ? exp.cuisineType.map((ct: string) => ct.toLowerCase())
+        : exp?.cuisineType ? [exp.cuisineType.toLowerCase()] : [];
+      
+      const coffeeTypes = ['coffee_shop', 'cafe', 'cafeteria', 'cafeteira', 'animal_cafe'];
+      const expectedHasCoffee = expectedCuisineTypes.some((ct: string) => coffeeTypes.includes(ct));
+      
+      if (out?.error || !expectedHasCoffee) {
         return null;
       }
       
-      const isMatch = (out?.requiresCoffeeFocus || false) === (exp?.requiresCoffeeFocus || false);
+      // Check if output has coffee-related cuisineType
+      const outputCuisineTypes = Array.isArray(out?.cuisineType) 
+        ? out.cuisineType.map((ct: string) => ct.toLowerCase())
+        : out?.cuisineType ? [out.cuisineType.toLowerCase()] : [];
+      
+      const outputHasCoffee = outputCuisineTypes.some((ct: string) => coffeeTypes.includes(ct));
+      
+      const isMatch = expectedHasCoffee === outputHasCoffee;
       return {
-        name: "requires_coffee_focus_accuracy",
+        name: "coffee_cuisine_type_accuracy",
         score: isMatch ? 1 : 0,
         metadata: {
-          output: out?.requiresCoffeeFocus || false,
-          expected: exp?.requiresCoffeeFocus || false
+          output: outputCuisineTypes,
+          expected: expectedCuisineTypes
         }
       };
     },
@@ -438,17 +454,33 @@ Eval("Query Parser - NEW Architecture (Rate Limited)", {
     function scoreRequiresDessertFocusAccuracy({ input, output, expected }: any) {
       const out = output as any;
       const exp = expected as any;
-      if (out?.error || exp?.requiresDessertFocus === undefined) {
+      
+      // Check if expected has dessert-related cuisineType (replaces requiresDessertFocus check)
+      const expectedCuisineTypes = Array.isArray(exp?.cuisineType) 
+        ? exp.cuisineType.map((ct: string) => ct.toLowerCase())
+        : exp?.cuisineType ? [exp.cuisineType.toLowerCase()] : [];
+      
+      const dessertTypes = ['bakery', 'dessert_shop', 'ice_cream_shop', 'pastry_shop', 'confectionery', 'dessert_restaurant'];
+      const expectedHasDessert = expectedCuisineTypes.some((ct: string) => dessertTypes.includes(ct));
+      
+      if (out?.error || !expectedHasDessert) {
         return null;
       }
       
-      const isMatch = (out?.requiresDessertFocus || false) === (exp?.requiresDessertFocus || false);
+      // Check if output has dessert-related cuisineType
+      const outputCuisineTypes = Array.isArray(out?.cuisineType) 
+        ? out.cuisineType.map((ct: string) => ct.toLowerCase())
+        : out?.cuisineType ? [out.cuisineType.toLowerCase()] : [];
+      
+      const outputHasDessert = outputCuisineTypes.some((ct: string) => dessertTypes.includes(ct));
+      
+      const isMatch = expectedHasDessert === outputHasDessert;
       return {
-        name: "requires_dessert_focus_accuracy",
+        name: "dessert_cuisine_type_accuracy",
         score: isMatch ? 1 : 0,
         metadata: {
-          output: out?.requiresDessertFocus || false,
-          expected: exp?.requiresDessertFocus || false
+          output: outputCuisineTypes,
+          expected: expectedCuisineTypes
         }
       };
     },

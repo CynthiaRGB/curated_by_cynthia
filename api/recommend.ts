@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Statsig from "statsig-node";
 import { preFilterRestaurants } from './services/filterService.js';
 import { decideRoute, getMoreRestaurants, isShowMeMoreQuery, type RoutingContext } from './services/routingService.js';
-import { parseQueryWithClaude } from './services/parseQuery.js';
+import { parseQueryWithClaude, getHardcodedKeywordsForPrompt } from './services/parseQuery.js';
 import { Restaurant, ExtractedKeywords, City, QueryContext } from '../src/types/restaurant.js';
 
 /**
@@ -237,16 +237,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       city: normalizedCity
     } : undefined;
     
-    // Always use Claude API to parse the query into structured keywords
-    console.log('[API] Parsing query with Claude API');
-    const claudeParseStartTime = Date.now();
-    try {
-      parsedKeywords = await parseQueryWithClaude(queryToFilter, normalizedCity, queryContext);
-      usedClaudeForParsing = true;
-      const claudeParseTime = Date.now() - claudeParseStartTime;
-      console.log(`[Performance] Claude query parsing took ${claudeParseTime}ms`);
-      console.log('[API] Successfully parsed query with Claude');
-    } catch (parseError: any) {
+    // OPTIMIZATION: Check if this is a city-prompt-item and use hardcoded keywords
+    // This avoids Claude API calls for predefined prompts (saves costs and improves latency)
+    // Only check for hardcoded keywords if there's no context (follow-up queries need Claude)
+    if (!queryContext) {
+      const hardcodedKeywords = getHardcodedKeywordsForPrompt(queryToFilter, normalizedCity);
+      if (hardcodedKeywords) {
+        console.log('[API] Using hardcoded keywords for city-prompt-item (skipping Claude API call)');
+        parsedKeywords = hardcodedKeywords;
+        usedClaudeForParsing = false; // No Claude API call needed
+      }
+    }
+    
+    // If no hardcoded keywords found, use Claude API to parse the query
+    if (!parsedKeywords) {
+      console.log('[API] Parsing query with Claude API');
+      const claudeParseStartTime = Date.now();
+      try {
+        parsedKeywords = await parseQueryWithClaude(queryToFilter, normalizedCity, queryContext);
+        usedClaudeForParsing = true;
+        const claudeParseTime = Date.now() - claudeParseStartTime;
+        console.log(`[Performance] Claude query parsing took ${claudeParseTime}ms`);
+        console.log('[API] Successfully parsed query with Claude');
+      } catch (parseError: any) {
       // Check if Claude detected irrelevant query (fallback - in case pattern matching missed it)
       // parseQuery throws this specific error message when NOT_RESTAURANT_QUERY is detected
       if (parseError.message && parseError.message.includes("I'm designed to answer restaurant-related questions only")) {
@@ -300,6 +313,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         route: routeDecision.route,
         context: undefined
       });
+      }
     }
     
     // Normalize city in keywords to use selected city (ignore city from query parsing if different)
@@ -332,8 +346,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (parsedKeywords.requiresInstagrammable) cleanedKeywords.requiresInstagrammable = parsedKeywords.requiresInstagrammable;
       if (parsedKeywords.requiresMichelin) cleanedKeywords.requiresMichelin = parsedKeywords.requiresMichelin;
       if (parsedKeywords.requiresCynthiasPick) cleanedKeywords.requiresCynthiasPick = parsedKeywords.requiresCynthiasPick;
-      if (parsedKeywords.requiresCoffeeFocus) cleanedKeywords.requiresCoffeeFocus = parsedKeywords.requiresCoffeeFocus;
-      if (parsedKeywords.requiresDessertFocus) cleanedKeywords.requiresDessertFocus = parsedKeywords.requiresDessertFocus;
       if (parsedKeywords.specialFeatures && parsedKeywords.specialFeatures.length > 0) cleanedKeywords.specialFeatures = parsedKeywords.specialFeatures;
       
       parsedKeywords = cleanedKeywords;

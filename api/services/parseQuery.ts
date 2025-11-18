@@ -135,15 +135,18 @@ cuisineType: american_restaurant, animal_cafe, asian_restaurant, bagel_shop, bak
 
 2. Cuisine: 
 cuisineType: Use ONLY values from list above. If query mentions unlisted cuisine (ethiopian, peruvian, etc.) → set cuisineType:null
+  - cuisineType can be a string OR an array of strings
+  - Use arrays when multiple equivalent types should match (e.g., coffee-related queries should match coffee_shop, cafe, cafeteria, animal_cafe)
+  - When using arrays, include all equivalent types that should match the query intent
 cuisineSpecialty: Extract specific dish name if mentioned. FilterService uses flexible matching against restaurant metadata, names, descriptions. Examples of dish name: pizza, sushi, dim sum, yakitori, etc. 
 
 Restaurant types (izakaya, bistro, trattoria) → NOT cuisineType; map to cuisine (japanese, french, italian)
 
 Cuisine Mapping Rules:
-Wine/cocktail/drinks/alcohol → "bar"
+Wine/cocktail/drinks/alcohol → ["bar", "wine_bar"]
 BBQ/bbq/barbecue/barbeque → "barbecue_restaurant"
-Coffee/cafe/coffee shop → "coffee_shop"
-Pastry/bakery/dessert → "bakery"
+Coffee/cafe/coffee shop → ["coffee_shop","cafe","cafeteria","animal_cafe"]
+Pastry/bakery/dessert → ["bakery","dessert_shop","confectionery","pastry_shop"]
 
 3. Price: "luxury"=expensive/fine dining/omakase/premium; "upscale"=upscale/fancy; "moderate"=mid-range; "budget"=cheap
 If both upscale + luxury → use "upscale"
@@ -200,7 +203,7 @@ Return raw JSON (no markdown):
 "borough": null|string|string[],
 "landmark": null|string|string[],
 "city": null|"nyc"|"tokyo"|"seoul"|"paris",
-"cuisineType": null|string,
+"cuisineType": null|string|string[],
 "cuisineSpecialty": null|string,
 "mealType": null|"breakfast"|"brunch"|"lunch"|"dinner",
 "priceLevel": null|"budget"|"moderate"|"upscale"|"luxury"|"any",
@@ -211,8 +214,6 @@ Return raw JSON (no markdown):
 "requiresInstagrammable": boolean|null,
 "requiresMichelin": boolean|null,
 "requiresCynthiasPick": boolean|null,
-"requiresCoffeeFocus": boolean|null,
-"requiresDessertFocus": boolean|null,
 "specialFeatures": string[]
 }
 
@@ -294,6 +295,92 @@ function normalizeCityForFilter(city: string | undefined): string | undefined {
   
   // If already in correct format, return as-is
   return lowerCity;
+}
+
+/**
+ * Get hardcoded ExtractedKeywords for city-prompt-items
+ * This avoids Claude API calls for predefined prompts that are likely high-traffic
+ * 
+ * @param query - The user's query string (may include " in [city]" suffix)
+ * @param city - The selected city (will be added to keywords)
+ * @returns ExtractedKeywords if query matches a city-prompt-item, null otherwise
+ */
+export function getHardcodedKeywordsForPrompt(
+  query: string,
+  city?: string
+): ExtractedKeywords | null {
+  // Normalize query: remove " in [city]" suffix and trim
+  const normalizedQuery = query
+    .toLowerCase()
+    .trim()
+    .replace(/\s+in\s+(new\s+york\s+city|tokyo|paris|seoul|nyc)$/i, '')
+    .trim();
+  
+  // Map of normalized prompt text to ExtractedKeywords (without city)
+  const promptKeywordMap: Record<string, Omit<ExtractedKeywords, 'city'>> = {
+    "cynthia's favorites": {
+      vibeKeywords: [],
+      requiresCynthiasPick: true,
+    },
+    "cynthias favorites": {
+      vibeKeywords: [],
+      requiresCynthiasPick: true,
+    },
+    "sushi restaurants loved by locals": {
+      vibeKeywords: [],
+      cuisineType: "sushi",
+    },
+    "coffee shops": {
+      vibeKeywords: [],
+      cuisineType: ["coffee_shop", "cafe", "cafeteria", "cafeteira"],
+    },
+    "traditional japanese food": {
+      vibeKeywords: [],
+      cuisineType: "japanese_restaurant",
+    },
+    "brunch restaurants": {
+      vibeKeywords: [],
+      mealType: "brunch",
+      cuisineType: "brunch_restaurant",
+    },
+    "romantic dinner": {
+      vibeKeywords: ["romantic", "intimate"],
+      mealType: "dinner",
+      occasionType: "date_night",
+    },
+    "best thai restaurants": {
+      vibeKeywords: [],
+      cuisineType: "thai_restaurant",
+    },
+    "traditional french fare": {
+      vibeKeywords: [],
+      cuisineType: "french_restaurant",
+    },
+    "galettes and crepes": {
+      vibeKeywords: [],
+      cuisineType: "french_restaurant",
+      cuisineSpecialty: "crepes",
+    },
+    "korean restaurant": {
+      vibeKeywords: [],
+      cuisineType: "korean_restaurant",
+    },
+  };
+  
+  // Check if normalized query matches any prompt
+  const matchedKeywords = promptKeywordMap[normalizedQuery];
+  if (!matchedKeywords) {
+    return null;
+  }
+  
+  // Build full ExtractedKeywords with city
+  const keywords: ExtractedKeywords = {
+    ...matchedKeywords,
+    city: city ? normalizeCityForFilter(city) : undefined,
+  };
+  
+  console.log(`[Parse Query] Using hardcoded keywords for prompt: "${normalizedQuery}"`);
+  return keywords;
 }
 
 /**
@@ -461,8 +548,6 @@ export async function parseQueryWithClaude(
       requiresInstagrammable: parsedKeywords.requiresInstagrammable === null ? undefined : (parsedKeywords.requiresInstagrammable ?? false),
       requiresMichelin: parsedKeywords.requiresMichelin === null ? undefined : (parsedKeywords.requiresMichelin ?? false),
       requiresCynthiasPick: parsedKeywords.requiresCynthiasPick === null ? undefined : (parsedKeywords.requiresCynthiasPick ?? false),
-      requiresCoffeeFocus: parsedKeywords.requiresCoffeeFocus === null ? undefined : (parsedKeywords.requiresCoffeeFocus ?? false),
-      requiresDessertFocus: parsedKeywords.requiresDessertFocus === null ? undefined : (parsedKeywords.requiresDessertFocus ?? false),
       specialFeatures: parsedKeywords.specialFeatures || [],
       neighborhood: parsedKeywords.neighborhood || undefined,
       borough: parsedKeywords.borough || undefined,

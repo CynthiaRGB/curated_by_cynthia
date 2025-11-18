@@ -42701,7 +42701,6 @@ export const restaurantData = [
       "types": [
         "bar",
         "pub",
-        "brunch_restaurant",
         "event_venue",
         "restaurant",
         "point_of_interest",

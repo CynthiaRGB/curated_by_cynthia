@@ -191,7 +191,11 @@ function calculateTier(restaurant: Restaurant, keywords: ExtractedKeywords): num
     return 3; // No cuisine filter, all restaurants in tier 3
   }
 
-  const cuisineKeyword = keywords.cuisineType.toLowerCase();
+  // Normalize cuisineType to array for consistent handling
+  const cuisineTypesToMatch = Array.isArray(keywords.cuisineType) 
+    ? keywords.cuisineType.map(ct => ct.toLowerCase())
+    : [keywords.cuisineType.toLowerCase()];
+  
   const primaryType = restaurant.google_data.primaryType?.toLowerCase() || '';
   const specificType = restaurant.specific_type?.toLowerCase() || '';
   const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
@@ -200,17 +204,51 @@ function calculateTier(restaurant: Restaurant, keywords: ExtractedKeywords): num
   const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
   const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
   
+  // SPECIAL CASE: For brunch_restaurant, prioritize by brunch_restaurant type
+  if (cuisineTypesToMatch.includes('brunch_restaurant')) {
+    // Tier 1: Has brunch_restaurant in primaryType or types array (highest priority)
+    if (primaryType === 'brunch_restaurant' || types.includes('brunch_restaurant')) {
+      return 1;
+    }
+    
+    // Tier 2: Has servesBrunch=true OR weekend_brunch tag (second priority)
+    const servesBrunch = restaurant.google_data.servesBrunch === true;
+    const hasWeekendBrunchTag = restaurant.occasion_tags?.includes('weekend_brunch') || false;
+    if (servesBrunch || hasWeekendBrunchTag) {
+      return 2;
+    }
+    
+    // Tier 3: Mentions brunch in name/summaries (lowest priority for brunch queries)
+    if (restaurantName.includes('brunch') ||
+        summary.includes('brunch') ||
+        reviewSummary.includes('brunch')) {
+      return 3;
+    }
+    
+    // Should not reach here if matchesCuisine is working correctly
+    return 3;
+  }
+  
+  // Check if any cuisine type matches (for arrays, check all types)
   // Tier 1: Matches primaryType, specificType, or restaurant name
-  if (primaryType.includes(cuisineKeyword) || 
-      specificType.includes(cuisineKeyword) ||
-      restaurantName.includes(cuisineKeyword)) {
+  const matchesTier1 = cuisineTypesToMatch.some(cuisineKeyword => 
+    primaryType.includes(cuisineKeyword) || 
+    specificType.includes(cuisineKeyword) ||
+    restaurantName.includes(cuisineKeyword)
+  );
+  
+  if (matchesTier1) {
     return 1;
   }
 
   // Tier 2: Matches types array or appears in summaries
-  if (types.some(t => t.includes(cuisineKeyword)) ||
-      summary.includes(cuisineKeyword) ||
-      reviewSummary.includes(cuisineKeyword)) {
+  const matchesTier2 = cuisineTypesToMatch.some(cuisineKeyword =>
+    types.some(t => t.includes(cuisineKeyword)) ||
+    summary.includes(cuisineKeyword) ||
+    reviewSummary.includes(cuisineKeyword)
+  );
+  
+  if (matchesTier2) {
     return 2;
   }
 
@@ -442,13 +480,44 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords, que
   
   // Check broad cuisine
   if (keywords.cuisineType) {
-    // Handle multiple cuisine types (OR logic for "X and Y" queries)
-    const additionalCuisineTypes = (keywords as any).additionalCuisineTypes as string[] | undefined;
-    const cuisineTypesToMatch = additionalCuisineTypes && additionalCuisineTypes.length > 0
-      ? [keywords.cuisineType, ...additionalCuisineTypes]
+    // Normalize cuisineType to array for consistent handling
+    const cuisineTypesToMatch = Array.isArray(keywords.cuisineType) 
+      ? keywords.cuisineType 
       : [keywords.cuisineType];
-
+    
+    // SPECIAL CASE: For "brunch_restaurant" cuisine type, use prioritized logic
+    // Include restaurants with brunch_restaurant type OR servesBrunch/weekend_brunch
+    // Check if any of the cuisine types is brunch_restaurant
+    if (cuisineTypesToMatch.some(ct => ct.toLowerCase() === 'brunch_restaurant')) {
+      const types = restaurant.google_data.types?.map(t => t.toLowerCase()) || [];
+      const hasBrunchRestaurantType = types.includes('brunch_restaurant') ||
+                                      restaurant.google_data.primaryType?.toLowerCase() === 'brunch_restaurant';
+      const servesBrunch = restaurant.google_data.servesBrunch === true;
+      const hasWeekendBrunchTag = restaurant.occasion_tags?.includes('weekend_brunch') || false;
+      
+      // Accept if it has brunch_restaurant type OR serves brunch OR has weekend_brunch tag
+      if (hasBrunchRestaurantType || servesBrunch || hasWeekendBrunchTag) {
+        return true;
+      }
+      
+      // Also check for brunch mentions in name/summaries (fallback)
+      const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
+      const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
+      const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
+      const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
+      
+      if (restaurantName.includes('brunch') ||
+          summary.includes('brunch') ||
+          reviewSummary.includes('brunch') ||
+          editorialSummary.includes('brunch')) {
+        return true;
+      }
+      
+      return false;
+    }
+    
     // Check if restaurant matches ANY of the cuisine types (OR logic)
+    // cuisineTypesToMatch is already normalized to array above
     const matchesBroadCuisine = cuisineTypesToMatch.some(cuisineType => {
       return matchesSingleCuisineType(restaurant, cuisineType, query);
     });
@@ -602,18 +671,18 @@ function matchesSingleCuisineType(restaurant: Restaurant, cuisineType: string, q
     return hasBarbecuePrimaryType || hasBarbecueInTypes;
   }
   
-  // For "coffee shop"/"coffee"/"cafe" queries, only check metadata fields
+  // For "coffee shop"/"coffee"/"cafe"/"coffee_shop"/"cafeteria"/"cafeteira" queries, only check metadata fields
   // MUST check this BEFORE restaurant name matching to avoid false positives
   // (e.g., "Café Fleur" has "cafe" in name but isn't actually a cafe)
-  if (cuisineKeyword === 'coffee shop' || cuisineKeyword === 'coffee' || cuisineKeyword === 'cafe') {
-    // Simplified: Check both primaryType and types array equally (no prioritization)
-    // Must have 'coffee_shop' or 'cafe' in either primaryType OR types array
-    const hasCoffeePrimaryType = primaryType === 'coffee_shop' || primaryType === 'cafe';
+  // Support both space and underscore variants, plus related types
+  const coffeeRelatedKeywords = ['coffee shop', 'coffee_shop', 'coffee', 'cafe', 'cafeteria', 'cafeteira'];
+  if (coffeeRelatedKeywords.includes(cuisineKeyword)) {
+    // Check both primaryType and types array equally (no prioritization)
+    // Must have any coffee-related type in either primaryType OR types array
+    const coffeeTypes = ['coffee_shop', 'cafe', 'cafeteria', 'cafeteira'];
+    const hasCoffeePrimaryType = coffeeTypes.some(ct => primaryType === ct);
     const hasCoffeeInTypes = types.some(t => 
-      t === 'coffee_shop' || 
-      t === 'cafe' || 
-      t.toLowerCase() === 'coffee_shop' || 
-      t.toLowerCase() === 'cafe'
+      coffeeTypes.some(ct => t === ct || t.toLowerCase() === ct)
     );
     
     return hasCoffeePrimaryType || hasCoffeeInTypes;
@@ -622,28 +691,16 @@ function matchesSingleCuisineType(restaurant: Restaurant, cuisineType: string, q
   // For dessert-related queries (dessert, pastry, cake, pastries, bakery, sweets), only check metadata fields
   // MUST check this BEFORE restaurant name matching to avoid false positives
   // (consistent with coffee/cafe logic)
-  if (['dessert', 'pastry', 'cake', 'pastries', 'bakery', 'bakeries', 'sweets'].includes(cuisineKeyword)) {
-    // Simplified: Check both primaryType and types array equally (no prioritization)
+  // Support both individual keywords and array-based matching
+  const dessertRelatedKeywords = ['dessert', 'pastry', 'cake', 'pastries', 'bakery', 'bakeries', 'sweets', 
+                                  'dessert_shop', 'pastry_shop', 'confectionery'];
+  if (dessertRelatedKeywords.includes(cuisineKeyword)) {
+    // Check both primaryType and types array equally (no prioritization)
     // Must have dessert-related type in either primaryType OR types array
-    const hasDessertPrimaryType = primaryType === 'bakery' || 
-                                   primaryType === 'dessert_shop' || 
-                                   primaryType === 'ice_cream_shop' ||
-                                   primaryType === 'pastry_shop' ||
-                                   primaryType === 'confectionery' ||
-                                   primaryType === 'dessert_restaurant';
+    const dessertTypes = ['bakery', 'dessert_shop', 'ice_cream_shop', 'pastry_shop', 'confectionery', 'dessert_restaurant'];
+    const hasDessertPrimaryType = dessertTypes.some(dt => primaryType === dt);
     const hasDessertInTypes = types.some(t => 
-      t === 'bakery' || 
-      t === 'dessert_shop' || 
-      t === 'ice_cream_shop' ||
-      t === 'pastry_shop' ||
-      t === 'confectionery' ||
-      t === 'dessert_restaurant' ||
-      t.toLowerCase() === 'bakery' ||
-      t.toLowerCase() === 'dessert_shop' ||
-      t.toLowerCase() === 'ice_cream_shop' ||
-      t.toLowerCase() === 'pastry_shop' ||
-      t.toLowerCase() === 'confectionery' ||
-      t.toLowerCase() === 'dessert_restaurant'
+      dessertTypes.some(dt => t === dt || t.toLowerCase() === dt)
     );
     
     return hasDessertPrimaryType || hasDessertInTypes;

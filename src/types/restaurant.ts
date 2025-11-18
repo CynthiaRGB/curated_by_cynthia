@@ -132,7 +132,7 @@ export interface ExtractedKeywords {
   landmark?: string | string[]; // Support single landmark or array for multiple (e.g., "Louvre", "Times Square")
   
   // Cuisine/Type
-  cuisineType?: string;
+  cuisineType?: string | string[]; // Support single type or array of equivalent types (e.g., ["coffee_shop", "cafe", "cafeteria"])
   cuisineSpecialty?: string | null; // Specific dish/specialty (e.g., "pizza", "ramen", "yakitori", "dim sum")
   
   // Meal time
@@ -158,8 +158,6 @@ export interface ExtractedKeywords {
   requiresInstagrammable?: boolean;
   requiresMichelin?: boolean;
   requiresCynthiasPick?: boolean;
-  requiresCoffeeFocus?: boolean; // For "coffee shop"/"coffee"/"cafe" queries - stricter matching
-  requiresDessertFocus?: boolean; // For "dessert"/"pastry"/"cake" queries - stricter matching
   
   // Special features: Array of special features extracted from query
   // Available values: "cash_only", "chef_driven", "compact_seating", "counter_seating", "counter_service", 
