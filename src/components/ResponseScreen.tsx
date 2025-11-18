@@ -71,12 +71,12 @@ const BotResponse: React.FC<{
   const [showThinkingDots, setShowThinkingDots] = useState(false);
   const [allCardsVisible, setAllCardsVisible] = useState(false);
 
-  // Reset states when text or loading state changes
+  // Reset states when text or loading state changes (but not when restaurants change to avoid double animation)
   useEffect(() => {
     setShowRestaurantCards(false);
     setShowThinkingDots(false);
     setAllCardsVisible(false);
-  }, [text, isLoading, restaurants]);
+  }, [text, isLoading]);
 
   const handleTypewriterComplete = () => {
     if (isLoading) {
@@ -335,11 +335,39 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   };
 
   // Handle "Show me more" - triggers API call with "show me more" query
+  // This should behave exactly like typing "show me more" in the chatbox
   const handleShowMore = () => {
-    if (onSendMessage) {
+    if (onSendMessage && !isLocalLoading) {
+      const originalMessage = 'show me more';
+      
+      // Add user message to conversation - display "show me more" in prompt-pill
+      const userMessage: Message = {
+        id: `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        text: originalMessage, // Display "show me more" in prompt-pill
+        isUser: true,
+        timestamp: Date.now()
+      };
+      
+      setConversation(prev => [...prev, userMessage]);
+      
+      // Add loading bot message
+      const loadingMessageId = `bot-loading-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const loadingMessage: Message = {
+        id: loadingMessageId,
+        text: 'Finding more restaurants for you...',
+        isUser: false,
+        timestamp: Date.now() + 1,
+        isLoading: true,
+        searchQuery: originalMessage // Use "show me more" for search query tracking
+      };
+      
+      setConversation(prev => [...prev, loadingMessage]);
+      setIsLocalLoading(true);
+      lastBotMessageIdRef.current = loadingMessageId;
+      
       // Send "show me more" query which the API will handle using context
       // The context is passed from ChatInterface, so it should be available
-      onSendMessage('show me more', originalCity || undefined);
+      onSendMessage(originalMessage, originalCity || undefined);
     }
   };
 
@@ -376,11 +404,15 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
     }
     
     // Handle initial load: replace initial loading message when results arrive
-    if (isExternalLoading === false && botResponse && initialRestaurants.length > 0) {
+    // Only do this if we're not in a local loading state (to avoid interfering with follow-up queries)
+    if (isExternalLoading === false && !isLocalLoading && botResponse && initialRestaurants.length > 0) {
       setConversation(prev => {
         // Find the initial loading message (if it exists) and replace it
+        // Only replace if this is truly the initial load (conversation has only 2 messages: user + loading)
         const hasInitialLoading = prev.some(msg => msg.id === 'bot-loading' && msg.isLoading);
-        if (hasInitialLoading) {
+        const isInitialLoad = prev.length === 2 && hasInitialLoading;
+        
+        if (isInitialLoad) {
           return prev.map(msg => {
             if (msg.id === 'bot-loading' && msg.isLoading) {
               lastBotMessageIdRef.current = 'bot-1';

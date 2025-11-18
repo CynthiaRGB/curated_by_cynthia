@@ -101,6 +101,10 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
   }, [restaurants, delay, startDelay, onAllCardsVisible]);
 
   const handleCardClick = (restaurant: Restaurant, index: number) => {
+    // Open Google Maps immediately (don't wait for logging)
+    window.open(restaurant.original_place.properties.google_maps_url, '_blank', 'noopener,noreferrer');
+    
+    // Log events asynchronously after opening the map (non-blocking)
     const timeSinceSearchResults = Math.round((Date.now() - searchResultsTimestamp) / 1000);
     
     // Log restaurant_clicked event
@@ -142,9 +146,6 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
       is_cynthias_pick: (restaurant.cynthias_pick || false).toString(),
       position_in_results: (index + 1).toString()
     });
-
-    // Open Google Maps in a new tab
-    window.open(restaurant.original_place.properties.google_maps_url, '_blank', 'noopener,noreferrer');
   };
 
   return (

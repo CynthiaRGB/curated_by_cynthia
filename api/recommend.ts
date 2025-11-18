@@ -239,10 +239,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     
     // OPTIMIZATION: For "show me more" queries, reuse previous keywords from context
     // This avoids Claude API calls and saves costs (we already have the keywords from the first query)
-    if (isShowMeMoreQuery(query) && context?.previousKeywords) {
-      console.log('[API] "Show me more" query detected - reusing previous keywords (skipping Claude API call)');
-      parsedKeywords = context.previousKeywords;
-      usedClaudeForParsing = false; // No Claude API call needed
+    if (isShowMeMoreQuery(query)) {
+      if (context?.previousKeywords) {
+        console.log('[API] "Show me more" query detected - reusing previous keywords (skipping Claude API call)');
+        parsedKeywords = context.previousKeywords;
+        usedClaudeForParsing = false; // No Claude API call needed
+        console.log('[API] Confirmed: parsedKeywords set from context, Claude API call will be skipped');
+      } else {
+        console.warn('[API] "Show me more" query detected but context.previousKeywords is missing! This should not happen.');
+        console.warn('[API] Context available:', !!context, 'PreviousKeywords:', context?.previousKeywords);
+      }
     }
     
     // OPTIMIZATION: Check if this is a city-prompt-item and use hardcoded keywords
@@ -260,7 +266,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     
     // If no hardcoded keywords found and not a "show me more" query, use Claude API to parse the query
     if (!parsedKeywords) {
-      console.log('[API] Parsing query with Claude API');
+      console.log('[API] ⚠️ WARNING: parsedKeywords is undefined/null, calling Claude API');
+      console.log('[API] Debug info - isShowMeMoreQuery:', isShowMeMoreQuery(query), 'hasContext:', !!context, 'hasPreviousKeywords:', !!context?.previousKeywords);
       const claudeParseStartTime = Date.now();
       try {
         parsedKeywords = await parseQueryWithClaude(queryToFilter, normalizedCity, queryContext);
