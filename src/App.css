@@ -552,7 +552,7 @@
 
 @media (max-width: 600px) {
   .content-container {
-    top: 10vh;
+    top: 20vh;
   }
 
   .pills-container {
