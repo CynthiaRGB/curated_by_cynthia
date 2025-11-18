@@ -129,6 +129,8 @@ specialFeature: cash_only, chef_driven, compact_seating, counter_seating, counte
 cuisineType: american_restaurant, animal_cafe, asian_restaurant, bagel_shop, bakery, bar, bar_and_grill, barbecue_restaurant, breakfast_restaurant, brunch_restaurant, cafe, cafeteria, catering_service, chinese_restaurant, coffee_shop, confectionery, cultural_center, deli, dessert_restaurant, dessert_shop, donut_shop, establishment, event_venue, fast_food_restaurant, fine_dining_restaurant, food, food_delivery, food_store, french_restaurant, greek_restaurant, grocery_store, hamburger_restaurant, ice_cream_shop, italian_restaurant, japanese_restaurant, korean_restaurant, liquor_store, meal_delivery, meal_takeaway, mediterranean_restaurant, mexican_restaurant, night_club, pizza_restaurant, point_of_interest, pub, ramen_restaurant, restaurant, sandwich_shop, seafood_restaurant, spanish_restaurant, steak_house, store, sushi_restaurant, tea_house, thai_restaurant, vegan_restaurant, vegetarian_restaurant, vietnamese_restaurant, wedding_venue, wholesaler, wine_bar
 
 ## RULES
+**Context reset:** Before using prior context, first decide if the user is starting a brand new search versus a follow-up. Phrases like "actually", "just", "any", "forget that", "nevermind", or "new search" usually mean start fresh—ignore previous filters in those cases. Otherwise, treat it as a follow-up and preserve relevant context.
+
 1. Location: Extract borough (NYC only), neighborhood (from list), landmark (if "near X"), city
    - Landmarks ≠ neighborhoods. "near Louvre" → landmark:"louvre", neighborhood:null
    - Support arrays: ["manhattan","brooklyn"] or "manhattan"
@@ -161,7 +163,8 @@ If both upscale + luxury → use "upscale"
    - "late night" → occasionType:"late_night" (NOT mealType)
 
 6. Special Features: 
-   - Instagram/photos → ["instagrammable"] + requiresInstagrammable:true
+   - If the user cares about visuals/photography, set requiresInstagrammable:true AND include "instagrammable" in specialFeatures. Trigger words/phrases include: "instagram", "ig", "photo", "photos", "photogenic", "picture-worthy", "beautiful", "pretty", "aesthetic", "scenic views", "scenic view", "good for pictures", "camera ready", "look great on instagram". Apply only when these words describe the **space/ambiance**, not the food.
+   - If the user explicitly says they do NOT care about Instagram/photos (e.g., "not instagrammable", "don't care about pictures"), set requiresInstagrammable:null to remove the filter.
 
 7. Booleans: null = remove filter, false = explicit false, true = explicit true
    - "not Michelin" / "remove Michelin" → requiresMichelin:null
