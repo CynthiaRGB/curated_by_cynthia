@@ -9,6 +9,12 @@ interface ChatInterfaceProps {
   className?: string;
 }
 
+const SHOW_ME_MORE_REGEX = /show me more|more options|more restaurants|more places|more results|what else|any other|any more/i;
+
+const isShowMeMoreQuery = (query: string): boolean => {
+  return SHOW_ME_MORE_REGEX.test(query);
+};
+
 export const ChatInterface: React.FC<ChatInterfaceProps> = ({ 
   className = '' 
 }) => {
@@ -25,6 +31,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   // Track query context for follow-up queries (using QueryContext type)
   const [queryContext, setQueryContext] = useState<QueryContext | null>(null);
   const [hasMoreResults, setHasMoreResults] = useState(false); // Track if there are more results available
+  const [shownRestaurantIds, setShownRestaurantIds] = useState<string[]>([]); // Track all restaurants surfaced so far
 
   // Helper function to detect if a query came from a prompt
   const checkIfPromptQuery = (query: string): boolean => {
@@ -64,6 +71,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     // Use message as-is (don't append city to query - city is sent separately)
     const fullQuery = message || '';
     setLastQuery(fullQuery);
+    const isShowMoreRequest = isShowMeMoreQuery(fullQuery);
 
     // Check if this query came from a prompt by looking for common prompt patterns
     const isPromptQuery = checkIfPromptQuery(fullQuery);
@@ -98,6 +106,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           city: cityToUse, // Send selected city (required)
           userId: 'web-user', // Add userId for Statsig Dynamic Config
           context: queryContext || undefined, // Pass query context for follow-up queries
+          previousResultIds: shownRestaurantIds, // Explicitly send all previously shown restaurant IDs
         }),
       });
 
@@ -137,18 +146,30 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           response_time_ms: responseTime.toString()
         });
 
-             setRestaurants(restaurants);
-             setBotResponse(data.summary);
-             setUsedClaude(data.usedClaude || false);
-             setIsInConversation(true); // Mark that we're in a conversation
-             // Update query context from API response (for follow-up queries)
-             if (data.context) {
-               setQueryContext(data.context as QueryContext);
-             } else {
-               setQueryContext(null); // Clear context if API doesn't return it
-             }
-             // Update hasMoreResults flag
-             setHasMoreResults(data.hasMoreResults || false);
+        setRestaurants(restaurants);
+        setBotResponse(data.summary);
+        setUsedClaude(data.usedClaude || false);
+        setIsInConversation(true); // Mark that we're in a conversation
+        // Update query context from API response (for follow-up queries)
+        if (data.context) {
+          setQueryContext(data.context as QueryContext);
+        } else {
+          setQueryContext(null); // Clear context if API doesn't return it
+        }
+        // Update hasMoreResults flag
+        setHasMoreResults(data.hasMoreResults || false);
+        // Track all restaurants that have been surfaced so far (used for "show me more" fallbacks)
+        const newResultIds = restaurants
+          .map(r => r.google_place_id)
+          .filter((id): id is string => typeof id === 'string' && id.length > 0);
+        setShownRestaurantIds(prevIds => {
+          if (isShowMoreRequest) {
+            const merged = new Set(prevIds);
+            newResultIds.forEach(id => merged.add(id));
+            return Array.from(merged);
+          }
+          return newResultIds;
+        });
            } else {
              // Log search_no_results event when no results
              client.logEvent('search_no_results', fullQuery, {
@@ -168,6 +189,9 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
              }
              // Update hasMoreResults flag (no results means no more results)
              setHasMoreResults(false);
+            if (!isShowMoreRequest) {
+              setShownRestaurantIds([]);
+            }
            }
 
            // Only increment key for first query, not for follow-ups
@@ -223,6 +247,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           setIsInConversation(false); // Reset conversation state
           setQueryContext(null); // Clear query context
           setHasMoreResults(false); // Reset hasMoreResults
+          setShownRestaurantIds([]); // Clear seen restaurants when resetting conversation
           setResponseScreenKey(prev => prev + 1); // Increment key to reset ResponseScreen
         }}
         onSendMessage={handleSendMessage}
