@@ -681,7 +681,7 @@
 
 /* Quick Actions styles - matching city-prompt-item */
 .quick-actions-container {
-  margin-top: 24px;
+  margin-top: 0;
   width: 100%;
 }
 

@@ -5,6 +5,7 @@ interface QuickActionsProps {
   onShowMore: () => void;
   onSortByPrice: () => void;
   onSortByRating: () => void;
+  onActionClick?: () => void; // Callback to hide quick actions when any action is clicked
 }
 
 export const QuickActions: React.FC<QuickActionsProps> = ({
@@ -12,6 +13,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
   onShowMore,
   onSortByPrice,
   onSortByRating,
+  onActionClick,
 }) => {
   const [visibleActions, setVisibleActions] = useState<number[]>([]);
 
@@ -33,6 +35,13 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
     revealNext(0);
   }, [hasMoreResults]);
 
+  const handleActionClick = (originalOnClick: () => void) => {
+    originalOnClick();
+    if (onActionClick) {
+      onActionClick();
+    }
+  };
+
   const actions = [];
   if (hasMoreResults) {
     actions.push({ id: 0, text: 'Show me more', onClick: onShowMore });
@@ -50,7 +59,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
             className={`quick-action-item ${
               visibleActions.includes(action.id) ? 'action-visible' : 'action-hidden'
             }`}
-            onClick={action.onClick}
+            onClick={() => handleActionClick(action.onClick)}
           >
             <div className="action-text">
               <span>{action.text}</span>

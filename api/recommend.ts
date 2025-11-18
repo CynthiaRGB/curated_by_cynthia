@@ -237,10 +237,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       city: normalizedCity
     } : undefined;
     
+    // OPTIMIZATION: For "show me more" queries, reuse previous keywords from context
+    // This avoids Claude API calls and saves costs (we already have the keywords from the first query)
+    if (isShowMeMoreQuery(query) && context?.previousKeywords) {
+      console.log('[API] "Show me more" query detected - reusing previous keywords (skipping Claude API call)');
+      parsedKeywords = context.previousKeywords;
+      usedClaudeForParsing = false; // No Claude API call needed
+    }
+    
     // OPTIMIZATION: Check if this is a city-prompt-item and use hardcoded keywords
     // This avoids Claude API calls for predefined prompts (saves costs and improves latency)
     // Only check for hardcoded keywords if there's no context (follow-up queries need Claude)
-    if (!queryContext) {
+    // Skip if we already have keywords from "show me more" optimization above
+    if (!parsedKeywords && !queryContext) {
       const hardcodedKeywords = getHardcodedKeywordsForPrompt(queryToFilter, normalizedCity);
       if (hardcodedKeywords) {
         console.log('[API] Using hardcoded keywords for city-prompt-item (skipping Claude API call)');
@@ -249,7 +258,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
     
-    // If no hardcoded keywords found, use Claude API to parse the query
+    // If no hardcoded keywords found and not a "show me more" query, use Claude API to parse the query
     if (!parsedKeywords) {
       console.log('[API] Parsing query with Claude API');
       const claudeParseStartTime = Date.now();

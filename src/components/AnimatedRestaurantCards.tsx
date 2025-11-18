@@ -25,6 +25,7 @@ interface AnimatedRestaurantCardsProps {
   searchResultsTimestamp?: number; // When search results were shown
   originalPromptText?: string | null; // Original prompt text if search came from prompt
   promptClickTimestamp?: number | null; // When the prompt was clicked
+  onAllCardsVisible?: () => void; // Callback when all cards have finished animating
 }
 
 export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = ({
@@ -35,7 +36,8 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
   searchQuery = '',
   searchResultsTimestamp = Date.now(),
   originalPromptText = null,
-  promptClickTimestamp = null
+  promptClickTimestamp = null,
+  onAllCardsVisible
 }) => {
   const { client } = useStatsigClient();
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
@@ -72,15 +74,31 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
     // Reset visible cards when restaurants change
     setVisibleCards([]);
     
-    if (restaurants.length === 0) return;
+    if (restaurants.length === 0) {
+      // If no restaurants, call callback immediately
+      if (onAllCardsVisible) {
+        onAllCardsVisible();
+      }
+      return;
+    }
 
     // Show cards one by one with delay, starting after startDelay
     restaurants.forEach((_, index) => {
       setTimeout(() => {
-        setVisibleCards(prev => [...prev, index]);
+        setVisibleCards(prev => {
+          const newVisibleCards = [...prev, index];
+          // Check if all cards are now visible (last card just appeared)
+          if (newVisibleCards.length === restaurants.length && onAllCardsVisible) {
+            // Call callback after a small delay to ensure the last card's animation has started
+            setTimeout(() => {
+              onAllCardsVisible();
+            }, 50);
+          }
+          return newVisibleCards;
+        });
       }, startDelay + (index * delay));
     });
-  }, [restaurants, delay, startDelay]);
+  }, [restaurants, delay, startDelay, onAllCardsVisible]);
 
   const handleCardClick = (restaurant: Restaurant, index: number) => {
     const timeSinceSearchResults = Math.round((Date.now() - searchResultsTimestamp) / 1000);

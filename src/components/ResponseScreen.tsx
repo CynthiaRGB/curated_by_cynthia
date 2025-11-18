@@ -47,9 +47,11 @@ const BotResponse: React.FC<{
   promptClickTimestamp?: number | null;
   isLoading?: boolean;
   hasMoreResults?: boolean;
+  showQuickActions?: boolean;
   onShowMore?: () => void;
   onSortByPrice?: () => void;
   onSortByRating?: () => void;
+  onQuickActionClick?: () => void;
 }> = ({ 
   text, 
   restaurants,
@@ -59,18 +61,22 @@ const BotResponse: React.FC<{
   promptClickTimestamp,
   isLoading = false,
   hasMoreResults = false,
+  showQuickActions = true,
   onShowMore,
   onSortByPrice,
   onSortByRating,
+  onQuickActionClick,
 }) => {
   const [showRestaurantCards, setShowRestaurantCards] = useState(false);
   const [showThinkingDots, setShowThinkingDots] = useState(false);
+  const [allCardsVisible, setAllCardsVisible] = useState(false);
 
   // Reset states when text or loading state changes
   useEffect(() => {
     setShowRestaurantCards(false);
     setShowThinkingDots(false);
-  }, [text, isLoading]);
+    setAllCardsVisible(false);
+  }, [text, isLoading, restaurants]);
 
   const handleTypewriterComplete = () => {
     if (isLoading) {
@@ -104,14 +110,18 @@ const BotResponse: React.FC<{
             searchResultsTimestamp={searchResultsTimestamp}
             originalPromptText={originalPromptText || undefined}
             promptClickTimestamp={promptClickTimestamp || undefined}
+            onAllCardsVisible={() => setAllCardsVisible(true)}
           />
-          {/* Quick Actions - shown after restaurant cards */}
-          <QuickActions
-            hasMoreResults={hasMoreResults}
-            onShowMore={onShowMore || (() => {})}
-            onSortByPrice={onSortByPrice || (() => {})}
-            onSortByRating={onSortByRating || (() => {})}
-          />
+          {/* Quick Actions - shown only after all restaurant cards have finished animating */}
+          {showQuickActions && allCardsVisible && (
+            <QuickActions
+              hasMoreResults={hasMoreResults}
+              onShowMore={onShowMore || (() => {})}
+              onSortByPrice={onSortByPrice || (() => {})}
+              onSortByRating={onSortByRating || (() => {})}
+              onActionClick={onQuickActionClick}
+            />
+          )}
         </>
       )}
     </div>
@@ -173,6 +183,8 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   const [hasMoreResults, setHasMoreResults] = useState(initialHasMoreResults);
   // Track query context
   const [queryContext, setQueryContext] = useState<QueryContext | null>(initialQueryContext);
+  // Track if quick actions should be shown
+  const [showQuickActions, setShowQuickActions] = useState(true);
   const [conversation, setConversation] = useState<Message[]>(() => {
     const messages: Message[] = [
       { id: 'user-1', text: userPrompt, isUser: true, timestamp: Date.now() }
@@ -266,6 +278,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   useEffect(() => {
     setSortedRestaurants(initialRestaurants);
     setIsSorted(false); // Reset sorted state when new results arrive
+    setShowQuickActions(true); // Show quick actions for new results
   }, [initialRestaurants]);
 
   // Sync hasMoreResults and queryContext when props change
@@ -323,10 +336,16 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
 
   // Handle "Show me more" - triggers API call with "show me more" query
   const handleShowMore = () => {
-    if (onSendMessage && queryContext) {
+    if (onSendMessage) {
       // Send "show me more" query which the API will handle using context
+      // The context is passed from ChatInterface, so it should be available
       onSendMessage('show me more', originalCity || undefined);
     }
+  };
+
+  // Hide quick actions when any action is clicked
+  const handleQuickActionClick = () => {
+    setShowQuickActions(false);
   };
 
   // Update conversation when new results arrive (for follow-up queries or initial load)
@@ -413,9 +432,11 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
                 promptClickTimestamp={promptClickTimestamp}
                 isLoading={msg.isLoading}
                 hasMoreResults={msg.id === lastBotMessageIdRef.current ? hasMoreResults : false}
+                showQuickActions={msg.id === lastBotMessageIdRef.current ? showQuickActions : false}
                 onShowMore={handleShowMore}
                 onSortByPrice={handleSortByPrice}
                 onSortByRating={handleSortByRating}
+                onQuickActionClick={handleQuickActionClick}
               />
             )}
           </div>
