@@ -24,14 +24,24 @@ export const ResultCard: React.FC<ResultCardProps> = ({
     ? 'bg-[#FCF6E8]' 
     : 'bg-[#FCF6E8] hover:bg-[#EADBBE]';
   
-  const formatPriceLevel = (priceLevel?: string) => {
-    switch (priceLevel) {
-      case 'PRICE_LEVEL_INEXPENSIVE': return '$';
-      case 'PRICE_LEVEL_MODERATE': return '$$';
-      case 'PRICE_LEVEL_EXPENSIVE': return '$$$';
-      case 'PRICE_LEVEL_VERY_EXPENSIVE': return '$$$$';
-      default: return '$$';
+  // price_display is now pre-calculated in the data, so we can use it directly
+  // Fallback to formatting priceLevel only if price_display is missing
+  const getPriceDisplay = (restaurant: Restaurant) => {
+    if (restaurant.price_display) {
+      return restaurant.price_display;
     }
+    // Fallback: format from priceLevel if price_display is missing
+    const priceLevel = restaurant.google_data.priceLevel;
+    if (priceLevel) {
+      switch (priceLevel) {
+        case 'PRICE_LEVEL_INEXPENSIVE': return '$';
+        case 'PRICE_LEVEL_MODERATE': return '$$';
+        case 'PRICE_LEVEL_EXPENSIVE': return '$$$';
+        case 'PRICE_LEVEL_VERY_EXPENSIVE': return '$$$$';
+        default: return 'N/A';
+      }
+    }
+    return 'N/A';
   };
   
   const renderStars = (rating: number) => {
@@ -74,7 +84,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
       <div className="flex items-center gap-2 text-base text-[#1A1818] flex-wrap">
         <span className="whitespace-nowrap">{restaurant.google_data.types[0] || 'Restaurant'}</span>
         <span>·</span>
-        <span className="whitespace-nowrap">{formatPriceLevel(restaurant.google_data.priceLevel)}</span>
+        <span className="whitespace-nowrap">{getPriceDisplay(restaurant)}</span>
         <span>·</span>
         <div className="flex items-center gap-1">
           <span className="whitespace-nowrap">{restaurant.google_data.rating?.toFixed(1) || 'N/A'}</span>
