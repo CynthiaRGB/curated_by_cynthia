@@ -143,7 +143,6 @@ export interface ExtractedKeywords {
   
   // Amenities
   needsTakeout?: boolean;
-  needsCoffee?: boolean;
   
   // Vibes (now filtered using enriched tags)
   vibeKeywords: string[];

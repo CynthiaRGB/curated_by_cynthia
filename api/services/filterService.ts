@@ -848,16 +848,7 @@ function matchesAmenities(restaurant: Restaurant, keywords: ExtractedKeywords): 
     return false;
   }
 
-  if (keywords.needsCoffee) {
-    const servesCoffee = restaurant.google_data.servesCoffee;
-    const isCafe = restaurant.google_data.types?.includes('cafe');
-    if (!servesCoffee && !isCafe) {
-      return false;
-    }
-  }
-
   // Dessert/sweets filtering is now handled in matchesCuisine with strict metadata-only matching
-  // (consistent with coffee/cafe logic)
 
   return true;
 }

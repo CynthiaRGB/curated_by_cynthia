@@ -207,7 +207,6 @@ Return raw JSON (no markdown):
 "cuisineSpecialty": null|string,
 "mealType": null|"breakfast"|"brunch"|"lunch"|"dinner",
 "priceLevel": null|"budget"|"moderate"|"upscale"|"luxury"|"any",
-"needsCoffee": boolean,
 "vibeKeywords": string[],
 "occasionType": null|string,
 "noisePreference": null|string,
@@ -564,7 +563,6 @@ export async function parseQueryWithClaude(
       mealType: parsedKeywords.mealType || null,
       priceLevel: parsedKeywords.priceLevel || undefined,
       needsTakeout: parsedKeywords.needsTakeout || false,
-      needsCoffee: parsedKeywords.needsCoffee || false,
     };
 
     console.log('[Parse Query] Parsed keywords:', JSON.stringify(keywords, null, 2));
