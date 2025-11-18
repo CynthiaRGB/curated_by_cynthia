@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useStatsigClient } from '@statsig/react-bindings';
 import { City } from '../types/restaurant';
+import type { SendMessageOptions } from '../types/chat';
 
 interface ChatboxProps {
-  onSendMessage: (message: string, city?: City) => void;
+  onSendMessage: (message: string, city?: City, options?: SendMessageOptions) => void;
   isLoading?: boolean;
 }
 

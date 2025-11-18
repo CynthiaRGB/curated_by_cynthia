@@ -3,6 +3,7 @@ import { useStatsigClient } from '@statsig/react-bindings';
 import { Chatbox } from './Chatbox';
 import { ResponseScreen } from './ResponseScreen';
 import { Restaurant, City, QueryContext } from '../types/restaurant';
+import type { SendMessageOptions } from '../types/chat';
 // All filtering now happens on the backend - no local imports needed
 
 interface ChatInterfaceProps {
@@ -46,7 +47,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     );
   };
 
-  const handleSendMessage = async (message: string, city?: City) => {
+  const handleSendMessage = async (message: string, city?: City, options?: SendMessageOptions) => {
     console.log('handleSendMessage called with:', { message, city });
     
     // Use city from parameter, or fall back to city from queryContext (for follow-up queries)
@@ -98,6 +99,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           city: cityToUse, // Send selected city (required)
           userId: 'web-user', // Add userId for Statsig Dynamic Config
           context: queryContext || undefined, // Pass query context for follow-up queries
+          excludePlaceIds: options?.excludePlaceIds || undefined,
         }),
       });
 

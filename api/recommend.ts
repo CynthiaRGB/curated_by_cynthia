@@ -152,7 +152,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       query, 
       city, // Selected city pill (required)
       userId = 'api-user',
-      context // Optional: { previousQuery, previousKeywords, previousResultIds, city }
+      context, // Optional: { previousQuery, previousKeywords, previousResultIds, city }
+      excludePlaceIds: rawExcludePlaceIds = []
     } = req.body;
 
     if (!query || typeof query !== 'string') {
@@ -196,6 +197,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Default configuration values
     const maxResults = 10;
+    const excludePlaceIds: string[] = Array.isArray(rawExcludePlaceIds)
+      ? rawExcludePlaceIds.filter((id: unknown): id is string => typeof id === 'string' && id.length > 0)
+      : [];
 
     const apiStartTime = Date.now();
 
@@ -409,12 +413,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Step 8: Handle "show me more" follow-ups - exclude previously shown results
-    if (isShowMeMoreQuery(query) && context?.previousResultIds && context.previousResultIds.length > 0) {
-      const previousRestaurants = filteredRestaurants.filter(r => 
-        context.previousResultIds!.includes(r.google_place_id)
-      );
-      console.log(`[API] Excluding ${previousRestaurants.length} previously shown restaurants`);
-      filteredRestaurants = getMoreRestaurants(filteredRestaurants, previousRestaurants);
+    const combinedExcludeIds = new Set<string>();
+    if (context?.previousResultIds && context.previousResultIds.length > 0) {
+      context.previousResultIds.forEach(id => combinedExcludeIds.add(id));
+    }
+    if (excludePlaceIds.length > 0) {
+      excludePlaceIds.forEach(id => combinedExcludeIds.add(id));
+    }
+
+    const shouldExclude = combinedExcludeIds.size > 0 && (isShowMeMoreQuery(query) || excludePlaceIds.length > 0);
+
+    if (shouldExclude) {
+      const previouslyShown = filteredRestaurants.filter(r => combinedExcludeIds.has(r.google_place_id));
+      console.log(`[API] Excluding ${previouslyShown.length} previously shown restaurants (manual exclude: ${excludePlaceIds.length > 0})`);
+      filteredRestaurants = getMoreRestaurants(filteredRestaurants, previouslyShown);
       console.log(`[API] After excluding previous results: ${filteredRestaurants.length} restaurants`);
     }
 

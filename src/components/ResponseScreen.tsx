@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Restaurant, City, QueryContext } from '../types/restaurant';
+import type { SendMessageOptions } from '../types/chat';
 import { TypewriterText } from './TypewriterText';
 import { AnimatedRestaurantCards } from './AnimatedRestaurantCards';
 import { ThinkingDots } from './ThinkingDots';
@@ -180,7 +181,7 @@ interface ResponseScreenProps {
   botResponse: string;
   restaurants: Restaurant[];
   onBackToSearch: () => void;
-  onSendMessage?: (message: string, city?: City) => void;
+  onSendMessage?: (message: string, city?: City, options?: SendMessageOptions) => void;
   onNewResults?: (restaurants: Restaurant[], query: string) => void;
   searchQuery?: string; // Add search query for event logging
   originalPromptText?: string | null; // Original prompt text if search came from prompt
@@ -405,6 +406,13 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
       // Send "show me more" query which the API will handle using context
       // The context is passed from ChatInterface, so it should be available
       onSendMessage(originalMessage, originalCity || undefined);
+      const excludePlaceIds = queryContext?.previousResultIds?.length 
+        ? queryContext.previousResultIds 
+        : sortedRestaurants.map(restaurant => restaurant.google_place_id);
+
+      onSendMessage(originalMessage, originalCity || undefined, {
+        excludePlaceIds
+      });
     }
   };
 
