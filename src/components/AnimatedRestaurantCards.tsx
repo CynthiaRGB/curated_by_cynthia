@@ -25,8 +25,11 @@ interface AnimatedRestaurantCardsProps {
   searchResultsTimestamp?: number; // When search results were shown
   originalPromptText?: string | null; // Original prompt text if search came from prompt
   promptClickTimestamp?: number | null; // When the prompt was clicked
-  onAllCardsVisible?: () => void; // Callback when all cards have finished animating
+  messageId?: string; // Unique ID for this message to track if cards have already animated
 }
+
+// Track which message+order combinations have already been animated
+const animatedMessageKeys = new Set<string>();
 
 export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = ({
   restaurants,
@@ -37,7 +40,7 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
   searchResultsTimestamp = Date.now(),
   originalPromptText = null,
   promptClickTimestamp = null,
-  onAllCardsVisible
+  messageId = ''
 }) => {
   const { client } = useStatsigClient();
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
@@ -71,34 +74,34 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
   };
 
   useEffect(() => {
-    // Reset visible cards when restaurants change
-    setVisibleCards([]);
-    
     if (restaurants.length === 0) {
-      // If no restaurants, call callback immediately
-      if (onAllCardsVisible) {
-        onAllCardsVisible();
-      }
+      setVisibleCards([]);
       return;
     }
 
+    // Create a key to track if this message+order combination has already been animated
+    // Use messageId + hash of restaurant IDs in order
+    const restaurantOrderHash = restaurants.map(r => r.google_place_id).join(',');
+    const animationKey = `${messageId}-${restaurantOrderHash}`;
+    
+    // Check if this combination has already been animated
+    if (animatedMessageKeys.has(animationKey)) {
+      // Already animated - show all cards immediately without animation
+      setVisibleCards(restaurants.map((_, index) => index));
+      return;
+    }
+
+    // Mark as animated and start animation
+    animatedMessageKeys.add(animationKey);
+    setVisibleCards([]);
+    
     // Show cards one by one with delay, starting after startDelay
     restaurants.forEach((_, index) => {
       setTimeout(() => {
-        setVisibleCards(prev => {
-          const newVisibleCards = [...prev, index];
-          // Check if all cards are now visible (last card just appeared)
-          if (newVisibleCards.length === restaurants.length && onAllCardsVisible) {
-            // Call callback after a small delay to ensure the last card's animation has started
-            setTimeout(() => {
-              onAllCardsVisible();
-            }, 50);
-          }
-          return newVisibleCards;
-        });
+        setVisibleCards(prev => [...prev, index]);
       }, startDelay + (index * delay));
     });
-  }, [restaurants, delay, startDelay, onAllCardsVisible]);
+  }, [restaurants, delay, startDelay, messageId]);
 
   const handleCardClick = (restaurant: Restaurant, index: number) => {
     // Open Google Maps immediately (don't wait for logging)

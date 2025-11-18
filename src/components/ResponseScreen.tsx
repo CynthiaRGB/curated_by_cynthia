@@ -48,6 +48,7 @@ const BotResponse: React.FC<{
   isLoading?: boolean;
   hasMoreResults?: boolean;
   showQuickActions?: boolean;
+  messageId?: string; // Unique ID for this message
   onShowMore?: () => void;
   onSortByPrice?: () => void;
   onSortByRating?: () => void;
@@ -62,6 +63,7 @@ const BotResponse: React.FC<{
   isLoading = false,
   hasMoreResults = false,
   showQuickActions = true,
+  messageId = '',
   onShowMore,
   onSortByPrice,
   onSortByRating,
@@ -69,13 +71,15 @@ const BotResponse: React.FC<{
 }) => {
   const [showRestaurantCards, setShowRestaurantCards] = useState(false);
   const [showThinkingDots, setShowThinkingDots] = useState(false);
-  const [allCardsVisible, setAllCardsVisible] = useState(false);
+  const [showQuickActionsAfterAnimation, setShowQuickActionsAfterAnimation] = useState(false);
+  const [hasShownQuickActions, setHasShownQuickActions] = useState(false); // Track if Quick Actions has been shown for this message
 
   // Reset states when text or loading state changes (but not when restaurants change to avoid double animation)
   useEffect(() => {
     setShowRestaurantCards(false);
     setShowThinkingDots(false);
-    setAllCardsVisible(false);
+    setShowQuickActionsAfterAnimation(false);
+    setHasShownQuickActions(false); // Reset when message changes
   }, [text, isLoading]);
 
   const handleTypewriterComplete = () => {
@@ -87,6 +91,39 @@ const BotResponse: React.FC<{
       setShowRestaurantCards(true);
     }
   };
+
+  // Calculate when to show Quick Actions: after all cards finish animating
+  // Last card appears at: (restaurants.length - 1) * delay
+  // Animation duration: 400ms (from CSS transition)
+  // Show Quick Actions after: last card delay + animation duration
+  // Once shown, keep it visible even if restaurants change (for sorting)
+  useEffect(() => {
+    if (restaurants && restaurants.length > 0 && showRestaurantCards && !isLoading) {
+      // If Quick Actions has already been shown, keep it visible (for sorting scenario)
+      if (hasShownQuickActions) {
+        setShowQuickActionsAfterAnimation(true);
+        return;
+      }
+      
+      const delay = 200; // Delay between each card (matches AnimatedRestaurantCards)
+      const animationDuration = 400; // Animation duration in ms (from CSS transition)
+      const lastCardIndex = restaurants.length - 1;
+      const lastCardAppearTime = lastCardIndex * delay;
+      const lastCardFinishTime = lastCardAppearTime + animationDuration;
+      
+      const timer = setTimeout(() => {
+        setShowQuickActionsAfterAnimation(true);
+        setHasShownQuickActions(true); // Mark as shown so it stays visible on sort
+      }, lastCardFinishTime);
+      
+      return () => clearTimeout(timer);
+    } else {
+      // Only reset if we're truly hiding (not just sorting)
+      if (!showRestaurantCards || isLoading) {
+        setShowQuickActionsAfterAnimation(false);
+      }
+    }
+  }, [restaurants, showRestaurantCards, isLoading, hasShownQuickActions]);
 
   return (
     <div className="response-content">
@@ -110,10 +147,10 @@ const BotResponse: React.FC<{
             searchResultsTimestamp={searchResultsTimestamp}
             originalPromptText={originalPromptText || undefined}
             promptClickTimestamp={promptClickTimestamp || undefined}
-            onAllCardsVisible={() => setAllCardsVisible(true)}
+            messageId={messageId}
           />
-          {/* Quick Actions - shown only after all restaurant cards have finished animating */}
-          {showQuickActions && allCardsVisible && (
+          {/* Quick Actions - shown after all restaurant cards finish animating (timing-based) */}
+          {showQuickActions && showQuickActionsAfterAnimation && (
             <QuickActions
               hasMoreResults={hasMoreResults}
               onShowMore={onShowMore || (() => {})}
@@ -465,6 +502,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
                 isLoading={msg.isLoading}
                 hasMoreResults={msg.id === lastBotMessageIdRef.current ? hasMoreResults : false}
                 showQuickActions={msg.id === lastBotMessageIdRef.current ? showQuickActions : false}
+                messageId={msg.id}
                 onShowMore={handleShowMore}
                 onSortByPrice={handleSortByPrice}
                 onSortByRating={handleSortByRating}
