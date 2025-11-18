@@ -6,28 +6,28 @@ const DATA_FILE = './api/data/final_data.ts';
 // City-specific price thresholds (using endPrice)
 const PRICE_THRESHOLDS = {
   USD: {
-    budget: 15,
-    moderate: 35,
-    upscale: 75,
-    // luxury: > 75
+    budget: 20,
+    moderate: 50,
+    upscale: 100,
+    // luxury: > 100
   },
   JPY: {
-    budget: 1500,
-    moderate: 4000,
-    upscale: 12000,
-    // luxury: > 12000
+    budget: 2000,
+    moderate: 5000,
+    upscale: 10000,
+    // luxury: > 10000
   },
   EUR: {
     budget: 20,
-    moderate: 50,
-    upscale: 120,
-    // luxury: > 120
+    moderate: 40,
+    upscale: 70,
+    // luxury: > 70
   },
   KRW: {
-    budget: 20000,
-    moderate: 50000,
-    upscale: 120000,
-    // luxury: > 120000
+    budget: 15000,
+    moderate: 35000,
+    upscale: 80000,
+    // luxury: > 80000
   }
 };
 

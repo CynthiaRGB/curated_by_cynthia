@@ -356,7 +356,11 @@ function formatRestaurantData(placeData, placeId, url) {
   }
   
   // Determine price display
+  // Priority 1: Use priceLevel if available
+  // Priority 2: Calculate from priceRange.endPrice using city-specific thresholds
+  // Priority 3: Set to N/A if no price data
   let priceDisplay = 'N/A';
+  
   if (placeData.priceLevel) {
     const priceMap = {
       'PRICE_LEVEL_FREE': 'Free',
@@ -366,12 +370,42 @@ function formatRestaurantData(placeData, placeId, url) {
       'PRICE_LEVEL_VERY_EXPENSIVE': '$$$$'
     };
     priceDisplay = priceMap[placeData.priceLevel] || 'N/A';
-  } else if (placeData.priceRange) {
-    const startPrice = parseInt(placeData.priceRange.startPrice?.units || '0');
-    if (startPrice <= 1) priceDisplay = '$';
-    else if (startPrice <= 2) priceDisplay = '$$';
-    else if (startPrice <= 3) priceDisplay = '$$$';
-    else priceDisplay = '$$$$';
+  } else if (placeData.priceRange?.endPrice) {
+    // Use endPrice (not startPrice) for better accuracy
+    const currencyCode = placeData.priceRange.endPrice.currencyCode;
+    const units = parseInt(placeData.priceRange.endPrice.units || '0', 10);
+    
+    if (units > 0) {
+      // City-specific price thresholds
+      const PRICE_THRESHOLDS = {
+        USD: { budget: 20, moderate: 50, upscale: 100 },
+        JPY: { budget: 2000, moderate: 5000, upscale: 10000 },
+        EUR: { budget: 20, moderate: 40, upscale: 70 },
+        KRW: { budget: 15000, moderate: 35000, upscale: 80000 }
+      };
+      
+      const thresholds = PRICE_THRESHOLDS[currencyCode];
+      
+      if (thresholds) {
+        // Check if units is in normalized scale (1-4) vs actual currency amount
+        if (units <= 4) {
+          // Normalized scale: map directly
+          const normalizedMap = { 1: '$', 2: '$$', 3: '$$$', 4: '$$$$' };
+          priceDisplay = normalizedMap[units] || 'N/A';
+        } else {
+          // Use actual currency thresholds
+          if (units < thresholds.budget) {
+            priceDisplay = '$';
+          } else if (units < thresholds.moderate) {
+            priceDisplay = '$$';
+          } else if (units < thresholds.upscale) {
+            priceDisplay = '$$$';
+          } else {
+            priceDisplay = '$$$$';
+          }
+        }
+      }
+    }
   }
   
   // Extract specific type
