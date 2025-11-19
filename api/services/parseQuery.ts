@@ -142,7 +142,8 @@ cuisineType: Use ONLY values from list above. If query mentions unlisted cuisine
   - When using arrays, include all equivalent types that should match the query intent
 cuisineSpecialty: Extract specific dish name if mentioned. FilterService uses flexible matching against restaurant metadata, names, descriptions. Examples of dish name: pizza, sushi, dim sum, yakitori, etc. 
 
-Restaurant types (izakaya, bistro, trattoria) → NOT cuisineType; map to cuisine (japanese, french, italian)
+What's NOT cuisineType:
+- Restaurant types (izakaya, bistro, trattoria) → NOT cuisineType; map to cuisine (japanese, french, italian)
 
 Cuisine Mapping Rules:
 Wine/cocktail/drinks/alcohol → ["bar", "wine_bar"]
@@ -223,7 +224,7 @@ Examples:
 "pizza in Manhattan" → {"borough":"manhattan","city":"nyc","cuisineType":"italian_restaurant","cuisineSpecialty":"pizza"}
 "upscale Japanese in Shibuya for anniversary" → {"neighborhood":"shibuya","city":"tokyo","cuisineType":"japanese_restaurant","priceLevel":"upscale","occasionType":"anniversary","vibeKeywords":["upscale"]}
 "first date in West Village" → {"neighborhood":"west village","city":"nyc","occasionType":"date_night","vibeKeywords":["romantic","intimate","cozy"]}
-"famous street food locals love near Times Square" → {"landmark":"times square","city":"nyc","priceLevel":"budget"}`;
+"famous street food locals love near Times Square" → {"landmark":"times square","city":"nyc","priceLevel":"budget"}
 
 /**
  * Build prompt for Claude API query parsing

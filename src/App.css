@@ -273,7 +273,8 @@
   font-size: 14px;
   line-height: normal;
   color: #1A1818;
-  white-space: nowrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Response content */

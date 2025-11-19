@@ -10,6 +10,21 @@ interface ChatboxProps {
 
 const CITIES: City[] = ['New York City', 'Tokyo', 'Paris', 'Seoul'];
 
+// Helper function to check if message already ends with "in [city]"
+const alreadyHasCity = (message: string, city: City): boolean => {
+  const trimmed = message.trim().toLowerCase();
+  const cityLower = city.toLowerCase();
+  
+  // Check for "in [city]" pattern at the end
+  const cityPatterns = [
+    `in ${cityLower}`,
+    `in ${city === 'New York City' ? 'nyc' : ''}`,
+    `in ${city === 'New York City' ? 'new york' : ''}`
+  ].filter(Boolean);
+  
+  return cityPatterns.some(pattern => trimmed.endsWith(pattern));
+};
+
 // City-specific search prompts
 const CITY_PROMPTS: Record<City, string[]> = {
   'Tokyo': [
@@ -53,7 +68,11 @@ export const Chatbox: React.FC<ChatboxProps> = ({
 
   const handleSubmit = () => {
     if (message.trim() && !isLoading && message.length <= MAX_CHARACTERS) {
-      const fullMessage = `${message.trim()} in ${selectedCity}`;
+      const trimmedMessage = message.trim();
+      // Only append city if it's not already in the message
+      const fullMessage = alreadyHasCity(trimmedMessage, selectedCity) 
+        ? trimmedMessage 
+        : `${trimmedMessage} in ${selectedCity}`;
       onSendMessage(fullMessage, selectedCity);
       setMessage('');
       // Keep the city selected - don't clear it
@@ -97,7 +116,10 @@ export const Chatbox: React.FC<ChatboxProps> = ({
     
     // Store the original prompt text for tracking purposes
     // We'll pass this through the search flow to track if it leads to restaurant clicks
-    const fullPromptText = `${prompt} in ${selectedCity}`;
+    // Only append city if it's not already in the prompt
+    const fullPromptText = alreadyHasCity(prompt, selectedCity)
+      ? prompt
+      : `${prompt} in ${selectedCity}`;
     
     // Send the prompt as the message
     onSendMessage(fullPromptText, selectedCity);
