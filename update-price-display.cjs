@@ -51,6 +51,20 @@ const RANGE_MAPPINGS = {
 };
 
 /**
+ * Map Google priceLevel to price_display
+ */
+function mapPriceLevelToDisplay(priceLevel) {
+  const priceMap = {
+    'PRICE_LEVEL_FREE': 'Free',
+    'PRICE_LEVEL_INEXPENSIVE': '$',
+    'PRICE_LEVEL_MODERATE': '$$',
+    'PRICE_LEVEL_EXPENSIVE': '$$$',
+    'PRICE_LEVEL_VERY_EXPENSIVE': '$$$$'
+  };
+  return priceMap[priceLevel] || null;
+}
+
+/**
  * Calculate price_display from priceRange using exact range mappings
  */
 function calculatePriceDisplayFromRange(priceRange, city) {
@@ -129,13 +143,97 @@ function updatePriceDisplay() {
   const fileContent = fs.readFileSync(DATA_FILE, 'utf-8');
   
   // Extract the restaurants array from the TypeScript file
-  const arrayMatch = fileContent.match(/export const restaurantData = (\[[\s\S]*\]);/);
-  if (!arrayMatch) {
-    throw new Error('Could not find restaurantData array in data file');
+  // Use a more robust method for large files
+  const exportStart = fileContent.indexOf('export const restaurantData = [');
+  if (exportStart === -1) {
+    throw new Error('Could not find export statement');
   }
-
-  const restaurantsJson = arrayMatch[1];
-  const restaurants = eval(`(${restaurantsJson})`); // Safe here since we control the file
+  
+  // Find the matching closing bracket and semicolon
+  let bracketCount = 0;
+  let inString = false;
+  let escapeNext = false;
+  let arrayStart = exportStart + 'export const restaurantData = '.length;
+  let arrayEnd = arrayStart;
+  
+  for (let i = arrayStart; i < fileContent.length; i++) {
+    const char = fileContent[i];
+    
+    if (escapeNext) {
+      escapeNext = false;
+      continue;
+    }
+    
+    if (char === '\\') {
+      escapeNext = true;
+      continue;
+    }
+    
+    if (char === '"' && !escapeNext) {
+      inString = !inString;
+      continue;
+    }
+    
+    if (!inString) {
+      if (char === '[') {
+        bracketCount++;
+      } else if (char === ']') {
+        if (bracketCount === 0) {
+          arrayEnd = i + 1;
+          // Find the semicolon
+          while (arrayEnd < fileContent.length && /\s/.test(fileContent[arrayEnd])) {
+            arrayEnd++;
+          }
+          if (fileContent[arrayEnd] === ';') {
+            arrayEnd++;
+          }
+          break;
+        }
+        bracketCount--;
+      }
+    }
+  }
+  
+  // arrayEnd points to after the ], so we need to include it
+  // But we need to find where the ] actually is
+  let actualArrayEnd = arrayStart;
+  let bracketCount = 0;
+  let inString = false;
+  let escapeNext = false;
+  
+  for (let i = arrayStart; i < fileContent.length; i++) {
+    const char = fileContent[i];
+    
+    if (escapeNext) {
+      escapeNext = false;
+      continue;
+    }
+    
+    if (char === '\\') {
+      escapeNext = true;
+      continue;
+    }
+    
+    if (char === '"' && !escapeNext) {
+      inString = !inString;
+      continue;
+    }
+    
+    if (!inString) {
+      if (char === '[') {
+        bracketCount++;
+      } else if (char === ']') {
+        if (bracketCount === 0) {
+          actualArrayEnd = i + 1; // Include the ]
+          break;
+        }
+        bracketCount--;
+      }
+    }
+  }
+  
+  const restaurantsJson = fileContent.substring(arrayStart, actualArrayEnd);
+  const restaurants = JSON.parse(restaurantsJson); // Parse the JSON array
 
   console.log(`Found ${restaurants.length} restaurants\n`);
   
@@ -152,10 +250,11 @@ function updatePriceDisplay() {
   for (let i = 0; i < restaurants.length; i++) {
     const restaurant = restaurants[i];
     const city = restaurant.city;
+    let newPriceDisplay = null;
     
-    // Only update restaurants that have priceRange data (startPrice and/or endPrice)
+    // Priority 1: Calculate from priceRange data (startPrice and/or endPrice)
     if (restaurant.google_data?.priceRange?.startPrice || restaurant.google_data?.priceRange?.endPrice) {
-      const newPriceDisplay = calculatePriceDisplayFromRange(restaurant.google_data.priceRange, city);
+      newPriceDisplay = calculatePriceDisplayFromRange(restaurant.google_data.priceRange, city);
       
       if (newPriceDisplay) {
         const oldPriceDisplay = restaurant.price_display;
@@ -179,7 +278,8 @@ function updatePriceDisplay() {
               name: restaurant.google_data.displayName?.text || 'Unknown',
               city,
               old: oldPriceDisplay,
-              new: newPriceDisplay
+              new: newPriceDisplay,
+              source: 'priceRange'
             });
           }
         } else {
@@ -189,8 +289,37 @@ function updatePriceDisplay() {
         // Could not calculate from priceRange (no matching range)
         skippedCount++;
       }
+    }
+    // Priority 2: Use priceLevel as fallback if no priceRange data
+    else if (restaurant.google_data?.priceLevel) {
+      newPriceDisplay = mapPriceLevelToDisplay(restaurant.google_data.priceLevel);
+      
+      if (newPriceDisplay) {
+        const oldPriceDisplay = restaurant.price_display;
+        
+        // Update if different
+        if (oldPriceDisplay !== newPriceDisplay) {
+          restaurant.price_display = newPriceDisplay;
+          updatedCount++;
+          
+          stats.byCity[city] = (stats.byCity[city] || 0) + 1;
+          
+          // Track some examples
+          if (stats.updates.length < 10) {
+            stats.updates.push({
+              name: restaurant.google_data.displayName?.text || 'Unknown',
+              city,
+              old: oldPriceDisplay,
+              new: newPriceDisplay,
+              source: 'priceLevel'
+            });
+          }
+        } else {
+          skippedCount++;
+        }
+      }
     } else {
-      // No priceRange data - leave as is
+      // No priceRange or priceLevel data - leave as is
       noPriceRangeCount++;
     }
 
@@ -203,17 +332,9 @@ function updatePriceDisplay() {
   console.log('Stringifying updated restaurants...');
   const newRestaurantsJson = JSON.stringify(restaurants, null, 2);
   
-  // Find the exact boundaries of the array
-  const exportStart = fileContent.indexOf('export const restaurantData = [');
-  if (exportStart === -1) {
-    throw new Error('Could not find export statement');
-  }
-  
-  // Find the matching closing bracket and semicolon
-  let bracketCount = 0;
-  let inString = false;
-  let escapeNext = false;
-  let arrayEnd = exportStart + 'export const restaurantData = ['.length;
+  // Use the same boundaries we found earlier
+  const exportStartPos = exportStart;
+  const arrayEndPos = arrayEnd;
   
   for (let i = arrayEnd; i < fileContent.length; i++) {
     const char = fileContent[i];
@@ -254,8 +375,8 @@ function updatePriceDisplay() {
   }
   
   // Replace the array content
-  const beforeArray = fileContent.substring(0, exportStart + 'export const restaurantData = '.length);
-  const afterArray = fileContent.substring(arrayEnd);
+  const beforeArray = fileContent.substring(0, exportStartPos + 'export const restaurantData = '.length);
+  const afterArray = fileContent.substring(arrayEndPos);
   const newFileContent = beforeArray + newRestaurantsJson + afterArray;
 
   // Write back to file
