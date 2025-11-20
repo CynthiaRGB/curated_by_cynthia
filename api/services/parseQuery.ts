@@ -129,7 +129,7 @@ vibeKeywords: aesthetic, artistic, authentic, bright, bustling, busy, calm, casu
 
 specialFeature: cash_only, chef_driven, compact_seating, counter_seating, counter_service, craft_driven, hard_to_get_into, hidden_gem, historic_venue, iconic_venue, instagrammable, outdoor_seating, scenic_views, speakeasy_vibe, unique_concept
 
-cuisineType: american_restaurant, asian_restaurant, bagel_shop, bakery, bar, barbecue_restaurant, cafe, cafeteria, chinese_restaurant, coffee_shop, confectionery, deli, dessert_restaurant, dessert_shop, donut_shop, french_restaurant, greek_restaurant, ice_cream_shop, italian_restaurant, japanese_restaurant, korean_restaurant, mediterranean_restaurant, mexican_restaurant, night_club, pub, sandwich_shop, seafood_restaurant, spanish_restaurant, steak_house, tea_house, thai_restaurant, vegan_restaurant, vegetarian_restaurant, vietnamese_restaurant, wine_bar
+cuisineType: american_restaurant, bagel_shop, bakery, bar, barbecue_restaurant, cafe, cafeteria, chinese_restaurant, coffee_shop, confectionery, deli, dessert_restaurant, dessert_shop, donut_shop, french_restaurant, greek_restaurant, ice_cream_shop, italian_restaurant, japanese_restaurant, korean_restaurant, mediterranean_restaurant, mexican_restaurant, night_club, pub, sandwich_shop, seafood_restaurant, spanish_restaurant, steak_house, tea_house, thai_restaurant, vegan_restaurant, vegetarian_restaurant, vietnamese_restaurant, wine_bar
 
 ## RULES
 **Context reset:** Before using prior context, first decide if the user is starting a brand new search versus a follow-up. If the query starts with phrases such as "actually", "instead", "never mind"/"nevermind", "forget that"/"forget about", "change my mind", "on second thought", "scratch that", "cancel that", "disregard", "ignore that", "wait"/"hold on", "just", "simply", "only", "new search", "start over", "something different", or similar corrections, treat it as a brand new search and IGNORE previous filters. Otherwise, treat it as a follow-up and preserve relevant context.
@@ -146,6 +146,7 @@ CRITICAL - Descriptor Mapping (NOT cuisineType):
 - "fine dining" / "splurge" / "fancy"→ priceLevel: "luxury" 
 - "fast food" / "quick service" → priceLevel: "budget" 
 - "brunch spot" / "brunch"→ mealType: "brunch" 
+- "asian food" / "asian cuisine" / "asian restaurant" → cuisineType:["chinese_restaurant","japanese_restaurant","korean_restaurant","thai_restaurant","vietnamese_restaurant"]
 
 Cuisine Extraction Logic:
 1. Identify the FOOD TYPE first (Italian, Japanese, etc.)
@@ -229,6 +230,7 @@ Return raw JSON (no markdown):
 Examples:
 "pizza in Manhattan or Brooklyn" → {"borough":["manhattan","brooklyn"],"cuisineType":"italian_restaurant","cuisineSpecialty":"pizza"}
 "pizza or pasta" → {"cuisineType":"italian_restaurant","cuisineSpecialty":["pizza","pasta"]}
+"asian food" → {"cuisineType":["chinese_restaurant","japanese_restaurant","korean_restaurant","thai_restaurant","vietnamese_restaurant"]}
 "upscale Japanese in Shibuya for anniversary" → {"neighborhood":"shibuya","cuisineType":"japanese_restaurant","priceLevel":"upscale","occasionType":"anniversary","vibeKeywords":["upscale"]}
 "romantic restaurant for anniversary" → {"occasionType":["date_night","anniversary","celebration"],"vibeKeywords":["romantic","intimate"]}
 "aesthetic cafes" → {"cuisineType":["coffee_shop","cafe","cafeteria"],"specialFeatures":["instagrammable","scenic_views"]}
