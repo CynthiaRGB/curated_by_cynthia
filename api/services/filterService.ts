@@ -1129,20 +1129,39 @@ export async function preFilterRestaurants(query: string, keywords: ExtractedKey
     // OPTIMIZATION: Apply filters in order of selectivity
     // Most selective filters first to reduce iterations
     const filterStart = Date.now();
+    
+    // Debug: Log filter stats
+    let cuisineFiltered = 0;
+    let locationFiltered = 0;
+    let landmarkFiltered = 0;
+    let otherFiltered = 0;
+    
     let filteredRestaurants = restaurantsToFilter.filter(restaurant => {
       try {
         // Order filters by selectivity (most selective first):
         // 1. Location (already filtered by city, but check neighborhood/borough)
-        if (!matchesLocation(restaurant, extractedKeywords)) return false;
+        if (!matchesLocation(restaurant, extractedKeywords)) {
+          locationFiltered++;
+          return false;
+        }
         
         // 2. Landmark (only used if neighborhood/borough not present - matchesLandmark handles this)
-        if (!matchesLandmark(restaurant, extractedKeywords)) return false;
+        if (!matchesLandmark(restaurant, extractedKeywords)) {
+          landmarkFiltered++;
+          return false;
+        }
         
         // 3. Cynthia's pick (very selective boolean)
-        if (!matchesCynthiasPick(restaurant, extractedKeywords)) return false;
+        if (!matchesCynthiasPick(restaurant, extractedKeywords)) {
+          otherFiltered++;
+          return false;
+        }
         
         // 4. Cuisine (selective, reduces dataset significantly)
-        if (!matchesCuisine(restaurant, extractedKeywords, query)) return false;
+        if (!matchesCuisine(restaurant, extractedKeywords, query)) {
+          cuisineFiltered++;
+          return false;
+        }
         
         // 5. Meal type (moderately selective)
         if (!matchesMealType(restaurant, extractedKeywords)) return false;
