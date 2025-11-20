@@ -296,9 +296,12 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
       
       // Add loading bot message
       const loadingMessageId = `bot-loading-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const followUpLoadingText = city 
+        ? `Curating the best spots for you in ${city}`
+        : 'Curating the best spots for you';
       const loadingMessage: Message = {
         id: loadingMessageId,
-        text: 'Finding the perfect restaurants for you...',
+        text: followUpLoadingText,
         isUser: false,
         timestamp: Date.now() + 1,
         isLoading: true,
