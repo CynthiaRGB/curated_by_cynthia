@@ -16,13 +16,33 @@ const alreadyHasCity = (message: string, city: City): boolean => {
   const cityLower = city.toLowerCase();
   
   // Check for "in [city]" pattern at the end
-  const cityPatterns = [
-    `in ${cityLower}`,
-    `in ${city === 'New York City' ? 'nyc' : ''}`,
-    `in ${city === 'New York City' ? 'new york' : ''}`
-  ].filter(Boolean);
+  // Handle all variations: "in New York City", "in NYC", "in New York", "in Tokyo", etc.
+  const cityPatterns: string[] = [];
   
-  return cityPatterns.some(pattern => trimmed.endsWith(pattern));
+  if (city === 'New York City') {
+    cityPatterns.push('in new york city', 'in nyc', 'in new york');
+  } else {
+    cityPatterns.push(`in ${cityLower}`);
+  }
+  
+  // Also check if city name appears anywhere in the message (not just at the end)
+  // This catches cases like "restaurants in nyc" when city is "New York City"
+  const cityNameVariations: string[] = [];
+  if (city === 'New York City') {
+    cityNameVariations.push('nyc', 'new york city', 'new york');
+  } else {
+    cityNameVariations.push(cityLower);
+  }
+  
+  // Check if message ends with any city pattern
+  const endsWithCity = cityPatterns.some(pattern => trimmed.endsWith(pattern));
+  
+  // Check if message contains "in [city variation]" anywhere
+  const containsCityPattern = cityNameVariations.some(cityVar => {
+    return trimmed.includes(`in ${cityVar}`);
+  });
+  
+  return endsWithCity || containsCityPattern;
 };
 
 // City-specific search prompts

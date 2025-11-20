@@ -189,6 +189,7 @@ interface ResponseScreenProps {
   isLoading?: boolean; // Loading state for new searches
   hasMoreResults?: boolean; // Whether there are more results available
   queryContext?: QueryContext | null; // Query context for follow-up queries
+  city?: City; // Current city for loading message
 }
 
 export const ResponseScreen: React.FC<ResponseScreenProps> = ({
@@ -204,6 +205,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   isLoading: isExternalLoading = false,
   hasMoreResults: initialHasMoreResults = false,
   queryContext: initialQueryContext = null,
+  city,
 }) => {
   const [message, setMessage] = useState('');
   const [isLocalLoading, setIsLocalLoading] = useState(false);
@@ -230,9 +232,12 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
     
     if (isExternalLoading) {
       // Show loading state like Google Gemini
+      const loadingText = city 
+        ? `Curating the best spots for you in ${city}`
+        : 'Curating the best spots for you';
       messages.push({
         id: 'bot-loading',
-        text: 'Curating the best spots for you...',
+        text: loadingText,
         isUser: false,
         timestamp: Date.now() + 1,
         isLoading: true,

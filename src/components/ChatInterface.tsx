@@ -22,6 +22,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const [, setUsedClaude] = useState(false);
   const [originalPromptText, setOriginalPromptText] = useState<string | null>(null);
   const [promptClickTimestamp, setPromptClickTimestamp] = useState<number | null>(null);
+  const [currentCity, setCurrentCity] = useState<City | null>(null); // Track current city for loading message
   const [isInConversation, setIsInConversation] = useState(false); // Track if we're in a conversation
   // Track query context for follow-up queries (using QueryContext type)
   const [queryContext, setQueryContext] = useState<QueryContext | null>(null);
@@ -54,6 +55,11 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     
     // Use city from parameter, or fall back to city from queryContext (for follow-up queries)
     const cityToUse = city || (queryContext?.city as City | undefined);
+    
+    // Update current city for loading message
+    if (cityToUse) {
+      setCurrentCity(cityToUse);
+    }
     
     // Validate city is provided
     if (!cityToUse) {
@@ -130,6 +136,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
         setRestaurants([]);
         setBotResponse(errorData?.message || `Sorry, there was an error processing your request. Please try again.`);
         setUsedClaude(false);
+        setIsLoading(false); // Ensure loading state is cleared on error
+        setIsInConversation(true); // Mark as in conversation so ResponseScreen shows the error
         return;
       }
 
@@ -272,6 +280,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
         isLoading={isLoading}
         hasMoreResults={hasMoreResults}
         queryContext={queryContext}
+        city={currentCity || undefined}
         onBackToSearch={() => {
           setRestaurants([]);
           setLastQuery('');
