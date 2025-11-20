@@ -36,9 +36,9 @@ function generateParsedQueryCacheKey(query: string, city?: string): string {
     .replace(/\s+/g, ' '); // Replace multiple spaces with single space
   
   // Include city if provided
-  const cityKey = city ? `_city:${city.toLowerCase()}` : '';
+  const cityKey = city ? '_city:' + city.toLowerCase() : '';
   
-  return `${normalizedQuery}${cityKey}`;
+  return normalizedQuery + cityKey;
 }
 
 /**
@@ -59,7 +59,7 @@ function getCachedParsedQuery(query: string, city?: string): ExtractedKeywords |
     return null;
   }
   
-  console.log(`[Parse Query Cache] Hit: ${cacheKey.substring(0, 50)}...`);
+  console.log('[Parse Query Cache] Hit: ' + cacheKey.substring(0, 50) + '...');
   return entry.keywords;
 }
 
@@ -77,7 +77,7 @@ function setCachedParsedQuery(
     const oldestKey = Array.from(parsedQueryCache.entries())
       .sort((a, b) => a[1].timestamp - b[1].timestamp)[0][0];
     parsedQueryCache.delete(oldestKey);
-    console.log(`[Parse Query Cache] Evicted oldest entry: ${oldestKey.substring(0, 50)}...`);
+    console.log('[Parse Query Cache] Evicted oldest entry: ' + oldestKey.substring(0, 50) + '...');
   }
   
   const cacheKey = generateParsedQueryCacheKey(query, city);
@@ -87,7 +87,7 @@ function setCachedParsedQuery(
     ttl: ttlMs,
   });
   
-  console.log(`[Parse Query Cache] Stored: ${cacheKey.substring(0, 50)}... (cache size: ${parsedQueryCache.size})`);
+  console.log('[Parse Query Cache] Stored: ' + cacheKey.substring(0, 50) + '... (cache size: ' + parsedQueryCache.size + ')');
 }
 
 /**
@@ -232,6 +232,7 @@ Examples:
 "desserts" or "sweets" or "confectionery" → {"cuisineType":["dessert_restaurant","confectionery","dessert_shop","ice_cream_shop"]}
 "bakery" or "bakeries" or "pastry" or "pastries" or "bread" → {"cuisineType":["bakery", "bagel_shop","donut_shop"]}
 "bar" or "drinks" or "cocktails" or "beer" or "wine" → {"cuisineType":["bar","night_club","pub","wine_bar"]}
+`;
 
 /**
  * Build prompt for Claude API query parsing
@@ -242,34 +243,27 @@ function buildQueryParsingPrompt(query: string, context?: QueryContext): string 
 
   // Add context if this is a follow-up
   if (context) {
-    const contextSection = `\n\n---\n\n## FOLLOW-UP QUERY CONTEXT\n\n**CONTEXT (Previous Query):** "${context.previousQuery}"\n**PREVIOUS KEYWORDS:** ${JSON.stringify(context.previousKeywords, null, 2)}\n\nThis is a follow-up question. The user wants to modify or refine their previous search.`;
+    const contextSection = '\n\n---\n\n## FOLLOW-UP QUERY CONTEXT\n\n**CONTEXT (Previous Query):** "' + context.previousQuery + '"\n**PREVIOUS KEYWORDS:** ' + JSON.stringify(context.previousKeywords, null, 2) + '\n\nThis is a follow-up question. The user wants to modify or refine their previous search.';
     
     // Detect what type of modification
     const lowerQuery = query.toLowerCase();
     let modificationInstructions = '';
     
     if (lowerQuery.includes('cheaper') || lowerQuery.includes('more affordable') || lowerQuery.includes('less expensive')) {
-      modificationInstructions = `\n\nThe user is asking for CHEAPER options. Update priceLevel to "budget" while keeping all other criteria from the previous search.`;
+      modificationInstructions = '\n\nThe user is asking for CHEAPER options. Update priceLevel to "budget" while keeping all other criteria from the previous search.';
     } else if (lowerQuery.includes('more expensive') || lowerQuery.includes('upscale') || lowerQuery.includes('fancier')) {
-      modificationInstructions = `\n\nThe user is asking for MORE EXPENSIVE/UPSCALE options. Update priceLevel to "upscale" while keeping all other criteria from the previous search.`;
+      modificationInstructions = '\n\nThe user is asking for MORE EXPENSIVE/UPSCALE options. Update priceLevel to "upscale" while keeping all other criteria from the previous search.';
     } else if (lowerQuery.includes('more') || lowerQuery.includes('other') || lowerQuery.includes('different')) {
-      modificationInstructions = `\n\nThe user wants MORE results with the SAME criteria. Return the same keywords as the previous search.`;
+      modificationInstructions = '\n\nThe user wants MORE results with the SAME criteria. Return the same keywords as the previous search.';
     } else if (lowerQuery.includes('not') && (lowerQuery.includes('michelin') || lowerQuery.includes('instagram') || lowerQuery.includes('cynthia'))) {
       // Detect field removal requests
       if (lowerQuery.includes('michelin')) {
-        modificationInstructions = `\n\nThe user wants to REMOVE the Michelin requirement. Set requiresMichelin to null (or omit it from the response) to remove this filter. Keep all other criteria from the previous search.`;
+        modificationInstructions = '\n\nThe user wants to REMOVE the Michelin requirement. Set requiresMichelin to null (or omit it from the response) to remove this filter. Keep all other criteria from the previous search.';
       } else if (lowerQuery.includes('cynthia')) {
-        modificationInstructions = `\n\nThe user wants to REMOVE Cynthia's pick requirement. Set requiresCynthiasPick to null (or omit it from the response) to remove this filter. Keep all other criteria from the previous search.`;
+        modificationInstructions = '\n\nThe user wants to REMOVE Cynthia\'s pick requirement. Set requiresCynthiasPick to null (or omit it from the response) to remove this filter. Keep all other criteria from the previous search.';
       }
     } else {
-      modificationInstructions = `\n\nMerge any new criteria from the current query with the previous keywords. 
-      
-**CRITICAL RULES FOR FOLLOW-UP QUERIES:**
-1. If the current query mentions something new or different (like a different price level, cuisine, or location), update ONLY that field.
-2. PRESERVE ALL OTHER FIELDS from the previous keywords - do NOT set them to null or undefined. Copy them exactly as they were in the previous keywords.
-3. If the user explicitly says "not X" or "remove X" (e.g., "not Michelin", "remove the Michelin requirement"), you should REMOVE that field by setting it to null or omitting it from the response. Do NOT set it to false - that means the filter is still active but set to false. Setting to null/undefined means the filter is removed entirely.
-
-Example: If previous keywords had priceLevel: "upscale" and the new query only changes location, you MUST include priceLevel: "upscale" in your response (preserve it from previous).`;
+      modificationInstructions = '\n\nMerge any new criteria from the current query with the previous keywords. \n\n**CRITICAL RULES FOR FOLLOW-UP QUERIES:**\n1. If the current query mentions something new or different (like a different price level, cuisine, or location), update ONLY that field.\n2. PRESERVE ALL OTHER FIELDS from the previous keywords - do NOT set them to null or undefined. Copy them exactly as they were in the previous keywords.\n3. If the user explicitly says "not X" or "remove X" (e.g., "not Michelin", "remove the Michelin requirement"), you should REMOVE that field by setting it to null or omitting it from the response. Do NOT set it to false - that means the filter is still active but set to false. Setting to null/undefined means the filter is removed entirely.\n\nExample: If previous keywords had priceLevel: "upscale" and the new query only changes location, you MUST include priceLevel: "upscale" in your response (preserve it from previous).';
     }
     
     // Insert context section before the EXAMPLES section
@@ -324,7 +318,7 @@ export function getHardcodedKeywordsForPrompt(
     .trim()
     .replace(/\s+in\s+(new\s+york\s+city|tokyo|paris|seoul|nyc)$/i, '')
     // Remove emojis and other Unicode symbols (preserves letters, numbers, spaces, apostrophes, hyphens)
-    .replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '')
+    .replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+|[\u2600-\u26FF]|[\u2700-\u27BF]/g, '')
     .trim();
   
   // Map of normalized prompt text to ExtractedKeywords (without city)
@@ -390,7 +384,7 @@ export function getHardcodedKeywordsForPrompt(
     city: city ? normalizeCityForFilter(city) : undefined,
   };
   
-  console.log(`[Parse Query] Using hardcoded keywords for prompt: "${normalizedQuery}"`);
+  console.log('[Parse Query] Using hardcoded keywords for prompt: "' + normalizedQuery + '"');
   return keywords;
 }
 
@@ -409,7 +403,7 @@ export async function parseQueryWithClaude(
   context?: QueryContext
 ): Promise<ExtractedKeywords> {
   try {
-    console.log(`[Parse Query] Parsing query: "${query}"${city ? ` (city: ${city})` : ''}${context ? ' (with context)' : ''}`);
+    console.log('[Parse Query] Parsing query: "' + query + '"' + (city ? ' (city: ' + city + ')' : '') + (context ? ' (with context)' : ''));
 
     // IMPORTANT: Don't cache if context is provided (follow-up queries need fresh parsing)
     // Check cache only for queries without context
@@ -514,7 +508,7 @@ export async function parseQueryWithClaude(
         statusText: response.statusText,
         errorText: errorText
       });
-      throw new Error(`PARSE_ERROR_SERVICE_ISSUE: Claude API returned ${response.status} ${response.statusText}`);
+      throw new Error('PARSE_ERROR_SERVICE_ISSUE: Claude API returned ' + response.status + ' ' + response.statusText);
     }
 
     const data = await response.json();
@@ -524,9 +518,12 @@ export async function parseQueryWithClaude(
 
     // Parse Claude's JSON response
     // Strip any markdown formatting that might be present
+    const backtick = String.fromCharCode(96);
+    const backtickPattern = new RegExp(backtick + backtick + backtick + 'json\\n?', 'g');
+    const backtickPattern2 = new RegExp(backtick + backtick + backtick + '\\n?', 'g');
     const cleanedResponse = responseText
-      .replace(/```json\n?/g, '')
-      .replace(/```\n?/g, '')
+      .replace(backtickPattern, '')
+      .replace(backtickPattern2, '')
       .trim();
 
     let parsedKeywords: any;

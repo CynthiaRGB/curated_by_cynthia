@@ -41,9 +41,17 @@ const initializeStatsig = async () => {
       throw new Error('STATSIG_SERVER_SECRET_KEY environment variable is not set');
     }
     
+    // Detect environment from Vercel environment variable
+    // VERCEL_ENV can be: "production", "preview", or "development"
+    const vercelEnv = process.env.VERCEL_ENV || 'production';
+    const statsigTier = vercelEnv === 'production' ? 'production' : (vercelEnv === 'preview' ? 'staging' : 'development');
+    
+    console.log('[Statsig Debug] - VERCEL_ENV:', vercelEnv);
+    console.log('[Statsig Debug] - Statsig tier:', statsigTier);
+    
     await Statsig.initialize(
       statsigSecret,  // ✅ Use environment variable
-      { environment: { tier: "production" } }
+      { environment: { tier: statsigTier } }
     );
     statsigInitialized = true;
     console.log('[Statsig Debug] Successfully initialized');
