@@ -231,6 +231,7 @@ Examples:
 "coffee shops" → {"cuisineType":["cafe", "cafeteria","coffee_shop"]}
 "desserts" or "sweets" or "confectionery" → {"cuisineType":["dessert_restaurant","confectionery","dessert_shop","ice_cream_shop"]}
 "bakery" or "bakeries" or "pastry" or "pastries" or "bread" → {"cuisineType":["bakery", "bagel_shop","donut_shop"]}
+"bar" or "drinks" or "cocktails" or "beer" or "wine" → {"cuisineType":["bar","night_club","pub","wine_bar"]}
 
 /**
  * Build prompt for Claude API query parsing
