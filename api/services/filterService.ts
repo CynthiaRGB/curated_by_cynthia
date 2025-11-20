@@ -550,8 +550,13 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords, que
   // Check specific specialty
   // Prioritize metadata fields (more reliable) over text mentions (can have false positives)
   // Follows same prioritization pattern as matchesSingleCuisineType
+  // Supports arrays for multiple dishes (OR logic - match if restaurant has ANY of the specialties)
   if (keywords.cuisineSpecialty) {
-    const specialty = keywords.cuisineSpecialty.toLowerCase();
+    // Normalize cuisineSpecialty to array for consistent handling
+    const specialtiesToMatch = Array.isArray(keywords.cuisineSpecialty) 
+      ? keywords.cuisineSpecialty 
+      : [keywords.cuisineSpecialty];
+    
     const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
     const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
     const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
@@ -567,36 +572,41 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords, que
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/s$/, '');
     };
-    const normalizedSpecialty = normalizeForMatching(specialty);
     
-    // PRIORITY 1: Check metadata fields first (most reliable)
-    // Check primaryType, specificType, and types array
-    const matchesInMetadata = 
-      primaryType.includes(specialty) ||
-      specificType.includes(specialty) ||
-      types.some(t => t.includes(specialty)) ||
-      normalizeForMatching(primaryType).includes(normalizedSpecialty) ||
-      normalizeForMatching(specificType).includes(normalizedSpecialty) ||
-      types.some(t => normalizeForMatching(t).includes(normalizedSpecialty));
-    
-    // PRIORITY 2: Check restaurant name (dish-specific restaurants often have the dish in their name)
-    // This is important because dish-specific restaurants often have the dish in their name
-    // but their type might just be "japanese_restaurant" (e.g., "Yakitori Imai" has yakitori in name)
-    const matchesInName = 
-      restaurantName.includes(specialty) ||
-      normalizeForMatching(restaurantName).includes(normalizedSpecialty);
-    
-    // PRIORITY 3: Check summaries (less reliable, can have false positives)
-    const matchesInSummaries = 
-      summary.includes(specialty) ||
-      reviewSummary.includes(specialty) ||
-      editorialSummary.includes(specialty) ||
-      normalizeForMatching(summary).includes(normalizedSpecialty) ||
-      normalizeForMatching(reviewSummary).includes(normalizedSpecialty) ||
-      normalizeForMatching(editorialSummary).includes(normalizedSpecialty);
-    
-    // If specialty matches in any field, mark it
-    matchesSpecialty = matchesInMetadata || matchesInName || matchesInSummaries;
+    // Check if restaurant matches ANY of the specialties (OR logic)
+    matchesSpecialty = specialtiesToMatch.some(specialty => {
+      const specialtyLower = specialty.toLowerCase();
+      const normalizedSpecialty = normalizeForMatching(specialtyLower);
+      
+      // PRIORITY 1: Check metadata fields first (most reliable)
+      // Check primaryType, specificType, and types array
+      const matchesInMetadata = 
+        primaryType.includes(specialtyLower) ||
+        specificType.includes(specialtyLower) ||
+        types.some(t => t.includes(specialtyLower)) ||
+        normalizeForMatching(primaryType).includes(normalizedSpecialty) ||
+        normalizeForMatching(specificType).includes(normalizedSpecialty) ||
+        types.some(t => normalizeForMatching(t).includes(normalizedSpecialty));
+      
+      // PRIORITY 2: Check restaurant name (dish-specific restaurants often have the dish in their name)
+      // This is important because dish-specific restaurants often have the dish in their name
+      // but their type might just be "japanese_restaurant" (e.g., "Yakitori Imai" has yakitori in name)
+      const matchesInName = 
+        restaurantName.includes(specialtyLower) ||
+        normalizeForMatching(restaurantName).includes(normalizedSpecialty);
+      
+      // PRIORITY 3: Check summaries (less reliable, can have false positives)
+      const matchesInSummaries = 
+        summary.includes(specialtyLower) ||
+        reviewSummary.includes(specialtyLower) ||
+        editorialSummary.includes(specialtyLower) ||
+        normalizeForMatching(summary).includes(normalizedSpecialty) ||
+        normalizeForMatching(reviewSummary).includes(normalizedSpecialty) ||
+        normalizeForMatching(editorialSummary).includes(normalizedSpecialty);
+      
+      // If specialty matches in any field, return true (OR logic)
+      return matchesInMetadata || matchesInName || matchesInSummaries;
+    });
     
     if (matchesSpecialty) {
       // Mark for ranking boost (store on restaurant object for sorting)
@@ -937,13 +947,6 @@ function matchesVibeInternal(restaurant: Restaurant, keywords: ExtractedKeywords
     return true;
   }
 
-  // If requiresInstagrammable is true, vibe keywords are optional (just additional context)
-  // Don't filter out restaurants that don't match vibe keywords if the main requirement is instagrammable
-  if (keywords.requiresInstagrammable) {
-    // Vibe keywords are nice-to-have but not required when instagrammable is the main filter
-    return true;
-  }
-
   const restaurantVibes = restaurant.vibe_tags || [];
   
   // Check if restaurant has ANY of the desired vibes
@@ -1017,18 +1020,6 @@ function matchesNoiseLevel(restaurant: Restaurant, keywords: ExtractedKeywords):
   
   // Direct match - noiseLevel from keywords should match restaurant's noise_level
   return restaurantNoiseLevel === keywords.noiseLevel;
-}
-
-/**
- * NEW: Check if restaurant is instagrammable
- */
-function matchesInstagrammable(restaurant: Restaurant, keywords: ExtractedKeywords): boolean {
-  if (!keywords.requiresInstagrammable) {
-    return true;
-  }
-
-  const specialFeatures = restaurant.special_features || [];
-  return specialFeatures.includes('instagrammable');
 }
 
 /**
@@ -1159,30 +1150,32 @@ export async function preFilterRestaurants(query: string, keywords: ExtractedKey
         if (!matchesPrice(restaurant, extractedKeywords)) return false;
         
         // 7. Special requirements (selective booleans)
-        if (!matchesInstagrammable(restaurant, extractedKeywords)) return false;
         if (!matchesMichelin(restaurant, extractedKeywords)) return false;
         
-        // 8. Vibe OR Special Features (OR relationship between these two filters)
-        // If both vibeKeywords and specialFeatures are specified, restaurant must match at least one
-        const hasVibeKeywords = extractedKeywords.vibeKeywords && extractedKeywords.vibeKeywords.length > 0;
-        const hasSpecialFeatures = extractedKeywords.specialFeatures && extractedKeywords.specialFeatures.length > 0;
-        
-        if (hasVibeKeywords && hasSpecialFeatures) {
-          // Both specified: use OR logic (match if either vibe OR special feature matches)
-          const matchesVibe = matchesVibeInternal(restaurant, extractedKeywords);
-          const matchesFeatures = matchesSpecialFeatures(restaurant, extractedKeywords);
-          if (!matchesVibe && !matchesFeatures) return false;
-        } else {
-          // Only one specified: use normal AND logic
-          if (hasVibeKeywords && !matchesVibeInternal(restaurant, extractedKeywords)) return false;
-          if (hasSpecialFeatures && !matchesSpecialFeatures(restaurant, extractedKeywords)) return false;
-        }
-        
-        // 9. Amenities (less selective)
+        // 8. Amenities (less selective)
         if (!matchesAmenities(restaurant, extractedKeywords)) return false;
         
-        // 10. Occasion/Noise (less selective, array checks)
-        if (!matchesOccasion(restaurant, extractedKeywords)) return false;
+        // 9. Vibe OR Occasion OR Special Features (Pure OR relationship between all three filters)
+        // If any of vibeKeywords, occasionType, or specialFeatures are specified, restaurant must match at least one
+        const hasVibeKeywords = extractedKeywords.vibeKeywords && extractedKeywords.vibeKeywords.length > 0;
+        const hasOccasionType = extractedKeywords.occasionType && 
+          (Array.isArray(extractedKeywords.occasionType) ? extractedKeywords.occasionType.length > 0 : true);
+        const hasSpecialFeatures = extractedKeywords.specialFeatures && extractedKeywords.specialFeatures.length > 0;
+        
+        // Count how many of the three filters are specified
+        const filterCount = [hasVibeKeywords, hasOccasionType, hasSpecialFeatures].filter(Boolean).length;
+        
+        if (filterCount > 0) {
+          // At least one filter is specified: use OR logic (match if restaurant matches ANY of them)
+          const matchesVibe = hasVibeKeywords ? matchesVibeInternal(restaurant, extractedKeywords) : false;
+          const matchesOccasionResult = hasOccasionType ? matchesOccasion(restaurant, extractedKeywords) : false;
+          const matchesFeatures = hasSpecialFeatures ? matchesSpecialFeatures(restaurant, extractedKeywords) : false;
+          
+          // Restaurant must match at least one of the specified filters
+          if (!matchesVibe && !matchesOccasionResult && !matchesFeatures) return false;
+        }
+        
+        // 10. Noise (less selective)
         if (!matchesNoiseLevel(restaurant, extractedKeywords)) return false;
         
         return true;

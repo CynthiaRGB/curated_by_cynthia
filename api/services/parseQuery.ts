@@ -106,13 +106,11 @@ Parse restaurant query to JSON. Return {"error":"NOT_RESTAURANT_QUERY"} if not r
 
 Boroughs (NYC): manhattan, brooklyn
 
-Cities: nyc, tokyo, seoul, paris
-
 Neighborhoods (extract ONLY if mentioned):
-NYC: Crown Heights, Dumbo, East Village, Gramercy, Greenpoint, Greenwich Village, LES, Manhattan, Midtown, Midtown E/W, Murray Hill, Park Slope, SoHo, Southside, Tribeca, UES, UWS, West Village, Williamsburg
-Tokyo: Adachi, Chiyoda, Chuo, Ginza, Koto, Machida, Meguro, Minato, Musashino, Nihonbashiningyōchō, Setagaya, Shibuya, Shinjuku, Sumida, Taito, Toranomon, Toshima
-Seoul: Gangnam, Gwanak-gu, Gwangjin, Jongno, Mapo-gu, Seodaemun-gu, Seongdong-gu, Songpa, Yongsan
-Paris: 1st-12th, 15th, 18th arrondissement
+NYC: Crown Heights, Dumbo, East Village, Gramercy, Greenpoint, Greenwich Village, Lower East Side, Manhattan, Midtown, Midtown East, Midtown West, Murray Hill, Park Slope, SoHo, Southside, Tribeca, Upper East Side, Upper West Side, West Village, Williamsburg
+Tokyo: Adachi City, Chiyoda City, Chuo City, Koto City, Machida, Meguro City, Minato City, Musashino, Nihonbashiningyōchō, Setagaya City, Shibuya, Shinjuku City, Sumida City, Taito City, Toranomon, Toshima City
+Seoul: Gangnam District, Gwanak-gu, Gwangjin District, Jongno, Jongno District, Jung District, Mapo-gu, Nonhyeon-dong, Seodaemun-gu, Seongdong-gu, Songpa District, Yongsan District
+Paris: 10th arrondissement, 11th arrondissement, 12th arrondissement, 15th arrondissement, 18th arrondissement, 1st arrondissement, 2nd arrondissement, 3rd arrondissement, 4th arrondissement, 5th arrondissement, 6th arrondissement, 7th arrondissement, 8th arrondissement, 9th arrondissement
 
 mealType: breakfast, brunch, lunch, dinner
 
@@ -126,14 +124,15 @@ vibeKeywords: aesthetic, artistic, authentic, bright, bustling, busy, calm, casu
 
 specialFeature: cash_only, chef_driven, compact_seating, counter_seating, counter_service, craft_driven, hard_to_get_into, hidden_gem, historic_venue, iconic_venue, instagrammable, outdoor_seating, scenic_views, speakeasy_vibe, unique_concept
 
-cuisineType: american_restaurant, asian_restaurant, bagel_shop, bakery, bar, barbecue_restaurant, cafe, cafeteria, chinese_restaurant, coffee_shop, confectionery, deli, french_restaurant, greek_restaurant, ice_cream_shop, italian_restaurant, japanese_restaurant, korean_restaurant, mediterranean_restaurant, mexican_restaurant, night_club, pub, sandwich_shop, seafood_restaurant, spanish_restaurant, steak_house, tea_house, thai_restaurant, vegan_restaurant, vegetarian_restaurant, vietnamese_restaurant, wine_bar
+cuisineType: american_restaurant, asian_restaurant, bagel_shop, bakery, bar, barbecue_restaurant, cafe, cafeteria, chinese_restaurant, coffee_shop, confectionery, deli, dessert_restaurant, dessert_shop, donut_shop, french_restaurant, greek_restaurant, ice_cream_shop, italian_restaurant, japanese_restaurant, korean_restaurant, mediterranean_restaurant, mexican_restaurant, night_club, pub, sandwich_shop, seafood_restaurant, spanish_restaurant, steak_house, tea_house, thai_restaurant, vegan_restaurant, vegetarian_restaurant, vietnamese_restaurant, wine_bar
 
 ## RULES
 **Context reset:** Before using prior context, first decide if the user is starting a brand new search versus a follow-up. Phrases like "actually", "just", "any", "forget that", "nevermind", or "new search" usually mean start fresh—ignore previous filters in those cases. Otherwise, treat it as a follow-up and preserve relevant context.
 
-1. Location: Extract borough (NYC only), neighborhood (from list), landmark (if "near X"), city
+1. Location: Extract borough (NYC only), neighborhood (from list), landmark (if "near X")
    - Landmarks ≠ neighborhoods. "near Louvre" → landmark:"louvre", neighborhood:null
    - Support arrays: ["manhattan","brooklyn"] or "manhattan"
+   - NOTE: Do NOT extract city - it is provided separately from the UI
 
 2. Cuisine: 
 cuisineType: Use ONLY values from list above. Match user's query to the CUISINE, not the style/quality descriptor.
@@ -141,7 +140,6 @@ cuisineType: Use ONLY values from list above. Match user's query to the CUISINE,
 CRITICAL - Descriptor Mapping (NOT cuisineType):
 - "fine dining" / "splurge" / "fancy"→ priceLevel: "luxury" 
 - "fast food" / "quick service" → priceLevel: "budget" 
-- "breakfast" / "breakfast spot" → mealType: "breakfast" 
 - "brunch spot" / "brunch"→ mealType: "brunch" 
 
 Cuisine Extraction Logic:
@@ -154,7 +152,6 @@ Examples:
 "fast food burger place" → cuisineType: "american_restaurant", cuisineSpecialty: "burger", priceLevel: "budget"
 "breakfast spot" → mealType: "breakfast", cuisineType: null
 "pizza restaurant" → cuisineType: "italian_restaurant", cuisineSpecialty: "pizza"
-"ramen shop" → cuisineType: "japanese_restaurant", cuisineSpecialty: "ramen"
 
 3. Price: "luxury"=expensive/fine dining/omakase/premium; "upscale"=upscale/fancy; "moderate"=mid-range; "budget"=cheap
 If both upscale + luxury → use "upscale"
@@ -165,16 +162,13 @@ If both upscale + luxury → use "upscale"
 5. Occasions: Use ONLY values from list above
    - occasionType can be a string OR an array of strings for interchangeable concepts
    - "first/second/third date" → occasionType:"date_night" (NOT "first_date")
-   - "romantic dinner" → occasionType:"date_night"
-   - "anniversary" → occasionType:"anniversary"
-   - "romantic" / "special occasion" / "celebration" → occasionType:["date_night","anniversary","celebration"] (interchangeable - return results matching either)
+   - "anniversary" → occasionType:【"anniversary"，"date_night","celebration"]
    - "late night" → occasionType:"late_night" (NOT mealType)
 
 6. Special Features: 
    - specialFeatures is an array - use arrays to capture interchangeable concepts
-   - If the user cares about visuals/photography, set requiresInstagrammable:true AND include "instagrammable" in specialFeatures. Trigger words/phrases include: "instagram", "ig", "photo", "photos", "photogenic", "picture-worthy", "beautiful", "pretty", "aesthetic", "scenic views", "scenic view", "good for pictures", "camera ready", "look great on instagram". Apply only when these words describe the **space/ambiance**, not the food.
+   - If the user cares about visuals/photography, include "instagrammable" in specialFeatures. Trigger words/phrases include: "instagram", "ig", "photo", "photos", "photogenic", "picture-worthy", "beautiful", "pretty", "aesthetic", "scenic views", "scenic view", "good for pictures", "camera ready", "look great on instagram". Apply only when these words describe the **space/ambiance**, not the food.
    - "aesthetic" / "beautiful space" / "pretty" → specialFeatures:["instagrammable","scenic_views"] (interchangeable - return results matching either)
-   - If the user explicitly says they do NOT care about Instagram/photos (e.g., "not instagrammable", "don't care about pictures"), set requiresInstagrammable:null to remove the filter.
 
 7. Booleans: null = remove filter, false = explicit false, true = explicit true
    - "not Michelin" / "remove Michelin" → requiresMichelin:null
@@ -189,7 +183,7 @@ Ignore descriptive words that imply quality/popularity:
 
 Pattern-based extraction:
 - "famous for ramen" → cuisineSpecialty:"ramen"
-- "famous pizza place" → ignore "famous", extract cuisineSpecialty:"pizza" if present
+- "famous pizza place" → ignore "famous", extract cuisineSpecialty:"pizza"
 - "popular" / "trending" / "hot spot" → vibeKeywords:["trendy"]
 - "authentic" / "real" / "genuine" / "local favorite" / "loved by locals" → vibeKeywords:["authentic"], specialFeatures:["hidden_gem"]
 - "traditional" / "classic" / "old-school" → vibeKeywords:["traditional","classic"]
@@ -215,27 +209,28 @@ Return raw JSON (no markdown):
 "neighborhood": null|string|string[],
 "borough": null|string|string[],
 "landmark": null|string|string[],
-"city": null|"nyc"|"tokyo"|"seoul"|"paris",
 "cuisineType": null|string|string[],
-"cuisineSpecialty": null|string,
+"cuisineSpecialty": null|string|string[],
 "mealType": null|"breakfast"|"brunch"|"lunch"|"dinner",
 "priceLevel": null|"budget"|"moderate"|"upscale"|"luxury"|"any",
 "vibeKeywords": string[],
 "occasionType": null|string|string[],
 "noisePreference": null|string,
-"requiresInstagrammable": boolean|null,
 "requiresMichelin": boolean|null,
 "requiresCynthiasPick": boolean|null,
 "specialFeatures": string[]
 }
 
 Examples:
-"pizza in Manhattan" → {"borough":"manhattan","city":"nyc","cuisineType":"italian_restaurant","cuisineSpecialty":"pizza"}
-"upscale Japanese in Shibuya for anniversary" → {"neighborhood":"shibuya","city":"tokyo","cuisineType":"japanese_restaurant","priceLevel":"upscale","occasionType":"anniversary","vibeKeywords":["upscale"]}
-"first date in West Village" → {"neighborhood":"west village","city":"nyc","occasionType":"date_night","vibeKeywords":["romantic","intimate","cozy"]}
-"romantic restaurant" → {"occasionType":["date_night","anniversary"],"vibeKeywords":["romantic"]}
+"pizza in Manhattan or Brooklyn" → {"borough":["manhattan","brooklyn"],"cuisineType":"italian_restaurant","cuisineSpecialty":"pizza"}
+"pizza or pasta" → {"cuisineType":"italian_restaurant","cuisineSpecialty":["pizza","pasta"]}
+"upscale Japanese in Shibuya for anniversary" → {"neighborhood":"shibuya","cuisineType":"japanese_restaurant","priceLevel":"upscale","occasionType":"anniversary","vibeKeywords":["upscale"]}
+"romantic restaurant for anniversary" → {"occasionType":["date_night","anniversary","celebration"],"vibeKeywords":["romantic","intimate"]}
 "aesthetic cafes" → {"cuisineType":["coffee_shop","cafe","cafeteria"],"specialFeatures":["instagrammable","scenic_views"]}
-"famous street food locals love near Times Square" → {"landmark":"times square","city":"nyc","priceLevel":"budget"}`;
+"famous street food locals love near Times Square" → {"landmark":"times square","priceLevel":"budget"}
+"coffee shops" → {"cuisineType":["cafe", "cafeteria","coffee_shop"]}
+"desserts" or "sweets" or "confectionery" → {"cuisineType":["dessert_restaurant","confectionery","dessert_shop","ice_cream_shop"]}
+"bakery" or "bakeries" or "pastry" or "pastries" or "bread" → {"cuisineType":["bakery", "bagel_shop","donut_shop"]}
 
 /**
  * Build prompt for Claude API query parsing
@@ -262,8 +257,6 @@ function buildQueryParsingPrompt(query: string, context?: QueryContext): string 
       // Detect field removal requests
       if (lowerQuery.includes('michelin')) {
         modificationInstructions = `\n\nThe user wants to REMOVE the Michelin requirement. Set requiresMichelin to null (or omit it from the response) to remove this filter. Keep all other criteria from the previous search.`;
-      } else if (lowerQuery.includes('instagram')) {
-        modificationInstructions = `\n\nThe user wants to REMOVE the Instagrammable requirement. Set requiresInstagrammable to null (or omit it from the response) to remove this filter. Keep all other criteria from the previous search.`;
       } else if (lowerQuery.includes('cynthia')) {
         modificationInstructions = `\n\nThe user wants to REMOVE Cynthia's pick requirement. Set requiresCynthiasPick to null (or omit it from the response) to remove this filter. Keep all other criteria from the previous search.`;
       }
@@ -562,7 +555,6 @@ export async function parseQueryWithClaude(
       occasionType: parsedKeywords.occasionType || null,
       noiseLevel: parsedKeywords.noiseLevel || null,
       // Handle null as field removal (undefined), preserve false/true, default to false if not present
-      requiresInstagrammable: parsedKeywords.requiresInstagrammable === null ? undefined : (parsedKeywords.requiresInstagrammable ?? false),
       requiresMichelin: parsedKeywords.requiresMichelin === null ? undefined : (parsedKeywords.requiresMichelin ?? false),
       requiresCynthiasPick: parsedKeywords.requiresCynthiasPick === null ? undefined : (parsedKeywords.requiresCynthiasPick ?? false),
       specialFeatures: parsedKeywords.specialFeatures || [],
@@ -570,9 +562,9 @@ export async function parseQueryWithClaude(
       borough: parsedKeywords.borough || undefined,
       landmark: parsedKeywords.landmark || undefined,
       // Always include city from input parameter (city pill is always selected in UI)
-      // Claude may extract city from query, but we always use the input city as the source of truth
+      // City is NOT extracted by Claude - it comes from the UI selection
       // Normalize city to filterService format (e.g., "New York City" -> "nyc")
-      city: city ? normalizeCityForFilter(city) : normalizeCityForFilter(parsedKeywords.city),
+      city: city ? normalizeCityForFilter(city) : undefined,
       cuisineType: parsedKeywords.cuisineType || undefined,
       cuisineSpecialty: parsedKeywords.cuisineSpecialty || null,
       mealType: parsedKeywords.mealType || null,

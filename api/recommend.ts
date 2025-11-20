@@ -378,7 +378,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (parsedKeywords.occasionType) cleanedKeywords.occasionType = parsedKeywords.occasionType;
       if (parsedKeywords.noiseLevel) cleanedKeywords.noiseLevel = parsedKeywords.noiseLevel;
       if (parsedKeywords.needsTakeout) cleanedKeywords.needsTakeout = parsedKeywords.needsTakeout;
-      if (parsedKeywords.requiresInstagrammable) cleanedKeywords.requiresInstagrammable = parsedKeywords.requiresInstagrammable;
       if (parsedKeywords.requiresMichelin) cleanedKeywords.requiresMichelin = parsedKeywords.requiresMichelin;
       if (parsedKeywords.requiresCynthiasPick) cleanedKeywords.requiresCynthiasPick = parsedKeywords.requiresCynthiasPick;
       if (parsedKeywords.specialFeatures && parsedKeywords.specialFeatures.length > 0) cleanedKeywords.specialFeatures = parsedKeywords.specialFeatures;
@@ -451,11 +450,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (isCynthiasFavorites) {
       console.log(`[API] Returning ALL ${filteredRestaurants.length} Cynthia's favorites (no limit applied)`);
       finalRestaurants = filteredRestaurants; // Return all, no slice
-      summary = `Curated ${finalRestaurants.length} spots just for you`;
+      summary = `Curated ${finalRestaurants.length} spots in ${normalizedCity} just for you`;
       hasMoreResults = false; // Cynthia's favorites returns all, so no more results
     } else {
       finalRestaurants = filteredRestaurants.slice(0, maxResults);
-      summary = `Curated ${finalRestaurants.length} spots just for you`;
+      summary = `Curated ${finalRestaurants.length} spots in ${normalizedCity} just for you`;
       hasMoreResults = filteredRestaurants.length > maxResults; // Check if there are more results available
     }
 

@@ -133,7 +133,7 @@ export interface ExtractedKeywords {
   
   // Cuisine/Type
   cuisineType?: string | string[]; // Support single type or array of equivalent types (e.g., ["coffee_shop", "cafe", "cafeteria"])
-  cuisineSpecialty?: string | null; // Specific dish/specialty (e.g., "pizza", "ramen", "yakitori", "dim sum")
+  cuisineSpecialty?: string | string[] | null; // Specific dish/specialty (e.g., "pizza", "ramen", "yakitori", "dim sum") - supports arrays for multiple dishes (e.g., ["pizza", "pasta"])
   
   // Meal time
   mealType?: 'breakfast' | 'brunch' | 'lunch' | 'dinner' | 'late-night' | null;
@@ -154,7 +154,6 @@ export interface ExtractedKeywords {
   noiseLevel?: 'loud' | 'moderate_noise' | 'quiet_ambiance' | null;
 
   // NEW: Special requirements
-  requiresInstagrammable?: boolean;
   requiresMichelin?: boolean;
   requiresCynthiasPick?: boolean;
   
