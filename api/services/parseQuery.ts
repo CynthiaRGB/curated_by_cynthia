@@ -126,7 +126,7 @@ vibeKeywords: aesthetic, artistic, authentic, bright, bustling, busy, calm, casu
 
 specialFeature: cash_only, chef_driven, compact_seating, counter_seating, counter_service, craft_driven, hard_to_get_into, hidden_gem, historic_venue, iconic_venue, instagrammable, outdoor_seating, scenic_views, speakeasy_vibe, unique_concept
 
-cuisineType: american_restaurant, animal_cafe, asian_restaurant, bagel_shop, bakery, bar, bar_and_grill, barbecue_restaurant, breakfast_restaurant, brunch_restaurant, cafe, cafeteria, catering_service, chinese_restaurant, coffee_shop, confectionery, cultural_center, deli, dessert_restaurant, dessert_shop, donut_shop, establishment, event_venue, fast_food_restaurant, fine_dining_restaurant, food, food_delivery, food_store, french_restaurant, greek_restaurant, grocery_store, hamburger_restaurant, ice_cream_shop, italian_restaurant, japanese_restaurant, korean_restaurant, liquor_store, meal_delivery, meal_takeaway, mediterranean_restaurant, mexican_restaurant, night_club, pizza_restaurant, point_of_interest, pub, ramen_restaurant, restaurant, sandwich_shop, seafood_restaurant, spanish_restaurant, steak_house, store, sushi_restaurant, tea_house, thai_restaurant, vegan_restaurant, vegetarian_restaurant, vietnamese_restaurant, wedding_venue, wholesaler, wine_bar
+cuisineType: american_restaurant, asian_restaurant, bagel_shop, bakery, bar, barbecue_restaurant, cafe, cafeteria, chinese_restaurant, coffee_shop, confectionery, deli, french_restaurant, greek_restaurant, ice_cream_shop, italian_restaurant, japanese_restaurant, korean_restaurant, mediterranean_restaurant, mexican_restaurant, night_club, pub, sandwich_shop, seafood_restaurant, spanish_restaurant, steak_house, tea_house, thai_restaurant, vegan_restaurant, vegetarian_restaurant, vietnamese_restaurant, wine_bar
 
 ## RULES
 **Context reset:** Before using prior context, first decide if the user is starting a brand new search versus a follow-up. Phrases like "actually", "just", "any", "forget that", "nevermind", or "new search" usually mean start fresh—ignore previous filters in those cases. Otherwise, treat it as a follow-up and preserve relevant context.
@@ -136,20 +136,25 @@ cuisineType: american_restaurant, animal_cafe, asian_restaurant, bagel_shop, bak
    - Support arrays: ["manhattan","brooklyn"] or "manhattan"
 
 2. Cuisine: 
-cuisineType: Use ONLY values from list above. If query mentions unlisted cuisine (ethiopian, peruvian, etc.) → set cuisineType:null
-  - cuisineType can be a string OR an array of strings
-  - Use arrays when multiple equivalent types should match (e.g., coffee-related queries should match coffee_shop, cafe, cafeteria, animal_cafe)
-  - When using arrays, include all equivalent types that should match the query intent
-cuisineSpecialty: Extract specific dish name if mentioned. FilterService uses flexible matching against restaurant metadata, names, descriptions. Examples of dish name: pizza, sushi, dim sum, yakitori, etc. 
+cuisineType: Use ONLY values from list above. Match user's query to the CUISINE, not the style/quality descriptor.
 
-What's NOT cuisineType:
-- Restaurant types (izakaya, bistro, trattoria) → NOT cuisineType; map to cuisine (japanese, french, italian)
+CRITICAL - Descriptor Mapping (NOT cuisineType):
+- "fine dining" / "splurge" / "fancy"→ priceLevel: "luxury" 
+- "fast food" / "quick service" → priceLevel: "budget" 
+- "breakfast" / "breakfast spot" → mealType: "breakfast" 
+- "brunch spot" / "brunch"→ mealType: "brunch" 
 
-Cuisine Mapping Rules:
-Wine/cocktail/drinks/alcohol → ["bar", "wine_bar"]
-BBQ/bbq/barbecue/barbeque → "barbecue_restaurant"
-Coffee/cafe/coffee shop → ["coffee_shop","cafe","cafeteria","animal_cafe"]
-Pastry/bakery/dessert → ["bakery","dessert_shop","confectionery","pastry_shop"]
+Cuisine Extraction Logic:
+1. Identify the FOOD TYPE first (Italian, Japanese, etc.)
+2. Map descriptors to correct fields (fine dining → price, breakfast → meal)
+3. If query only has descriptor (e.g., "fine dining" with no cuisine), set cuisineType: null
+
+Examples:
+"fine dining French" → cuisineType: "french_restaurant", priceLevel: "luxury"
+"fast food burger place" → cuisineType: "american_restaurant", cuisineSpecialty: "burger", priceLevel: "budget"
+"breakfast spot" → mealType: "breakfast", cuisineType: null
+"pizza restaurant" → cuisineType: "italian_restaurant", cuisineSpecialty: "pizza"
+"ramen shop" → cuisineType: "japanese_restaurant", cuisineSpecialty: "ramen"
 
 3. Price: "luxury"=expensive/fine dining/omakase/premium; "upscale"=upscale/fancy; "moderate"=mid-range; "budget"=cheap
 If both upscale + luxury → use "upscale"
@@ -158,13 +163,17 @@ If both upscale + luxury → use "upscale"
    - Dual extraction: "upscale French" → priceLevel:"upscale" + vibeKeywords:["upscale"]
 
 5. Occasions: Use ONLY values from list above
+   - occasionType can be a string OR an array of strings for interchangeable concepts
    - "first/second/third date" → occasionType:"date_night" (NOT "first_date")
    - "romantic dinner" → occasionType:"date_night"
    - "anniversary" → occasionType:"anniversary"
+   - "romantic" / "special occasion" / "celebration" → occasionType:["date_night","anniversary","celebration"] (interchangeable - return results matching either)
    - "late night" → occasionType:"late_night" (NOT mealType)
 
 6. Special Features: 
+   - specialFeatures is an array - use arrays to capture interchangeable concepts
    - If the user cares about visuals/photography, set requiresInstagrammable:true AND include "instagrammable" in specialFeatures. Trigger words/phrases include: "instagram", "ig", "photo", "photos", "photogenic", "picture-worthy", "beautiful", "pretty", "aesthetic", "scenic views", "scenic view", "good for pictures", "camera ready", "look great on instagram". Apply only when these words describe the **space/ambiance**, not the food.
+   - "aesthetic" / "beautiful space" / "pretty" → specialFeatures:["instagrammable","scenic_views"] (interchangeable - return results matching either)
    - If the user explicitly says they do NOT care about Instagram/photos (e.g., "not instagrammable", "don't care about pictures"), set requiresInstagrammable:null to remove the filter.
 
 7. Booleans: null = remove filter, false = explicit false, true = explicit true
@@ -212,7 +221,7 @@ Return raw JSON (no markdown):
 "mealType": null|"breakfast"|"brunch"|"lunch"|"dinner",
 "priceLevel": null|"budget"|"moderate"|"upscale"|"luxury"|"any",
 "vibeKeywords": string[],
-"occasionType": null|string,
+"occasionType": null|string|string[],
 "noisePreference": null|string,
 "requiresInstagrammable": boolean|null,
 "requiresMichelin": boolean|null,
@@ -224,7 +233,9 @@ Examples:
 "pizza in Manhattan" → {"borough":"manhattan","city":"nyc","cuisineType":"italian_restaurant","cuisineSpecialty":"pizza"}
 "upscale Japanese in Shibuya for anniversary" → {"neighborhood":"shibuya","city":"tokyo","cuisineType":"japanese_restaurant","priceLevel":"upscale","occasionType":"anniversary","vibeKeywords":["upscale"]}
 "first date in West Village" → {"neighborhood":"west village","city":"nyc","occasionType":"date_night","vibeKeywords":["romantic","intimate","cozy"]}
-"famous street food locals love near Times Square" → {"landmark":"times square","city":"nyc","priceLevel":"budget"}
+"romantic restaurant" → {"occasionType":["date_night","anniversary"],"vibeKeywords":["romantic"]}
+"aesthetic cafes" → {"cuisineType":["coffee_shop","cafe","cafeteria"],"specialFeatures":["instagrammable","scenic_views"]}
+"famous street food locals love near Times Square" → {"landmark":"times square","city":"nyc","priceLevel":"budget"}`;
 
 /**
  * Build prompt for Claude API query parsing

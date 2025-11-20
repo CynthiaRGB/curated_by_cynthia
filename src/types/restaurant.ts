@@ -147,8 +147,8 @@ export interface ExtractedKeywords {
   // Vibes (now filtered using enriched tags)
   vibeKeywords: string[];
 
-  // NEW: Occasion filtering
-  occasionType?: string | null;
+  // NEW: Occasion filtering - can be string or array for interchangeable concepts
+  occasionType?: string | string[] | null;
 
   // NEW: Noise level
   noiseLevel?: 'loud' | 'moderate_noise' | 'quiet_ambiance' | null;

@@ -262,13 +262,30 @@ function calculateTier(restaurant: Restaurant, keywords: ExtractedKeywords): num
 function sortByTieredRanking(restaurants: Restaurant[], keywords: ExtractedKeywords): Restaurant[] {
   return restaurants.sort((a, b) => {
     try {
-      // TIER 0: Specialty match (if user asked for specific dish)
+      // PRIORITY 1: Specialty matches first (if user asked for specific dish)
       if (keywords.cuisineSpecialty) {
         const aMatchesSpecialty = (a as any)._matchesSpecialty || false;
         const bMatchesSpecialty = (b as any)._matchesSpecialty || false;
         
         if (aMatchesSpecialty && !bMatchesSpecialty) return -1;
         if (!aMatchesSpecialty && bMatchesSpecialty) return 1;
+      }
+      
+      // PRIORITY 2: CuisineType matches (if both cuisineType and cuisineSpecialty are specified)
+      // Only check cuisineType if specialty comparison didn't decide the order
+      if (keywords.cuisineType && keywords.cuisineSpecialty) {
+        const aMatchesSpecialty = (a as any)._matchesSpecialty || false;
+        const bMatchesSpecialty = (b as any)._matchesSpecialty || false;
+        
+        // Only compare cuisineType if both have same specialty status
+        if (aMatchesSpecialty === bMatchesSpecialty) {
+          const aMatchesCuisineType = (a as any)._matchesCuisineType || false;
+          const bMatchesCuisineType = (b as any)._matchesCuisineType || false;
+          
+          // CuisineType matches come before non-cuisineType matches
+          if (aMatchesCuisineType && !bMatchesCuisineType) return -1;
+          if (!aMatchesCuisineType && bMatchesCuisineType) return 1;
+        }
       }
       
       // TIER 1: primaryType match (or other tier 1 criteria)
@@ -478,6 +495,10 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords, que
     return true; // No cuisine filter
   }
   
+  // Track matches independently for OR logic and sorting
+  let matchesCuisineType = false;
+  let matchesSpecialty = false;
+  
   // Check broad cuisine
   if (keywords.cuisineType) {
     // Normalize cuisineType to array for consistent handling
@@ -497,33 +518,32 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords, que
       
       // Accept if it has brunch_restaurant type OR serves brunch OR has weekend_brunch tag
       if (hasBrunchRestaurantType || servesBrunch || hasWeekendBrunchTag) {
-        return true;
+        matchesCuisineType = true;
+      } else {
+        // Also check for brunch mentions in name/summaries (fallback)
+        const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
+        const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
+        const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
+        const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
+        
+        if (restaurantName.includes('brunch') ||
+            summary.includes('brunch') ||
+            reviewSummary.includes('brunch') ||
+            editorialSummary.includes('brunch')) {
+          matchesCuisineType = true;
+        }
       }
-      
-      // Also check for brunch mentions in name/summaries (fallback)
-      const restaurantName = restaurant.google_data.displayName?.text?.toLowerCase() || '';
-      const summary = restaurant.google_data.generativeSummary?.overview?.text?.toLowerCase() || '';
-      const reviewSummary = restaurant.google_data.reviewSummary?.text?.text?.toLowerCase() || '';
-      const editorialSummary = restaurant.google_data.editorialSummary?.text?.toLowerCase() || '';
-      
-      if (restaurantName.includes('brunch') ||
-          summary.includes('brunch') ||
-          reviewSummary.includes('brunch') ||
-          editorialSummary.includes('brunch')) {
-        return true;
-      }
-      
-      return false;
+    } else {
+      // Check if restaurant matches ANY of the cuisine types (OR logic)
+      // cuisineTypesToMatch is already normalized to array above
+      matchesCuisineType = cuisineTypesToMatch.some(cuisineType => {
+        return matchesSingleCuisineType(restaurant, cuisineType, query);
+      });
     }
     
-    // Check if restaurant matches ANY of the cuisine types (OR logic)
-    // cuisineTypesToMatch is already normalized to array above
-    const matchesBroadCuisine = cuisineTypesToMatch.some(cuisineType => {
-      return matchesSingleCuisineType(restaurant, cuisineType, query);
-    });
-    
-    if (!matchesBroadCuisine) {
-      return false; // ❌ Wrong cuisine category entirely
+    // Set flag for sorting (will be used if specialty doesn't match)
+    if (matchesCuisineType) {
+      (restaurant as any)._matchesCuisineType = true;
     }
   }
   
@@ -559,13 +579,6 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords, que
       normalizeForMatching(specificType).includes(normalizedSpecialty) ||
       types.some(t => normalizeForMatching(t).includes(normalizedSpecialty));
     
-    if (matchesInMetadata) {
-      // Mark for ranking boost (store on restaurant object for sorting)
-      (restaurant as any)._matchesSpecialty = true;
-      // Metadata match is strong signal - return true
-      // (we'll continue to check other fields for ranking purposes, but metadata match is sufficient)
-    }
-    
     // PRIORITY 2: Check restaurant name (dish-specific restaurants often have the dish in their name)
     // This is important because dish-specific restaurants often have the dish in their name
     // but their type might just be "japanese_restaurant" (e.g., "Yakitori Imai" has yakitori in name)
@@ -573,20 +586,7 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords, que
       restaurantName.includes(specialty) ||
       normalizeForMatching(restaurantName).includes(normalizedSpecialty);
     
-    if (matchesInName) {
-      // Mark for ranking boost
-      (restaurant as any)._matchesSpecialty = true;
-      // Name match is also a strong signal - return true if we haven't already matched
-      if (matchesInMetadata) {
-        // Already matched in metadata, continue to check summaries for completeness
-      } else {
-        // Name match is sufficient - return true
-        // (we'll continue to check summaries for ranking purposes, but name match is sufficient)
-      }
-    }
-    
     // PRIORITY 3: Check summaries (less reliable, can have false positives)
-    // Only check if metadata and name didn't match, or include for ranking boost
     const matchesInSummaries = 
       summary.includes(specialty) ||
       reviewSummary.includes(specialty) ||
@@ -595,24 +595,27 @@ function matchesCuisine(restaurant: Restaurant, keywords: ExtractedKeywords, que
       normalizeForMatching(reviewSummary).includes(normalizedSpecialty) ||
       normalizeForMatching(editorialSummary).includes(normalizedSpecialty);
     
-    if (matchesInSummaries) {
-      // Mark for ranking boost
+    // If specialty matches in any field, mark it
+    matchesSpecialty = matchesInMetadata || matchesInName || matchesInSummaries;
+    
+    if (matchesSpecialty) {
+      // Mark for ranking boost (store on restaurant object for sorting)
       (restaurant as any)._matchesSpecialty = true;
     }
-    
-    // If specialty is specified, it MUST match in at least one of the above (filter, not just rank)
-    const matchesSpecialty = matchesInMetadata || matchesInName || matchesInSummaries;
-    
-    if (!matchesSpecialty) {
-      return false; // ❌ Doesn't match the required specialty
-    }
-    
-    // Mark for ranking boost (store on restaurant object for sorting)
-    // Already set above, but ensure it's set
-    (restaurant as any)._matchesSpecialty = true;
   }
   
-  return true; // ✅ At least matches broad cuisine (and specialty if specified)
+  // OR logic: return true if either cuisineType OR cuisineSpecialty matches
+  // If only one is specified, it must match
+  if (keywords.cuisineType && keywords.cuisineSpecialty) {
+    // Both specified: use OR logic
+    return matchesCuisineType || matchesSpecialty;
+  } else if (keywords.cuisineType) {
+    // Only cuisineType specified: must match
+    return matchesCuisineType;
+  } else {
+    // Only cuisineSpecialty specified: must match
+    return matchesSpecialty;
+  }
 }
 
 /**
@@ -958,6 +961,7 @@ function matchesVibe(restaurant: Restaurant, keywords: ExtractedKeywords): boole
 
 /**
  * NEW: Check if restaurant matches occasion criteria using enriched tags
+ * Supports arrays for interchangeable concepts (e.g., ["date_night", "anniversary"])
  */
 function matchesOccasion(restaurant: Restaurant, keywords: ExtractedKeywords): boolean {
   if (!keywords.occasionType) {
@@ -966,31 +970,39 @@ function matchesOccasion(restaurant: Restaurant, keywords: ExtractedKeywords): b
 
   const restaurantOccasions = restaurant.occasion_tags || [];
   
-  // Direct match
-  if (restaurantOccasions.includes(keywords.occasionType)) {
-    return true;
-  }
+  // Normalize occasionType to array for consistent handling
+  const occasionTypesToMatch = Array.isArray(keywords.occasionType) 
+    ? keywords.occasionType 
+    : [keywords.occasionType];
   
-  // Flexible matching for business occasions:
-  // If query is for "business_lunch" and restaurant has "business_dinner" tag AND serves lunch, it's suitable
-  if (keywords.occasionType === 'business_lunch') {
-    const hasBusinessDinner = restaurantOccasions.includes('business_dinner');
-    const servesLunch = restaurant.google_data.servesLunch === true;
-    if (hasBusinessDinner && servesLunch) {
+  // Check if restaurant matches ANY of the occasion types (OR logic)
+  return occasionTypesToMatch.some(occasionType => {
+    // Direct match
+    if (restaurantOccasions.includes(occasionType)) {
       return true;
     }
-  }
-  
-  // If query is for "business_dinner" and restaurant has "business_lunch" tag AND serves dinner, it's suitable
-  if (keywords.occasionType === 'business_dinner') {
-    const hasBusinessLunch = restaurantOccasions.includes('business_lunch');
-    const servesDinner = restaurant.google_data.servesDinner === true;
-    if (hasBusinessLunch && servesDinner) {
-      return true;
+    
+    // Flexible matching for business occasions:
+    // If query is for "business_lunch" and restaurant has "business_dinner" tag AND serves lunch, it's suitable
+    if (occasionType === 'business_lunch') {
+      const hasBusinessDinner = restaurantOccasions.includes('business_dinner');
+      const servesLunch = restaurant.google_data.servesLunch === true;
+      if (hasBusinessDinner && servesLunch) {
+        return true;
+      }
     }
-  }
-  
-  return false;
+    
+    // If query is for "business_dinner" and restaurant has "business_lunch" tag AND serves dinner, it's suitable
+    if (occasionType === 'business_dinner') {
+      const hasBusinessLunch = restaurantOccasions.includes('business_lunch');
+      const servesDinner = restaurant.google_data.servesDinner === true;
+      if (hasBusinessLunch && servesDinner) {
+        return true;
+      }
+    }
+    
+    return false;
+  });
 }
 
 /**
