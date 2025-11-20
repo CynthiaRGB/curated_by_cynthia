@@ -17,6 +17,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [lastQuery, setLastQuery] = useState('');
+  const [lastDisplayedQuery, setLastDisplayedQuery] = useState('');
   const [responseScreenKey, setResponseScreenKey] = useState(0);
   const [botResponse, setBotResponse] = useState('');
   const [, setUsedClaude] = useState(false);
@@ -72,7 +73,9 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     
     // Use message as-is (don't append city to query - city is sent separately)
     const fullQuery = message || '';
+    const displayQuery = options?.displayMessage ?? message ?? '';
     setLastQuery(fullQuery);
+    setLastDisplayedQuery(displayQuery);
 
     // Check if this query came from a prompt by looking for common prompt patterns
     const isPromptQuery = checkIfPromptQuery(fullQuery);
@@ -267,11 +270,13 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     if (lastQuery.trim()) {
       userPrompt = lastQuery;
     }
+    const displayPrompt = lastDisplayedQuery.trim() ? lastDisplayedQuery : userPrompt;
     
     return (
       <ResponseScreen
         key={responseScreenKey}
         userPrompt={userPrompt}
+        displayPrompt={displayPrompt}
         botResponse={botResponse}
         restaurants={restaurants}
         searchQuery={lastQuery}
@@ -284,6 +289,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
         onBackToSearch={() => {
           setRestaurants([]);
           setLastQuery('');
+          setLastDisplayedQuery('');
           setBotResponse('');
           setOriginalPromptText(null);
           setPromptClickTimestamp(null);

@@ -178,6 +178,7 @@ interface Message {
 
 interface ResponseScreenProps {
   userPrompt: string;
+  displayPrompt?: string;
   botResponse: string;
   restaurants: Restaurant[];
   onBackToSearch: () => void;
@@ -194,6 +195,7 @@ interface ResponseScreenProps {
 
 export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   userPrompt,
+  displayPrompt = userPrompt,
   botResponse,
   restaurants: initialRestaurants,
   onBackToSearch,
@@ -226,8 +228,9 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
   // Track if quick actions should be shown
   const [showQuickActions, setShowQuickActions] = useState(true);
   const [conversation, setConversation] = useState<Message[]>(() => {
+    const initialUserMessage = displayPrompt || userPrompt;
     const messages: Message[] = [
-      { id: 'user-1', text: userPrompt, isUser: true, timestamp: Date.now() }
+      { id: 'user-1', text: initialUserMessage, isUser: true, timestamp: Date.now() }
     ];
     
     if (isExternalLoading) {
@@ -456,7 +459,7 @@ export const ResponseScreen: React.FC<ResponseScreenProps> = ({
     
     // Handle initial load: replace initial loading message when results arrive
     // Only do this if we're not in a local loading state (to avoid interfering with follow-up queries)
-    if (isExternalLoading === false && !isLocalLoading && botResponse && initialRestaurants.length > 0) {
+    if (isExternalLoading === false && !isLocalLoading && botResponse) {
       const latestRestaurants = initialRestaurants;
       setConversation(prev => {
         // Find the initial loading message (if it exists) and replace it

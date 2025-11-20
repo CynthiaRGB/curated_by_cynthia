@@ -91,6 +91,11 @@ function setCachedParsedQuery(
 }
 
 /**
+ * Utility: delay helper for retries
+ */
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+/**
  * Restaurant Query Parser Prompt Template
  * 
  * This prompt parses natural language restaurant search queries into structured JSON data.
@@ -483,32 +488,54 @@ export async function parseQueryWithClaude(
       });
     }
 
-    // Call Claude API with prompt caching enabled
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': anthropicApiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-beta': 'prompt-caching-2024-07-31', // Enable prompt caching
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: messages,
-      }),
-    });
+    // Call Claude API with retries on overloaded/network errors
+    const maxRetries = 3;
+    const baseDelayMs = 200;
+    const retryableStatuses = new Set([429, 500, 502, 503, 504, 529]);
+    let response: Response | null = null;
 
-    if (!response.ok) {
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': anthropicApiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-beta': 'prompt-caching-2024-07-31', // Enable prompt caching
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          messages: messages,
+        }),
+      });
+
+      if (response.ok) {
+        break;
+      }
+
+      const status = response.status;
+      const shouldRetry = retryableStatuses.has(status) && attempt < maxRetries - 1;
       const errorText = await response.text();
-      console.error('[Parse Query] ERROR: Claude API call failed');
-      console.error('[Parse Query] ERROR_TYPE: CLAUDE_API_ERROR');
-      console.error('[Parse Query] ERROR_DETAILS:', {
-        status: response.status,
+
+      console.warn(`[Parse Query] Claude API call failed (status ${status}). Attempt ${attempt + 1}/${maxRetries}. Retry: ${shouldRetry}`);
+      console.warn('[Parse Query] ERROR_DETAILS:', {
+        status,
         statusText: response.statusText,
         errorText: errorText
       });
-      throw new Error('PARSE_ERROR_SERVICE_ISSUE: Claude API returned ' + response.status + ' ' + response.statusText);
+
+      if (shouldRetry) {
+        const backoffMs = baseDelayMs * Math.pow(2, attempt) + Math.floor(Math.random() * 100);
+        console.log(`[Parse Query] Retrying Claude request in ${backoffMs}ms...`);
+        await delay(backoffMs);
+      } else {
+        throw new Error('PARSE_ERROR_SERVICE_ISSUE: Claude API returned ' + status + ' ' + response.statusText);
+      }
+    }
+
+    if (!response) {
+      throw new Error('PARSE_ERROR_SERVICE_ISSUE: Failed to contact Claude API');
     }
 
     const data = await response.json();

@@ -93,7 +93,9 @@ export const Chatbox: React.FC<ChatboxProps> = ({
       const fullMessage = alreadyHasCity(trimmedMessage, selectedCity) 
         ? trimmedMessage 
         : `${trimmedMessage} in ${selectedCity}`;
-      onSendMessage(fullMessage, selectedCity);
+      onSendMessage(fullMessage, selectedCity, {
+        displayMessage: trimmedMessage
+      });
       setMessage('');
       // Keep the city selected - don't clear it
     }
@@ -142,7 +144,9 @@ export const Chatbox: React.FC<ChatboxProps> = ({
       : `${prompt} in ${selectedCity}`;
     
     // Send the prompt as the message
-    onSendMessage(fullPromptText, selectedCity);
+    onSendMessage(fullPromptText, selectedCity, {
+      displayMessage: prompt
+    });
     setMessage('');
     // Keep the city selected - don't clear it
   };

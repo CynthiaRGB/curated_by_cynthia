@@ -2,13 +2,13 @@
 .thinking-dots {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   margin-left: 4px;
 }
 
 .thinking-dot {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background-color: #7F7F7F; /* Match secondary text color from app */
   animation: thinking-bounce 1.4s ease-in-out infinite;
@@ -32,7 +32,7 @@
     opacity: 0.7;
   }
   30% {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
     opacity: 1;
   }
 }
