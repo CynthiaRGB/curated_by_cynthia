@@ -355,13 +355,136 @@ function formatRestaurantData(placeData, placeId, url) {
     }
   }
   
-  // Determine price display
-  // Priority 1: Use priceLevel if available
-  // Priority 2: Calculate from priceRange.endPrice using city-specific thresholds
+  // Determine price display using exact range mappings
+  // Priority 1: Calculate from priceRange (startPrice and/or endPrice)
+  // Priority 2: Use priceLevel as fallback if priceRange is not available
   // Priority 3: Set to N/A if no price data
   let priceDisplay = 'N/A';
   
-  if (placeData.priceLevel) {
+  // Helper function to calculate price display from priceRange
+  function calculatePriceDisplayFromRange(priceRange, city) {
+    if (!priceRange) {
+      return 'N/A';
+    }
+
+    const hasStart = priceRange.startPrice && priceRange.startPrice.units;
+    const hasEnd = priceRange.endPrice && priceRange.endPrice.units;
+    
+    if (!hasStart && !hasEnd) {
+      return 'N/A';
+    }
+
+    const currencyCode = (priceRange.endPrice?.currencyCode || priceRange.startPrice?.currencyCode);
+    if (!currencyCode) {
+      return 'N/A';
+    }
+
+    // Exact range mappings by city and currency
+    const rangeMappings = {
+      'New York City': {
+        'USD': {
+          '1-10': '$',
+          '10-20': '$',
+          '20-30': '$$',
+          '30-50': '$$',
+          '50-100': '$$$',
+          '100+': '$$$$'
+        }
+      },
+      'Tokyo': {
+        'JPY': {
+          '1-1000': '$',
+          '1-2000': '$',
+          '1000-2000': '$',
+          '1000-3000': '$$',
+          '2000-3000': '$$',
+          '4000-5000': '$$',
+          '10000+': '$$$$'
+        }
+      },
+      'Paris': {
+        'EUR': {
+          '1-10': '$',
+          '10-20': '$',
+          '10-30': '$$',
+          '20-30': '$$',
+          '20-40': '$$',
+          '40-50': '$$',
+          '100+': '$$$$'
+        }
+      },
+      'Seoul': {
+        'KRW': {
+          '1-10000': '$',
+          '1-20000': '$',
+          '10000-20000': '$',
+          '10000-30000': '$$',
+          '20000-30000': '$$',
+          '40000-60000': '$$$',
+          '100000+': '$$$$'
+        }
+      }
+    };
+
+    const cityMapping = rangeMappings[city];
+    if (!cityMapping) {
+      return 'N/A';
+    }
+
+    const currencyMapping = cityMapping[currencyCode];
+    if (!currencyMapping) {
+      return 'N/A';
+    }
+
+    // If only startPrice exists (no endPrice), check for "+" ranges
+    if (hasStart && !hasEnd) {
+      const start = parseInt(priceRange.startPrice.units, 10);
+      // Check for startPrice-only ranges (e.g., $100+, ¥10000+)
+      if (currencyCode === 'USD' && start >= 100) {
+        return currencyMapping['100+'] || 'N/A';
+      } else if (currencyCode === 'JPY' && start >= 10000) {
+        return currencyMapping['10000+'] || 'N/A';
+      } else if (currencyCode === 'EUR' && start >= 100) {
+        return currencyMapping['100+'] || 'N/A';
+      } else if (currencyCode === 'KRW' && start >= 100000) {
+        return currencyMapping['100000+'] || 'N/A';
+      }
+      // If startPrice doesn't match a "+" range, return N/A
+      return 'N/A';
+    }
+
+    // If both startPrice and endPrice exist, match the exact range
+    if (hasStart && hasEnd) {
+      const start = parseInt(priceRange.startPrice.units, 10);
+      const end = parseInt(priceRange.endPrice.units, 10);
+      const rangeKey = `${start}-${end}`;
+
+      // Try exact match first
+      if (currencyMapping[rangeKey]) {
+        return currencyMapping[rangeKey];
+      }
+
+      // If no exact match, try to find the best matching range
+      for (const [key, value] of Object.entries(currencyMapping)) {
+        if (key.includes('+')) continue; // Skip "+" ranges
+        
+        const [rangeStart, rangeEnd] = key.split('-').map(n => parseInt(n, 10));
+        if (start === rangeStart && end === rangeEnd) {
+          return value;
+        }
+      }
+
+      // If still no match, return N/A
+      return 'N/A';
+    }
+
+    return 'N/A';
+  }
+  
+  if (placeData.priceRange?.startPrice || placeData.priceRange?.endPrice) {
+    priceDisplay = calculatePriceDisplayFromRange(placeData.priceRange, city);
+  } else if (placeData.priceLevel) {
+    // Fallback to priceLevel if priceRange is not available
     const priceMap = {
       'PRICE_LEVEL_FREE': 'Free',
       'PRICE_LEVEL_INEXPENSIVE': '$',
@@ -370,42 +493,6 @@ function formatRestaurantData(placeData, placeId, url) {
       'PRICE_LEVEL_VERY_EXPENSIVE': '$$$$'
     };
     priceDisplay = priceMap[placeData.priceLevel] || 'N/A';
-  } else if (placeData.priceRange?.endPrice) {
-    // Use endPrice (not startPrice) for better accuracy
-    const currencyCode = placeData.priceRange.endPrice.currencyCode;
-    const units = parseInt(placeData.priceRange.endPrice.units || '0', 10);
-    
-    if (units > 0) {
-      // City-specific price thresholds
-      const PRICE_THRESHOLDS = {
-        USD: { budget: 20, moderate: 50, upscale: 100 },
-        JPY: { budget: 2000, moderate: 5000, upscale: 10000 },
-        EUR: { budget: 20, moderate: 40, upscale: 70 },
-        KRW: { budget: 15000, moderate: 35000, upscale: 80000 }
-      };
-      
-      const thresholds = PRICE_THRESHOLDS[currencyCode];
-      
-      if (thresholds) {
-        // Check if units is in normalized scale (1-4) vs actual currency amount
-        if (units <= 4) {
-          // Normalized scale: map directly
-          const normalizedMap = { 1: '$', 2: '$$', 3: '$$$', 4: '$$$$' };
-          priceDisplay = normalizedMap[units] || 'N/A';
-        } else {
-          // Use actual currency thresholds
-          if (units < thresholds.budget) {
-            priceDisplay = '$';
-          } else if (units < thresholds.moderate) {
-            priceDisplay = '$$';
-          } else if (units < thresholds.upscale) {
-            priceDisplay = '$$$';
-          } else {
-            priceDisplay = '$$$$';
-          }
-        }
-      }
-    }
   }
   
   // Extract specific type

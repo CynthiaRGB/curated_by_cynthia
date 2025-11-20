@@ -7,7 +7,7 @@ const DATA_FILE = './api/data/final_data.ts';
 const PRICE_THRESHOLDS = {
   USD: {
     budget: 20,
-    moderate: 50,
+    moderate: 45,
     upscale: 100,
     // luxury: > 100
   },
@@ -43,47 +43,125 @@ function mapPriceLevelToDisplay(priceLevel) {
   return priceMap[priceLevel] || 'N/A';
 }
 
-// Calculate price_display from priceRange.endPrice
+// Calculate price_display from priceRange using exact range mappings
 function calculatePriceDisplayFromRange(priceRange, city) {
-  if (!priceRange || !priceRange.endPrice) {
+  if (!priceRange) {
     return 'N/A';
   }
 
-  const currencyCode = priceRange.endPrice.currencyCode;
-  const units = parseInt(priceRange.endPrice.units || '0', 10);
-
-  if (!units || units <= 0) {
+  const hasStart = priceRange.startPrice && priceRange.startPrice.units;
+  const hasEnd = priceRange.endPrice && priceRange.endPrice.units;
+  
+  if (!hasStart && !hasEnd) {
     return 'N/A';
   }
 
-  const thresholds = PRICE_THRESHOLDS[currencyCode];
-  if (!thresholds) {
-    // Unknown currency, return N/A
+  const currencyCode = (priceRange.endPrice?.currencyCode || priceRange.startPrice?.currencyCode);
+  if (!currencyCode) {
     return 'N/A';
   }
 
-  // Check if units is in normalized scale (1-4) vs actual currency amount
-  // If units <= 4, it's likely normalized, so map directly
-  if (units <= 4) {
-    const normalizedMap = {
-      1: '$',
-      2: '$$',
-      3: '$$$',
-      4: '$$$$'
-    };
-    return normalizedMap[units] || 'N/A';
+  // Exact range mappings by city and currency
+  const rangeMappings = {
+    'New York City': {
+      'USD': {
+        '1-10': '$',
+        '10-20': '$',
+        '20-30': '$$',
+        '30-50': '$$',
+        '50-100': '$$$',
+        '100+': '$$$$'
+      }
+    },
+    'Tokyo': {
+      'JPY': {
+        '1-1000': '$',
+        '1-2000': '$',
+        '1000-2000': '$',
+        '1000-3000': '$$',
+        '2000-3000': '$$',
+        '4000-5000': '$$',
+        '10000+': '$$$$'
+      }
+    },
+    'Paris': {
+      'EUR': {
+        '1-10': '$',
+        '10-20': '$',
+        '10-30': '$$',
+        '20-30': '$$',
+        '20-40': '$$',
+        '40-50': '$$',
+        '100+': '$$$$'
+      }
+    },
+    'Seoul': {
+      'KRW': {
+        '1-10000': '$',
+        '1-20000': '$',
+        '10000-20000': '$',
+        '10000-30000': '$$',
+        '20000-30000': '$$',
+        '40000-60000': '$$$',
+        '100000+': '$$$$'
+      }
+    }
+  };
+
+  const cityMapping = rangeMappings[city];
+  if (!cityMapping) {
+    return 'N/A';
   }
 
-  // Use actual currency thresholds
-  if (units < thresholds.budget) {
-    return '$';
-  } else if (units < thresholds.moderate) {
-    return '$$';
-  } else if (units < thresholds.upscale) {
-    return '$$$';
-  } else {
-    return '$$$$';
+  const currencyMapping = cityMapping[currencyCode];
+  if (!currencyMapping) {
+    return 'N/A';
   }
+
+  // If only startPrice exists (no endPrice), check for "+" ranges
+  if (hasStart && !hasEnd) {
+    const start = parseInt(priceRange.startPrice.units, 10);
+    // Check for startPrice-only ranges (e.g., $100+, ¥10000+)
+    if (currencyCode === 'USD' && start >= 100) {
+      return currencyMapping['100+'] || 'N/A';
+    } else if (currencyCode === 'JPY' && start >= 10000) {
+      return currencyMapping['10000+'] || 'N/A';
+    } else if (currencyCode === 'EUR' && start >= 100) {
+      return currencyMapping['100+'] || 'N/A';
+    } else if (currencyCode === 'KRW' && start >= 100000) {
+      return currencyMapping['100000+'] || 'N/A';
+    }
+    // If startPrice doesn't match a "+" range, return N/A
+    return 'N/A';
+  }
+
+  // If both startPrice and endPrice exist, match the exact range
+  if (hasStart && hasEnd) {
+    const start = parseInt(priceRange.startPrice.units, 10);
+    const end = parseInt(priceRange.endPrice.units, 10);
+    const rangeKey = `${start}-${end}`;
+
+    // Try exact match first
+    if (currencyMapping[rangeKey]) {
+      return currencyMapping[rangeKey];
+    }
+
+    // If no exact match, try to find the best matching range
+    // Check each range in the mapping
+    for (const [key, value] of Object.entries(currencyMapping)) {
+      if (key.includes('+')) continue; // Skip "+" ranges
+      
+      const [rangeStart, rangeEnd] = key.split('-').map(n => parseInt(n, 10));
+      if (start === rangeStart && end === rangeEnd) {
+        return value;
+      }
+    }
+
+    // If still no match, return N/A
+    return 'N/A';
+  }
+
+  return 'N/A';
 }
 
 // Main migration function
@@ -117,18 +195,26 @@ function migratePriceDisplay() {
     const restaurant = restaurants[i];
     let newPriceDisplay = 'N/A';
 
-    // Priority 1: Use priceLevel if available
-    if (restaurant.google_data?.priceLevel) {
+    // Priority 1: Calculate from priceRange (startPrice and/or endPrice)
+    if (restaurant.google_data?.priceRange?.startPrice || restaurant.google_data?.priceRange?.endPrice) {
+      newPriceDisplay = calculatePriceDisplayFromRange(restaurant.google_data.priceRange, restaurant.city);
+      // Debug: Check OLIO E PIÙ specifically
+      if (restaurant.google_place_id === 'ChIJ_RUJvZZZwokRNUEv3K4nSik') {
+        console.log(`[DEBUG] OLIO E PIÙ: city=${restaurant.city}, newPriceDisplay=${newPriceDisplay}, current=${restaurant.price_display}`);
+      }
+      if (newPriceDisplay !== 'N/A') {
+        priceRangeCount++;
+        const currency = restaurant.google_data.priceRange.endPrice?.currencyCode || 
+                        restaurant.google_data.priceRange.startPrice?.currencyCode || 
+                        'UNKNOWN';
+        stats.byCurrency[currency] = (stats.byCurrency[currency] || 0) + 1;
+      }
+    }
+    // Priority 2: Use priceLevel as fallback if priceRange is not available
+    else if (restaurant.google_data?.priceLevel) {
       newPriceDisplay = mapPriceLevelToDisplay(restaurant.google_data.priceLevel);
       priceLevelCount++;
       stats.byPriceLevel[restaurant.google_data.priceLevel] = (stats.byPriceLevel[restaurant.google_data.priceLevel] || 0) + 1;
-    }
-    // Priority 2: Calculate from priceRange.endPrice
-    else if (restaurant.google_data?.priceRange?.endPrice) {
-      newPriceDisplay = calculatePriceDisplayFromRange(restaurant.google_data.priceRange, restaurant.city);
-      priceRangeCount++;
-      const currency = restaurant.google_data.priceRange.endPrice.currencyCode || 'UNKNOWN';
-      stats.byCurrency[currency] = (stats.byCurrency[currency] || 0) + 1;
     }
     // Priority 3: No price data available
     else {
