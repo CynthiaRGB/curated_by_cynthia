@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useStatsigClient } from '@statsig/react-bindings';
 import { Chatbox } from './Chatbox';
 import { ResponseScreen } from './ResponseScreen';
@@ -26,6 +26,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   // Track query context for follow-up queries (using QueryContext type)
   const [queryContext, setQueryContext] = useState<QueryContext | null>(null);
   const [hasMoreResults, setHasMoreResults] = useState(false); // Track if there are more results available
+  const [returnToStartingScreenCount, setReturnToStartingScreenCount] = useState(0); // Track how many times user returns to starting screen
+  const wasOnResponseScreenRef = useRef(false); // Track if we were previously on response screen
 
   // Helper function to detect if a query came from a prompt
   const checkIfPromptQuery = (query: string): boolean => {
@@ -81,6 +83,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       query: fullQuery,
       query_length: fullQuery.length.toString(),
       contains_location: fullQuery.toLowerCase().includes(' in ').toString(),
+      source: isPromptQuery ? 'prompt' : 'user_input',
       timestamp: new Date().toISOString()
     });
 
@@ -105,15 +108,27 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
       if (!response.ok) {
         console.error('Backend error:', response.status, response.statusText);
+        const responseTime = Date.now() - apiStartTime;
+        
+        // Try to parse error response for additional details
+        let errorData = null;
+        try {
+          errorData = await response.json();
+        } catch (e) {
+          // If JSON parsing fails, use status text
+        }
         
         // Log search_failed event for API errors
         client.logEvent('search_failed', fullQuery, {
           query: fullQuery,
-          error_message: `API Error: ${response.status} ${response.statusText}`
+          error_type: 'http_error',
+          http_status_code: response.status.toString(),
+          error_message: errorData?.message || `API Error: ${response.status} ${response.statusText}`,
+          response_time_ms: responseTime.toString()
         });
         
         setRestaurants([]);
-        setBotResponse(`Sorry, there was an error processing your request. Please try again.`);
+        setBotResponse(errorData?.message || `Sorry, there was an error processing your request. Please try again.`);
         setUsedClaude(false);
         return;
       }
@@ -151,12 +166,13 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
              }
              // Update hasMoreResults flag
              setHasMoreResults(data.hasMoreResults || false);
-           } else {
-             // Log search_no_results event when no results
-             client.logEvent('search_no_results', fullQuery, {
-               query: fullQuery,
-               timestamp: new Date().toISOString()
-             });
+          } else {
+            // Log search_no_results event when no results
+            client.logEvent('search_no_results', fullQuery, {
+              query: fullQuery,
+              response_time_ms: responseTime.toString(),
+              timestamp: new Date().toISOString()
+            });
 
              setRestaurants([]);
              setBotResponse(data.summary || `No spots found for "${fullQuery}". Try a different search!`);
@@ -180,11 +196,14 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       
     } catch (error) {
       console.error('Error getting recommendations:', error);
+      const responseTime = Date.now() - apiStartTime;
       
       // Log search_failed event for network/other errors
       client.logEvent('search_failed', fullQuery, {
         query: fullQuery,
-        error_message: error instanceof Error ? error.message : 'Unknown error'
+        error_type: 'network_error',
+        error_message: error instanceof Error ? error.message : 'Unknown error',
+        response_time_ms: responseTime.toString()
       });
       
       setRestaurants([]);
@@ -197,6 +216,43 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
   // Show ResponseScreen if we have restaurants, are loading, or have a bot response (including errors)
   const shouldShowResults = restaurants.length > 0 || isLoading || (botResponse && botResponse.trim().length > 0);
+  
+  // Track starting screen views and returns
+  useEffect(() => {
+    if (!shouldShowResults && client) {
+      // Starting screen is being shown
+      const isReturn = wasOnResponseScreenRef.current;
+      
+      // Update return count if this is a return
+      if (isReturn) {
+        setReturnToStartingScreenCount(prev => {
+          const newCount = prev + 1;
+          
+          // Log starting_screen_viewed event with updated return count
+          client.logEvent('starting_screen_viewed', 'page_view', {
+            is_return: 'true',
+            return_count: newCount.toString(),
+            timestamp: new Date().toISOString()
+          });
+          
+          return newCount;
+        });
+      } else {
+        // First time viewing starting screen (initial load)
+        client.logEvent('starting_screen_viewed', 'page_view', {
+          is_return: 'false',
+          return_count: '0',
+          timestamp: new Date().toISOString()
+        });
+      }
+      
+      // Reset the ref since we're now on starting screen
+      wasOnResponseScreenRef.current = false;
+    } else if (shouldShowResults) {
+      // We're on response screen - mark that we've been here
+      wasOnResponseScreenRef.current = true;
+    }
+  }, [shouldShowResults, client]);
   
   if (shouldShowResults) {
     let userPrompt = 'Recommend me some restaurants';

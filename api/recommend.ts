@@ -309,17 +309,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         });
       }
       
-      // Check for service issues (missing API key, Claude API errors)
+      // Check for service issues (missing API key, Claude API errors, credit/quota issues)
       if (parseError.message && parseError.message.includes("PARSE_ERROR_SERVICE_ISSUE")) {
-        console.error('[API] Service error in parseQuery - user will see generic error message');
+        console.error('[API] Service error in parseQuery - returning 503 status');
         console.error('[API] Parse error details:', parseError.message);
-        return res.status(200).json({
+        // Extract HTTP status code from error message if available (e.g., "Claude API returned 429")
+        const statusMatch = parseError.message.match(/returned (\d+)/);
+        const claudeStatus = statusMatch ? parseInt(statusMatch[1]) : null;
+        // Return 503 Service Unavailable for service errors (credit/quota issues, API failures)
+        return res.status(503).json({
+          error: 'Service temporarily unavailable',
+          message: "Oops, something went wrong with the service. Please try again.",
           recommendations: [],
-          summary: "Oops, something went wrong with the service. Please try again.",
           usedClaude: false,
           usedClaudeRanking: false,
           route: routeDecision.route,
-          context: undefined
+          context: undefined,
+          claude_api_status: claudeStatus
         });
       }
       

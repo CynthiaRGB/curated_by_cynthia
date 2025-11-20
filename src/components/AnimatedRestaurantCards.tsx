@@ -104,8 +104,15 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
   }, [restaurants, delay, startDelay, messageId]);
 
   const handleCardClick = (restaurant: Restaurant, index: number) => {
-    // Open Google Maps immediately (don't wait for logging)
-    window.open(restaurant.original_place.properties.google_maps_url, '_blank', 'noopener,noreferrer');
+    // Try to open Google Maps and check if popup was blocked
+    const mapsWindow = window.open(
+      restaurant.original_place.properties.google_maps_url, 
+      '_blank', 
+      'noopener,noreferrer'
+    );
+    
+    // Check if popup was blocked (window.open returns null or window is immediately closed)
+    const wasPopupBlocked = mapsWindow === null || (mapsWindow && mapsWindow.closed);
     
     // Log events asynchronously after opening the map (non-blocking)
     const timeSinceSearchResults = Math.round((Date.now() - searchResultsTimestamp) / 1000);
@@ -128,7 +135,10 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
       
       // User context
       time_to_click_seconds: timeSinceSearchResults.toString(),
-      scroll_depth_percentage: calculateScrollDepth().toString()
+      scroll_depth_percentage: calculateScrollDepth().toString(),
+      
+      // Maps popup tracking
+      maps_popup_blocked: wasPopupBlocked.toString()
     });
 
     // Log prompt_led_to_restaurant_click event if this search came from a prompt
@@ -142,13 +152,6 @@ export const AnimatedRestaurantCards: React.FC<AnimatedRestaurantCardsProps> = (
         time_to_click_seconds: timeFromPromptToClick.toString()
       });
     }
-
-    // Log google_maps_opened event
-    client.logEvent('google_maps_opened', restaurant.google_data.displayName.text, {
-      restaurant_name: restaurant.google_data.displayName.text,
-      is_cynthias_pick: (restaurant.cynthias_pick || false).toString(),
-      position_in_results: (index + 1).toString()
-    });
   };
 
   return (
