@@ -15,7 +15,8 @@ async function getRestaurantsAsync(): Promise<Restaurant[]> {
     const startTime = Date.now();
     // Import at runtime to avoid loading on module initialization
     const { restaurantData } = await import('../data/final_data.js');
-    restaurantsCache = (restaurantData as any).places || (restaurantData as any) || [];
+    // restaurantData is already an array, not an object with .places property
+    restaurantsCache = Array.isArray(restaurantData) ? restaurantData : [];
     const loadTime = Date.now() - startTime;
     console.log(`[Performance] Loaded ${restaurantsCache.length} restaurants in ${loadTime}ms`);
   }
