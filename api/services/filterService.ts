@@ -13,10 +13,39 @@ let restaurantsByCityCache: Map<string, Restaurant[]> | null = null;
 async function getRestaurantsAsync(): Promise<Restaurant[]> {
   if (restaurantsCache === null) {
     const startTime = Date.now();
-    // Import at runtime to avoid loading on module initialization
-    const { restaurantData } = await import('../data/final_data.js');
-    // restaurantData is already an array, not an object with .places property
-    restaurantsCache = Array.isArray(restaurantData) ? restaurantData : [];
+    try {
+      // Import at runtime to avoid loading on module initialization
+      // Try .js first (for compiled output), fall back to .ts if needed
+      let imported;
+      try {
+        imported = await import('../data/final_data.js');
+      } catch (jsError) {
+        console.log('[DEBUG] .js import failed, trying .ts:', jsError);
+        imported = await import('../data/final_data.ts');
+      }
+      
+      console.log('[DEBUG] Import result keys:', Object.keys(imported));
+      console.log('[DEBUG] restaurantData type:', typeof imported.restaurantData);
+      console.log('[DEBUG] restaurantData is array:', Array.isArray(imported.restaurantData));
+      console.log('[DEBUG] restaurantData length:', imported.restaurantData?.length);
+      
+      const { restaurantData } = imported;
+      
+      if (!restaurantData) {
+        console.error('[ERROR] restaurantData is undefined or null');
+        restaurantsCache = [];
+      } else if (Array.isArray(restaurantData)) {
+        restaurantsCache = restaurantData;
+      } else {
+        console.error('[ERROR] restaurantData is not an array:', typeof restaurantData);
+        restaurantsCache = [];
+      }
+    } catch (error) {
+      console.error('[ERROR] Failed to import restaurant data:', error);
+      console.error('[ERROR] Error details:', error instanceof Error ? error.message : String(error));
+      console.error('[ERROR] Error stack:', error instanceof Error ? error.stack : 'No stack');
+      restaurantsCache = [];
+    }
     const loadTime = Date.now() - startTime;
     console.log(`[Performance] Loaded ${restaurantsCache.length} restaurants in ${loadTime}ms`);
   }
@@ -1207,6 +1236,9 @@ export async function preFilterRestaurants(query: string, keywords: ExtractedKey
 
     const filterTime = Date.now() - filterStart;
     console.log(`[Performance] Filtering ${restaurantsToFilter.length} restaurants took ${filterTime}ms`);
+    if (filteredRestaurants.length === 0 && restaurantsToFilter.length > 0) {
+      console.log(`[Debug] Filter breakdown: location=${locationFiltered}, landmark=${landmarkFiltered}, cuisine=${cuisineFiltered}, other=${otherFiltered}, total filtered=${restaurantsToFilter.length}`);
+    }
     console.log(`Filtered from ${restaurantsToFilter.length} to ${filteredRestaurants.length} restaurants`);
 
     // Sort using tiered ranking system
