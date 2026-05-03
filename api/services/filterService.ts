@@ -135,6 +135,16 @@ export async function preFilterRestaurants(query: string, keywords: ExtractedKey
       return [];
     }
     
+    // Reset per-query ranking flags on cached restaurant objects.
+    // matchesCuisine() mutates `_matchesCuisineType` / `_matchesSpecialty` onto
+    // restaurants for use by sortByTieredRanking. Because restaurantsCache is
+    // shared across queries, stale flags from a previous query would otherwise
+    // bleed into this one's ranking.
+    for (const restaurant of restaurantsToFilter) {
+      delete (restaurant as any)._matchesCuisineType;
+      delete (restaurant as any)._matchesSpecialty;
+    }
+    
     // OPTIMIZATION: Apply filters in order of selectivity
     // Most selective filters first to reduce iterations
     const filterStart = Date.now();
